@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/welcome.dart';
-import 'pages/second_page.dart';
+import 'pages/second_page copy.dart';
 
 void main() {
   runApp(MyApp());

@@ -77,6 +77,30 @@ flutter:
     - assets/images/surveyscoutlogo.png
     - assets/images/surveyscout1.png
     - assets/images/google.png
+    - assets/images/merekrut.png
+    - assets/images/selesai.png
+    - assets/images/butuhtinjau.png
+    - assets/images/dikerjakan.png
+    - assets/images/duaharilalu.png
+    - assets/images/pdfexcel.png
+    - assets/images/chat.png
+    - assets/images/aksi.png
+    - assets/images/2bulanlagi.png
+    - assets/images/foto1.png
+    - assets/images/foto2.png
+    - assets/images/foto3.png
+    - assets/images/taskantor.png
+    - assets/images/taskantorjam.png
+    - assets/images/titik3.png
+    - assets/images/chat.png
+    - assets/images/peringatan.png
+    - assets/images/gradienmerah.png
+    - assets/images/butuhtinjau2.png
+    - assets/images/selesai2.png
+    - assets/images/download.png
+    - assets/images/chat3.png
+    - assets/images/saya.png
+    - assets/images/proyek.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
