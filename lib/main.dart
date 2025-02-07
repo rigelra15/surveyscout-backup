@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //import 'pages/welcome.dart';
 //import 'pages/second_page copy.dart';
 //import 'pages/cobacoba.dart';
-import 'pages/clientsignup.dart';
+import 'pages/clientsignup2.dart';
 
 void main() {
   runApp(MyApp());

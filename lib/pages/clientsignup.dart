@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
-class ClientSignUp extends StatelessWidget {
+class ClientSignUp extends StatefulWidget {
   const ClientSignUp({Key? key}) : super(key: key);
+
+  @override
+  State<ClientSignUp> createState() => _ClientSignUpState();
+}
+
+class _ClientSignUpState extends State<ClientSignUp> {
+  bool _isObscured = true;
 
   @override
   Widget build(BuildContext context) {
@@ -53,532 +60,83 @@ class ClientSignUp extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-
-              //NAMA LENGKAP############################################################################
+              // BANK Section
               Container(
                 width: double.infinity,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      child: Align(
-                        alignment: Alignment.center, // Posisi gambar di tengah
-                        child: Image(
-                          image: AssetImage('assets/images/namalengkap.png'),
-                          width: 30,
-                          height: 30,
-                          fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Container(
-                      width: 250, // Tentukan lebar maksimum untuk kolom teks
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
-                          children: [
-                            Text(
-                              'Nama Lengkap',
-                              style: TextStyle(
-                                color: Color(0xFF705D54),
-                                fontSize: 16,
-                                fontFamily: 'NunitoSans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            SizedBox(height: 2),
-                            Container(
-                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'John Doe',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xFFB0B0B0),
-                                    fontSize: 16,
-                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                    fontStyle: FontStyle.italic, // Gaya italic
-                                    fontWeight: FontWeight.w400, // Bobot reguler
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                  isDense: true, // Mengurangi padding vertikal
-                                  border: InputBorder.none, // Menghilangkan garis bawah
-                                ),
-                                // Pastikan TextField mengisi lebar Container
-                              ),
-                            ),
-
-
-
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: double.infinity, // Lebar mengikuti lebar layar
-                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
-                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
-              ),
-              SizedBox(height: 15),
-
-              //JENIS KELAMIN########################################################################
-              Container(
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Align(
-                        alignment: Alignment.center, // Posisi gambar di tengah
-                        child: Image(
-                          image: AssetImage('assets/images/jeniskelamin.png'),
-                          width: 30,
-                          height: 30,
-                          fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Container(
-                      width: 250, // Tentukan lebar maksimum untuk kolom teks
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
-                          children: [
-                            Text(
-                              'Jenis Kelamin',
-                              style: TextStyle(
-                                color: Color(0xFF705D54),
-                                fontSize: 16,
-                                fontFamily: 'NunitoSans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            SizedBox(height: 2),
-                            Container(
-                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Laki-laki',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xFFB0B0B0),
-                                    fontSize: 16,
-                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                    fontStyle: FontStyle.italic, // Gaya italic
-                                    fontWeight: FontWeight.w400, // Bobot reguler
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                  isDense: true, // Mengurangi padding vertikal
-                                  border: InputBorder.none, // Menghilangkan garis bawah
-                                ),
-                                // Pastikan TextField mengisi lebar Container
-                              ),
-                            ),
-
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: double.infinity, // Lebar mengikuti lebar layar
-                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
-                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
-              ),
-              SizedBox(height: 15),
-
-              //TANGGAL LAHIR########################################################################
-              Container(
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Align(
-                        alignment: Alignment.center, // Posisi gambar di tengah
-                        child: Image(
-                          image: AssetImage('assets/images/tanggallahir.png'),
-                          width: 30,
-                          height: 30,
-                          fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Container(
-                      width: 250, // Tentukan lebar maksimum untuk kolom teks
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
-                          children: [
-                            Text(
-                              'Tanggal Lahir',
-                              style: TextStyle(
-                                color: Color(0xFF705D54),
-                                fontSize: 16,
-                                fontFamily: 'NunitoSans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            SizedBox(height: 2),
-                            Container(
-                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: '1 Januari 1990',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xFFB0B0B0),
-                                    fontSize: 16,
-                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                    fontStyle: FontStyle.italic, // Gaya italic
-                                    fontWeight: FontWeight.w400, // Bobot reguler
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                  isDense: true, // Mengurangi padding vertikal
-                                  border: InputBorder.none, // Menghilangkan garis bawah
-                                ),
-                                // Pastikan TextField mengisi lebar Container
-                              ),
-                            ),
-
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: double.infinity, // Lebar mengikuti lebar layar
-                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
-                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
-              ),
-              SizedBox(height: 15),
-
-              //NOMOR TELEPON########################################################################
-              Container(
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Align(
-                        alignment: Alignment.center, // Posisi gambar di tengah
-                        child: Image(
-                          image: AssetImage('assets/images/nomortelepon.png'),
-                          width: 30,
-                          height: 30,
-                          fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Container(
-                      width: 250, // Tentukan lebar maksimum untuk kolom teks
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
-                          children: [
-                            Text(
-                              'Nomor Telepon',
-                              style: TextStyle(
-                                color: Color(0xFF705D54),
-                                fontSize: 16,
-                                fontFamily: 'NunitoSans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            SizedBox(height: 2),
-                            Container(
-                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: '081 234 567 890',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xFFB0B0B0),
-                                    fontSize: 16,
-                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                    fontStyle: FontStyle.italic, // Gaya italic
-                                    fontWeight: FontWeight.w400, // Bobot reguler
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                  isDense: true, // Mengurangi padding vertikal
-                                  border: InputBorder.none, // Menghilangkan garis bawah
-                                ),
-                                // Pastikan TextField mengisi lebar Container
-                              ),
-                            ),
-
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: double.infinity, // Lebar mengikuti lebar layar
-                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
-                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
-              ),
-              SizedBox(height: 15),
-
-              //NIK########################################################################
-              Container(
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Align(
-                        alignment: Alignment.center, // Posisi gambar di tengah
-                        child: Image(
-                          image: AssetImage('assets/images/nik.png'),
-                          width: 30,
-                          height: 30,
-                          fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Container(
-                      width: 250, // Tentukan lebar maksimum untuk kolom teks
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
-                          children: [
-                            Text(
-                              'NIK',
-                              style: TextStyle(
-                                color: Color(0xFF705D54),
-                                fontSize: 16,
-                                fontFamily: 'NunitoSans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            SizedBox(height: 2),
-                            Container(
-                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: '3403130101901001',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xFFB0B0B0),
-                                    fontSize: 16,
-                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                    fontStyle: FontStyle.italic, // Gaya italic
-                                    fontWeight: FontWeight.w400, // Bobot reguler
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                  isDense: true, // Mengurangi padding vertikal
-                                  border: InputBorder.none, // Menghilangkan garis bawah
-                                ),
-                                // Pastikan TextField mengisi lebar Container
-                              ),
-                            ),
-
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: double.infinity, // Lebar mengikuti lebar layar
-                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
-                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
-              ),
-              SizedBox(height: 15),
-
-              //BANK########################################################################
-              Container(
-                width: double.infinity, // Lebar penuh untuk kontainer besar
-
-
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start, // Rata atas kedua kontainer
-                  children: [
-                    // Kontainer kiri (kontainer lama)
+                    // Kontainer kiri
                     Expanded(
-                      flex: 3, // Fleksibilitas untuk menyesuaikan lebar relatif
+                      flex: 3,
                       child: Container(
-                        width: (MediaQuery.of(context).size.width - 54 - 50) / 2,
-
-
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri untuk isi kolom
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Container(
                                   child: Align(
-                                    alignment: Alignment.center, // Posisi gambar di tengah
+                                    alignment: Alignment.center,
                                     child: Image(
                                       image: AssetImage('assets/images/namabank.png'),
                                       width: 30,
                                       height: 30,
-                                      fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
                                 SizedBox(width: 8),
                                 Container(
-                                  width: (MediaQuery.of(context).size.width - 54 - 100) / 2,
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
-                                      children: [
-                                        Text(
-                                          'Nama Bank',
-                                          style: TextStyle(
-                                            color: Color(0xFF705D54),
+                                  width: MediaQuery.of(context).size.width * 0.4,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Nama Bank',
+                                        style: TextStyle(
+                                          color: Color(0xFF705D54),
+                                          fontSize: 16,
+                                          fontFamily: 'NunitoSans',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      SizedBox(height: 2),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          hintText: 'Bank Saya',
+                                          hintStyle: TextStyle(
+                                            color: Color(0xFFB0B0B0),
                                             fontSize: 16,
-                                            fontFamily: 'NunitoSans',
+                                            fontStyle: FontStyle.italic,
                                             fontWeight: FontWeight.w400,
                                           ),
+                                          contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                                          isDense: true,
+                                          border: InputBorder.none,
                                         ),
-                                        SizedBox(height: 2),
-                                        Container(
-                                          width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
-                                          child: TextField(
-                                            decoration: InputDecoration(
-                                              hintText: 'Bank Saya',
-                                              hintStyle: TextStyle(
-                                                color: Color(0xFFB0B0B0),
-                                                fontSize: 16,
-                                                fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                                fontStyle: FontStyle.italic, // Gaya italic
-                                                fontWeight: FontWeight.w400, // Bobot reguler
-                                              ),
-                                              contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                              isDense: true, // Mengurangi padding vertikal
-                                              border: InputBorder.none, // Menghilangkan garis bawah
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
-                            Container(
-                              width: double.infinity, // Lebar mengikuti lebar layar
-                              height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
-                              color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
-                            ),
+                            Divider(color: Color(0xFF705D54)),
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(width: 16), // Jarak antara kontainer kiri dan kanan
+                    SizedBox(width: 16),
                     // Kontainer kanan
                     Expanded(
-                      flex: 3, // Fleksibilitas untuk menyesuaikan lebar relatif
+                      flex: 3,
                       child: Container(
-                        width: (MediaQuery.of(context).size.width - 54 - 50) / 2,
-
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri untuk isi kolom
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: (MediaQuery.of(context).size.width - 54 - 50) / 2,
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
-                                      children: [
-                                        Text(
-                                          'Nomor Rekening',
-                                          style: TextStyle(
-                                            color: Color(0xFF705D54),
-                                            fontSize: 16,
-                                            fontFamily: 'NunitoSans',
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                        SizedBox(height: 2),
-                                        Container(
-                                          width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
-                                          child: TextField(
-                                            decoration: InputDecoration(
-                                              hintText: '1234567890',
-                                              hintStyle: TextStyle(
-                                                color: Color(0xFFB0B0B0),
-                                                fontSize: 16,
-                                                fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                                fontStyle: FontStyle.italic, // Gaya italic
-                                                fontWeight: FontWeight.w400, // Bobot reguler
-                                              ),
-                                              contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                              isDense: true, // Mengurangi padding vertikal
-                                              border: InputBorder.none, // Menghilangkan garis bawah
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              width: double.infinity, // Lebar mengikuti lebar layar
-                              height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
-                              color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 15),
-
-              //Nama Perusahaan########################################################################
-              Container(
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Align(
-                        alignment: Alignment.center, // Posisi gambar di tengah
-                        child: Image(
-                          image: AssetImage('assets/images/namaperusahaan.png'),
-                          width: 30,
-                          height: 30,
-                          fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Container(
-                      width: 250, // Tentukan lebar maksimum untuk kolom teks
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Nama Perusahaan',
+                              'Nomor Rekening',
                               style: TextStyle(
                                 color: Color(0xFF705D54),
                                 fontSize: 16,
@@ -587,26 +145,21 @@ class ClientSignUp extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 2),
-                            Container(
-                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'PT Maju Mapan',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xFFB0B0B0),
-                                    fontSize: 16,
-                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                    fontStyle: FontStyle.italic, // Gaya italic
-                                    fontWeight: FontWeight.w400, // Bobot reguler
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                  isDense: true, // Mengurangi padding vertikal
-                                  border: InputBorder.none, // Menghilangkan garis bawah
+                            TextField(
+                              decoration: InputDecoration(
+                                hintText: '1234567890',
+                                hintStyle: TextStyle(
+                                  color: Color(0xFFB0B0B0),
+                                  fontSize: 16,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w400,
                                 ),
-                                // Pastikan TextField mengisi lebar Container
+                                contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                                isDense: true,
+                                border: InputBorder.none,
                               ),
                             ),
-
+                            Divider(color: Color(0xFF705D54)),
                           ],
                         ),
                       ),
@@ -614,82 +167,50 @@ class ClientSignUp extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                width: double.infinity, // Lebar mengikuti lebar layar
-                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
-                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
-              ),
               SizedBox(height: 15),
-
-              //Jenis Perusahaan########################################################################
+              // Jenis Perusahaan Section
               Container(
-                width: double.infinity,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      child: Align(
-                        alignment: Alignment.center, // Posisi gambar di tengah
-                        child: Image(
-                          image: AssetImage('assets/images/jenisperusahaan.png'),
-                          width: 30,
-                          height: 30,
-                          fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
+                    Image(
+                      image: AssetImage('assets/images/jenisperusahaan.png'),
+                      width: 30,
+                      height: 30,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        obscureText: _isObscured,
+                        decoration: InputDecoration(
+                          hintText: 'Swasta',
+                          hintStyle: TextStyle(
+                            color: Color(0xFFB0B0B0),
+                            fontSize: 16,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                          isDense: true,
+                          border: InputBorder.none,
                         ),
                       ),
                     ),
-                    SizedBox(width: 8),
-                    Container(
-                      width: 250, // Tentukan lebar maksimum untuk kolom teks
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
-                          children: [
-                            Text(
-                              'Jenis Perusahaan',
-                              style: TextStyle(
-                                color: Color(0xFF705D54),
-                                fontSize: 16,
-                                fontFamily: 'NunitoSans',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            SizedBox(height: 2),
-                            Container(
-                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Swasta',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xFFB0B0B0),
-                                    fontSize: 16,
-                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                    fontStyle: FontStyle.italic, // Gaya italic
-                                    fontWeight: FontWeight.w400, // Bobot reguler
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                  isDense: true, // Mengurangi padding vertikal
-                                  border: InputBorder.none, // Menghilangkan garis bawah
-                                ),
-                                // Pastikan TextField mengisi lebar Container
-                              ),
-                            ),
-
-                          ],
-                        ),
+                    IconButton(
+                      icon: Icon(
+                        _isObscured ? Icons.visibility_off : Icons.visibility,
+                        color: Color(0xFF705D54),
                       ),
+                      onPressed: () {
+                        setState(() {
+                          _isObscured = !_isObscured;
+                        });
+                      },
                     ),
                   ],
                 ),
               ),
-              Container(
-                width: double.infinity, // Lebar mengikuti lebar layar
-                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
-                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
-              ),
-              SizedBox(height: 15),
-
             ],
           ),
         ),
