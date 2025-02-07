@@ -66,6 +66,9 @@ flutter:
           weight: 700
         - asset: assets/fonts/NunitoSans_7pt-ExtraLight.ttf
           weight: 300
+        - asset: assets/fonts/NunitoSans_7pt-LightItalic.ttf
+          weight: 400
+          style: italic
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -107,6 +110,15 @@ flutter:
     - assets/images/klien.png
     - assets/images/surveyor.png
     - assets/images/responden.png
+    - assets/images/namalengkap.png
+    - assets/images/jeniskelamin.png
+    - assets/images/tanggallahir.png
+    - assets/images/nomortelepon.png
+    - assets/images/nik.png
+    - assets/images/namabank.png
+    - assets/images/namaperusahaan.png
+    - assets/images/jenisperusahaan.png
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'pages/welcome.dart';
+//import 'pages/welcome.dart';
 //import 'pages/second_page copy.dart';
 //import 'pages/cobacoba.dart';
+import 'pages/clientsignup.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Welcome(),
+        '/': (context) => ClientSignUp(),
       },
     );
   }
