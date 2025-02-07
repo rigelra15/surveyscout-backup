@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async'; // Import untuk Future.delayed
+import 'clientsignup2.dart';
 
 class Welcome extends StatefulWidget {
   @override
@@ -177,45 +178,51 @@ class _WelcomeState extends State<Welcome> {
                 ),
                 SizedBox(height: 20),
                 // Kontainer pertama
-                Container(
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Color(0xFFD7CCC8),
-                  ),
-                  child: ListTile(
-                    leading: Image.asset(
-                      'assets/images/klien.png',
-                      width: 50,
-                      height: 50,
+                GestureDetector(
+                  onTap: () {
+                    // Navigasi ke halaman clientsignup2.dart
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ClientSignUp()),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Color(0xFFD7CCC8),
                     ),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Klien",
-                          style: TextStyle(
-                            fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700, // Weight 400
-                            color: Color(0xFF705D54), // Warna #705D54
+                    child: ListTile(
+                      leading: Image.asset(
+                        'assets/images/klien.png',
+                        width: 50,
+                        height: 50,
+                      ),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Klien",
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700, // Weight 700
+                              color: Color(0xFF705D54), // Warna #705D54
+                            ),
                           ),
-
-                        ),
-                        SizedBox(height: 2), // Spasi antara dua teks
-                        Text("Rekrut surveyor atau responden untuk membantu observasi Anda berjalan lancar dan efisien.",
-                          style: TextStyle(
-                            fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400, // Weight 400
-                            color: Color(0xFF3A2B24), // Warna #705D54
+                          SizedBox(height: 2), // Spasi antara dua teks
+                          Text(
+                            "Rekrut surveyor atau responden untuk membantu observasi Anda berjalan lancar dan efisien.",
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400, // Weight 400
+                              color: Color(0xFF3A2B24), // Warna #3A2B24
+                            ),
                           ),
-                        ), // Teks kedua
-                      ],
+                        ],
+                      ),
                     ),
-                    onTap: () {
-                      print("Daftar sebagai Pengguna");
-                      Navigator.pop(context);  // Close the bottom sheet
-                    },
                   ),
                 ),
                 SizedBox(height: 10),

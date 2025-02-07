@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'pages/welcome.dart';
-import 'pages/second_page copy.dart';
+//import 'pages/coba.dart';
+import 'pages/proyekpovklien.dart';
 //import 'pages/cobacoba.dart';
-//import 'pages/clientsignup2.dart';
+import 'pages/clientsignup2.dart';
+import 'pages/clientchat.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Welcome(),
+        '/': (context) => Clientchat(),
       },
     );
   }

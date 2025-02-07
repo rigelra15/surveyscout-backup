@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'proyekpovklien.dart';
 
 class ClientSignUp extends StatefulWidget {
   const ClientSignUp({Key? key}) : super(key: key);
@@ -8,6 +9,49 @@ class ClientSignUp extends StatefulWidget {
 }
 
 class _ClientSignUpState extends State<ClientSignUp> {
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+  final TextEditingController _controller3 = TextEditingController();
+  final TextEditingController _controller4 = TextEditingController();
+  final TextEditingController _controller5 = TextEditingController();
+  final TextEditingController _controller6 = TextEditingController();
+  final TextEditingController _controller7 = TextEditingController();
+  final TextEditingController _controller8 = TextEditingController();
+  final TextEditingController _controller9 = TextEditingController();
+  final TextEditingController _controller10 = TextEditingController();
+  final TextEditingController _controller11 = TextEditingController();
+
+  int nomortext = 0;
+
+  void _validateFields() {
+    setState(() {
+      // Periksa apakah semua TextField sudah terisi
+      bool allFilled = _controller1.text.isNotEmpty &&
+          _controller2.text.isNotEmpty &&
+          _controller3.text.isNotEmpty &&
+          _controller4.text.isNotEmpty &&
+          _controller5.text.isNotEmpty &&
+          _controller6.text.isNotEmpty &&
+          _controller7.text.isNotEmpty &&
+          _controller8.text.isNotEmpty &&
+          _controller9.text.isNotEmpty &&
+          _controller10.text.isNotEmpty &&
+          _controller11.text.isNotEmpty;
+
+      nomortext = allFilled ? 1 : 0;
+    });
+  }
+
+  @override
+  void dispose() {
+    // Bersihkan semua controller
+    _controller1.dispose();
+    _controller2.dispose();
+    _controller3.dispose();
+    _controller4.dispose();
+    _controller5.dispose();
+    super.dispose();
+  }
   bool _isObscured = true;
 
   final int nomorselesai = 12;
@@ -102,6 +146,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                             Container(
                               width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                               child: TextField(
+                                controller: _controller1,
+                                onChanged: (value) => _validateFields(),
                                 decoration: InputDecoration(
                                   hintText: 'John Doe',
                                   hintStyle: TextStyle(
@@ -173,6 +219,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                             Container(
                               width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                               child: TextField(
+                                controller: _controller2,
+                                onChanged: (value) => _validateFields(),
                                 decoration: InputDecoration(
                                   hintText: 'Laki-laki',
                                   hintStyle: TextStyle(
@@ -242,6 +290,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                             Container(
                               width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                               child: TextField(
+                                controller: _controller3,
+                                onChanged: (value) => _validateFields(),
                                 decoration: InputDecoration(
                                   hintText: '1 Januari 1990',
                                   hintStyle: TextStyle(
@@ -311,6 +361,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                             Container(
                               width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                               child: TextField(
+                                controller: _controller4,
+                                onChanged: (value) => _validateFields(),
                                 decoration: InputDecoration(
                                   hintText: '081 234 567 890',
                                   hintStyle: TextStyle(
@@ -380,6 +432,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                             Container(
                               width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                               child: TextField(
+                                controller: _controller5,
+                                onChanged: (value) => _validateFields(),
                                 decoration: InputDecoration(
                                   hintText: '3403130101901001',
                                   hintStyle: TextStyle(
@@ -464,6 +518,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                         Container(
                                           width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                                           child: TextField(
+                                            controller: _controller6,
+                                            onChanged: (value) => _validateFields(),
                                             decoration: InputDecoration(
                                               hintText: 'Bank Saya',
                                               hintStyle: TextStyle(
@@ -527,6 +583,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                         Container(
                                           width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                                           child: TextField(
+                                            controller: _controller7,
+                                            onChanged: (value) => _validateFields(),
                                             decoration: InputDecoration(
                                               hintText: '1234567890',
                                               hintStyle: TextStyle(
@@ -600,6 +658,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                             Container(
                               width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                               child: TextField(
+                                controller: _controller8,
+                                onChanged: (value) => _validateFields(),
                                 decoration: InputDecoration(
                                   hintText: 'PT Maju Mapan',
                                   hintStyle: TextStyle(
@@ -669,6 +729,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                             Container(
                               width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                               child: TextField(
+                                controller: _controller9,
+                                onChanged: (value) => _validateFields(),
                                 decoration: InputDecoration(
                                   hintText: 'Swasta',
                                   hintStyle: TextStyle(
@@ -742,6 +804,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                   Expanded(
                                     flex: 9, // Memberikan lebih banyak ruang pada TextField
                                     child: TextField(
+                                      controller: _controller10,
+                                      onChanged: (value) => _validateFields(),
                                       obscureText: _isObscured, // Kontrol apakah teks disembunyikan
                                       decoration: InputDecoration(
                                         hintText: '6 digit, hanya angka',
@@ -830,6 +894,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                   Expanded(
                                     flex: 9, // Memberikan lebih banyak ruang pada TextField
                                     child: TextField(
+                                      controller: _controller11,
+                                      onChanged: (value) => _validateFields(),
                                       obscureText: _isObscured, // Kontrol apakah teks disembunyikan
                                       decoration: InputDecoration(
                                         hintText: 'Masukkan kembali PIN Akses',
@@ -922,36 +988,47 @@ class _ClientSignUpState extends State<ClientSignUp> {
                   ],
                 ),
               ),
+              SizedBox(height: 20),
+              // Text(
+              //   'Nomortext: $nomortext',
+              //   style: TextStyle(fontSize: 20),
+              // ),
 
               SizedBox(height: 15),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: nomorselesai < 12 ? Color(0xFFC4B8B1) : Color(0xFF826754),
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0), // Border radius 8
-              ),
-            ),
-            onPressed: () {
-              // Tambahkan aksi untuk tombol di sini
-            },
-            child: Container(
-              width: double.infinity, // Lebar tombol penuh
-              alignment: Alignment.center, // Tulisan di tengah
-              child: Text(
-                "Lanjut",
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'NunitoSans',
-                  color: nomorselesai < 12 ? Color(0xFFD7CCC8) : Color(0xFFF1E9E5),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: nomortext != 1 ? Color(0xFFC4B8B1) : Color(0xFF826754),
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0), // Border radius 8
+                  ),
+                ),
+                onPressed: nomortext == 1
+                    ? () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SecondPage()),
+                  );
+                }
+                    : null, // Tombol dinonaktifkan jika `nomortext` bukan 1
+                child: Container(
+                  width: double.infinity, // Lebar tombol penuh
+                  alignment: Alignment.center, // Tulisan di tengah
+                  child: Text(
+                    "Lanjut",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'NunitoSans',
+                      color: nomortext != 1 ? Color(0xFFD7CCC8) : Color(0xFFF1E9E5),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
 
 
-          ],
+
+            ],
           ),
         ),
       ),
