@@ -101,6 +101,12 @@ flutter:
     - assets/images/chat3.png
     - assets/images/saya.png
     - assets/images/proyek.png
+    - assets/images/ataujadilah.png
+    - assets/images/kepuasananda.png
+    - assets/images/caridata.png
+    - assets/images/klien.png
+    - assets/images/surveyor.png
+    - assets/images/responden.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -512,8 +512,8 @@ class _SecondPageState extends State<SecondPage> {
                                 padding: EdgeInsets.all(20),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFF44336), // Warna utama
-                                  borderRadius: BorderRadius.circular(8),
+                                  color: Color(0xFFF44336), // Warna utaborderma
+                                  Radius: BorderRadius.circular(8),
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.black.withOpacity(0.1), // Bayangan
