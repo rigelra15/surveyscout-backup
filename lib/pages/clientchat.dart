@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'proyekpovklien.dart';
 
 class Clientchat extends StatefulWidget {
   @override
@@ -6,19 +7,18 @@ class Clientchat extends StatefulWidget {
 }
 
 class _SecondPageState extends State<Clientchat> {
-  // Variabel untuk menyimpan pilihan dropdown
-  String selectedStatus = "Semua status";
-  String selectedPeran = "Semua peran";
-  String selectedLokasi = "Semua lokasi";
-  String selectedKomisi = "Semua komisi";
+  int activeButton = -1; // Tombol default yang tidak aktif
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: Color(0xFFF1E9E5), // Background berwarna #F1E9E5
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(165), // Tinggi AppBar diatur menjadi 130
         child: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Color(0xFFD7CCC8), // Header berwarna #D7CCC8
           flexibleSpace: Padding(
             padding: const EdgeInsets.all(27.0), // Padding diatur menjadi 27
@@ -85,60 +85,178 @@ class _SecondPageState extends State<Clientchat> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildIconBox(),
-                      SizedBox(width: 8), // Spasi antara kotak dan dropdown
-                      _buildDropdown("Semua Status", [
-                        "Semua status",
-                        "Peringatan",
-                        "Dikerjakan",
-                        "Butuh konfirmasi",
-                        "Selesai",
-                        "Kadaluwarsa",
-                        "Draft",
-                        "Menunggu bayar"
-                      ], selectedValue: selectedStatus, onChanged: (value) {
-                        setState(() {
-                          selectedStatus = value!;
-                        });
-                      }),
-                      SizedBox(width: 8), // Spasi antar dropdown
-                      _buildDropdown("Semua Peran", [
-                        "Semua peran",
-                        "Surveyor",
-                        "Responden"
-                      ], selectedValue: selectedPeran, onChanged: (value) {
-                        setState(() {
-                          selectedPeran = value!;
-                        });
-                      }),
-                      SizedBox(width: 8),
-                      _buildDropdown("Semua Lokasi", [
-                        "Semua lokasi",
-                        "Sidoarjo",
-                        "Surabaya"
-                      ], selectedValue: selectedLokasi, onChanged: (value) {
-                        setState(() {
-                          selectedLokasi = value!;
-                        });
-                      }),
-                      SizedBox(width: 8),
-                      _buildDropdown("Semua Komisi", [
-                        "Semua komisi",
-                        "0 - 100.000 rupiah",
-                        "100.000 - 200.000 rupiah",
-                        "200.000 - 500.000 rupiah",
-                        "500.000 - 1.000.000 rupiah",
-                        "1.000.000 - 5.000.000 rupiah",
-                        "5.000.000 - 10.000.000 rupiah",
-                        "10.000.000 - 20.000.000 rupiah",
-                        "20.000.000 - 30.000.000 rupiah",
-                        "> 30.000.000 rupiah"
-                      ], selectedValue: selectedKomisi, onChanged: (value) {
-                        setState(() {
-                          selectedKomisi = value!;
-                        });
-                      }, isWide: true),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: activeButton == 0
+                              ? Color(0xFF826754)
+                              : Color(0xFFD7CCC8),
+                          foregroundColor: activeButton == 0
+                              ? Color(0xFFEDE7E2)
+                              : Color(0xFF705D54),
+                          overlayColor: Colors.transparent, // Hilangkan overlay
+                          shadowColor: Colors.transparent, // Hilangkan bayangan
+                          elevation: 0, // Elevasi tombol 0
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            side: BorderSide(
+                              color: activeButton == 0
+                                  ? Color(0xFFEDE7E2)
+                                  : Color(0xFF705D54),
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            activeButton = 0;
+                          });
+                        },
+                        child: Text(
+                          "Semua",
+                          style: TextStyle(
+                            fontFamily: 'NunitoSans',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 15),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: activeButton == 1
+                              ? Color(0xFF826754)
+                              : Color(0xFFD7CCC8),
+                          foregroundColor: activeButton == 1
+                              ? Color(0xFFEDE7E2)
+                              : Color(0xFF705D54),
+                          overlayColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            side: BorderSide(
+                              color: activeButton == 1
+                                  ? Color(0xFFEDE7E2)
+                                  : Color(0xFF705D54),
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            activeButton = 1;
+                          });
+                        },
+                        child: Text(
+                          "Belum Dibaca",
+                          style: TextStyle(
+                            fontFamily: 'NunitoSans',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 15),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: activeButton == 2
+                              ? Color(0xFF826754)
+                              : Color(0xFFD7CCC8),
+                          foregroundColor: activeButton == 2
+                              ? Color(0xFFEDE7E2)
+                              : Color(0xFF705D54),
+                          overlayColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            side: BorderSide(
+                              color: activeButton == 2
+                                  ? Color(0xFFEDE7E2)
+                                  : Color(0xFF705D54),
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            activeButton = 2;
+                          });
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              activeButton == 2
+                                  ? 'assets/images/dikerjakan3.png' // Gambar saat diklik
+                                  : 'assets/images/dikerjakan2.png', // Gambar saat tidak diklik
+                              width: 24, // Sesuaikan ukuran gambar
+                              height: 24, // Sesuaikan ukuran gambar
+                            ),
+                            SizedBox(width: 8), // Jarak antara gambar dan teks
+                            Text(
+                              "Dikerjakan",
+                              style: TextStyle(
+                                fontFamily: 'NunitoSans',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 15),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: activeButton == 3
+                              ? Color(0xFF826754)
+                              : Color(0xFFD7CCC8),
+                          foregroundColor: activeButton == 3
+                              ? Color(0xFFEDE7E2)
+                              : Color(0xFF705D54),
+                          overlayColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            side: BorderSide(
+                              color: activeButton == 3
+                                  ? Color(0xFFEDE7E2)
+                                  : Color(0xFF705D54),
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            activeButton = 3;
+                          });
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              activeButton == 3
+                                  ? 'assets/images/rekrutmen2.png' // Gambar saat diklik
+                                  : 'assets/images/rekrutmen.png', // Gambar saat tidak diklik
+                              width: 24, // Sesuaikan ukuran gambar
+                              height: 24, // Sesuaikan ukuran gambar
+                            ),
+                            SizedBox(width: 8), // Jarak antara gambar dan teks
+                            Text(
+                              "Rekrutmen",
+                              style: TextStyle(
+                                fontFamily: 'NunitoSans',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
                     ],
                   ),
                 ),
@@ -147,6 +265,880 @@ class _SecondPageState extends State<Clientchat> {
           ),
         ),
       ),
+      body: SingleChildScrollView(
+        child: Align(
+          alignment: Alignment.topCenter, // Menempatkan kontainer di bagian atas
+          child: Container(
+            padding: EdgeInsets.all(27),
+            //color: Colors.grey[200], // Warna background Container utama
+            child: Column(
+              children: [
+                //herman walton
+                Container(
+                  //color: Colors.white24,
+                  height: 90,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // KONTEN UTAMA (Kiri)
+                      Flexible(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            //color: Colors.green,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              // Gambar Lingkaran
+                              Container(
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/images/hermanwalton.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              // Konten Teks
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // Baris Pertama
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          //color: Colors.blue,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: 24, // Lebar Container
+                                                height: 24, // Tinggi Container
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Image.asset(
+                                                    'assets/images/hermanwalton2.png',
+                                                    width: 24, // Lebar gambar
+                                                    height: 24, // Tinggi gambar
+                                                    fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(width: 2),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  //color: Colors.red,
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Text(
+                                                  "Herman Walton".length > 15
+                                                      ? "Herman Walton".substring(0, 15) + "..."
+                                                      : "Herman Walton",
+                                                  style: TextStyle(
+                                                    color: Color(0xFF705D54),
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily: "NunitoSans",
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 0), // Jarak antar baris
+                                      // Baris Kedua
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          //color: Colors.blue,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: 24, // Lebar Container
+                                                height: 24, // Tinggi Container
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Image.asset(
+                                                    'assets/images/centang.png',
+                                                    width: 24, // Lebar gambar
+                                                    height: 24, // Tinggi gambar
+                                                    fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(width: 2),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  //color: Colors.red,
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Text(
+                                                  "Oke, ditunggu ya, ini nanti untuk linknya zoom.us/InterviewWonderesearch".length > 15
+                                                      ? "Oke, ditunggu ya, ini nanti untuk linknya zoom.us/InterviewWonderesearch".substring(0, 15) + "..."
+                                                      : "Oke, ditunggu ya, ini nanti untuk linknya zoom.us/InterviewWonderesearch",
+                                                  style: TextStyle(
+                                                    color: Color(0xFFA3948D),
+                                                    fontFamily: "NunitoSans",
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 14,
+
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      // Elemen Tambahan (Kanan)
+                      Container(
+                        width: 50,
+                        decoration: BoxDecoration(
+                          //color: Colors.red,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Align(
+                          alignment: Alignment.topCenter, // Menempatkan konten di bagian atas kiri
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20), // Tambahkan padding agar tidak terlalu mepet
+                            child: Text(
+                              "08.00",
+                              style: TextStyle(
+                                color: Color(0xFFB8ADA5),
+                                fontSize: 12,
+                                fontFamily: "NunitoSans",
+                                fontWeight: FontWeight.w400,
+
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+                //bagaskara putra
+                Container(
+                  //color: Colors.white24,
+                  height: 90,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // KONTEN UTAMA (Kiri)
+                      Flexible(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            //color: Colors.green,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              // Gambar Lingkaran
+                              Container(
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/images/bagaskaraputra.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              // Konten Teks
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // Baris Pertama
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          //color: Colors.blue,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: 24, // Lebar Container
+                                                height: 24, // Tinggi Container
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Image.asset(
+                                                    'assets/images/hermanwalton2.png',
+                                                    width: 24, // Lebar gambar
+                                                    height: 24, // Tinggi gambar
+                                                    fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(width: 2),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  //color: Colors.red,
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Text(
+                                                  "Bagaskara Putra".length > 15
+                                                      ? "Bagaskara Putra".substring(0, 15) + "..."
+                                                      : "Bagaskara Putra",
+                                                  style: TextStyle(
+                                                    color: Color(0xFF705D54),
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily: "NunitoSans",
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 0), // Jarak antar baris
+                                      // Baris Kedua
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          //color: Colors.blue,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              SizedBox(width: 2),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  //color: Colors.red,
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Text(
+                                                  "Baik, Pak/Bu, saya bersedia untuk Zoom interview besok pagi".length > 15
+                                                      ? "Baik, Pak/Bu, saya bersedia untuk Zoom interview besok pagi".substring(0, 15) + "..."
+                                                      : "Baik, Pak/Bu, saya bersedia untuk Zoom interview besok pagi",
+                                                  style: TextStyle(
+                                                    color: Color(0xFFA3948D),
+                                                    fontFamily: "NunitoSans",
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 14,
+
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      // Elemen Tambahan (Kanan)
+                      Container(
+                        width: 50,
+                        decoration: BoxDecoration(
+                          //color: Colors.red,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Align(
+                          alignment: Alignment.topCenter, // Menempatkan konten di bagian atas kiri
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20), // Tambahkan padding agar tidak terlalu mepet
+                            child: Text(
+                              "07.00",
+                              style: TextStyle(
+                                color: Color(0xFFB8ADA5),
+                                fontSize: 12,
+                                fontFamily: "NunitoSans",
+                                fontWeight: FontWeight.w400,
+
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+                //richard santoso
+                Container(
+                  //color: Colors.white24,
+                  height: 90,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // KONTEN UTAMA (Kiri)
+                      Flexible(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            //color: Colors.green,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              // Gambar Lingkaran
+                              Container(
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/images/richardsantoso2.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              // Konten Teks
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // Baris Pertama
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          //color: Colors.blue,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: 24, // Lebar Container
+                                                height: 24, // Tinggi Container
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Image.asset(
+                                                    'assets/images/richardsantoso.png',
+                                                    width: 24, // Lebar gambar
+                                                    height: 24, // Tinggi gambar
+                                                    fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(width: 2),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  //color: Colors.red,
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Text(
+                                                  "Richard Santoso".length > 15
+                                                      ? "Richard Santoso".substring(0, 15) + "..."
+                                                      : "Richard Santoso",
+                                                  style: TextStyle(
+                                                    color: Color(0xFF705D54),
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily: "NunitoSans",
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 0), // Jarak antar baris
+                                      // Baris Kedua
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          //color: Colors.blue,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+
+                                              SizedBox(width: 2),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  //color: Colors.red,
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Text(
+                                                  "Untuk selanjutnya, saya coba untuk ke halte bus yang sebelah utara, Pak. Akan segera saya kabarkan kembali untuk progressnya.".length > 15
+                                                      ? "Untuk selanjutnya, saya coba untuk ke halte bus yang sebelah utara, Pak. Akan segera saya kabarkan kembali untuk progressnya.".substring(0, 15) + "..."
+                                                      : "Untuk selanjutnya, saya coba untuk ke halte bus yang sebelah utara, Pak. Akan segera saya kabarkan kembali untuk progressnya.",
+                                                  style: TextStyle(
+                                                    color: Color(0xFFA3948D),
+                                                    fontFamily: "NunitoSans",
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 14,
+
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      // Elemen Tambahan (Kanan)
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        width: 100, // Lebar utama kontainer
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            // Kontainer atas
+                            Container(
+                              width: 80,
+                              decoration: BoxDecoration(
+                                //color: Colors.amber, // Warna background kontainer atas
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(0), // Menambahkan padding ke teks
+                                child: Text(
+                                  "Kemarin",
+                                  textAlign: TextAlign.end, // Menyelaraskan teks ke tengah
+                                  style: TextStyle(
+                                    color: Color(0xFFB8ADA5),
+                                    fontSize: 12,
+                                    fontFamily: "NunitoSans",
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10), // Memberi jarak antara kontainer atas dan bawah
+
+                            // Kontainer bawah
+                            Container(
+                              width: 20,
+                              height: 20, // Disesuaikan agar lebih proporsional
+                              decoration: BoxDecoration(
+                                color: Colors.red, // Warna background kontainer bawah
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "3",
+                                  style: TextStyle(
+                                    color: Colors.white, // Warna tulisan putih
+                                    fontSize: 10, // Ukuran font disesuaikan agar lebih jelas
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+
+
+                    ],
+                  ),
+                ),
+                //layanan pelanggan
+                Container(
+                  //color: Colors.white24,
+                  height: 90,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // KONTEN UTAMA (Kiri)
+                      Flexible(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            //color: Colors.green,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              // Gambar Lingkaran
+                              Container(
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/images/layananpelanggan.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              // Konten Teks
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // Baris Pertama
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          //color: Colors.blue,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: 24, // Lebar Container
+                                                height: 24, // Tinggi Container
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Image.asset(
+                                                    'assets/images/layananpelanggan2.png',
+                                                    width: 24, // Lebar gambar
+                                                    height: 24, // Tinggi gambar
+                                                    fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(width: 2),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  //color: Colors.red,
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Text(
+                                                  "Layanan Pelanggan".length > 15
+                                                      ? "Layanan Pelanggan".substring(0, 15) + "..."
+                                                      : "Layanan Pelanggan",
+                                                  style: TextStyle(
+                                                    color: Color(0xFF705D54),
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily: "NunitoSans",
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 0), // Jarak antar baris
+                                      // Baris Kedua
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          //color: Colors.blue,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              SizedBox(width: 2),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  //color: Colors.red,
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Text(
+                                                  "Apabila sudah tidak ada pertanyaan lagi, kami izin menutup percakapan ini. Terima kasih telah menghubungi Layanan Pelanggan SurveyScout!".length > 15
+                                                      ? "Apabila sudah tidak ada pertanyaan lagi, kami izin menutup percakapan ini. Terima kasih telah menghubungi Layanan Pelanggan SurveyScout!".substring(0, 15) + "..."
+                                                      : "Apabila sudah tidak ada pertanyaan lagi, kami izin menutup percakapan ini. Terima kasih telah menghubungi Layanan Pelanggan SurveyScout!",
+                                                  style: TextStyle(
+                                                    color: Color(0xFFA3948D),
+                                                    fontFamily: "NunitoSans",
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 14,
+
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      // Elemen Tambahan (Kanan)
+                      Container(
+                        width: 60,
+                        decoration: BoxDecoration(
+                          //color: Colors.red,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Align(
+                          alignment: Alignment.topCenter, // Menempatkan konten di bagian atas kiri
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20), // Tambahkan padding agar tidak terlalu mepet
+                            child: Text(
+                              "Kemarin",
+                              style: TextStyle(
+                                color: Color(0xFFB8ADA5),
+                                fontSize: 12,
+                                fontFamily: "NunitoSans",
+                                fontWeight: FontWeight.w400,
+
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+                //notifikasi pembayaran
+                Container(
+                  //color: Colors.white24,
+                  height: 90,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // KONTEN UTAMA (Kiri)
+                      Flexible(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            //color: Colors.green,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              // Gambar Lingkaran
+                              Container(
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/images/notifikasipembayaran.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              // Konten Teks
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // Baris Pertama
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          //color: Colors.blue,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: 24, // Lebar Container
+                                                height: 24, // Tinggi Container
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Image.asset(
+                                                    'assets/images/layananpelanggan2.png',
+                                                    width: 24, // Lebar gambar
+                                                    height: 24, // Tinggi gambar
+                                                    fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(width: 2),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  //color: Colors.red,
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Text(
+                                                  "Notifikasi Pembayaran".length > 15
+                                                      ? "Notifikasi Pembayaran".substring(0, 15) + "..."
+                                                      : "Notifikasi Pembayaran",
+                                                  style: TextStyle(
+                                                    color: Color(0xFF705D54),
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily: "NunitoSans",
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 0), // Jarak antar baris
+                                      // Baris Kedua
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          //color: Colors.blue,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              SizedBox(width: 2),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  //color: Colors.red,
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.all(4),
+                                                child: Text(
+                                                  "Pembayaran QRIS Anda untuk “Pengamatan Lalu Lintas di Simpang Lima Semarang” sudah kami terima. Proses rekrutmen untuk proyek tersebut telah dimulai. Terima kasih!".length > 15
+                                                      ? "Pembayaran QRIS Anda untuk “Pengamatan Lalu Lintas di Simpang Lima Semarang” sudah kami terima. Proses rekrutmen untuk proyek tersebut telah dimulai. Terima kasih!".substring(0, 15) + "..."
+                                                      : "Pembayaran QRIS Anda untuk “Pengamatan Lalu Lintas di Simpang Lima Semarang” sudah kami terima. Proses rekrutmen untuk proyek tersebut telah dimulai. Terima kasih!",
+                                                  style: TextStyle(
+                                                    color: Color(0xFFA3948D),
+                                                    fontFamily: "NunitoSans",
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 14,
+
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      // Elemen Tambahan (Kanan)
+                      Container(
+                        width: 60,
+                        decoration: BoxDecoration(
+                          //color: Colors.red,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Align(
+                          alignment: Alignment.topCenter, // Menempatkan konten di bagian atas kiri
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20), // Tambahkan padding agar tidak terlalu mepet
+                            child: Text(
+                              "Kemarin",
+                              style: TextStyle(
+                                color: Color(0xFFB8ADA5),
+                                fontSize: 12,
+                                fontFamily: "NunitoSans",
+                                fontWeight: FontWeight.w400,
+
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+      ),
+
+
 
       bottomNavigationBar:
       Container(
@@ -160,31 +1152,41 @@ class _SecondPageState extends State<Clientchat> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween, // Jarak antar container dibuat maksimal
             children: [
-              Container(
-                width: 80,
-                height: 60,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
-                  children: [
-                    Image.asset(
-                      'assets/images/proyek.png', // Path ke gambar
-                      width: 24, // Lebar gambar
-                      height: 24, // Tinggi gambar
-                      fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                    ),
-                    SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
-                    Text(
-                      'Proyek',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'NunitoSans',
-                        color: Color(0xFF705D54),
+              GestureDetector(
+                onTap: () {
+                  // Navigasi ke halaman baru
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SecondPage()), // Ganti dengan nama halaman Anda
+                  );
+                },
+                child: Container(
+                  width: 80,
+                  height: 60,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
+                    children: [
+                      Image.asset(
+                        'assets/images/proyek2.png', // Path ke gambar
+                        width: 24, // Lebar gambar
+                        height: 24, // Tinggi gambar
+                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
+                      Text(
+                        'Proyek',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: 'NunitoSans',
+                          color: Color(0xFFB8ADA5),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
+
 
               Container(
                 width: 80,
@@ -193,7 +1195,7 @@ class _SecondPageState extends State<Clientchat> {
                   mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
                   children: [
                     Image.asset(
-                      'assets/images/chat3.png', // Path ke gambar
+                      'assets/images/chat4.png', // Path ke gambar
                       width: 24, // Lebar gambar
                       height: 24, // Tinggi gambar
                       fit: BoxFit.contain, // Menyesuaikan ukuran gambar
@@ -205,12 +1207,13 @@ class _SecondPageState extends State<Clientchat> {
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                         fontFamily: 'NunitoSans',
-                        color: Color(0xFFC4B8B1),
+                        color: Color(0xFF705D54),
                       ),
                     ),
                   ],
                 ),
               ),
+
               Container(
                 width: 80,
                 height: 60,
@@ -309,15 +1312,7 @@ class _SecondPageState extends State<Clientchat> {
 
   Widget _buildIconBox() {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          // Reset the status, role, location, and commission selections when the icon box is tapped
-          selectedStatus = "Semua status";
-          selectedPeran = "Semua peran";
-          selectedLokasi = "Semua lokasi";
-          selectedKomisi = "Semua komisi";
-        });
-      },
+
       child: Container(
         width: 40,
         height: 40,

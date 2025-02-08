@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'clientchat.dart';
 
 class SecondPage extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class _SecondPageState extends State<SecondPage> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(165), // Tinggi AppBar diatur menjadi 130
         child: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Color(0xFFD7CCC8), // Header berwarna #D7CCC8
           flexibleSpace: Padding(
             padding: const EdgeInsets.all(27.0), // Padding diatur menjadi 27
@@ -2608,31 +2610,41 @@ class _SecondPageState extends State<SecondPage> {
                   ),
                 ),
 
-                Container(
-                  width: 80,
-                  height: 60,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
-                    children: [
-                      Image.asset(
-                        'assets/images/chat3.png', // Path ke gambar
-                        width: 24, // Lebar gambar
-                        height: 24, // Tinggi gambar
-                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                      ),
-                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
-                      Text(
-                        'Chat',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xFFC4B8B1),
+                GestureDetector(
+                  onTap: () {
+                    // Navigasi ke halaman baru
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Clientchat()), // Ganti dengan nama halaman Anda
+                    );
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 60,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
+                      children: [
+                        Image.asset(
+                          'assets/images/chat3.png', // Path ke gambar
+                          width: 24, // Lebar gambar
+                          height: 24, // Tinggi gambar
+                          fit: BoxFit.contain, // Menyesuaikan ukuran gambar
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
+                        Text(
+                          'Chat',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'NunitoSans',
+                            color: Color(0xFFC4B8B1),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+
                 Container(
                   width: 80,
                   height: 60,

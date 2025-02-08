@@ -4,6 +4,7 @@ import 'pages/proyekpovklien.dart';
 //import 'pages/cobacoba.dart';
 import 'pages/clientsignup2.dart';
 import 'pages/clientchat.dart';
+import 'pages/welcome.dart';
 
 void main() {
   runApp(MyApp());
