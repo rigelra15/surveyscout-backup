@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'clientchat.dart';
+import 'clientsaya.dart';
 
 class SecondPage extends StatefulWidget {
   @override
@@ -2645,29 +2646,37 @@ class _SecondPageState extends State<SecondPage> {
                   ),
                 ),
 
-                Container(
-                  width: 80,
-                  height: 60,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
-                    children: [
-                      Image.asset(
-                        'assets/images/saya.png', // Path ke gambar
-                        width: 24, // Lebar gambar
-                        height: 24, // Tinggi gambar
-                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                      ),
-                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
-                      Text(
-                        'Saya',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xFFC4B8B1),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Clientsaya()), // Ganti dengan nama halaman Anda
+                    );
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 60,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
+                      children: [
+                        Image.asset(
+                          'assets/images/saya.png', // Path ke gambar
+                          width: 24, // Lebar gambar
+                          height: 24, // Tinggi gambar
+                          fit: BoxFit.contain, // Menyesuaikan ukuran gambar
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
+                        Text(
+                          'Saya',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'NunitoSans',
+                            color: Color(0xFFB8ADA5),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

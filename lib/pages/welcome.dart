@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async'; // Import untuk Future.delayed
-import 'clientsignup2.dart';
+import 'clientsignup.dart';
 
 class Welcome extends StatefulWidget {
   @override
