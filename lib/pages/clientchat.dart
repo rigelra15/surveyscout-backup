@@ -417,6 +417,7 @@ class _SecondPageState extends State<Clientchat> {
                                                       fontSize: 14,
 
                                                     ),
+
                                                   ),
                                                 ),
                                               ],
