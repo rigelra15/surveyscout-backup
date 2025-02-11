@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async'; // Import untuk Future.delayed
 import 'clientsignup.dart';
+import 'surveyorprojects.dart';
 
 class Welcome extends StatefulWidget {
   @override
@@ -227,47 +228,60 @@ class _WelcomeState extends State<Welcome> {
                 ),
                 SizedBox(height: 10),
                 // Kontainer kedua
-                Container(
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Color(0xFFD7CCC8),
-                  ),
-                  child: ListTile(
-                    leading: Image.asset(
-                      'assets/images/surveyor.png',
-                      width: 50,
-                      height: 50,
+                GestureDetector(
+                  onTap: () {
+                    // Navigasi ke halaman SurveyorProjects
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SurveyorProjects()),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(16), // Padding untuk kontainer
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: const Color(0xFFD7CCC8), // Warna latar belakang
                     ),
-                    title: Column(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Surveyor",
-                          style: TextStyle(
-                            fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700, // Weight 400
-                            color: Color(0xFF705D54), // Warna #705D54
-                          ),
-
+                        Image.asset(
+                          'assets/images/surveyor.png',
+                          width: 50,
+                          height: 50,
                         ),
-                        SizedBox(height: 2), // Spasi antara dua teks
-                        Text("Hasilkan uang dengan mencari data dengan wawancara, observasi, dan/atau lainnya hingga merekapnya.",
-                          style: TextStyle(
-                            fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400, // Weight 400
-                            color: Color(0xFF3A2B24), // Warna #705D54
+                        const SizedBox(width: 12), // Spasi antara gambar dan teks
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Surveyor",
+                                style: TextStyle(
+                                  fontFamily: 'NunitoSans',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700, // Font tebal
+                                  color: Color(0xFF705D54),
+                                ),
+                              ),
+                              const SizedBox(height: 4), // Spasi antara judul dan deskripsi
+                              const Text(
+                                "Hasilkan uang dengan mencari data dengan wawancara, observasi, dan/atau lainnya hingga merekapnya.",
+                                style: TextStyle(
+                                  fontFamily: 'NunitoSans',
+                                  fontSize: 14, // Ukuran font deskripsi lebih kecil
+                                  fontWeight: FontWeight.w400, // Font normal
+                                  color: Color(0xFF3A2B24),
+                                ),
+                              ),
+                            ],
                           ),
-                        ), // Teks kedua
+                        ),
                       ],
                     ),
-                    onTap: () {
-                      print("Daftar sebagai Pengguna");
-                      Navigator.pop(context);  // Close the bottom sheet
-                    },
                   ),
                 ),
+
                 SizedBox(height: 10),
                 // Kontainer ketiga
                 Container(

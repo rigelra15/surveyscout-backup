@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/clientsaya.dart';
 import 'pages/welcome.dart';
+import 'pages/surveyorprojects.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Clientsaya(),
+        '/': (context) => SurveyorProjects(),
       },
     );
   }
