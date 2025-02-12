@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'clientprojects.dart';
-import 'clientsaya.dart';
+import 'surveyorproyeksaya.dart';
 
 class SurveyorProjects extends StatefulWidget {
   @override
@@ -1190,7 +1189,10 @@ class _SurveyorProjects extends State<SurveyorProjects> {
             children: [
               GestureDetector(
                 onTap: () {
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SurveyorProyekSaya()), // Ganti dengan nama halaman Anda
+                  );
                 },
                 child: Container(
                   width: 60,
@@ -1219,38 +1221,48 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                 ),
               ),
 
-
-              Container(
-                width: 100,
-                height: 80,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
-                  children: [
-                    Image.asset(
-                      'assets/images/proyeksaya.png', // Path ke gambar
-                      width: 24, // Lebar gambar
-                      height: 24, // Tinggi gambar
-                      fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                    ),
-                    SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
-                    Text(
-                      'Proyek Saya',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'NunitoSans',
-                        color: Color(0xFFB8ADA5),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SurveyorProyekSaya()), // Ganti dengan nama halaman Anda
+                  );
+                },
+                child: Container(
+                  width: 100,
+                  height: 80,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
+                    children: [
+                      Image.asset(
+                        'assets/images/proyeksaya.png', // Path ke gambar
+                        width: 24, // Lebar gambar
+                        height: 24, // Tinggi gambar
+                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
+                      Text(
+                        'Proyek Saya',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: 'NunitoSans',
+                          color: Color(0xFFB8ADA5),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
+
+
+
 
               GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Clientsaya()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => SurveyorProyekSaya()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
@@ -1284,7 +1296,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Clientsaya()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => SurveyorProyekSaya()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(

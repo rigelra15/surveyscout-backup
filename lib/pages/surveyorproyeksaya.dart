@@ -174,7 +174,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                   child: Padding(
                                     padding: EdgeInsets.zero, // Padding diatur ke 0
                                     child: Text(
-                                      "Survei Kepuasan Pengguna Transportasi Umum",
+                                      "Pemantauan Kualitas Udara di Wilayah Industri Bekasi",
                                       style: TextStyle(
                                         fontFamily: 'SourceSans3', // Font-family
                                         fontSize: 24, // Font-size
@@ -203,7 +203,222 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     Padding(
                                       padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
                                       child: Image.asset(
-                                        'assets/images/online.png',
+                                        'assets/images/2bulanlagi.png',
+                                        height: 18, // Sesuaikan ukuran gambar
+                                        width: 18,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                    SizedBox(width: 8), // Spasi horizontal antara gambar dan teks
+                                    // Teks
+                                    Text(
+                                      "2 bulan lagi",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'NunitoSans',
+                                        color: Color(0xFFA3948D),
+                                      ),
+                                      softWrap: true, // Agar teks bisa membungkus
+                                      overflow: TextOverflow.visible,
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              // Kotak 3
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical: 4), // Padding atas dan bawah 3
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start, // Rata kiri
+                                  crossAxisAlignment: CrossAxisAlignment.center, // Vertikal tengah
+                                  children: [
+                                    // Gambar
+                                    Padding(
+                                      padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
+                                      child: Image.asset(
+                                        'assets/images/pdfexcel.png',
+                                        height: 18, // Sesuaikan ukuran gambar
+                                        width: 18,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                    SizedBox(width: 8), // Spasi horizontal antara gambar dan teks
+                                    // Teks
+                                    Flexible(
+                                      child: Text(
+                                        "Excel",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'NunitoSans',
+                                          color: Color(0xFFA3948D),
+                                        ),
+                                        softWrap: true, // Agar teks bisa membungkus
+                                        overflow: TextOverflow.visible, // Agar teks tidak dipotong
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10), // Spasi antar kotak
+                        // Container kanan
+                        Container(
+                          width: (MediaQuery.of(context).size.width - 27 * 2) * (1/3) - 4,
+                          decoration: BoxDecoration(
+                            //color: Color(0xFFF44336),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(8), // Menambahkan padding untuk teks di dalam kontainer
+                                decoration: BoxDecoration(
+                                  color: Color(0xFF2196F3), // Warna background #FF9800
+                                  borderRadius: BorderRadius.circular(16), // Border radius 16
+                                ),
+                                child: Wrap(
+                                  alignment: WrapAlignment.start, // Menyusun elemen dari kiri
+                                  spacing: 8, // Jarak horizontal antara gambar dan teks
+                                  runSpacing: 4, // Jarak antar baris
+                                  children: [
+                                    // Gambar di sisi kiri
+                                    Image.asset(
+                                      'assets/images/taskantor2.png', // Gambar yang ingin ditampilkan
+                                      width: 15, // Ukuran gambar, sesuaikan dengan kebutuhan
+                                      height: 15,
+                                    ),
+
+                                    // Teks di sisi kanan
+                                    Text(
+                                      "Mendaftar",
+                                      style: TextStyle(
+                                        fontFamily: 'NunitoSans',
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xFFFFFFFF), // Warna teks putih (#FFFFFF)
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              SizedBox(height: 100),
+
+
+                              Container(
+                                width: (MediaQuery.of(context).size.width - 27 * 2) * (1 / 2) - 4,
+                                padding: EdgeInsets.all(0), // Padding diatur menjadi 0
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end, // Posisi rata kanan
+                                  children: [
+                                    SizedBox(width: 8), // Gap antar lingkaran
+                                    // Lingkaran kedua
+                                    Container(
+                                      width: 42.2, // Diameter lingkaran
+                                      height: 42.2,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: Color(0xFF826754), // Warna border
+                                          width: 1, // Ketebalan border 1px
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Image.asset(
+                                          'assets/images/titik3.png',
+                                          width: 21, // Ukuran gambar dalam lingkaran (sesuaikan jika perlu)
+                                          height: 21,
+                                          fit: BoxFit.contain, // Mengatur agar gambar tidak terpotong
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Container(
+                    padding: EdgeInsets.all(20), // Jarak padding luar
+                    width: double.infinity, // Lebar penuh
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEDE7E2),
+                      borderRadius: BorderRadius.circular(8), // Sudut melengkun
+                    ),
+                    child: Row(
+
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Container kiri
+                        Container(
+                          padding: EdgeInsets.all(0), // Padding luar container
+                          width: (MediaQuery.of(context).size.width - 27 * 2) * (1/2) - 4,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEDE7E2),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min, // Ukuran mengikuti konten
+                            children: [
+                              // Kotak 1
+                              Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.zero, // Padding diatur ke 0
+                                    child: Text(
+                                      "Pengamatan Lalu Lintas di Simpang Lima Semarang",
+                                      style: TextStyle(
+                                        fontFamily: 'SourceSans3', // Font-family
+                                        fontSize: 24, // Font-size
+                                        fontWeight: FontWeight.w700, // Font-weight
+                                        color: Color(0xFF705D54), // Warna teks
+                                      ),
+                                      maxLines: 3, // Membatasi teks hanya satu baris
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              // Kotak 2
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical: 4), // Padding atas dan bawah 3
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start, // Rata kiri
+                                  crossAxisAlignment: CrossAxisAlignment.center, // Vertikal tengah
+                                  children: [
+                                    // Gambar
+                                    Padding(
+                                      padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
+                                      child: Image.asset(
+                                        'assets/images/2bulanlagi.png',
                                         height: 18, // Sesuaikan ukuran gambar
                                         width: 18,
                                         fit: BoxFit.contain,
@@ -241,7 +456,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     Padding(
                                       padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
                                       child: Image.asset(
-                                        'assets/images/uang.png',
+                                        'assets/images/pdfexcel.png',
                                         height: 18, // Sesuaikan ukuran gambar
                                         width: 18,
                                         fit: BoxFit.contain,
@@ -301,7 +516,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
 
                                     // Teks di sisi kanan
                                     Text(
-                                      "Dikerjakan",
+                                      "Mengerjakan",
                                       style: TextStyle(
                                         fontFamily: 'NunitoSans',
                                         fontSize: 10,
@@ -438,7 +653,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                   child: Padding(
                                     padding: EdgeInsets.zero, // Padding diatur ke 0
                                     child: Text(
-                                      "Kepuasan Pengguna Transportasi Umum di Jakarta",
+                                      "Pemantauan Kualitas Udara di Wilayah Industri Bekasi",
                                       style: TextStyle(
                                         fontFamily: 'SourceSans3', // Font-family
                                         fontSize: 24, // Font-size
@@ -467,7 +682,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     Padding(
                                       padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
                                       child: Image.asset(
-                                        'assets/images/online.png',
+                                        'assets/images/2bulanlagi.png',
                                         height: 18, // Sesuaikan ukuran gambar
                                         width: 18,
                                         fit: BoxFit.contain,
@@ -475,16 +690,18 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     ),
                                     SizedBox(width: 8), // Spasi horizontal antara gambar dan teks
                                     // Teks
-                                    Text(
-                                      "1 bulan lagi",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'NunitoSans',
-                                        color: Color(0xFFA3948D),
+                                    Expanded(
+                                      child: Text(
+                                        "28 Desember 2024",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'NunitoSans',
+                                          color: Color(0xFFA3948D),
+                                        ),
+                                        softWrap: true,
+                                        overflow: TextOverflow.visible,
                                       ),
-                                      softWrap: true, // Agar teks bisa membungkus
-                                      overflow: TextOverflow.visible,
                                     ),
                                   ],
                                 ),
@@ -505,7 +722,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     Padding(
                                       padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
                                       child: Image.asset(
-                                        'assets/images/uang.png',
+                                        'assets/images/pdfexcel.png',
                                         height: 18, // Sesuaikan ukuran gambar
                                         width: 18,
                                         fit: BoxFit.contain,
@@ -548,7 +765,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                               Container(
                                 padding: EdgeInsets.all(8), // Menambahkan padding untuk teks di dalam kontainer
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFFF9800), // Warna background #FF9800
+                                  color: Color(0xFF4CAF50), // Warna background #FF9800
                                   borderRadius: BorderRadius.circular(16), // Border radius 16
                                 ),
                                 child: Wrap(
@@ -558,14 +775,14 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                   children: [
                                     // Gambar di sisi kiri
                                     Image.asset(
-                                      'assets/images/taskantorjam.png', // Gambar yang ingin ditampilkan
+                                      'assets/images/centang2.png', // Gambar yang ingin ditampilkan
                                       width: 15, // Ukuran gambar, sesuaikan dengan kebutuhan
                                       height: 15,
                                     ),
 
                                     // Teks di sisi kanan
                                     Text(
-                                      "Dikerjakan",
+                                      "Selesai",
                                       style: TextStyle(
                                         fontFamily: 'NunitoSans',
                                         fontSize: 10,
@@ -606,7 +823,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                           ),
                                           child: Center(
                                             child: Image.asset(
-                                              'assets/images/chat.png',
+                                              'assets/images/download2.png',
                                               width: 21, // Ukuran gambar dalam lingkaran utama
                                               height: 21,
                                               fit: BoxFit.contain, // Mengatur agar gambar tidak terpotong
@@ -614,292 +831,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                           ),
                                         ),
                                         // Lingkaran kecil (notifikasi)
-                                        Positioned(
-                                          top: 0, // Posisi lingkaran kecil di kanan atas
-                                          right: 0,
-                                          child: Container(
-                                            width: 13, // Diameter lingkaran kecil
-                                            height: 13,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFFB3261E), // Warna lingkaran kecil (notifikasi)
-                                              shape: BoxShape.circle, // Membuat lingkaran
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                "3", // Teks yang ditampilkan di tengah
-                                                style: TextStyle(
-                                                  fontSize: 8, // Ukuran teks
-                                                  color: Colors.white, // Warna teks
-                                                  fontWeight: FontWeight.bold, // Tebal teks
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(width: 8), // Gap antar lingkaran
-                                    // Lingkaran kedua
-                                    Container(
-                                      width: 42.2, // Diameter lingkaran
-                                      height: 42.2,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: Color(0xFF826754), // Warna border
-                                          width: 1, // Ketebalan border 1px
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Image.asset(
-                                          'assets/images/titik3.png',
-                                          width: 21, // Ukuran gambar dalam lingkaran (sesuaikan jika perlu)
-                                          height: 21,
-                                          fit: BoxFit.contain, // Mengatur agar gambar tidak terpotong
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  Container(
-                    padding: EdgeInsets.all(20), // Jarak padding luar
-                    width: double.infinity, // Lebar penuh
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEDE7E2),
-                      borderRadius: BorderRadius.circular(8), // Sudut melengkun
-                    ),
-                    child: Row(
 
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // Container kiri
-                        Container(
-                          padding: EdgeInsets.all(0), // Padding luar container
-                          width: (MediaQuery.of(context).size.width - 27 * 2) * (1/2) - 4,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFEDE7E2),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min, // Ukuran mengikuti konten
-                            children: [
-                              // Kotak 1
-                              Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                    padding: EdgeInsets.zero, // Padding diatur ke 0
-                                    child: Text(
-                                      "Kepuasan Pengguna Transportasi Umum di Jakarta",
-                                      style: TextStyle(
-                                        fontFamily: 'SourceSans3', // Font-family
-                                        fontSize: 24, // Font-size
-                                        fontWeight: FontWeight.w700, // Font-weight
-                                        color: Color(0xFF705D54), // Warna teks
-                                      ),
-                                      maxLines: 3, // Membatasi teks hanya satu baris
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              // Kotak 2
-                              Container(
-                                padding: EdgeInsets.symmetric(vertical: 4), // Padding atas dan bawah 3
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start, // Rata kiri
-                                  crossAxisAlignment: CrossAxisAlignment.center, // Vertikal tengah
-                                  children: [
-                                    // Gambar
-                                    Padding(
-                                      padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
-                                      child: Image.asset(
-                                        'assets/images/online.png',
-                                        height: 18, // Sesuaikan ukuran gambar
-                                        width: 18,
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                    SizedBox(width: 8), // Spasi horizontal antara gambar dan teks
-                                    // Teks
-                                    Text(
-                                      "Online",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'NunitoSans',
-                                        color: Color(0xFFA3948D),
-                                      ),
-                                      softWrap: true, // Agar teks bisa membungkus
-                                      overflow: TextOverflow.visible,
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              // Kotak 3
-                              Container(
-                                padding: EdgeInsets.symmetric(vertical: 4), // Padding atas dan bawah 3
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start, // Rata kiri
-                                  crossAxisAlignment: CrossAxisAlignment.center, // Vertikal tengah
-                                  children: [
-                                    // Gambar
-                                    Padding(
-                                      padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
-                                      child: Image.asset(
-                                        'assets/images/uang.png',
-                                        height: 18, // Sesuaikan ukuran gambar
-                                        width: 18,
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                    SizedBox(width: 8), // Spasi horizontal antara gambar dan teks
-                                    // Teks
-                                    Flexible(
-                                      child: Text(
-                                        "Rp 75.000",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: 'NunitoSans',
-                                          color: Color(0xFFA3948D),
-                                        ),
-                                        softWrap: true, // Agar teks bisa membungkus
-                                        overflow: TextOverflow.visible, // Agar teks tidak dipotong
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 10), // Spasi antar kotak
-                        // Container kanan
-                        Container(
-                          width: (MediaQuery.of(context).size.width - 27 * 2) * (1/3) - 4,
-                          decoration: BoxDecoration(
-                            //color: Color(0xFFF44336),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(8), // Menambahkan padding untuk teks di dalam kontainer
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFFF9800), // Warna background #FF9800
-                                  borderRadius: BorderRadius.circular(16), // Border radius 16
-                                ),
-                                child: Wrap(
-                                  alignment: WrapAlignment.start, // Menyusun elemen dari kiri
-                                  spacing: 8, // Jarak horizontal antara gambar dan teks
-                                  runSpacing: 4, // Jarak antar baris
-                                  children: [
-                                    // Gambar di sisi kiri
-                                    Image.asset(
-                                      'assets/images/taskantorjam.png', // Gambar yang ingin ditampilkan
-                                      width: 15, // Ukuran gambar, sesuaikan dengan kebutuhan
-                                      height: 15,
-                                    ),
-
-                                    // Teks di sisi kanan
-                                    Text(
-                                      "Dikerjakan",
-                                      style: TextStyle(
-                                        fontFamily: 'NunitoSans',
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xFFFFFFFF), // Warna teks putih (#FFFFFF)
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              SizedBox(height: 100),
-
-
-                              Container(
-                                width: (MediaQuery.of(context).size.width - 27 * 2) * (1 / 2) - 4,
-                                padding: EdgeInsets.all(0), // Padding diatur menjadi 0
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end, // Posisi rata kanan
-                                  children: [
-                                    // Lingkaran pertama
-                                    Stack(
-                                      alignment: Alignment.center, // Menjaga elemen di tengah
-                                      children: [
-                                        // Lingkaran utama
-                                        Container(
-                                          width: 42.2, // Diameter lingkaran utama
-                                          height: 42.2,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                              color: Color(0xFF826754), // Warna border
-                                              width: 1, // Ketebalan border
-                                            ),
-                                          ),
-                                          child: Center(
-                                            child: Image.asset(
-                                              'assets/images/chat.png',
-                                              width: 21, // Ukuran gambar dalam lingkaran utama
-                                              height: 21,
-                                              fit: BoxFit.contain, // Mengatur agar gambar tidak terpotong
-                                            ),
-                                          ),
-                                        ),
-                                        // Lingkaran kecil (notifikasi)
-                                        Positioned(
-                                          top: 0, // Posisi lingkaran kecil di kanan atas
-                                          right: 0,
-                                          child: Container(
-                                            width: 13, // Diameter lingkaran kecil
-                                            height: 13,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFFB3261E), // Warna lingkaran kecil (notifikasi)
-                                              shape: BoxShape.circle, // Membuat lingkaran
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                "3", // Teks yang ditampilkan di tengah
-                                                style: TextStyle(
-                                                  fontSize: 8, // Ukuran teks
-                                                  color: Colors.white, // Warna teks
-                                                  fontWeight: FontWeight.bold, // Tebal teks
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
                                       ],
                                     ),
                                     SizedBox(width: 8), // Gap antar lingkaran
@@ -968,7 +900,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                     mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
                     children: [
                       Image.asset(
-                        'assets/images/tersedia.png', // Path ke gambar
+                        'assets/images/tersedia2.png', // Path ke gambar
                         width: 24, // Lebar gambar
                         height: 24, // Tinggi gambar
                         fit: BoxFit.contain, // Menyesuaikan ukuran gambar
@@ -980,7 +912,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
                           fontFamily: 'NunitoSans',
-                          color: Color(0xFF705D54),
+                          color: Color(0xFFB8ADA5),
                         ),
                       ),
                     ],
@@ -996,7 +928,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                   mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
                   children: [
                     Image.asset(
-                      'assets/images/proyeksaya.png', // Path ke gambar
+                      'assets/images/proyeksaya2.png', // Path ke gambar
                       width: 24, // Lebar gambar
                       height: 24, // Tinggi gambar
                       fit: BoxFit.contain, // Menyesuaikan ukuran gambar
@@ -1008,7 +940,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                         fontFamily: 'NunitoSans',
-                        color: Color(0xFFB8ADA5),
+                        color: Color(0xFF705D54),
                       ),
                     ),
                   ],
