@@ -4,6 +4,7 @@ import 'pages/welcome.dart';
 import 'pages/surveyorprojects.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 

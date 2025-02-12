@@ -10,6 +10,7 @@ class SurveyorProjects extends StatefulWidget {
 class _SurveyorProjects extends State<SurveyorProjects> {
   int activeButton = -1; // Tombol default yang tidak aktif
   bool _isSaved = false;
+  bool _isSaved2 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -142,71 +143,1024 @@ class _SurveyorProjects extends State<SurveyorProjects> {
               child: Column(
                 children: [
                   Container(
-                    color: Colors.green,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEDE7E2),
+                      borderRadius: BorderRadius.circular(8), // Border radius 8
+                    ),
                     width: double.infinity,
                     padding: EdgeInsets.all(12),
                     child: Column(
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 8),
-                          color: Colors.blue,
+                          //color: Colors.blue,
                           child: Row(
                             children: [
                               Expanded(
                                 child: Container(
-                                  color: Colors.red,
-                                  height: 50,
+                                  //color: Colors.red, // Warna background
+                                  height: 60, // Tinggi container
+                                  padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
+                                  child: Text(
+                                    "Pengamatan Lalu Lintas di Simpang Lima Semarang",
+                                    maxLines: 2, // Maksimal hanya 2 baris
+                                    overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
+                                    style: TextStyle(
+                                      color: Color(0xFF705D54), // Warna teks
+                                      fontSize: 16, // Ukuran font
+                                      fontWeight: FontWeight.w700, // Tebal teks
+                                      fontFamily: "SourceSans3",
+                                    ),
+                                  ),
                                 ),
                               ),
+
                               const SizedBox(width: 8),
-                              Expanded(
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _isSaved2 = !_isSaved2; // Toggle status saat diklik
+                                  });
+                                },
                                 child: Container(
-                                  color: Colors.red,
-                                  height: 50,
+                                  //color: Colors.red, // Warna background
+                                  width: 50, // Lebar kotak
+                                  height: 60, // Tinggi kotak
+                                  child: Center(
+                                    child: Icon(
+                                      _isSaved2 ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
+                                      color: Color(0xFF705D54), // Warna ikon
+                                      size: 30, // Ukuran ikon
+                                    ),
+                                  ),
                                 ),
                               ),
+
                               const SizedBox(width: 8),
-                              Expanded(
-                                child: Container(
-                                  color: Colors.red,
-                                  height: 50,
+                              Container(
+                                width: 50,
+                                //color: Colors.red,
+                                height: 60,
+                                child: Center(
+                                  child: Image.asset(
+                                    'assets/images/titik32.png', // Ganti dengan path gambar Anda
+                                    width: 24, // Lebar gambar
+                                    height: 24, // Tinggi gambar
+                                    fit: BoxFit.contain, // Agar gambar sesuai
+                                  ),
                                 ),
                               ),
+
                             ],
                           ),
                         ),
                         Container(
-                          color: Colors.red,
-                          height: 50,
+                          //color: Colors.red, // Warna background
+                          height: 70, // Tinggi container
+                          padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
+                          child: Text(
+                            "Surveyor diminta untuk mencatat jumlah kendaraan yang melewati Simpang Lima selama jam sibuk (07:00-09:00 dan 16:00-18:00). Data akan digunakan untuk analisis kepadatan lalu lintas guna mendukung rencana pembangunan jalan baru.",
+                            maxLines: 3, // Maksimal hanya 3 baris
+                            overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
+                            style: TextStyle(
+                              color: Color(0xFFA3948D), // Warna teks
+                              fontSize: 12, // Ukuran font
+                              fontFamily: "NunitoSans",
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                         ),
+
+
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 8),
-                          color: Colors.blue,
+                          //color: Colors.blue,
+                          child: SizedBox(
+                            width: double.infinity, // Memberikan batasan lebar
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Menyebarkan elemen dengan jarak yang sama
+                              children: [
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFA3948D),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/2bulanlagi2.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "2 bulan lagi",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFA3948D),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/semarang.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Semarang",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF4A7C59),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/limaratus.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Rp 500.000",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEDE7E2),
+                      borderRadius: BorderRadius.circular(8), // Border radius 8
+                    ),
+                    width: double.infinity,
+                    padding: EdgeInsets.all(12),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          //color: Colors.blue,
                           child: Row(
                             children: [
                               Expanded(
                                 child: Container(
-                                  color: Colors.red,
-                                  height: 50,
+                                  //color: Colors.red, // Warna background
+                                  height: 60, // Tinggi container
+                                  padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
+                                  child: Text(
+                                    "Survei Kepuasan Pelanggan Restoran Cepat Saji",
+                                    maxLines: 2, // Maksimal hanya 2 baris
+                                    overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
+                                    style: TextStyle(
+                                      color: Color(0xFF705D54), // Warna teks
+                                      fontSize: 16, // Ukuran font
+                                      fontWeight: FontWeight.w700, // Tebal teks
+                                      fontFamily: "SourceSans3",
+                                    ),
+                                  ),
                                 ),
                               ),
+
                               const SizedBox(width: 8),
-                              Expanded(
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _isSaved2 = !_isSaved2; // Toggle status saat diklik
+                                  });
+                                },
                                 child: Container(
-                                  color: Colors.red,
-                                  height: 50,
+                                  //color: Colors.red, // Warna background
+                                  width: 50, // Lebar kotak
+                                  height: 60, // Tinggi kotak
+                                  child: Center(
+                                    child: Icon(
+                                      _isSaved2 ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
+                                      color: Color(0xFF705D54), // Warna ikon
+                                      size: 30, // Ukuran ikon
+                                    ),
+                                  ),
                                 ),
                               ),
+
                               const SizedBox(width: 8),
-                              Expanded(
-                                child: Container(
-                                  color: Colors.red,
-                                  height: 50,
+                              Container(
+                                width: 50,
+                                //color: Colors.red,
+                                height: 60,
+                                child: Center(
+                                  child: Image.asset(
+                                    'assets/images/titik32.png', // Ganti dengan path gambar Anda
+                                    width: 24, // Lebar gambar
+                                    height: 24, // Tinggi gambar
+                                    fit: BoxFit.contain, // Agar gambar sesuai
+                                  ),
                                 ),
                               ),
+
                             ],
                           ),
                         ),
+                        Container(
+                          //color: Colors.red, // Warna background
+                          height: 70, // Tinggi container
+                          padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
+                          child: Text(
+                            "Surveyor akan mengumpulkan data dari pelanggan di restoran cepat saji mengenai pengalaman mereka. Survei meliputi aspek seperti pelayanan, kebersihan, dan kualitas makanan.",
+                            maxLines: 3, // Maksimal hanya 3 baris
+                            overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
+                            style: TextStyle(
+                              color: Color(0xFFA3948D), // Warna teks
+                              fontSize: 12, // Ukuran font
+                              fontFamily: "NunitoSans",
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+
+
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          //color: Colors.blue,
+                          child: SizedBox(
+                            width: double.infinity, // Memberikan batasan lebar
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Menyebarkan elemen dengan jarak yang sama
+                              children: [
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFF44336),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/2bulanlagi2.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "20 hari lagi",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFA3948D),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/semarang.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Jakarta Sel.",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF4A7C59),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/limaratus.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Rp 750.000",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEDE7E2),
+                      borderRadius: BorderRadius.circular(8), // Border radius 8
+                    ),
+                    width: double.infinity,
+                    padding: EdgeInsets.all(12),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          //color: Colors.blue,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  //color: Colors.red, // Warna background
+                                  height: 60, // Tinggi container
+                                  padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
+                                  child: Text(
+                                    "Pemantauan Kualitas Udara di Wilayah Industri Bekasi",
+                                    maxLines: 2, // Maksimal hanya 2 baris
+                                    overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
+                                    style: TextStyle(
+                                      color: Color(0xFF705D54), // Warna teks
+                                      fontSize: 16, // Ukuran font
+                                      fontWeight: FontWeight.w700, // Tebal teks
+                                      fontFamily: "SourceSans3",
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 8),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _isSaved2 = !_isSaved2; // Toggle status saat diklik
+                                  });
+                                },
+                                child: Container(
+                                  //color: Colors.red, // Warna background
+                                  width: 50, // Lebar kotak
+                                  height: 60, // Tinggi kotak
+                                  child: Center(
+                                    child: Icon(
+                                      _isSaved2 ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
+                                      color: Color(0xFF705D54), // Warna ikon
+                                      size: 30, // Ukuran ikon
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 8),
+                              Container(
+                                width: 50,
+                                //color: Colors.red,
+                                height: 60,
+                                child: Center(
+                                  child: Image.asset(
+                                    'assets/images/titik32.png', // Ganti dengan path gambar Anda
+                                    width: 24, // Lebar gambar
+                                    height: 24, // Tinggi gambar
+                                    fit: BoxFit.contain, // Agar gambar sesuai
+                                  ),
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        Container(
+                          //color: Colors.red, // Warna background
+                          height: 70, // Tinggi container
+                          padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
+                          child: Text(
+                            "Surveyor diminta untuk mencatat data kualitas udara (PM2.5, PM10) di beberapa titik pemantauan di area industri Bekasi. Data ini akan digunakan untuk evaluasi lingkungan oleh pemerintah daerah.",
+                            maxLines: 3, // Maksimal hanya 3 baris
+                            overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
+                            style: TextStyle(
+                              color: Color(0xFFA3948D), // Warna teks
+                              fontSize: 12, // Ukuran font
+                              fontFamily: "NunitoSans",
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+
+
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          //color: Colors.blue,
+                          child: SizedBox(
+                            width: double.infinity, // Memberikan batasan lebar
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Menyebarkan elemen dengan jarak yang sama
+                              children: [
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFA3948D),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/2bulanlagi2.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "1 bulan lagi",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFA3948D),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/semarang.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Bekasi",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF4A7C59),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/limaratus.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Rp 1.000.000",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEDE7E2),
+                      borderRadius: BorderRadius.circular(8), // Border radius 8
+                    ),
+                    width: double.infinity,
+                    padding: EdgeInsets.all(12),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          //color: Colors.blue,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  //color: Colors.red, // Warna background
+                                  height: 60, // Tinggi container
+                                  padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
+                                  child: Text(
+                                    "Studi Pola Konsumsi Produk Ramah Lingkungan",
+                                    maxLines: 2, // Maksimal hanya 2 baris
+                                    overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
+                                    style: TextStyle(
+                                      color: Color(0xFF705D54), // Warna teks
+                                      fontSize: 16, // Ukuran font
+                                      fontWeight: FontWeight.w700, // Tebal teks
+                                      fontFamily: "SourceSans3",
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 8),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _isSaved2 = !_isSaved2; // Toggle status saat diklik
+                                  });
+                                },
+                                child: Container(
+                                  //color: Colors.red, // Warna background
+                                  width: 50, // Lebar kotak
+                                  height: 60, // Tinggi kotak
+                                  child: Center(
+                                    child: Icon(
+                                      _isSaved2 ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
+                                      color: Color(0xFF705D54), // Warna ikon
+                                      size: 30, // Ukuran ikon
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 8),
+                              Container(
+                                width: 50,
+                                //color: Colors.red,
+                                height: 60,
+                                child: Center(
+                                  child: Image.asset(
+                                    'assets/images/titik32.png', // Ganti dengan path gambar Anda
+                                    width: 24, // Lebar gambar
+                                    height: 24, // Tinggi gambar
+                                    fit: BoxFit.contain, // Agar gambar sesuai
+                                  ),
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        Container(
+                          //color: Colors.red, // Warna background
+                          height: 70, // Tinggi container
+                          padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
+                          child: Text(
+                            "Surveyor akan melakukan wawancara dengan pelanggan di pusat perbelanjaan terkait minat mereka pada produk ramah lingkungan. Hasil survei akan digunakan untuk strategi pemasaran produk berkelanjutan.",
+                            maxLines: 3, // Maksimal hanya 3 baris
+                            overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
+                            style: TextStyle(
+                              color: Color(0xFFA3948D), // Warna teks
+                              fontSize: 12, // Ukuran font
+                              fontFamily: "NunitoSans",
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+
+
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          //color: Colors.blue,
+                          child: SizedBox(
+                            width: double.infinity, // Memberikan batasan lebar
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Menyebarkan elemen dengan jarak yang sama
+                              children: [
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFA3948D),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/2bulanlagi2.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "2 bulan lagi",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFA3948D),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/semarang.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Semarang",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF4A7C59),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/limaratus.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Rp 500.000",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEDE7E2),
+                      borderRadius: BorderRadius.circular(8), // Border radius 8
+                    ),
+                    width: double.infinity,
+                    padding: EdgeInsets.all(12),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          //color: Colors.blue,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  //color: Colors.red, // Warna background
+                                  height: 60, // Tinggi container
+                                  padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
+                                  child: Text(
+                                    "Pemetaan Infrastruktur Jalan di Wilayah Perkotaan",
+                                    maxLines: 2, // Maksimal hanya 2 baris
+                                    overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
+                                    style: TextStyle(
+                                      color: Color(0xFF705D54), // Warna teks
+                                      fontSize: 16, // Ukuran font
+                                      fontWeight: FontWeight.w700, // Tebal teks
+                                      fontFamily: "SourceSans3",
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 8),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _isSaved2 = !_isSaved2; // Toggle status saat diklik
+                                  });
+                                },
+                                child: Container(
+                                  //color: Colors.red, // Warna background
+                                  width: 50, // Lebar kotak
+                                  height: 60, // Tinggi kotak
+                                  child: Center(
+                                    child: Icon(
+                                      _isSaved2 ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
+                                      color: Color(0xFF705D54), // Warna ikon
+                                      size: 30, // Ukuran ikon
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 8),
+                              Container(
+                                width: 50,
+                                //color: Colors.red,
+                                height: 60,
+                                child: Center(
+                                  child: Image.asset(
+                                    'assets/images/titik32.png', // Ganti dengan path gambar Anda
+                                    width: 24, // Lebar gambar
+                                    height: 24, // Tinggi gambar
+                                    fit: BoxFit.contain, // Agar gambar sesuai
+                                  ),
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        Container(
+                          //color: Colors.red, // Warna background
+                          height: 70, // Tinggi container
+                          padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
+                          child: Text(
+                            "Surveyor ditugaskan untuk mengukur dan mencatat kondisi jalan raya di beberapa kecamatan. Data ini akan membantu dalam perencanaan proyek perbaikan infrastruktur.",
+                            maxLines: 3, // Maksimal hanya 3 baris
+                            overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
+                            style: TextStyle(
+                              color: Color(0xFFA3948D), // Warna teks
+                              fontSize: 12, // Ukuran font
+                              fontFamily: "NunitoSans",
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+
+
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          //color: Colors.blue,
+                          child: SizedBox(
+                            width: double.infinity, // Memberikan batasan lebar
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Menyebarkan elemen dengan jarak yang sama
+                              children: [
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFA3948D),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/2bulanlagi2.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "3 bulan lagi",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFA3948D),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/semarang.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Yogyakarta",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF4A7C59),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/limaratus.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Rp 1.200.000",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
 
                       ],
 
@@ -236,11 +1190,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
             children: [
               GestureDetector(
                 onTap: () {
-                  // Navigasi ke halaman baru
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SecondPage()), // Ganti dengan nama halaman Anda
-                  );
+
                 },
                 child: Container(
                   width: 60,
@@ -249,19 +1199,19 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                     mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
                     children: [
                       Image.asset(
-                        'assets/images/proyek2.png', // Path ke gambar
+                        'assets/images/tersedia.png', // Path ke gambar
                         width: 24, // Lebar gambar
                         height: 24, // Tinggi gambar
                         fit: BoxFit.contain, // Menyesuaikan ukuran gambar
                       ),
                       SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
                       Text(
-                        'Proyek',
+                        'Tersedia',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
                           fontFamily: 'NunitoSans',
-                          color: Color(0xFFB8ADA5),
+                          color: Color(0xFF705D54),
                         ),
                       ),
                     ],
@@ -271,25 +1221,25 @@ class _SurveyorProjects extends State<SurveyorProjects> {
 
 
               Container(
-                width: 60,
-                height: 60,
+                width: 100,
+                height: 80,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
                   children: [
                     Image.asset(
-                      'assets/images/chat4.png', // Path ke gambar
+                      'assets/images/proyeksaya.png', // Path ke gambar
                       width: 24, // Lebar gambar
                       height: 24, // Tinggi gambar
                       fit: BoxFit.contain, // Menyesuaikan ukuran gambar
                     ),
                     SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
                     Text(
-                      'Chat',
+                      'Proyek Saya',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                         fontFamily: 'NunitoSans',
-                        color: Color(0xFF705D54),
+                        color: Color(0xFFB8ADA5),
                       ),
                     ),
                   ],
@@ -310,14 +1260,14 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                     mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
                     children: [
                       Image.asset(
-                        'assets/images/saya.png', // Path ke gambar
+                        'assets/images/chat3.png', // Path ke gambar
                         width: 24, // Lebar gambar
                         height: 24, // Tinggi gambar
                         fit: BoxFit.contain, // Menyesuaikan ukuran gambar
                       ),
                       SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
                       Text(
-                        'Saya',
+                        'Chat',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
@@ -351,7 +1301,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                       ),
                       SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
                       Text(
-                        'Saya',
+                        'Akun',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
