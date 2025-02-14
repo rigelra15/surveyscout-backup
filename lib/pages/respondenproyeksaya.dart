@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'respondenprojects.dart';
 import 'respondenchat.dart';
-import 'surveyorakun.dart';
+import 'respondenakun.dart';
 
 class Respondenproyeksaya extends StatefulWidget {
   @override
@@ -982,7 +982,7 @@ class _Respondenproyeksaya extends State<Respondenproyeksaya> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Surveyorakun()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => Respondenakun()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(

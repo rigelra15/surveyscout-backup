@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'respondenproyeksaya.dart';
 import 'respondenchat.dart';
-import 'surveyorakun.dart';
+import 'respondenakun.dart';
 
 
 class Respondenprojects extends StatefulWidget {
@@ -1301,7 +1301,7 @@ class _Respondenprojects extends State<Respondenprojects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Surveyorakun()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => Respondenakun()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(

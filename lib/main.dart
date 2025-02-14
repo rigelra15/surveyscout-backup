@@ -7,6 +7,7 @@ import 'pages/surveyorchat.dart';
 import 'pages/surveyorakun.dart';
 import 'pages/respondenprojects.dart';
 import 'pages/respondenchat.dart';
+import 'pages/respondenakun.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Respondenchat(),
+        '/': (context) => Welcome(),
       },
     );
   }
