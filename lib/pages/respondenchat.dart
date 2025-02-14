@@ -11,7 +11,6 @@ class Respondenchat extends StatefulWidget {
 class _Respondenchat extends State<Respondenchat> {
   int activeButton = -1; // Tombol default yang tidak aktif
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
