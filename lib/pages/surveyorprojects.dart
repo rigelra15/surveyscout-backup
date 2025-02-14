@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'surveyorproyeksaya.dart';
+import 'surveyorchat.dart';
 
 class SurveyorProjects extends StatefulWidget {
   @override
@@ -1262,7 +1263,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SurveyorProyekSaya()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => Surveyorchat()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(

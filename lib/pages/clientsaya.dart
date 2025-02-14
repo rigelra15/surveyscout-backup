@@ -12,6 +12,7 @@ class Clientsaya extends StatefulWidget {
 class _SecondPageState extends State<Clientsaya> {
   int activeButton = -1; // Tombol default yang tidak aktif
   bool isOn = false;
+  bool isOn2 = false;
 
 
   @override
@@ -711,10 +712,10 @@ class _SecondPageState extends State<Clientsaya> {
                           width: 40, // Ukuran tombol
                           height: 20,
                           child: Switch(
-                            value: isOn,
+                            value: isOn2,
                             onChanged: (bool value) {
                               setState(() {
-                                isOn = value; // Ubah status tombol
+                                isOn2 = value; // Ubah status tombol
                               });
                             },
                             activeColor: Color(0xFF826754), // Warna tombol saat aktifColors.white,

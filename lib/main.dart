@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'pages/clientsaya.dart';
 import 'pages/welcome.dart';
 import 'pages/surveyorprojects.dart';
-import 'pages/surveyorproyeksaya.dart';
+import 'pages/surveyorchat.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => SurveyorProyekSaya(),
+        '/': (context) => Welcome(),
       },
     );
   }

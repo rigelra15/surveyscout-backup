@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'surveyorprojects.dart';
+import 'surveyorchat.dart';
 
 class SurveyorProyekSaya extends StatefulWidget {
   @override
@@ -36,7 +37,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                   ),
                   child: TextField(
                     decoration: InputDecoration(
-                      hintText: "Cari dari 100+ proyek...", // Placeholder teks
+                      hintText: "Cari proyek Anda", // Placeholder teks
                       filled: true,
                       fillColor: Color(0xFFF1E9E5), // Warna latar belakang
                       contentPadding: const EdgeInsets.all(10.0),
@@ -94,28 +95,23 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                 ),
 
                 // Kotak kedua
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _isSaved = !_isSaved; // Toggle status saat diklik
-                    });
-                  },
-                  child: Container(
-                    width: 40, // Lebar kotak
-                    height: 40, // Tinggi kotak
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8), // Sudut melengkung
-                      border: Border.all(
-                        color: Color(0xFF705D54), // Warna border
-                        width: 1, // Lebar border
-                      ),
+                Container(
+                  width: 40, // Lebar kotak
+                  height: 40, // Tinggi kotak
+                  decoration: BoxDecoration(
+                    //color: Color(0xFFD9D9D9), // Warna kotak
+                    borderRadius: BorderRadius.circular(8), // Sudut melengkung
+                    border: Border.all(
+                      color: Color(0xFF705D54), // Warna border
+                      width: 1, // Lebar border
                     ),
-                    child: Center(
-                      child: Icon(
-                        _isSaved ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
-                        color: Color(0xFF705D54), // Warna ikon
-                        size: 24, // Ukuran ikon
-                      ),
+                  ),
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/download2.png', // Ganti dengan path gambar Anda
+                      width: 24, // Lebar gambar
+                      height: 24, // Tinggi gambar
+                      fit: BoxFit.contain, // Agar gambar sesuai
                     ),
                   ),
                 ),
@@ -951,7 +947,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SurveyorProjects()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => Surveyorchat()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
