@@ -266,30 +266,43 @@ class Clientproyekdetailmerekrut extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 4),
-                          Text(
-                            'Rp 500.000',
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "NunitoSans",
-                              color: Color(0xFFA3948D),
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            softWrap: false,
+                          Wrap(
+                            children: [
+                              Text(
+                                'Tinjau pengalaman mereka atau mulai chat untuk screening',
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: "NunitoSans",
+                                  color: Color(0xFFA3948D),
+                                ),
+
+                              ),
+                            ],
                           ),
+
                           SizedBox(height: 4),
-                          Text(
-                            'Rp 500.000',
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "NunitoSans",
-                              color: Color(0xFFA3948D),
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            softWrap: false,
+                          Wrap(
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4), // Opsional untuk memberi ruang dalam kontainer
+                                decoration: BoxDecoration(
+                                  color: Colors.white, // Sesuaikan warna latar belakang jika perlu
+                                  borderRadius: BorderRadius.circular(8), // Opsional untuk sudut melengkung
+                                ),
+                                child: Text(
+                                  'Rp 500.000',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "NunitoSans",
+                                    color: Color(0xFFA3948D),
+                                  ),
+
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
