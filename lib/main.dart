@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:surveyscout/pages/respondenproyeksaya.dart';
 import 'pages/clientsaya.dart';
 import 'pages/welcome.dart';
 import 'pages/surveyorprojects.dart';
 import 'pages/surveyorchat.dart';
+import 'pages/surveyorakun.dart';
+import 'pages/respondenprojects.dart';
+import 'pages/respondenchat.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Welcome(),
+        '/': (context) => Respondenchat(),
       },
     );
   }

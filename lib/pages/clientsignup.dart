@@ -72,6 +72,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(height: 80),
                     Container(
                       width: double.infinity,
                       child: const Align(

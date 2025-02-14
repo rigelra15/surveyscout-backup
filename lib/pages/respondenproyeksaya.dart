@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'surveyorprojects.dart';
-import 'surveyorchat.dart';
+import 'respondenprojects.dart';
+import 'respondenchat.dart';
 import 'surveyorakun.dart';
 
-class SurveyorProyekSaya extends StatefulWidget {
+class Respondenproyeksaya extends StatefulWidget {
   @override
-  _SurveyorProyekSaya createState() => _SurveyorProyekSaya();
+  _Respondenproyeksaya createState() => _Respondenproyeksaya();
 }
 
-class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
+class _Respondenproyeksaya extends State<Respondenproyeksaya> {
   int activeButton = -1; // Tombol default yang tidak aktif
   bool _isSaved = false;
   bool _isSaved2 = false;
@@ -171,7 +171,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                   child: Padding(
                                     padding: EdgeInsets.zero, // Padding diatur ke 0
                                     child: Text(
-                                      "Pemantauan Kualitas Udara di Wilayah Industri Bekasi",
+                                      "Survei Kepuasan Pengguna Transportasi Umum",
                                       style: TextStyle(
                                         fontFamily: 'SourceSans3', // Font-family
                                         fontSize: 24, // Font-size
@@ -200,7 +200,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     Padding(
                                       padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
                                       child: Image.asset(
-                                        'assets/images/2bulanlagi.png',
+                                        'assets/images/online.png',
                                         height: 18, // Sesuaikan ukuran gambar
                                         width: 18,
                                         fit: BoxFit.contain,
@@ -209,7 +209,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     SizedBox(width: 8), // Spasi horizontal antara gambar dan teks
                                     // Teks
                                     Text(
-                                      "2 bulan lagi",
+                                      "Online",
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w700,
@@ -238,7 +238,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     Padding(
                                       padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
                                       child: Image.asset(
-                                        'assets/images/pdfexcel.png',
+                                        'assets/images/uang.png',
                                         height: 18, // Sesuaikan ukuran gambar
                                         width: 18,
                                         fit: BoxFit.contain,
@@ -248,7 +248,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     // Teks
                                     Flexible(
                                       child: Text(
-                                        "Excel",
+                                        "Rp. 50.000",
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700,
@@ -386,7 +386,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                   child: Padding(
                                     padding: EdgeInsets.zero, // Padding diatur ke 0
                                     child: Text(
-                                      "Pengamatan Lalu Lintas di Simpang Lima Semarang",
+                                      "Wawancara Konsumen Produk Skincare",
                                       style: TextStyle(
                                         fontFamily: 'SourceSans3', // Font-family
                                         fontSize: 24, // Font-size
@@ -415,7 +415,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     Padding(
                                       padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
                                       child: Image.asset(
-                                        'assets/images/2bulanlagi.png',
+                                        'assets/images/online.png',
                                         height: 18, // Sesuaikan ukuran gambar
                                         width: 18,
                                         fit: BoxFit.contain,
@@ -424,7 +424,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     SizedBox(width: 8), // Spasi horizontal antara gambar dan teks
                                     // Teks
                                     Text(
-                                      "1 bulan lagi",
+                                      "Online",
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w700,
@@ -453,7 +453,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     Padding(
                                       padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
                                       child: Image.asset(
-                                        'assets/images/pdfexcel.png',
+                                        'assets/images/uang.png',
                                         height: 18, // Sesuaikan ukuran gambar
                                         width: 18,
                                         fit: BoxFit.contain,
@@ -463,7 +463,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     // Teks
                                     Flexible(
                                       child: Text(
-                                        "Excel",
+                                        "Rp. 75.000",
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700,
@@ -650,7 +650,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                   child: Padding(
                                     padding: EdgeInsets.zero, // Padding diatur ke 0
                                     child: Text(
-                                      "Pemantauan Kualitas Udara di Wilayah Industri Bekasi",
+                                      "Survei Preferensi Konsumen untuk Produk Ramah Lingkungan",
                                       style: TextStyle(
                                         fontFamily: 'SourceSans3', // Font-family
                                         fontSize: 24, // Font-size
@@ -679,7 +679,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     Padding(
                                       padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
                                       child: Image.asset(
-                                        'assets/images/2bulanlagi.png',
+                                        'assets/images/online.png',
                                         height: 18, // Sesuaikan ukuran gambar
                                         width: 18,
                                         fit: BoxFit.contain,
@@ -689,7 +689,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     // Teks
                                     Expanded(
                                       child: Text(
-                                        "28 Desember 2024",
+                                        "Jakarta",
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700,
@@ -719,7 +719,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     Padding(
                                       padding: const EdgeInsets.all(0), // Tambahkan sedikit jarak dari tepi kiri
                                       child: Image.asset(
-                                        'assets/images/pdfexcel.png',
+                                        'assets/images/uang.png',
                                         height: 18, // Sesuaikan ukuran gambar
                                         width: 18,
                                         fit: BoxFit.contain,
@@ -729,7 +729,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                                     // Teks
                                     Flexible(
                                       child: Text(
-                                        "Excel",
+                                        "Rp. 50.000",
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700,
@@ -887,7 +887,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SurveyorProjects()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => Respondenprojects()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
@@ -948,7 +948,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Surveyorchat()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => Respondenchat()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(

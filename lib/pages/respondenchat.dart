@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'surveyorproyeksaya.dart';
-import 'surveyorprojects.dart';
+import 'respondenproyeksaya.dart';
+import 'respondenprojects.dart';
 import 'surveyorakun.dart';
 
-class Surveyorchat extends StatefulWidget {
+class Respondenchat extends StatefulWidget {
   @override
-  _Surveyorchat createState() => _Surveyorchat();
+  _Respondenchat createState() => _Respondenchat();
 }
 
-class _Surveyorchat extends State<Surveyorchat> {
+class _Respondenchat extends State<Respondenchat> {
   int activeButton = -1; // Tombol default yang tidak aktif
 
 
@@ -976,7 +976,7 @@ class _Surveyorchat extends State<Surveyorchat> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SurveyorProjects()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => Respondenprojects()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
@@ -1011,7 +1011,7 @@ class _Surveyorchat extends State<Surveyorchat> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SurveyorProyekSaya()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => Respondenproyeksaya()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(

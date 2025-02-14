@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
-import 'surveyorproyeksaya.dart';
-import 'surveyorchat.dart';
+import 'respondenproyeksaya.dart';
+import 'respondenchat.dart';
 import 'surveyorakun.dart';
 
 
-class SurveyorProjects extends StatefulWidget {
+class Respondenprojects extends StatefulWidget {
   @override
-  _SurveyorProjects createState() => _SurveyorProjects();
+  _Respondenprojects createState() => _Respondenprojects();
 }
 
-class _SurveyorProjects extends State<SurveyorProjects> {
+class _Respondenprojects extends State<Respondenprojects> {
   int activeButton = -1; // Tombol default yang tidak aktif
   bool _isSaved = false;
   bool _isSaved2 = false;
+  bool _isSaved3 = false;
+  bool _isSaved4 = false;
+  bool _isSaved5 = false;
+  bool _isSaved6 = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +169,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                   height: 60, // Tinggi container
                                   padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
                                   child: Text(
-                                    "Pengamatan Lalu Lintas di Simpang Lima Semarang",
+                                    "Survei Kepuasan Pengguna Transportasi Umum",
                                     maxLines: 2, // Maksimal hanya 2 baris
                                     overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
                                     style: TextStyle(
@@ -221,7 +226,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                           height: 70, // Tinggi container
                           padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
                           child: Text(
-                            "Surveyor diminta untuk mencatat jumlah kendaraan yang melewati Simpang Lima selama jam sibuk (07:00-09:00 dan 16:00-18:00). Data akan digunakan untuk analisis kepadatan lalu lintas guna mendukung rencana pembangunan jalan baru.",
+                            "Anda diminta mengisi kuesioner terkait pengalaman Anda menggunakan transportasi umum seperti bus, KRL, atau MRT di Jakarta.",
                             maxLines: 3, // Maksimal hanya 3 baris
                             overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
                             style: TextStyle(
@@ -246,7 +251,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                   height: 30,
                                   padding: const EdgeInsets.all(4.0),
                                   decoration: BoxDecoration(
-                                    color: Color(0xFFA3948D),
+                                    color: Color(0xFFF44336),
                                     borderRadius: BorderRadius.circular(4), // Border radius 8
                                   ),
                                   child: Row(
@@ -262,7 +267,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "2 bulan lagi",
+                                        "2 hari lagi",
                                         style: const TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w400,
@@ -294,7 +299,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "Semarang",
+                                        "Jakarta",
                                         style: const TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w400,
@@ -326,7 +331,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "Rp 500.000",
+                                        "Rp 50.000",
                                         style: const TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w400,
@@ -369,7 +374,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                   height: 60, // Tinggi container
                                   padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
                                   child: Text(
-                                    "Survei Kepuasan Pelanggan Restoran Cepat Saji",
+                                    "Wawancara Konsumen Produk Skincare",
                                     maxLines: 2, // Maksimal hanya 2 baris
                                     overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
                                     style: TextStyle(
@@ -386,7 +391,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                               GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                    _isSaved2 = !_isSaved2; // Toggle status saat diklik
+                                    _isSaved3 = !_isSaved3; // Toggle status saat diklik
                                   });
                                 },
                                 child: Container(
@@ -395,7 +400,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                   height: 60, // Tinggi kotak
                                   child: Center(
                                     child: Icon(
-                                      _isSaved2 ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
+                                      _isSaved3 ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
                                       color: Color(0xFF705D54), // Warna ikon
                                       size: 30, // Ukuran ikon
                                     ),
@@ -426,7 +431,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                           height: 70, // Tinggi container
                           padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
                           child: Text(
-                            "Surveyor akan mengumpulkan data dari pelanggan di restoran cepat saji mengenai pengalaman mereka. Survei meliputi aspek seperti pelayanan, kebersihan, dan kualitas makanan.",
+                            "Anda akan diwawancarai terkait pengalaman menggunakan produk skincare. Wawancara akan berlangsung melalui video call dengan durasi sekitar 15-20 menit.",
                             maxLines: 3, // Maksimal hanya 3 baris
                             overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
                             style: TextStyle(
@@ -452,6 +457,211 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                   padding: const EdgeInsets.all(4.0),
                                   decoration: BoxDecoration(
                                     color: Color(0xFFF44336),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/2bulanlagi2.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "10 hari lagi",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFA3948D),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/semarang.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Online",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF4A7C59),
+                                    borderRadius: BorderRadius.circular(4), // Border radius 8
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Image.asset(
+                                          'assets/images/limaratus.png',
+                                          height: 10,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Rp 75.000",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEDE7E2),
+                      borderRadius: BorderRadius.circular(8), // Border radius 8
+                    ),
+                    width: double.infinity,
+                    padding: EdgeInsets.all(12),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          //color: Colors.blue,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  //color: Colors.red, // Warna background
+                                  height: 60, // Tinggi container
+                                  padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
+                                  child: Text(
+                                    "Survei Preferensi Konsumen untuk Produk Ramah Lingkungan",
+                                    maxLines: 2, // Maksimal hanya 2 baris
+                                    overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
+                                    style: TextStyle(
+                                      color: Color(0xFF705D54), // Warna teks
+                                      fontSize: 16, // Ukuran font
+                                      fontWeight: FontWeight.w700, // Tebal teks
+                                      fontFamily: "SourceSans3",
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 8),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _isSaved4 = !_isSaved4; // Toggle status saat diklik
+                                  });
+                                },
+                                child: Container(
+                                  //color: Colors.red, // Warna background
+                                  width: 50, // Lebar kotak
+                                  height: 60, // Tinggi kotak
+                                  child: Center(
+                                    child: Icon(
+                                      _isSaved4 ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
+                                      color: Color(0xFF705D54), // Warna ikon
+                                      size: 30, // Ukuran ikon
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 8),
+                              Container(
+                                width: 50,
+                                //color: Colors.red,
+                                height: 60,
+                                child: Center(
+                                  child: Image.asset(
+                                    'assets/images/titik32.png', // Ganti dengan path gambar Anda
+                                    width: 24, // Lebar gambar
+                                    height: 24, // Tinggi gambar
+                                    fit: BoxFit.contain, // Agar gambar sesuai
+                                  ),
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        Container(
+                          //color: Colors.red, // Warna background
+                          height: 70, // Tinggi container
+                          padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
+                          child: Text(
+                            "Isi survei yang akan membantu perusahaan memahami preferensi Anda terhadap produk yang ramah lingkungan, seperti kemasan biodegradable atau bahan alami.",
+                            maxLines: 3, // Maksimal hanya 3 baris
+                            overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
+                            style: TextStyle(
+                              color: Color(0xFFA3948D), // Warna teks
+                              fontSize: 12, // Ukuran font
+                              fontFamily: "NunitoSans",
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+
+
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          //color: Colors.blue,
+                          child: SizedBox(
+                            width: double.infinity, // Memberikan batasan lebar
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Menyebarkan elemen dengan jarak yang sama
+                              children: [
+                                Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFA3948D),
                                     borderRadius: BorderRadius.circular(4), // Border radius 8
                                   ),
                                   child: Row(
@@ -499,7 +709,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "Jakarta Sel.",
+                                        "Online",
                                         style: const TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w400,
@@ -531,7 +741,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "Rp 750.000",
+                                        "Rp 30.000",
                                         style: const TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w400,
@@ -574,7 +784,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                   height: 60, // Tinggi container
                                   padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
                                   child: Text(
-                                    "Pemantauan Kualitas Udara di Wilayah Industri Bekasi",
+                                    "Observasi Penggunaan Ruang Publik di Taman Kota",
                                     maxLines: 2, // Maksimal hanya 2 baris
                                     overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
                                     style: TextStyle(
@@ -591,7 +801,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                               GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                    _isSaved2 = !_isSaved2; // Toggle status saat diklik
+                                    _isSaved5 = !_isSaved5; // Toggle status saat diklik
                                   });
                                 },
                                 child: Container(
@@ -600,7 +810,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                   height: 60, // Tinggi kotak
                                   child: Center(
                                     child: Icon(
-                                      _isSaved2 ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
+                                      _isSaved5 ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
                                       color: Color(0xFF705D54), // Warna ikon
                                       size: 30, // Ukuran ikon
                                     ),
@@ -631,7 +841,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                           height: 70, // Tinggi container
                           padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
                           child: Text(
-                            "Surveyor diminta untuk mencatat data kualitas udara (PM2.5, PM10) di beberapa titik pemantauan di area industri Bekasi. Data ini akan digunakan untuk evaluasi lingkungan oleh pemerintah daerah.",
+                            "Anda diminta interview untuk menceritakan aktivitas yang biasa dilakukan di taman kota, termasuk fasilitas yang sering digunakan dan waktu kunjungan.",
                             maxLines: 3, // Maksimal hanya 3 baris
                             overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
                             style: TextStyle(
@@ -672,7 +882,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "1 bulan lagi",
+                                        "15 hari lagi",
                                         style: const TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w400,
@@ -704,7 +914,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "Bekasi",
+                                        "Online",
                                         style: const TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w400,
@@ -736,7 +946,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "Rp 1.000.000",
+                                        "Rp 100.000",
                                         style: const TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w400,
@@ -779,7 +989,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                   height: 60, // Tinggi container
                                   padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
                                   child: Text(
-                                    "Studi Pola Konsumsi Produk Ramah Lingkungan",
+                                    "Survei Pola Belanja Online di Kalangan Mahasiswa",
                                     maxLines: 2, // Maksimal hanya 2 baris
                                     overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
                                     style: TextStyle(
@@ -796,7 +1006,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                               GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                    _isSaved2 = !_isSaved2; // Toggle status saat diklik
+                                    _isSaved6 = !_isSaved6; // Toggle status saat diklik
                                   });
                                 },
                                 child: Container(
@@ -805,7 +1015,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                   height: 60, // Tinggi kotak
                                   child: Center(
                                     child: Icon(
-                                      _isSaved2 ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
+                                      _isSaved6 ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
                                       color: Color(0xFF705D54), // Warna ikon
                                       size: 30, // Ukuran ikon
                                     ),
@@ -836,7 +1046,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                           height: 70, // Tinggi container
                           padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
                           child: Text(
-                            "Surveyor akan melakukan wawancara dengan pelanggan di pusat perbelanjaan terkait minat mereka pada produk ramah lingkungan. Hasil survei akan digunakan untuk strategi pemasaran produk berkelanjutan.",
+                            "Survei ini bertujuan untuk mengetahui kebiasaan belanja online, termasuk produk favorit, metode pembayaran, dan waktu belanja.",
                             maxLines: 3, // Maksimal hanya 3 baris
                             overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
                             style: TextStyle(
@@ -861,7 +1071,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                   height: 30,
                                   padding: const EdgeInsets.all(4.0),
                                   decoration: BoxDecoration(
-                                    color: Color(0xFFA3948D),
+                                    color: Color(0xFFF44336),
                                     borderRadius: BorderRadius.circular(4), // Border radius 8
                                   ),
                                   child: Row(
@@ -877,212 +1087,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "2 bulan lagi",
-                                        style: const TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: "NunitoSans",
-                                          color: Colors.white,
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 30,
-                                  padding: const EdgeInsets.all(4.0),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFA3948D),
-                                    borderRadius: BorderRadius.circular(4), // Border radius 8
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Image.asset(
-                                          'assets/images/semarang.png',
-                                          height: 10,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                        "Semarang",
-                                        style: const TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: "NunitoSans",
-                                          color: Colors.white,
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 30,
-                                  padding: const EdgeInsets.all(4.0),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFF4A7C59),
-                                    borderRadius: BorderRadius.circular(4), // Border radius 8
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Image.asset(
-                                          'assets/images/limaratus.png',
-                                          height: 10,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                        "Rp 500.000",
-                                        style: const TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: "NunitoSans",
-                                          color: Colors.white,
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEDE7E2),
-                      borderRadius: BorderRadius.circular(8), // Border radius 8
-                    ),
-                    width: double.infinity,
-                    padding: EdgeInsets.all(12),
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          //color: Colors.blue,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  //color: Colors.red, // Warna background
-                                  height: 60, // Tinggi container
-                                  padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
-                                  child: Text(
-                                    "Pemetaan Infrastruktur Jalan di Wilayah Perkotaan",
-                                    maxLines: 2, // Maksimal hanya 2 baris
-                                    overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
-                                    style: TextStyle(
-                                      color: Color(0xFF705D54), // Warna teks
-                                      fontSize: 16, // Ukuran font
-                                      fontWeight: FontWeight.w700, // Tebal teks
-                                      fontFamily: "SourceSans3",
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              const SizedBox(width: 8),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _isSaved2 = !_isSaved2; // Toggle status saat diklik
-                                  });
-                                },
-                                child: Container(
-                                  //color: Colors.red, // Warna background
-                                  width: 50, // Lebar kotak
-                                  height: 60, // Tinggi kotak
-                                  child: Center(
-                                    child: Icon(
-                                      _isSaved2 ? Icons.bookmark : Icons.bookmark_border, // Ikon berubah
-                                      color: Color(0xFF705D54), // Warna ikon
-                                      size: 30, // Ukuran ikon
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              const SizedBox(width: 8),
-                              Container(
-                                width: 50,
-                                //color: Colors.red,
-                                height: 60,
-                                child: Center(
-                                  child: Image.asset(
-                                    'assets/images/titik32.png', // Ganti dengan path gambar Anda
-                                    width: 24, // Lebar gambar
-                                    height: 24, // Tinggi gambar
-                                    fit: BoxFit.contain, // Agar gambar sesuai
-                                  ),
-                                ),
-                              ),
-
-                            ],
-                          ),
-                        ),
-                        Container(
-                          //color: Colors.red, // Warna background
-                          height: 70, // Tinggi container
-                          padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
-                          child: Text(
-                            "Surveyor ditugaskan untuk mengukur dan mencatat kondisi jalan raya di beberapa kecamatan. Data ini akan membantu dalam perencanaan proyek perbaikan infrastruktur.",
-                            maxLines: 3, // Maksimal hanya 3 baris
-                            overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
-                            style: TextStyle(
-                              color: Color(0xFFA3948D), // Warna teks
-                              fontSize: 12, // Ukuran font
-                              fontFamily: "NunitoSans",
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-
-
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          //color: Colors.blue,
-                          child: SizedBox(
-                            width: double.infinity, // Memberikan batasan lebar
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Menyebarkan elemen dengan jarak yang sama
-                              children: [
-                                Container(
-                                  height: 30,
-                                  padding: const EdgeInsets.all(4.0),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFA3948D),
-                                    borderRadius: BorderRadius.circular(4), // Border radius 8
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran minimum
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Image.asset(
-                                          'assets/images/2bulanlagi2.png',
-                                          height: 10,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                        "3 bulan lagi",
+                                        "3 hari lagi",
                                         style: const TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w400,
@@ -1146,7 +1151,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "Rp 1.200.000",
+                                        "Rp 40.000",
                                         style: const TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w400,
@@ -1168,7 +1173,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
 
                     ),
                   ),
-              ],
+                ],
               ),
             ),
           ),
@@ -1192,10 +1197,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
             children: [
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SurveyorProyekSaya()), // Ganti dengan nama halaman Anda
-                  );
+
                 },
                 child: Container(
                   width: 60,
@@ -1228,7 +1230,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SurveyorProyekSaya()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => Respondenproyeksaya()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
@@ -1265,7 +1267,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Surveyorchat()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => Respondenchat()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
