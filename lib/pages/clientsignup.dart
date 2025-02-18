@@ -23,10 +23,17 @@ class _ClientSignUpState extends State<ClientSignUp> {
   final TextEditingController _jenisUsahaController = TextEditingController();
   final TextEditingController _pinAksesController = TextEditingController();
   final TextEditingController _konfirmasiPinController = TextEditingController();
-  int nomortext = 0;
 
   bool _isObscured = true;
   bool _isLoading = false;
+  bool _isButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _pinAksesController.addListener(_validateForm);
+    _konfirmasiPinController.addListener(_validateForm);
+  }
 
   Future<void> _saveToken(String token) async {
     try {
@@ -57,29 +64,22 @@ class _ClientSignUpState extends State<ClientSignUp> {
   }
 
   bool _validateForm() {
-    if (!RegExp(r'^[0-9]{6}$').hasMatch(_pinAksesController.text)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("PIN Akses harus terdiri dari 6 angka!"),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 3),
-        ),
-      );
-      return false;
-    }
+    String pin = _pinAksesController.text.trim();
+    String confirmPin = _konfirmasiPinController.text.trim();
 
-
-    if (_pinAksesController.text != _konfirmasiPinController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("PIN Akses tidak cocok!"),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 2),
-        ),
-      );
-      return false;
-    }
-    return true;
+    setState(() {
+      if (!RegExp(r'^\d{6}$').hasMatch(pin) || !RegExp(r'^\d{6}$').hasMatch(confirmPin))
+      {
+        _isButtonEnabled = false;
+        return;
+      }
+      if (pin != confirmPin) {
+        _isButtonEnabled = false;
+        return;
+      }
+      _isButtonEnabled = true;
+    });
+    return _isButtonEnabled;
   }
 
   Future<void> _submitForm() async {
@@ -230,7 +230,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
               _buildInputField(
                 controller: _tanggalLahirController,
                 label: "Tanggal Lahir",
-                hint: "YYYY-MM-DD",
+                hint: "1-Januari-1999",
                 iconPath: "assets/images/tanggallahir.png",
               ),
               _buildDivider(),
@@ -265,7 +265,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                 controller: _nomorRekeningController,
                 label: "Nomor Rekening",
                 hint: "1234567890",
-                iconPath: "assets/images/nomorrekening.png",
+                iconPath: "assets/images/namaperusahaan.png",
                 keyboardType: TextInputType.number,
               ),
               _buildDivider(),
@@ -291,6 +291,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                 label: "PIN Akses",
                 hint: "6 digit angka",
                 iconPath: "assets/images/pinakses.png",
+                keyboardType: TextInputType.number,
               ),
               _buildDivider(),
 
@@ -299,18 +300,19 @@ class _ClientSignUpState extends State<ClientSignUp> {
                 label: "Konfirmasi PIN Akses",
                 hint: "Masukkan kembali PIN",
                 iconPath: "assets/images/pinakses.png",
+                keyboardType: TextInputType.number,
               ),
               _buildDivider(),
               const SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: nomortext != 1 ? const Color(0xFFC4B8B1) : const Color(0xFF826754),
+                  backgroundColor: _isButtonEnabled ? Color(0xFF826754) : Color(0xFFC4B8B1),
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
-                onPressed: nomortext == 1 ? _submitForm : null,
+                onPressed: _isButtonEnabled ? _submitForm : null,
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -320,7 +322,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                       fontSize: 16.0,
                       fontWeight: FontWeight.w700,
                       fontFamily: 'NunitoSans',
-                      color: nomortext != 1 ? const Color(0xFFD7CCC8) : const Color(0xFFF1E9E5),
+                      color: _isButtonEnabled ? Colors.white : Color(0xFFD7CCC8),
                     ),
                   ),
                 ),
@@ -396,6 +398,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
     required String label,
     required String hint,
     required String iconPath,
+    TextInputType keyboardType = TextInputType.text,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

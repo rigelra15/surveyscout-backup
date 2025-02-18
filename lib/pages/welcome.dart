@@ -323,7 +323,7 @@ class _WelcomeState extends State<Welcome> {
                 SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
-                    _sendSelectedRole("Client");
+                    _sendSelectedRole("client");
                   },
                   child: Container(
                     padding: EdgeInsets.all(16),
@@ -367,7 +367,7 @@ class _WelcomeState extends State<Welcome> {
                 SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
-                    _sendSelectedRole("Surveyor");
+                    _sendSelectedRole("surveyor");
                   },
                   child: Container(
                     padding: const EdgeInsets.all(16),
@@ -417,7 +417,7 @@ class _WelcomeState extends State<Welcome> {
                 SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
-                    _sendSelectedRole("Responden");
+                    _sendSelectedRole("responden");
                   },
                   child: Container(
                     padding: EdgeInsets.all(16),
