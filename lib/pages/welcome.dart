@@ -6,8 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:surveyscout/pages/clientsignup.dart';
 import 'package:surveyscout/pages/login.dart';
-import 'package:surveyscout/pages/respondenprojects.dart';
-import 'package:surveyscout/pages/surveyorprojects.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Welcome extends StatefulWidget {
   @override
@@ -16,6 +15,34 @@ class Welcome extends StatefulWidget {
 class _WelcomeState extends State<Welcome> {
   int currentIndex = 0;
   late List<Widget> containers;
+
+  Future<void> _saveToken(String token) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('jwt_token', token);
+    } catch (e) {
+      print("Error menyimpan token: $e");
+    }
+  }
+
+  Future<String?> _getToken() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getString('jwt_token');
+    } catch (e) {
+      print("Error mengambil token: $e");
+      return null;
+    }
+  }
+
+  Future<void> _removeToken() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('jwt_token');
+    } catch (e) {
+      print("Error menghapus token: $e");
+    }
+  }
 
   Future<void> _handleGoogleSignIn() async {
     try {
@@ -29,7 +56,6 @@ class _WelcomeState extends State<Welcome> {
         print("Google Sign-In dibatalkan oleh pengguna.");
         return;
       }
-
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
@@ -38,13 +64,12 @@ class _WelcomeState extends State<Welcome> {
 
       UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
       User? user = userCredential.user;
-
       if (user != null) {
         String? idToken = await user.getIdToken(true);
         print("ID Token dari Firebase: $idToken");
 
         final response = await http.post(
-          Uri.parse("https://031d-2404-c0-3350-00-315b-4bc3.ngrok-free.app/api/v1/users/GloginFirebase"),
+          Uri.parse("https://a0f5-118-99-84-39.ngrok-free.app/api/v1/users/GloginFirebase"),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({"idToken": idToken}),
         );
@@ -53,14 +78,18 @@ class _WelcomeState extends State<Welcome> {
           print("Backend response: ${response.body}");
           final data = jsonDecode(response.body);
           String status = data["status"];
+          String token = data["token"];
+
+          await _saveToken(token);
+
           if (status == "0") {
             _showGoogleSignupMenu(context);
           } else if (status == "1") {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text("Akun Google sudah terdaftar"),
-                backgroundColor: Colors.red,
-                duration: Duration(seconds: 2),
+                backgroundColor: Colors.green,
+                duration: Duration(seconds: 3),
               ),
             );
           }
@@ -73,10 +102,63 @@ class _WelcomeState extends State<Welcome> {
       print("Terjadi error saat login: $error");
     }
   }
+
+  Future<void> _sendSelectedRole(String role) async {
+    try {
+      String? token = await _getToken();
+      if (token == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Token tidak ditemukan, harap login ulang."),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 3),
+          ),
+        );
+        return;
+      }
+
+      final response = await http.post(
+        Uri.parse("https://a0f5-118-99-84-39.ngrok-free.app/api/v1/users/selectRole"),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+        body: jsonEncode({"role": role}),
+      );
+
+      if (response.statusCode == 200) {
+        print("Role berhasil diperbarui: ${response.body}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Berhasil memilih role sebagai $role"),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 3),
+          ),
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => ClientSignUp()),
+        );
+      } else {
+        print("Gagal memilih role! Status Code: ${response.statusCode}");
+        print("Response dari server: ${response.body}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Gagal memilih role! Silakan coba lagi."),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (error) {
+      print("Terjadi error saat memilih role: $error");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    // Initialize containers inside initState
     containers = [containerA(), containerB(), containerC()];
     _startContainerLoop();
   }
@@ -84,7 +166,7 @@ class _WelcomeState extends State<Welcome> {
   void _startContainerLoop() {
     Timer.periodic(Duration(seconds: 3), (timer) {
       setState(() {
-        currentIndex = (currentIndex + 1) % containers.length; // Mengulang A, B, C
+        currentIndex = (currentIndex + 1) % containers.length;
       });
     });
   }
@@ -110,8 +192,6 @@ class _WelcomeState extends State<Welcome> {
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 100),
-
-                // Menggunakan AnimatedSwitcher untuk transisi antar kontainer
                 Center(
                   child: AnimatedSwitcher(
                     duration: Duration(seconds: 1),
@@ -120,8 +200,6 @@ class _WelcomeState extends State<Welcome> {
                 ),
               ],
             ),
-
-            // Tombol di bagian bawah
             Positioned(
               bottom: 20,
               left: 0,
@@ -209,26 +287,30 @@ class _WelcomeState extends State<Welcome> {
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(30),
+        ),
       ),
-      isScrollControlled: true, // Allow bottom sheet to adjust based on its content
+      isScrollControlled: true,
       builder: (BuildContext context) {
         return ClipRRect(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30)), // Apply rounded corners to the content
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(30),
+          ),
           child: Container(
-            width: MediaQuery.of(context).size.width, // Make the width fill the screen
+            width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(24),
             color: Color(0xFFF1E9E5),
             child: Column(
-              mainAxisSize: MainAxisSize.min, // Makes the bottom sheet take only necessary height
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Divider(
-                  thickness: 3, // Adjust thickness to make the line thicker
-                  indent: 150,   // Make the line shorter by adding space from the start
-                  endIndent: 150, // Make the line shorter by adding space from the end
-                  color: Color(0xFFB0B0B0), // Optional: set a color for the divider
+                  thickness: 3,
+                  indent: 150,
+                  endIndent: 150,
+                  color: Color(0xFFB0B0B0),
                 ),
-                SizedBox(height: 10), // Spasi antara garis dan tulisan
+                SizedBox(height: 10),
                 Text(
                   "Daftar Sebagai",
                   style: TextStyle(
@@ -239,14 +321,9 @@ class _WelcomeState extends State<Welcome> {
                   ),
                 ),
                 SizedBox(height: 20),
-                // Kontainer pertama
                 GestureDetector(
                   onTap: () {
-                    // Navigasi ke halaman clientsignup2.dart
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ClientSignUp()),
-                    );
+                    _sendSelectedRole("Client");
                   },
                   child: Container(
                     padding: EdgeInsets.all(16),
@@ -266,20 +343,20 @@ class _WelcomeState extends State<Welcome> {
                           Text(
                             "Klien",
                             style: TextStyle(
-                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
+                              fontFamily: 'NunitoSans',
                               fontSize: 16,
-                              fontWeight: FontWeight.w700, // Weight 700
-                              color: Color(0xFF705D54), // Warna #705D54
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF705D54),
                             ),
                           ),
-                          SizedBox(height: 2), // Spasi antara dua teks
+                          SizedBox(height: 2),
                           Text(
                             "Rekrut surveyor atau responden untuk membantu observasi Anda berjalan lancar dan efisien.",
                             style: TextStyle(
-                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
+                              fontFamily: 'NunitoSans',
                               fontSize: 16,
-                              fontWeight: FontWeight.w400, // Weight 400
-                              color: Color(0xFF3A2B24), // Warna #3A2B24
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF3A2B24),
                             ),
                           ),
                         ],
@@ -288,20 +365,15 @@ class _WelcomeState extends State<Welcome> {
                   ),
                 ),
                 SizedBox(height: 10),
-                // Kontainer kedua
                 GestureDetector(
                   onTap: () {
-                    // Navigasi ke halaman SurveyorProjects
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SurveyorProjects()),
-                    );
+                    _sendSelectedRole("Surveyor");
                   },
                   child: Container(
-                    padding: const EdgeInsets.all(16), // Padding untuk kontainer
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: const Color(0xFFD7CCC8), // Warna latar belakang
+                      color: const Color(0xFFD7CCC8),
                     ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -311,7 +383,7 @@ class _WelcomeState extends State<Welcome> {
                           width: 50,
                           height: 50,
                         ),
-                        const SizedBox(width: 12), // Spasi antara gambar dan teks
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -321,17 +393,17 @@ class _WelcomeState extends State<Welcome> {
                                 style: TextStyle(
                                   fontFamily: 'NunitoSans',
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w700, // Font tebal
+                                  fontWeight: FontWeight.w700,
                                   color: Color(0xFF705D54),
                                 ),
                               ),
-                              const SizedBox(height: 4), // Spasi antara judul dan deskripsi
+                              const SizedBox(height: 4),
                               const Text(
                                 "Hasilkan uang dengan mencari data dengan wawancara, observasi, dan/atau lainnya hingga merekapnya.",
                                 style: TextStyle(
                                   fontFamily: 'NunitoSans',
-                                  fontSize: 14, // Ukuran font deskripsi lebih kecil
-                                  fontWeight: FontWeight.w400, // Font normal
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
                                   color: Color(0xFF3A2B24),
                                 ),
                               ),
@@ -345,11 +417,7 @@ class _WelcomeState extends State<Welcome> {
                 SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
-                    // Navigasi ke halaman SurveyorProjects
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Respondenprojects()),
-                    );
+                    _sendSelectedRole("Responden");
                   },
                   child: Container(
                     padding: EdgeInsets.all(16),
@@ -368,20 +436,19 @@ class _WelcomeState extends State<Welcome> {
                         children: [
                           Text("Responden",
                             style: TextStyle(
-                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
+                              fontFamily: 'NunitoSans',
                               fontSize: 16,
-                              fontWeight: FontWeight.w700, // Weight 400
-                              color: Color(0xFF705D54), // Warna #705D54
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF705D54),
                             ),
-
                           ),
-                          SizedBox(height: 2), // Spasi antara dua teks
+                          SizedBox(height: 2),
                           Text("Hasilkan uang dengan menjadi narasumber. Anda akan mengisi survei, diwawancarai, dan lainnya.",
                             style: TextStyle(
-                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
+                              fontFamily: 'NunitoSans',
                               fontSize: 16,
-                              fontWeight: FontWeight.w400, // Weight 400
-                              color: Color(0xFF3A2B24), // Warna #705D54
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF3A2B24),
                             ),
                           ), // Teks kedua
                         ],
@@ -397,52 +464,35 @@ class _WelcomeState extends State<Welcome> {
     );
   }
 
-
-
-
-
-
-
-
-
-
-  // Kontainer A
   Widget containerA() {
     return Container(
-      padding: EdgeInsets.all(16), // Tambahkan padding agar konten tidak terlalu menempel ke tepi
+      padding: EdgeInsets.all(16),
       child: Column(
-        mainAxisSize: MainAxisSize.min, // Agar Column hanya mengambil ruang yang dibutuhkan
-        mainAxisAlignment: MainAxisAlignment.center, // Pusatkan konten secara vertikal
-        crossAxisAlignment: CrossAxisAlignment.center, // Pusatkan konten secara horizontal
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Gambar
           Image.asset(
             'assets/images/caridata.png',
             width: 200,
             height: 200,
             fit: BoxFit.cover,
           ),
-
-          SizedBox(height: 30), // Spasi antara gambar dan teks
-
-          // Teks pertama
+          SizedBox(height: 30),
           Text(
             "Cari data tak pernah semudah ini",
-            textAlign: TextAlign.center, // Rata tengah teks
+            textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'SourceSans3', // Gunakan font yang sudah di-load
+              fontFamily: 'SourceSans3',
               fontSize: 24,
-              fontWeight: FontWeight.w400, // Weight 400
-              color: Color(0xFF705D54), // Warna #705D54
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF705D54),
             ),
           ),
-
-          SizedBox(height: 10), // Spasi antara teks pertama dan teks kedua
-
-          // Teks kedua
+          SizedBox(height: 10),
           Text(
             "Tak perlu pusing lagi mencari responden dan data, surveyor kami akan melakukannya untuk Anda",
-            textAlign: TextAlign.center, // Rata tengah teks
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'NunitoSans',
               fontWeight: FontWeight.w400,
@@ -450,47 +500,37 @@ class _WelcomeState extends State<Welcome> {
               color: Color(0xFFA3948D),
             ),
           ),
-
-          SizedBox(height: 20), // Spasi antara teks dan bulatan
-
-          // 3 Bulatan kecil
+          SizedBox(height: 20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center, // Pusatkan bulatan secara horizontal
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Bulatan 1
               Container(
-                width: 30, // Lebar elips (horizontal)
-                height: 10, // Tinggi elips (vertikal)
+                width: 30,
+                height: 10,
                 decoration: BoxDecoration(
-                  color: Color(0xFF826754), // Warna elips
+                  color: Color(0xFF826754),
                   borderRadius: BorderRadius.horizontal(
-                    left: Radius.circular(20), // Radius sudut kiri
-                    right: Radius.circular(20), // Radius sudut kanan
+                    left: Radius.circular(20),
+                    right: Radius.circular(20),
                   ),
                 ),
               ),
-
-              SizedBox(width: 5), // Jarak antara bulatan
-
-              // Bulatan 2
+              SizedBox(width: 5),
               Container(
-                width: 10, // Diameter bulatan
-                height: 10, // Diameter bulatan
+                width: 10,
+                height: 10,
                 decoration: BoxDecoration(
-                  color: Color(0xFFC4B8B1), // Warna bulatan
-                  shape: BoxShape.circle, // Bentuk lingkaran
+                  color: Color(0xFFC4B8B1),
+                  shape: BoxShape.circle,
                 ),
               ),
-
-              SizedBox(width: 5), // Jarak antara bulatan
-
-              // Bulatan 3
+              SizedBox(width: 5),
               Container(
-                width: 10, // Diameter bulatan
-                height: 10, // Diameter bulatan
+                width: 10,
+                height: 10,
                 decoration: BoxDecoration(
-                  color: Color(0xFFC4B8B1), // Warna bulatan
-                  shape: BoxShape.circle, // Bentuk lingkaran
+                  color: Color(0xFFC4B8B1),
+                  shape: BoxShape.circle,
                 ),
               ),
             ],
@@ -500,43 +540,35 @@ class _WelcomeState extends State<Welcome> {
     );
   }
 
-  // Kontainer B
   Widget containerB() {
     return Container(
-      padding: EdgeInsets.all(16), // Tambahkan padding agar konten tidak terlalu menempel ke tepi
+      padding: EdgeInsets.all(16),
       child: Column(
-        mainAxisSize: MainAxisSize.min, // Agar Column hanya mengambil ruang yang dibutuhkan
-        mainAxisAlignment: MainAxisAlignment.center, // Pusatkan konten secara vertikal
-        crossAxisAlignment: CrossAxisAlignment.center, // Pusatkan konten secara horizontal
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Gambar
           Image.asset(
             'assets/images/kepuasananda.png',
             width: 200,
             height: 200,
             fit: BoxFit.cover,
           ),
-
-          SizedBox(height: 30), // Spasi antara gambar dan teks
-
-          // Teks pertama
+          SizedBox(height: 30),
           Text(
             "Kepuasan Anda ada di setiap visi kami",
-            textAlign: TextAlign.center, // Rata tengah teks
+            textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'SourceSans3', // Gunakan font yang sudah di-load
+              fontFamily: 'SourceSans3',
               fontSize: 24,
-              fontWeight: FontWeight.w400, // Weight 400
-              color: Color(0xFF705D54), // Warna #705D54
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF705D54),
             ),
           ),
-
-          SizedBox(height: 10), // Spasi antara teks pertama dan teks kedua
-
-          // Teks kedua
+          SizedBox(height: 10),
           Text(
             "Kami memastikan tenaga surveyor dan responden yang terpercaya dan andal dalam bidangnya",
-            textAlign: TextAlign.center, // Rata tengah teks
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'NunitoSans',
               fontWeight: FontWeight.w400,
@@ -544,47 +576,37 @@ class _WelcomeState extends State<Welcome> {
               color: Color(0xFFA3948D),
             ),
           ),
-
-          SizedBox(height: 20), // Spasi antara teks dan bulatan
-
-          // 3 Bulatan kecil
+          SizedBox(height: 20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center, // Pusatkan bulatan secara horizontal
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Bulatan 1
               Container(
-                width: 10, // Diameter bulatan
-                height: 10, // Diameter bulatan
+                width: 10,
+                height: 10,
                 decoration: BoxDecoration(
-                  color: Color(0xFFC4B8B1), // Warna bulatan
-                  shape: BoxShape.circle, // Bentuk lingkaran
+                  color: Color(0xFFC4B8B1),
+                  shape: BoxShape.circle,
                 ),
               ),
-
-              SizedBox(width: 5), // Jarak antara bulatan
-
-              // Bulatan 2
+              SizedBox(width: 5),
               Container(
-                width: 30, // Lebar elips (horizontal)
-                height: 10, // Tinggi elips (vertikal)
+                width: 30,
+                height: 10,
                 decoration: BoxDecoration(
-                  color: Color(0xFF826754), // Warna elips
+                  color: Color(0xFF826754),
                   borderRadius: BorderRadius.horizontal(
-                    left: Radius.circular(20), // Radius sudut kiri
-                    right: Radius.circular(20), // Radius sudut kanan
+                    left: Radius.circular(20),
+                    right: Radius.circular(20),
                   ),
                 ),
               ),
-
-              SizedBox(width: 5), // Jarak antara bulatan
-
-              // Bulatan 3
+              SizedBox(width: 5),
               Container(
-                width: 10, // Diameter bulatan
-                height: 10, // Diameter bulatan
+                width: 10,
+                height: 10,
                 decoration: BoxDecoration(
-                  color: Color(0xFFC4B8B1), // Warna bulatan
-                  shape: BoxShape.circle, // Bentuk lingkaran
+                  color: Color(0xFFC4B8B1),
+                  shape: BoxShape.circle,
                 ),
               ),
             ],
@@ -594,43 +616,35 @@ class _WelcomeState extends State<Welcome> {
     );
   }
 
-  // Kontainer C
   Widget containerC() {
     return Container(
-      padding: EdgeInsets.all(16), // Tambahkan padding agar konten tidak terlalu menempel ke tepi
+      padding: EdgeInsets.all(16),
       child: Column(
-        mainAxisSize: MainAxisSize.min, // Agar Column hanya mengambil ruang yang dibutuhkan
-        mainAxisAlignment: MainAxisAlignment.center, // Pusatkan konten secara vertikal
-        crossAxisAlignment: CrossAxisAlignment.center, // Pusatkan konten secara horizontal
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Gambar
           Image.asset(
             'assets/images/ataujadilah.png',
             width: 200,
             height: 200,
             fit: BoxFit.cover,
           ),
-
-          SizedBox(height: 30), // Spasi antara gambar dan teks
-
-          // Teks pertama
+          SizedBox(height: 30),
           Text(
             "Atau, jadilah bagian dari kami dan dapatkan komisi",
-            textAlign: TextAlign.center, // Rata tengah teks
+            textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'SourceSans3', // Gunakan font yang sudah di-load
+              fontFamily: 'SourceSans3',
               fontSize: 24,
-              fontWeight: FontWeight.w400, // Weight 400
-              color: Color(0xFF705D54), // Warna #705D54
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF705D54),
             ),
           ),
-
-          SizedBox(height: 10), // Spasi antara teks pertama dan teks kedua
-
-          // Teks kedua
+          SizedBox(height: 10),
           Text(
             "Anda dapat menjadi surveyor atau responden dan memperoleh komisi setelah melaksanakan tugas",
-            textAlign: TextAlign.center, // Rata tengah teks
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'NunitoSans',
               fontWeight: FontWeight.w400,
@@ -638,46 +652,36 @@ class _WelcomeState extends State<Welcome> {
               color: Color(0xFFA3948D),
             ),
           ),
-
-          SizedBox(height: 20), // Spasi antara teks dan bulatan
-
-          // 3 Bulatan kecil
+          SizedBox(height: 20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center, // Pusatkan bulatan secara horizontal
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Bulatan 1
               Container(
-                width: 10, // Diameter bulatan
-                height: 10, // Diameter bulatan
+                width: 10,
+                height: 10,
                 decoration: BoxDecoration(
-                  color: Color(0xFFC4B8B1), // Warna bulatan
-                  shape: BoxShape.circle, // Bentuk lingkaran
+                  color: Color(0xFFC4B8B1),
+                  shape: BoxShape.circle,
                 ),
               ),
-
-              SizedBox(width: 5), // Jarak antara bulatan
-
-              // Bulatan 2
+              SizedBox(width: 5),
               Container(
-                width: 10, // Diameter bulatan
-                height: 10, // Diameter bulatan
+                width: 10,
+                height: 10,
                 decoration: BoxDecoration(
-                  color: Color(0xFFC4B8B1), // Warna bulatan
-                  shape: BoxShape.circle, // Bentuk lingkaran
+                  color: Color(0xFFC4B8B1),
+                  shape: BoxShape.circle,
                 ),
               ),
-
-              SizedBox(width: 5), // Jarak antara bulatan
-
-              // Bulatan 3
+              SizedBox(width: 5),
               Container(
-                width: 30, // Lebar elips (horizontal)
-                height: 10, // Tinggi elips (vertikal)
+                width: 30,
+                height: 10,
                 decoration: BoxDecoration(
-                  color: Color(0xFF826754), // Warna elips
+                  color: Color(0xFF826754),
                   borderRadius: BorderRadius.horizontal(
-                    left: Radius.circular(20), // Radius sudut kiri
-                    right: Radius.circular(20), // Radius sudut kanan
+                    left: Radius.circular(20),
+                    right: Radius.circular(20),
                   ),
                 ),
               ),
