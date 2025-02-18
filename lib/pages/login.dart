@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:surveyscout/pages/clientsignup.dart';
+import 'package:surveyscout/pages/respondenprojects.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:surveyscout/pages/clientsignup.dart';
-import 'package:surveyscout/pages/login.dart';
-import 'package:surveyscout/pages/respondenprojects.dart';
+
 import 'package:surveyscout/pages/surveyorprojects.dart';
 
-class Welcome extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  _WelcomeState createState() => _WelcomeState();
+  _LoginState createState() => _LoginState();
 }
-class _WelcomeState extends State<Welcome> {
+class _LoginState extends State<Login> {
   int currentIndex = 0;
   late List<Widget> containers;
 
@@ -44,26 +44,13 @@ class _WelcomeState extends State<Welcome> {
         print("ID Token dari Firebase: $idToken");
 
         final response = await http.post(
-          Uri.parse("https://031d-2404-c0-3350-00-315b-4bc3.ngrok-free.app/api/v1/users/GloginFirebase"),
+          Uri.parse("https://220c-120-188-80-146.ngrok-free.app/api/v1/users/GloginFirebase"),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({"idToken": idToken}),
         );
 
         if (response.statusCode == 200) {
           print("Backend response: ${response.body}");
-          final data = jsonDecode(response.body);
-          String status = data["status"];
-          if (status == "0") {
-            _showGoogleSignupMenu(context);
-          } else if (status == "1") {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Akun Google sudah terdaftar"),
-                backgroundColor: Colors.red,
-                duration: Duration(seconds: 2),
-              ),
-            );
-          }
         } else {
           print("Login Gagal di Backend! Status Code: ${response.statusCode}");
           print("Response dari server: ${response.body}");
@@ -73,6 +60,7 @@ class _WelcomeState extends State<Welcome> {
       print("Terjadi error saat login: $error");
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -114,14 +102,12 @@ class _WelcomeState extends State<Welcome> {
                 // Menggunakan AnimatedSwitcher untuk transisi antar kontainer
                 Center(
                   child: AnimatedSwitcher(
-                    duration: Duration(seconds: 1),
+                    duration: Duration(seconds: 1), // Durasi animasi transisi
                     child: containers[currentIndex],
                   ),
                 ),
               ],
             ),
-
-            // Tombol di bagian bawah
             Positioned(
               bottom: 20,
               left: 0,
@@ -133,7 +119,9 @@ class _WelcomeState extends State<Welcome> {
                     child: SizedBox(
                       width: double.infinity,
                       child: TextButton(
-                        onPressed: _handleGoogleSignIn,
+                        onPressed: () {
+                          _handleGoogleSignIn();
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor: Color(0xFF3A2B24),
                           foregroundColor: Colors.white,
@@ -152,7 +140,7 @@ class _WelcomeState extends State<Welcome> {
                             ),
                             SizedBox(width: 8),
                             Text(
-                              "Daftar Dengan Google",
+                              "Login Dengan Google",
                               style: TextStyle(
                                 fontFamily: 'NunitoSans',
                                 fontWeight: FontWeight.w700,
@@ -166,36 +154,6 @@ class _WelcomeState extends State<Welcome> {
                     ),
                   ),
                   SizedBox(height: 16),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login()),
-                      );
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        text: "Sudah punya akun? ",
-                        style: TextStyle(
-                          fontFamily: 'NunitoSans',
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFFa3948d),
-                          fontSize: 16,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: "Masuk di sini",
-                            style: TextStyle(
-                              fontFamily: 'NunitoSans',
-                              color: Color(0xFFa3948d),
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),

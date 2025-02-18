@@ -1,0 +1,2 @@
+C:/Users/anca/StudioProjects/surveyscout/android/app/.cxx/Debug/5v1i4o1m/x86/CMakeFiles/edit_cache.dir
+C:/Users/anca/StudioProjects/surveyscout/android/app/.cxx/Debug/5v1i4o1m/x86/CMakeFiles/rebuild_cache.dir

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'clientchat.dart';
+import 'clientsaya.dart';
 
 class SecondPage extends StatefulWidget {
   @override
   _SecondPageState createState() => _SecondPageState();
 }
+
 class _SecondPageState extends State<SecondPage> {
+  // Variabel untuk menyimpan pilihan dropdown
   String selectedStatus = "Semua status";
   String selectedPeran = "Semua peran";
   String selectedLokasi = "Semua lokasi";
@@ -13,79 +17,80 @@ class _SecondPageState extends State<SecondPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF1E9E5),
+      backgroundColor: Color(0xFFF1E9E5), // Background berwarna #F1E9E5
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(165),
+        preferredSize: Size.fromHeight(165), // Tinggi AppBar diatur menjadi 130
         child: AppBar(
-          backgroundColor: Color(0xFFD7CCC8),
+          automaticallyImplyLeading: false,
+          backgroundColor: Color(0xFFD7CCC8), // Header berwarna #D7CCC8
           flexibleSpace: Padding(
-            padding: const EdgeInsets.all(27.0),
+            padding: const EdgeInsets.all(27.0), // Padding diatur menjadi 27
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                // Search Bar
                 Container(
-                  height: 40,
+                  height: 40, // Tinggi dari kotak teks
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFFF1E9E5),
-                      borderRadius: BorderRadius.circular(8),
+                      color: Color(0xFFF1E9E5), // Warna latar belakang
+                      borderRadius: BorderRadius.circular(8), // Sudut melengkung
                       boxShadow: [
                         BoxShadow(
-                          color: Color(0x40000000),
-                          offset: Offset(0, 4),
-                          blurRadius: 4,
-                          spreadRadius: 0,
+                          color: Color(0x40000000), // Warna shadow (semi-transparent hitam)
+                          offset: Offset(0, 4), // Posisi shadow (horizontal, vertikal)
+                          blurRadius: 4, // Blur radius
+                          spreadRadius: 0, // Radius sebaran shadow
                         ),
                       ],
                     ),
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: "Cari proyek Anda...",
+                        hintText: "Cari proyek Anda...", // Placeholder teks
                         filled: true,
-                        fillColor: Color(0xFFF1E9E5),
+                        fillColor: Color(0xFFF1E9E5), // Warna latar belakang
                         contentPadding: const EdgeInsets.all(10.0),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8), // Sudut melengkung
                           borderSide: BorderSide(
-                            color: Color(0xFF757575),
-                            width: 0.1,
+                            color: Color(0xFF757575), // Warna border #757575
+                            width: 0.1, // Lebar border 0.5px
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide(
-                            color: Color(0xFF705D54),
-                            width: 2.0,
+                            color: Color(0xFF705D54), // Warna border tetap saat fokus
+                            width: 2.0, // Lebar border saat fokus
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide(
-                            color: Color(0xFF705D54),
-                            width: 1.0,
+                            color: Color(0xFF705D54), // Warna border tetap saat tidak fokus
+                            width: 1.0, // Lebar border saat tidak fokus
                           ),
                         ),
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Color(0xFF826754),
-                        ),
+                        prefixIcon: Icon(Icons.search, color: Color(0xFF826754)), // Ikon pencarian
                         hintStyle: TextStyle(
-                          color: Color(0xFFB0B0B0),
+                          color: Color(0xFFB0B0B0), // Warna teks #B0B0B0
                           fontFamily: 'NunitoSans',
-                          fontWeight: FontWeight.w300,
-                          fontSize: 14,
+                          fontWeight: FontWeight.w300, // Ketebalan font 300
+                          fontSize: 14, // Ukuran font 14px
                         ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 17),
+                SizedBox(height: 17), // Jarak antara Search Bar dan Dropdowns
+
+                // Horizontal Scrollable Dropdowns
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
                       _buildIconBox(),
-                      SizedBox(width: 8),
+                      SizedBox(width: 8), // Spasi antara kotak dan dropdown
                       _buildDropdown("Semua Status", [
                         "Semua status",
                         "Peringatan",
@@ -100,7 +105,7 @@ class _SecondPageState extends State<SecondPage> {
                           selectedStatus = value!;
                         });
                       }),
-                      SizedBox(width: 8),
+                      SizedBox(width: 8), // Spasi antar dropdown
                       _buildDropdown("Semua Peran", [
                         "Semua peran",
                         "Surveyor",
@@ -156,162 +161,24 @@ class _SecondPageState extends State<SecondPage> {
                     child: Column(
                       children: [
                         SizedBox(height: 10),
+
                         Container(
-                          width: double.infinity,
-                          height: 100,
-                          padding: EdgeInsets.all(0),
+                          width: double.infinity, // Frame will stretch across the available width
+                          height: 100, // Set height for the frame
+                          padding: EdgeInsets.all(0), // No padding inside the frame
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Evenly space the boxes
                             children: [
-                              Container(
-                                width: (MediaQuery.of(context).size.width - 54) / 4,
-                                height: 100,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      height: 50,
-                                      padding: EdgeInsets.only(top: 10),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.all(0),
-                                            width: (MediaQuery.of(context).size.width - 54) / 8,
-                                            height: double.infinity,
-                                            child: Align(
-                                              alignment: Alignment.centerRight,
-                                              child: Image.asset(
-                                                'assets/images/dikerjakan.png',
-                                                fit: BoxFit.contain,
-                                                width: 20,
-                                                height: 20,
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.all(3),
-                                            width: (MediaQuery.of(context).size.width - 54) / 8,
-                                            height: double.infinity,
-                                            child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                '1',
-                                                style: TextStyle(
-                                                  fontFamily: 'SourceSans3',
-                                                  fontSize: 24,
-                                                  fontWeight: FontWeight.w400,
-                                                  decoration: TextDecoration.none,
-                                                  color: Color(0xFF705D54),
-                                                ),
-                                                textAlign: TextAlign.left,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 20,
-                                      child: Center(
-                                        child: Text(
-                                          'Merekrut',
-                                          style: TextStyle(
-                                            fontFamily: 'NunitoSans',
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700,
-                                            height: 16.37 / 12,
-                                            decorationColor: Color(0xFFA3948D),
-                                            decorationStyle: TextDecorationStyle.solid,
-                                            color: Color(0xFFA3948D),
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: (MediaQuery.of(context).size.width - 54) / 4,
-                                height: 100,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      height: 50,
-                                      padding: EdgeInsets.only(top: 10),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.all(0),
-                                            width: (MediaQuery.of(context).size.width - 54) / 8,
-                                            height: double.infinity,
-                                            child: Align(
-                                              alignment: Alignment.centerRight,
-                                              child: Image.asset(
-                                                'assets/images/merekrut.png',
-                                                fit: BoxFit.contain,
-                                                width: 20,
-                                                height: 20,
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.all(3),
-                                            width: (MediaQuery.of(context).size.width - 54) / 8,
-                                            height: double.infinity,
-                                            child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                '1',
-                                                style: TextStyle(
-                                                  fontFamily: 'SourceSans3',
-                                                  fontSize: 24,
-                                                  fontWeight: FontWeight.w400,
-                                                  decoration: TextDecoration.none,
-                                                  color: Color(0xFF705D54),
-                                                ),
-                                                textAlign: TextAlign.left,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 20,
-                                      child: Center(
-                                        child: Text(
-                                          'Dikerjakan',
-                                          style: TextStyle(
-                                            fontFamily: 'NunitoSans',
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700,
-                                            height: 16.37 / 12,
-                                            decorationColor: Color(0xFFA3948D),
-                                            decorationStyle: TextDecorationStyle.solid,
-                                            color: Color(0xFFA3948D),
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              // First box with two smaller boxes inside
                               Container(
                                 width: (MediaQuery.of(context).size.width - 54) / 4, // Dynamic width based on screen width
                                 height: 100,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start, // Space between top and bottom boxes
                                   children: [
+                                    // Top box with padding and two smaller boxes inside
                                     Container(
+
                                       width: double.infinity, // Max width
                                       height: 50, // Height of top box
                                       padding: EdgeInsets.only(top: 10), // Padding for the top box
@@ -322,6 +189,176 @@ class _SecondPageState extends State<SecondPage> {
                                             padding: EdgeInsets.all(0),
                                             width: (MediaQuery.of(context).size.width - 54) / 8, // Each inner box takes up max width
                                             height: double.infinity,
+                                            // color: Colors.red, // Set color for visibility
+
+                                            child: Align(
+                                              alignment: Alignment.centerRight, // Pusatkan secara vertikal, rata kanan secara horizontal
+                                              child: Image.asset(
+                                                'assets/images/dikerjakan.png', // Gambar yang akan ditampilkan
+                                                fit: BoxFit.contain, // Sesuaikan ukuran gambar
+                                                width: 20, // Atur lebar gambar
+                                                height: 20, // Atur tinggi gambar
+                                              ),
+                                            ),
+
+                                          ),
+
+                                          Container(
+                                            padding: EdgeInsets.all(3),
+                                            width: (MediaQuery.of(context).size.width - 54) / 8, // Each inner box takes up max width
+                                            height: double.infinity,
+                                            // color: Colors.red, // Set color for visibility
+
+                                            child: Align(
+                                              alignment: Alignment.centerLeft, // Pusatkan secara vertikal, rata kanan secara horizontal
+                                              child: Text(
+                                                '1', // Teks yang ditampilkan
+                                                style: TextStyle(
+                                                  fontFamily: 'SourceSans3',
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.w400,
+
+                                                  decoration: TextDecoration.none, // Tidak ada dekorasi tambahan
+                                                  color: Color(0xFF705D54), // Warna teks
+                                                ),
+                                                textAlign: TextAlign.left, // Teks diratakan ke kanan
+                                              ),
+                                            ),
+
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    // Bottom box with text centered inside
+                                    Container(
+                                      width: double.infinity, // Max width
+                                      height: 20, // Bottom box height
+
+                                      child: Center(
+                                        child: Text(
+                                          'Merekrut', // Text to display in the bottom box
+                                          style: TextStyle(
+                                            fontFamily: 'NunitoSans',
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            height: 16.37 / 12, // Line height calculation
+                                            decorationColor: Color(0xFFA3948D),
+                                            decorationStyle: TextDecorationStyle.solid,
+                                            color: Color(0xFFA3948D),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // Second box with two smaller boxes inside
+                              Container(
+                                width: (MediaQuery.of(context).size.width - 54) / 4, // Dynamic width based on screen width
+                                height: 100,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start, // Space between top and bottom boxes
+                                  children: [
+                                    // Top box with padding and two smaller boxes inside
+                                    Container(
+
+                                      width: double.infinity, // Max width
+                                      height: 50, // Height of top box
+                                      padding: EdgeInsets.only(top: 10), // Padding for the top box
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between the two boxes inside the top box
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(0),
+                                            width: (MediaQuery.of(context).size.width - 54) / 8, // Each inner box takes up max width
+                                            height: double.infinity,
+                                            // color: Colors.red, // Set color for visibility
+
+                                            child: Align(
+                                              alignment: Alignment.centerRight, // Pusatkan secara vertikal, rata kanan secara horizontal
+                                              child: Image.asset(
+                                                'assets/images/merekrut.png', // Gambar yang akan ditampilkan
+                                                fit: BoxFit.contain, // Sesuaikan ukuran gambar
+                                                width: 20, // Atur lebar gambar
+                                                height: 20, // Atur tinggi gambar
+                                              ),
+                                            ),
+
+                                          ),
+
+                                          Container(
+                                            padding: EdgeInsets.all(3),
+                                            width: (MediaQuery.of(context).size.width - 54) / 8, // Each inner box takes up max width
+                                            height: double.infinity,
+                                            // color: Colors.red, // Set color for visibility
+
+                                            child: Align(
+                                              alignment: Alignment.centerLeft, // Pusatkan secara vertikal, rata kanan secara horizontal
+                                              child: Text(
+                                                '1', // Teks yang ditampilkan
+                                                style: TextStyle(
+                                                  fontFamily: 'SourceSans3',
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.w400,
+
+                                                  decoration: TextDecoration.none, // Tidak ada dekorasi tambahan
+                                                  color: Color(0xFF705D54), // Warna teks
+                                                ),
+                                                textAlign: TextAlign.left, // Teks diratakan ke kanan
+                                              ),
+                                            ),
+
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    // Bottom box with text centered inside
+                                    Container(
+                                      width: double.infinity, // Max width
+                                      height: 20, // Bottom box height
+
+                                      child: Center(
+                                        child: Text(
+                                          'Dikerjakan', // Text to display in the bottom box
+                                          style: TextStyle(
+                                            fontFamily: 'NunitoSans',
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            height: 16.37 / 12, // Line height calculation
+                                            decorationColor: Color(0xFFA3948D),
+                                            decorationStyle: TextDecorationStyle.solid,
+                                            color: Color(0xFFA3948D),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // Third box with two smaller boxes inside
+                              Container(
+                                width: (MediaQuery.of(context).size.width - 54) / 4, // Dynamic width based on screen width
+                                height: 100,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start, // Space between top and bottom boxes
+                                  children: [
+                                    // Top box with padding and two smaller boxes inside
+                                    Container(
+
+                                      width: double.infinity, // Max width
+                                      height: 50, // Height of top box
+                                      padding: EdgeInsets.only(top: 10), // Padding for the top box
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between the two boxes inside the top box
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.all(0),
+                                            width: (MediaQuery.of(context).size.width - 54) / 8, // Each inner box takes up max width
+                                            height: double.infinity,
+                                            // color: Colors.red, // Set color for visibility
+
                                             child: Align(
                                               alignment: Alignment.centerRight, // Pusatkan secara vertikal, rata kanan secara horizontal
                                               child: Image.asset(
@@ -331,11 +368,15 @@ class _SecondPageState extends State<SecondPage> {
                                                 height: 20, // Atur tinggi gambar
                                               ),
                                             ),
+
                                           ),
+
                                           Container(
                                             padding: EdgeInsets.all(3),
                                             width: (MediaQuery.of(context).size.width - 54) / 8, // Each inner box takes up max width
                                             height: double.infinity,
+                                            // color: Colors.red, // Set color for visibility
+
                                             child: Align(
                                               alignment: Alignment.centerLeft, // Pusatkan secara vertikal, rata kanan secara horizontal
                                               child: Text(
@@ -344,19 +385,23 @@ class _SecondPageState extends State<SecondPage> {
                                                   fontFamily: 'SourceSans3',
                                                   fontSize: 24,
                                                   fontWeight: FontWeight.w400,
+
                                                   decoration: TextDecoration.none, // Tidak ada dekorasi tambahan
                                                   color: Color(0xFF705D54), // Warna teks
                                                 ),
                                                 textAlign: TextAlign.left, // Teks diratakan ke kanan
                                               ),
                                             ),
+
                                           ),
                                         ],
                                       ),
                                     ),
+                                    // Bottom box with text centered inside
                                     Container(
                                       width: double.infinity, // Max width
                                       height: 20, // Bottom box height
+
                                       child: Center(
                                         child: Text(
                                           'Butuh Tinjau', // Text to display in the bottom box
@@ -376,6 +421,7 @@ class _SecondPageState extends State<SecondPage> {
                                   ],
                                 ),
                               ),
+                              // Fourth box with two smaller boxes inside
                               Container(
                                 width: (MediaQuery.of(context).size.width - 54) / 4, // Dynamic width based on screen width
                                 height: 100,
@@ -2565,54 +2611,72 @@ class _SecondPageState extends State<SecondPage> {
                 ),
               ),
 
-              Container(
-                width: 80,
-                height: 60,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
-                  children: [
-                    Image.asset(
-                      'assets/images/chat3.png', // Path ke gambar
-                      width: 24, // Lebar gambar
-                      height: 24, // Tinggi gambar
-                      fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                    ),
-                    SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
-                    Text(
-                      'Chat',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'NunitoSans',
-                        color: Color(0xFFC4B8B1),
+              GestureDetector(
+                onTap: () {
+                  // Navigasi ke halaman baru
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Clientchat()), // Ganti dengan nama halaman Anda
+                  );
+                },
+                child: Container(
+                  width: 80,
+                  height: 60,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
+                    children: [
+                      Image.asset(
+                        'assets/images/chat3.png', // Path ke gambar
+                        width: 24, // Lebar gambar
+                        height: 24, // Tinggi gambar
+                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
+                      Text(
+                        'Chat',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: 'NunitoSans',
+                          color: Color(0xFFC4B8B1),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                width: 80,
-                height: 60,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
-                  children: [
-                    Image.asset(
-                      'assets/images/saya.png', // Path ke gambar
-                      width: 24, // Lebar gambar
-                      height: 24, // Tinggi gambar
-                      fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                    ),
-                    SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
-                    Text(
-                      'Saya',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'NunitoSans',
-                        color: Color(0xFFC4B8B1),
+
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Clientsaya()), // Ganti dengan nama halaman Anda
+                  );
+                },
+                child: Container(
+                  width: 80,
+                  height: 60,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
+                    children: [
+                      Image.asset(
+                        'assets/images/saya.png', // Path ke gambar
+                        width: 24, // Lebar gambar
+                        height: 24, // Tinggi gambar
+                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
+                      Text(
+                        'Saya',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: 'NunitoSans',
+                          color: Color(0xFFB8ADA5),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

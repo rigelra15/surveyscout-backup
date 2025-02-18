@@ -32,7 +32,7 @@ flutter:
     - family: NunitoSans
       fonts:
         - asset: assets/fonts/NunitoSans_7pt_SemiCondensed-Medium.ttf
-          weight: 400  # Sesuaikan dengan bobot sebenarnya
+          weight: 400
         - asset: assets/fonts/NunitoSans_7pt-SemiBold.ttf
           weight: 700
         - asset: assets/fonts/NunitoSans_7pt-ExtraLight.ttf
@@ -68,3 +68,19 @@ flutter:
     - assets/images/chat3.png
     - assets/images/saya.png
     - assets/images/proyek.png
+    - assets/images/klien.png
+    - assets/images/surveyor.png
+    - assets/images/responden.png
+    - assets/images/caridata.png
+    - assets/images/kepuasananda.png
+    - assets/images/ataujadilah.png
+    - assets/images/namalengkap.png
+    - assets/images/jeniskelamin.png
+    - assets/images/tanggallahir.png
+    - assets/images/nomortelepon.png
+    - assets/images/nik.png
+    - assets/images/namabank.png
+    - assets/images/namaperusahaan.png
+    - assets/images/jenisperusahaan.png
+    - assets/images/pinakses.png
+    - assets/images/hurufi.png
