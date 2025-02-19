@@ -5,12 +5,12 @@ import 'clientchat.dart';
 import 'clientsaya.dart';
 import 'package:surveyscout/services/api_service.dart';
 
-class ClientProjectsPage extends StatefulWidget {
+class ClientProjects extends StatefulWidget {
   @override
   _ClientProjectsState createState() => _ClientProjectsState();
 }
 
-class _ClientProjectsState extends State<ClientProjectsPage> {
+class _ClientProjectsState extends State<ClientProjects> {
   final ApiService apiService = ApiService(
       "https://bcbf-118-99-84-39.ngrok-free.app/api/v1",
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoiM2JmODgxYmMtMmNmZi00YTc4LTgxNGUtMDM3YjhmMzI1NzIzIiwiZW1haWwiOiJnZWRlYXJpc3VkYW5hMTZAZ21haWwuY29tIiwiaWF0IjoxNzM5ODgxNzIzLCJleHAiOjE3Mzk5NjgxMjN9.3hBQlNz1qWVlfPszuileSpieALQbvhp-OGLyf8e7dTo");

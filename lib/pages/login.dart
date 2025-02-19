@@ -4,6 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:surveyscout/pages/clientprojects.dart';
+import 'package:surveyscout/pages/respondenprojects.dart';
+import 'package:surveyscout/pages/surveyorprojects.dart';
+import 'package:surveyscout/pages/welcome.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -47,6 +52,24 @@ class _LoginState extends State<Login> {
 
         if (response.statusCode == 200) {
           print("Backend response: ${response.body}");
+          final data = jsonDecode(response.body);
+
+          String status = data["status"];
+          String role = data["role"];
+          String token = data["token"];
+
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('jwt_token', token);
+          await prefs.setString('user_role', role);
+
+          if (status == "0") {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Welcome()),
+            );
+          } else {
+            _navigateToRolePage(role);
+          }
         } else {
           print("Login Gagal di Backend! Status Code: ${response.statusCode}");
           print("Response dari server: ${response.body}");
@@ -55,6 +78,32 @@ class _LoginState extends State<Login> {
     } catch (error) {
       print("Terjadi error saat login: $error");
     }
+  }
+
+  void _navigateToRolePage(String role) {
+    Widget nextPage;
+
+    switch (role) {
+      case "client":
+        nextPage = ClientProjects();
+        break;
+      case "surveyor":
+        nextPage = SurveyorProjects();
+        break;
+      case "responden":
+        nextPage = RespondenProjects();
+        break;
+      default:
+        nextPage = Login();
+        break;
+    }
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => nextPage,
+      ),
+    );
   }
 
   @override
@@ -67,7 +116,7 @@ class _LoginState extends State<Login> {
   void _startContainerLoop() {
     Timer.periodic(Duration(seconds: 3), (timer) {
       setState(() {
-        currentIndex = (currentIndex + 1) % containers.length; // Mengulang A, B, C
+        currentIndex = (currentIndex + 1) % containers.length;
       });
     });
   }
@@ -240,7 +289,6 @@ class _LoginState extends State<Login> {
         mainAxisAlignment: MainAxisAlignment.center, // Pusatkan konten secara vertikal
         crossAxisAlignment: CrossAxisAlignment.center, // Pusatkan konten secara horizontal
         children: [
-          // Gambar
           Image.asset(
             'assets/images/kepuasananda.png',
             width: 200,

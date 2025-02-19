@@ -4,12 +4,12 @@ import 'respondenchat.dart';
 import 'respondenakun.dart';
 
 
-class Respondenprojects extends StatefulWidget {
+class RespondenProjects extends StatefulWidget {
   @override
-  _Respondenprojects createState() => _Respondenprojects();
+  _RespondenProjects createState() => _RespondenProjects();
 }
 
-class _Respondenprojects extends State<Respondenprojects> {
+class _RespondenProjects extends State<RespondenProjects> {
   int activeButton = -1; // Tombol default yang tidak aktif
   bool _isSaved = false;
   bool _isSaved2 = false;

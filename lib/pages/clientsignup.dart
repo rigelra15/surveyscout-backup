@@ -133,7 +133,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => ClientProjectsPage()),
+          MaterialPageRoute(builder: (context) => ClientProjects()),
         );
       } else {
         print("Registrasi gagal! Status Code: ${response.statusCode}");
