@@ -17,6 +17,7 @@ dependencies:
   cloud_firestore: ^5.6.3
   google_sign_in: ^6.2.2
   shared_preferences: ^2.5.2
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
@@ -38,6 +39,9 @@ flutter:
           weight: 700
         - asset: assets/fonts/NunitoSans_7pt-ExtraLight.ttf
           weight: 300
+        - asset: assets/fonts/NunitoSans_7pt-LightItalic.ttf
+          weight: 400
+          style: italic
 
   uses-material-design: true
 

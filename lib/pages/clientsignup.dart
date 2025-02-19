@@ -54,15 +54,6 @@ class _ClientSignUpState extends State<ClientSignUp> {
     }
   }
 
-  Future<void> _removeToken() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove('jwt_token');
-    } catch (e) {
-      print("Error menghapus token: $e");
-    }
-  }
-
   bool _validateForm() {
     String pin = _pinAksesController.text.trim();
     String confirmPin = _konfirmasiPinController.text.trim();
@@ -116,7 +107,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
       };
 
       final response = await http.post(
-        Uri.parse("https://a0f5-118-99-84-39.ngrok-free.app/api/v1/users/registerClient"),
+        Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/clients/SignInClient"),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",
@@ -142,7 +133,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => SecondPage()),
+          MaterialPageRoute(builder: (context) => ClientProjectsPage()),
         );
       } else {
         print("Registrasi gagal! Status Code: ${response.statusCode}");

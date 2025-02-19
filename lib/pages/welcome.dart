@@ -35,15 +35,6 @@ class _WelcomeState extends State<Welcome> {
     }
   }
 
-  Future<void> _removeToken() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove('jwt_token');
-    } catch (e) {
-      print("Error menghapus token: $e");
-    }
-  }
-
   Future<void> _handleGoogleSignIn() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(
@@ -69,7 +60,7 @@ class _WelcomeState extends State<Welcome> {
         print("ID Token dari Firebase: $idToken");
 
         final response = await http.post(
-          Uri.parse("https://a0f5-118-99-84-39.ngrok-free.app/api/v1/users/GloginFirebase"),
+          Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/users/GloginFirebase"),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({"idToken": idToken}),
         );

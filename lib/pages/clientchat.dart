@@ -1168,7 +1168,7 @@ class _SecondPageState extends State<Clientchat> {
                   // Navigasi ke halaman baru
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SecondPage()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => ClientProjectsPage()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
