@@ -249,8 +249,49 @@ class Clientproyekdetailmerekrut extends StatelessWidget {
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.max, // Memastikan Row mengikuti lebar Container
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.money, color: Color(0xFFA3948D), size: 20), // Ikon di kiri
+                    Wrap(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width / 2,
+                          height: 100,
+                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Positioned(
+                                left: 50,
+                                bottom: -2,
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Colors.red,
+                                ),
+                              ),
+                              Positioned(
+                                right: 50,
+                                bottom: -2,
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Colors.blue,
+                                ),
+                              ),
+                              CircleAvatar(
+                                radius: 15,
+                                backgroundColor: Colors.green, // Lingkaran tengah di lapisan atas
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+
                     SizedBox(width: 8), // Jarak antara ikon dan teks
                     Flexible( // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
                       child: Column(
@@ -286,20 +327,26 @@ class Clientproyekdetailmerekrut extends StatelessWidget {
                             children: [
                               Container(
                                 width: double.infinity,
-                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4), // Opsional untuk memberi ruang dalam kontainer
+                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: Colors.white, // Sesuaikan warna latar belakang jika perlu
-                                  borderRadius: BorderRadius.circular(8), // Opsional untuk sudut melengkung
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Text(
-                                  'Rp 500.000',
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "NunitoSans",
-                                    color: Color(0xFFA3948D),
-                                  ),
-
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center, // Pusatkan teks dan ikon
+                                  children: [
+                                    Icon(Icons.local_post_office_sharp, size: 14, color: Color(0xFFA3948D)), // Ikon di kiri
+                                    SizedBox(width: 4), // Jarak antara ikon dan teks
+                                    Text(
+                                      'Tinjau',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: "NunitoSans",
+                                        color: Color(0xFFA3948D),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
