@@ -1,17 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:surveyscout/pages/clientprojects.dart';
+import 'package:surveyscout/pages/surveyorprojects.dart';
+import 'package:file_picker/file_picker.dart';
 
-class ClientSignUp extends StatefulWidget {
-  const ClientSignUp({Key? key}) : super(key: key);
+class SurveyorSignUp extends StatefulWidget {
+  const SurveyorSignUp({Key? key}) : super(key: key);
 
   @override
-  State<ClientSignUp> createState() => _ClientSignUpState();
+  State<SurveyorSignUp> createState() => _SurveyorSignUpState();
 }
 
-class _ClientSignUpState extends State<ClientSignUp> {
+class _SurveyorSignUpState extends State<SurveyorSignUp> {
   final TextEditingController _namaLengkapController = TextEditingController();
   final TextEditingController _jenisKelaminController = TextEditingController();
   final TextEditingController _tanggalLahirController = TextEditingController();
@@ -19,10 +22,12 @@ class _ClientSignUpState extends State<ClientSignUp> {
   final TextEditingController _nikController = TextEditingController();
   final TextEditingController _namaBankController = TextEditingController();
   final TextEditingController _nomorRekeningController = TextEditingController();
-  final TextEditingController _namaPerusahaanController = TextEditingController();
-  final TextEditingController _jenisUsahaController = TextEditingController();
+  final TextEditingController _tempatTinggalController = TextEditingController();
+  final TextEditingController _keahlianController = TextEditingController();
+  final TextEditingController _cvATSController = TextEditingController();
   final TextEditingController _pinAksesController = TextEditingController();
   final TextEditingController _konfirmasiPinController = TextEditingController();
+  File? _selectedFile;
 
   bool _isObscured = true;
   bool _isLoading = false;
@@ -62,6 +67,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
       _isButtonEnabled = pin.length == 6 &&
           confirmPin.length == 6 &&
           pin == confirmPin &&
+          _selectedFile != null &&
           _namaLengkapController.text.isNotEmpty &&
           _jenisKelaminController.text.isNotEmpty &&
           _tanggalLahirController.text.isNotEmpty &&
@@ -69,8 +75,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
           _nikController.text.isNotEmpty &&
           _namaBankController.text.isNotEmpty &&
           _nomorRekeningController.text.isNotEmpty &&
-          _namaPerusahaanController.text.isNotEmpty &&
-          _jenisUsahaController.text.isNotEmpty;
+          _tempatTinggalController.text.isNotEmpty &&
+          _keahlianController.text.isNotEmpty;
     });
     return _isButtonEnabled;
   }
@@ -93,7 +99,13 @@ class _ClientSignUpState extends State<ClientSignUp> {
         );
         return;
       }
-      final Map<String, dynamic> requestData = {
+
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/surveyors/signInSurveyor"),
+      );
+      request.headers['Authorization'] = "Bearer $token";
+      request.fields.addAll({
         "nama_lengkap": _namaLengkapController.text,
         "jenis_kelamin": _jenisKelaminController.text,
         "tanggal_lahir": _tanggalLahirController.text,
@@ -101,25 +113,26 @@ class _ClientSignUpState extends State<ClientSignUp> {
         "nik": _nikController.text,
         "nama_bank": _namaBankController.text,
         "nomor_rekening": _nomorRekeningController.text,
-        "nama_perusahaan": _namaPerusahaanController.text,
-        "jenis_usaha": _jenisUsahaController.text,
+        "tempat_tinggal": _tempatTinggalController.text,
+        "keahlian": _keahlianController.text,
         "pin_akses": _pinAksesController.text,
-      };
+      });
 
-      final response = await http.post(
-        Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/clients/SignInClient"),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
-        },
-        body: jsonEncode(requestData),
-      );
+      if (_selectedFile != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'cv_ats',
+          _selectedFile!.path,
+        ));
+      }
+
+      var response = await request.send();
+      var responseData = await response.stream.bytesToString();
+      var decodedData = jsonDecode(responseData);
 
       if (response.statusCode == 200) {
-        print("Registrasi berhasil: ${response.body}");
-        final data = jsonDecode(response.body);
-        if (data.containsKey("token")) {
-          await _saveToken(data["token"]);
+        print("Registrasi berhasil: $responseData");
+        if (decodedData.containsKey("token")) {
+          await _saveToken(decodedData["token"]);
         }
 
         ScaffoldMessenger.of(context).showSnackBar(
@@ -132,11 +145,11 @@ class _ClientSignUpState extends State<ClientSignUp> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => ClientProjects()),
+          MaterialPageRoute(builder: (context) => SurveyorProjects()),
         );
       } else {
         print("Registrasi gagal! Status Code: ${response.statusCode}");
-        print("Response dari server: ${response.body}");
+        print("Response dari server: $responseData");
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Gagal mendaftar! Silakan coba lagi."),
@@ -154,6 +167,22 @@ class _ClientSignUpState extends State<ClientSignUp> {
     }
   }
 
+  Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (result != null) {
+      setState(() {
+        _selectedFile = File(result.files.single.path!);
+        _validateForm();
+      });
+    } else {
+      print("Tidak ada file yang dipilih.");
+    }
+  }
+
   @override
   void dispose() {
     _namaLengkapController.dispose();
@@ -163,14 +192,15 @@ class _ClientSignUpState extends State<ClientSignUp> {
     _nikController.dispose();
     _namaBankController.dispose();
     _nomorRekeningController.dispose();
-    _namaPerusahaanController.dispose();
-    _jenisUsahaController.dispose();
+    _tempatTinggalController.dispose();
+    _keahlianController.dispose();
+    _cvATSController.dispose();
     _pinAksesController.dispose();
     _konfirmasiPinController.dispose();
     super.dispose();
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF1E9E5),
@@ -261,20 +291,83 @@ class _ClientSignUpState extends State<ClientSignUp> {
               _buildDivider(),
 
               _buildInputField(
-                controller: _namaPerusahaanController,
-                label: "Nama Perusahaan",
-                hint: "PT Maju Jaya",
-                iconPath: "assets/images/namaperusahaan.png",
+                controller: _tempatTinggalController,
+                label: "Kabupaten/Kota Tempat Tinggal",
+                hint: "Surabaya",
+                iconPath: "assets/images/kabupaten.png",
               ),
               _buildDivider(),
 
               _buildInputField(
-                controller: _jenisUsahaController,
-                label: "Jenis Usaha",
-                hint: "Teknologi / Manufaktur",
-                iconPath: "assets/images/jenisperusahaan.png",
+                controller: _keahlianController,
+                label: "Keahlian",
+                hint: "Excel, hitung manual, ...",
+                iconPath: "assets/images/keahlian.png",
               ),
               _buildDivider(),
+
+              Container(
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/jenisperusahaan.png',
+                          width: 30,
+                          height: 30,
+                          fit: BoxFit.cover,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          'CV ATS',
+                          style: TextStyle(
+                            color: Color(0xFF705D54),
+                            fontSize: 16,
+                            fontFamily: 'NunitoSans',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: _pickFile,
+                      icon: Image.asset(
+                        'assets/images/unggah.png',
+                        width: 24,
+                        height: 24,
+                      ),
+                      label: Text(
+                        "Unggah",
+                        style: TextStyle(
+                          color: Color(0xFF826754),
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "NunitoSans",
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFD7CCC8),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 16,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 10),
+              _selectedFile != null
+                  ? Text(
+                "File dipilih: ${_selectedFile!.path.split('/').last}",
+                style: TextStyle(color: Colors.black54, fontSize: 14),
+              )
+                  : Container(),
 
               _buildPasswordField(
                 controller: _pinAksesController,

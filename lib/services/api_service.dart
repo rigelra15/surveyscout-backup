@@ -14,6 +14,10 @@ class Survey {
   String idClient;
   String createdAt;
   String statusTask;
+  String? midtransToken;
+  String? orderId;
+  String? midtransLink;
+  int? jumlahResponden;
 
   Survey({
     required this.idSurvey,
@@ -28,6 +32,10 @@ class Survey {
     required this.idClient,
     required this.createdAt,
     required this.statusTask,
+    this.midtransToken,
+    this.orderId,
+    this.midtransLink,
+    this.jumlahResponden,
   });
 
   Map<String, dynamic> toJson() {
@@ -44,23 +52,33 @@ class Survey {
       'id_client': idClient,
       'created_at': createdAt,
       'status_task': statusTask,
+      'midtrans_token': midtransToken,
+      'order_id': orderId,
+      'midtrans_link': midtransLink,
+      'jumlah_responden': jumlahResponden,
     };
   }
 
   static Survey fromJson(Map<String, dynamic> json) {
     return Survey(
-      idSurvey: json['id_survey'],
-      namaProyek: json['nama_proyek'],
-      deskripsiProyek: json['deskripsi_proyek'],
-      tenggatPengerjaan: json['tenggat_pengerjaan'],
-      lokasi: json['lokasi'],
-      alamat: json['alamat'],
-      keahlian: List<String>.from(json['keahlian']),
-      tipeHasil: List<String>.from(json['tipe_hasil']),
-      kompensasi: json['kompensasi'],
-      idClient: json['id_client'],
-      createdAt: json['created_at'],
-      statusTask: json['status_task'],
+      idSurvey: json['id_survey'] ?? '',
+      namaProyek: json['nama_proyek'] ?? '',
+      deskripsiProyek: json['deskripsi_proyek'] ?? '',
+      tenggatPengerjaan: json['tenggat_pengerjaan'] ?? '',
+      lokasi: json['lokasi'] ?? '',
+      alamat: json['alamat'] ?? '',
+      keahlian: List<String>.from(json['keahlian'] ?? []),
+      tipeHasil: List<String>.from(json['tipe_hasil'] ?? []),
+      kompensasi: json['kompensasi'] ?? '',
+      idClient: json['id_client'] ?? '',
+      createdAt: json['created_at'] ?? '',
+      statusTask: json['status_task'] ?? '',
+      midtransToken: json['midtrans_token'] ?? null,
+      orderId: json['order_id'] ?? null,
+      midtransLink: json['midtrans_link'] ?? null,
+      jumlahResponden: (
+      json['jumlah_responden'] != null && json['jumlah_responden'] is int
+      ) ? json['jumlah_responden'] : null,
     );
   }
 
