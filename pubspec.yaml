@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  file_picker: ^6.1.1
   flutter:
     sdk: flutter
 
@@ -169,6 +170,9 @@ flutter:
     - assets/images/loading.png
     - assets/images/company.png
     - assets/images/like.png
+    - assets/images/kabupaten.png
+    - assets/images/keahlian.png
+    - assets/images/unggah.png
 
 
 

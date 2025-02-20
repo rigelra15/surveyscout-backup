@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'clientprojects.dart';
+import 'package:file_picker/file_picker.dart';
 
 class Surveyorsignup extends StatefulWidget {
   const Surveyorsignup({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class _ClientSignUpState extends State<Surveyorsignup> {
   final TextEditingController _controller9 = TextEditingController();
   final TextEditingController _controller10 = TextEditingController();
   final TextEditingController _controller11 = TextEditingController();
+  final TextEditingController _controller12 = TextEditingController();
 
   int nomortext = 0;
 
@@ -36,7 +38,8 @@ class _ClientSignUpState extends State<Surveyorsignup> {
           _controller8.text.isNotEmpty &&
           _controller9.text.isNotEmpty &&
           _controller10.text.isNotEmpty &&
-          _controller11.text.isNotEmpty;
+          _controller11.text.isNotEmpty &&
+          _controller12.text.isNotEmpty;
 
       nomortext = allFilled ? 1 : 0;
     });
@@ -692,7 +695,7 @@ class _ClientSignUpState extends State<Surveyorsignup> {
               ),
               SizedBox(height: 15),
 
-              //Jenis Perusahaan########################################################################
+              //Keahlian########################################################################
               Container(
                 width: double.infinity,
                 child: Row(
@@ -702,7 +705,7 @@ class _ClientSignUpState extends State<Surveyorsignup> {
                       child: Align(
                         alignment: Alignment.center, // Posisi gambar di tengah
                         child: Image(
-                          image: AssetImage('assets/images/jenisperusahaan.png'),
+                          image: AssetImage('assets/images/keahlian.png'),
                           width: 30,
                           height: 30,
                           fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
@@ -718,7 +721,7 @@ class _ClientSignUpState extends State<Surveyorsignup> {
                           crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
                           children: [
                             Text(
-                              'Jenis Perusahaan',
+                              'Keahlian',
                               style: TextStyle(
                                 color: Color(0xFF705D54),
                                 fontSize: 16,
@@ -732,21 +735,22 @@ class _ClientSignUpState extends State<Surveyorsignup> {
                               child: TextField(
                                 controller: _controller9,
                                 onChanged: (value) => _validateFields(),
+                                keyboardType: TextInputType.multiline, // Mengaktifkan input multi-baris
+                                maxLines: null, // Membiarkan TextField otomatis bertambah tinggi sesuai teks
+                                textAlignVertical: TextAlignVertical.top, // Menempatkan teks di atas
                                 decoration: InputDecoration(
-                                  hintText: 'Swasta',
+                                  hintText: 'Excel, hitung manual, ...',
                                   hintStyle: TextStyle(
                                     color: Color(0xFFB0B0B0),
                                     fontSize: 16,
-                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                    fontStyle: FontStyle.italic, // Gaya italic
-                                    fontWeight: FontWeight.w400, // Bobot reguler
+                                    fontFamily: 'NunitoSans',
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w400,
                                   ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                  isDense: true, // Mengurangi padding vertikal
                                   border: InputBorder.none, // Menghilangkan garis bawah
                                 ),
-                                // Pastikan TextField mengisi lebar Container
                               ),
+
                             ),
 
                           ],
@@ -756,6 +760,96 @@ class _ClientSignUpState extends State<Surveyorsignup> {
                   ],
                 ),
               ),
+              Container(
+                width: double.infinity, // Lebar mengikuti lebar layar
+                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
+                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
+              ),
+              SizedBox(height: 15),
+
+              //CV ATS ########################################################################
+              Container(
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center, // Agar kontennya sejajar secara vertikal
+                        children: [
+                          Container(
+                            child: Align(
+                              alignment: Alignment.center, // Posisi gambar di tengah
+                              child: Image(
+                                image: AssetImage('assets/images/jenisperusahaan.png'),
+                                width: 30,
+                                height: 30,
+                                fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          Container(
+
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'CV ATS',
+                                style: TextStyle(
+                                  color: Color(0xFF705D54),
+                                  fontSize: 16,
+                                  fontFamily: 'NunitoSans',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () async {
+                        FilePickerResult? result = await FilePicker.platform.pickFiles(
+                          type: FileType.custom,
+                          allowedExtensions: ['pdf'],
+                        );
+
+                        if (result != null) {
+                          String filePath = result.files.single.path!;
+                          print("File terpilih: $filePath");
+                          setState(() {
+                            _controller12.text = filePath; // Simpan path ke controller
+                            _validateFields(); // Panggil validasi ulang setelah file diunggah
+                          });
+                        } else {
+                          print("Tidak ada file yang dipilih.");
+                        }
+                      },
+                      icon: Image.asset(
+                        'assets/images/unggah.png',
+                        width: 24, // Sesuaikan ukuran ikon
+                        height: 24,
+                      ),
+                      label: Text(
+                        "Unggah",
+                        style: TextStyle(
+                          color: Color(0xFF826754),
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "NunitoSans",
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFD7CCC8), // Warna tombol
+                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 15),
               Container(
                 width: double.infinity, // Lebar mengikuti lebar layar
                 height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
