@@ -9,6 +9,7 @@ import 'pages/respondenprojects.dart';
 import 'pages/respondenchat.dart';
 import 'pages/respondenakun.dart';
 import 'pages/clientproyekdetailmerekrut.dart';
+import 'pages/surveyorsignup.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Welcome(),
+        '/': (context) => Surveyorsignup(),
       },
     );
   }

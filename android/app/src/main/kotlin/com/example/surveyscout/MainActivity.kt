@@ -1,4 +1,4 @@
-package com.survey.surveyscout
+package com.example.surveyscout
 
 import io.flutter.embedding.android.FlutterActivity
 
