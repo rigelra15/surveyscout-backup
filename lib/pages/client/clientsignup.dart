@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:surveyscout/pages/clientprojects.dart';
+import 'package:surveyscout/pages/client/clientprojects.dart';
 
 class ClientSignUp extends StatefulWidget {
   const ClientSignUp({Key? key}) : super(key: key);
@@ -107,7 +107,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
       };
 
       final response = await http.post(
-        Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/clients/SignInClient"),
+        Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/clients/signInClient"),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",

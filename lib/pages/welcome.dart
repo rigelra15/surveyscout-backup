@@ -4,7 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:surveyscout/pages/clientsignup.dart';
+import 'package:surveyscout/pages/client/clientsignup.dart';
+import 'package:surveyscout/pages/surveyor/surveyorsignup.dart';
+import 'package:surveyscout/pages/responden/respondensignup.dart';
 import 'package:surveyscout/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -127,10 +129,28 @@ class _WelcomeState extends State<Welcome> {
           ),
         );
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => ClientSignUp()),
-        );
+        switch (role) {
+          case "client":
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => ClientSignUp()),
+            );
+            break;
+          case "surveyor":
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => SurveyorSignUp()),
+            );
+            break;
+          case "responden":
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => RespondenSignUp()),
+            );
+            break;
+          default:
+            print("Role tidak dikenali: $role");
+        }
       } else {
         print("Gagal memilih role! Status Code: ${response.statusCode}");
         print("Response dari server: ${response.body}");
@@ -138,7 +158,7 @@ class _WelcomeState extends State<Welcome> {
           SnackBar(
             content: Text("Gagal memilih role! Silakan coba lagi."),
             backgroundColor: Colors.red,
-            duration: Duration(seconds: 2),
+            duration: Duration(seconds: 3),
           ),
         );
       }

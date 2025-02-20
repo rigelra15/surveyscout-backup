@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:surveyscout/pages/clientprojects.dart';
-import 'package:surveyscout/pages/login.dart';
-import 'package:surveyscout/pages/respondenprojects.dart';
-import 'package:surveyscout/pages/surveyorprojects.dart';
+import 'package:surveyscout/pages/client/clientprojects.dart';
+import 'package:surveyscout/pages/responden/respondenprojects.dart';
+import 'package:surveyscout/pages/surveyor/surveyorprojects.dart';
 import 'package:surveyscout/pages/welcome.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
@@ -34,7 +33,7 @@ class MyApp extends StatelessWidget {
     if (token != null && role != null) {
       return _getRolePage(role);
     }
-    return Login();
+    return Welcome();
   }
 
   Widget _getRolePage(String role) {
@@ -46,7 +45,7 @@ class MyApp extends StatelessWidget {
       case "responden":
         return RespondenProjects();
       default:
-        return Login();
+        return Welcome();
     }
   }
 
