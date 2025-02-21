@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Respondensignup(),
+        '/': (context) => Clientproyekdetailmerekrut(),
       },
     );
   }
