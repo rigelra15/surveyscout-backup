@@ -144,7 +144,6 @@ class Clientproyekdetaildikerjakan extends StatelessWidget {
                         ),
                       ),
 
-
                     ],
                   ),
                 ),
@@ -256,128 +255,116 @@ class Clientproyekdetaildikerjakan extends StatelessWidget {
                 SizedBox(height: 10),
                 Container(
                   width:double.infinity,
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     color: Color(0xFFEDE7E2),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  child: Row(
+                  child: Column(
                     mainAxisSize: MainAxisSize.max, // Memastikan Row mengikuti lebar Container
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Wrap(
-                        children: [
-                          Container(
-                            width: 57,
-                            height: 100,
-
-                            decoration: BoxDecoration(
-                              //color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Positioned(
-                                  left: 30,
-                                  bottom: 33,
-                                  child: CircleAvatar(
-                                    radius: 13,
-                                    backgroundColor: Colors.red, // Warna bingkai
-                                    backgroundImage: AssetImage('assets/images/foto1.png'), // Ganti dengan path gambar Anda
-                                  ),
-                                ),
-                                Positioned(
-                                  right: 30,
-                                  bottom: 33,
-                                  child: CircleAvatar(
-                                    radius: 13,
-                                    backgroundColor: Colors.blue, // Warna bingkai
-                                    backgroundImage: AssetImage('assets/images/foto2.png'), // Ganti dengan path gambar Anda
-                                  ),
-                                ),
-                                CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor: Colors.green, // Warna bingkai
-                                  backgroundImage: AssetImage('assets/images/foto3.png'), // Ganti dengan path gambar Anda
-                                ),
-                              ],
-
-                            ),
-                          ),
-                        ],
-                      ),
-
-
-                      SizedBox(width: 8), // Jarak antara ikon dan teks
-                      Flexible( // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      Container(
+                        child: Row(
                           children: [
-                            Text(
-                              '20 pelamar telah mendaftar',
+                            Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage("assets/images/foto1.png"),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(width: 8), // Jarak antara ikon dan teks
+                            Flexible( // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Richard Santoso',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: "NunitoSans",
+                                      color: Color(0xFF705D54),
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        'Tenaga Surveyor',
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Color(0xFFA3948D),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Icon(Icons.thumb_up, color: Color(0xFFA3948D), size: 10),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        '90%',
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Color(0xFFA3948D),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Icon(Icons.location_on, color: Color(0xFFA3948D), size: 10),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        'Jakarta',
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Color(0xFFA3948D),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Richard: ',
                               style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
                                 fontFamily: "NunitoSans",
                                 color: Color(0xFF705D54),
                               ),
                             ),
-                            SizedBox(height: 4),
-                            Wrap(
-                              children: [
-                                Text(
-                                  'Tinjau pengalaman mereka atau mulai chat untuk screening',
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "NunitoSans",
-                                    color: Color(0xFFA3948D),
-                                  ),
-
-                                ),
-                              ],
-                            ),
-
-                            SizedBox(height: 4),
-                            Wrap(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    // Show the bottom sheet when the button is pressed
-                                    _showPelamar(context);
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFF826754),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center, // Pusatkan teks dan ikon
-                                      children: [
-                                        Icon(Icons.local_post_office_sharp, size: 14, color: Color(0xFFEDE7E2)), // Ikon di kiri
-                                        SizedBox(width: 4), // Jarak antara ikon dan teks
-                                        Text(
-                                          'Tinjau',
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily: "NunitoSans",
-                                            color: Color(0xFFEDE7E2),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                              ],
+                            TextSpan(
+                              text: 'Untuk selanjutnya, saya coba untuk ke halte bus yang sebelah utara, Pak. Akan segera saya kabarkan ',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "NunitoSans",
+                                color: Color(0xFF705D54),
+                              ),
                             ),
                           ],
                         ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
@@ -394,7 +381,7 @@ class Clientproyekdetaildikerjakan extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Surveyor diminta untuk mencatat jumlah kendaraan yang melewati Simpang Lima selama jam sibuk (07:00-09:00 dan 16:00-18:00). Data akan digunakan untuk analisis kepadatan lalu lintas guna mendukung rencana pembangunan jalan baru.',
+                  'Surveyor akan mewawancarai pengguna transportasi umum seperti TransJakarta, KRL, dan MRT untuk mengetahui tingkat kepuasan mereka terhadap layanan yang diberikan. Data akan digunakan oleh Dinas Perhubungan untuk meningkatkan layanan.',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: "NunitoSans",
@@ -414,7 +401,7 @@ class Clientproyekdetaildikerjakan extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Tenaga surveyor harus Cermat menghitung kendaraan secara manual. Mampu menggunakan Excel untuk rekap data. Nyaman bekerja di luar ruangan.',
+                  'Tenaga surveyor harus Mampu melakukan wawancara dengan ramah dan profesional. Mengerti cara mencatat jawaban dengan cepat. Familiar dengan formulir Google Form atau kuesioner digital lainnya.',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: "NunitoSans",
@@ -434,7 +421,7 @@ class Clientproyekdetaildikerjakan extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Untuk dapat menyelesaikan proyek ini, surveyor diminta memberikan File Excel berisi rekap jumlah kendaraan berdasarkan kategori (mobil, motor, bus). Foto kondisi simpang lima selama pengamatan.',
+                  'Rekap jawaban responden dalam format PDF dan Excel. Rekaman wawancara (opsional, jika diizinkan responden).',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: "NunitoSans",
@@ -468,6 +455,13 @@ class Clientproyekdetaildikerjakan extends StatelessWidget {
           ),
 
         ),
+        bottomNavigationBar: Container(
+          height: 50,
+          decoration: BoxDecoration(
+            color: Color(0xFF826754),
+          ),
+        ),
+
       ),
 
     );
