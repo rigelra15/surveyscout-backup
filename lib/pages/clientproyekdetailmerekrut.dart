@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:surveyscout/pages/respondenprojects.dart';
+import 'dart:async'; // Import untuk Future.delayed
+import 'clientsignup.dart';
+import 'surveyorprojects.dart';
+import 'respondenprojects.dart';
 
 void main() {
   runApp(Clientproyekdetailmerekrut());
@@ -338,30 +343,37 @@ class Clientproyekdetailmerekrut extends StatelessWidget {
                             SizedBox(height: 4),
                             Wrap(
                               children: [
-                                Container(
-                                  width: double.infinity,
-                                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFF826754),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan teks dan ikon
-                                    children: [
-                                      Icon(Icons.local_post_office_sharp, size: 14, color: Color(0xFFEDE7E2)), // Ikon di kiri
-                                      SizedBox(width: 4), // Jarak antara ikon dan teks
-                                      Text(
-                                        'Tinjau',
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: "NunitoSans",
-                                          color: Color(0xFFEDE7E2),
+                                GestureDetector(
+                                  onTap: () {
+                                    // Show the bottom sheet when the button is pressed
+                                    _showPelamar(context);
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFF826754),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center, // Pusatkan teks dan ikon
+                                      children: [
+                                        Icon(Icons.local_post_office_sharp, size: 14, color: Color(0xFFEDE7E2)), // Ikon di kiri
+                                        SizedBox(width: 4), // Jarak antara ikon dan teks
+                                        Text(
+                                          'Tinjau',
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: "NunitoSans",
+                                            color: Color(0xFFEDE7E2),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
+
                               ],
                             ),
                           ],
@@ -460,4 +472,197 @@ class Clientproyekdetailmerekrut extends StatelessWidget {
 
     );
   }
+
+  void _showPelamar(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      isScrollControlled: true, // Allow bottom sheet to adjust based on its content
+      builder: (BuildContext context) {
+        return ClipRRect(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)), // Apply rounded corners to the content
+          child: Container(
+            width: MediaQuery.of(context).size.width, // Make the width fill the screen
+            padding: EdgeInsets.all(24),
+            color: Color(0xFFF1E9E5),
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Makes the bottom sheet take only necessary height
+              children: [
+                Divider(
+                  thickness: 3, // Adjust thickness to make the line thicker
+                  indent: 150,   // Make the line shorter by adding space from the start
+                  endIndent: 150, // Make the line shorter by adding space from the end
+                  color: Color(0xFFB0B0B0), // Optional: set a color for the divider
+                ),
+                SizedBox(height: 10), // Spasi antara garis dan tulisan
+                Text(
+                  "Daftar Sebagai",
+                  style: TextStyle(
+                    fontFamily: 'SourceSans3',
+                    fontSize: 24,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF705D54),
+                  ),
+                ),
+                SizedBox(height: 20),
+                // Kontainer pertama
+                GestureDetector(
+                  onTap: () {
+                    // Navigasi ke halaman clientsignup2.dart
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ClientSignUp()),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Color(0xFFD7CCC8),
+                    ),
+                    child: ListTile(
+                      leading: Image.asset(
+                        'assets/images/klien.png',
+                        width: 50,
+                        height: 50,
+                      ),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Klien",
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700, // Weight 700
+                              color: Color(0xFF705D54), // Warna #705D54
+                            ),
+                          ),
+                          SizedBox(height: 2), // Spasi antara dua teks
+                          Text(
+                            "Rekrut surveyor atau responden untuk membantu observasi Anda berjalan lancar dan efisien.",
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400, // Weight 400
+                              color: Color(0xFF3A2B24), // Warna #3A2B24
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                // Kontainer kedua
+                GestureDetector(
+                  onTap: () {
+                    // Navigasi ke halaman SurveyorProjects
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SurveyorProjects()),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(16), // Padding untuk kontainer
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: const Color(0xFFD7CCC8), // Warna latar belakang
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.asset(
+                          'assets/images/surveyor.png',
+                          width: 50,
+                          height: 50,
+                        ),
+                        const SizedBox(width: 12), // Spasi antara gambar dan teks
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Surveyor",
+                                style: TextStyle(
+                                  fontFamily: 'NunitoSans',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700, // Font tebal
+                                  color: Color(0xFF705D54),
+                                ),
+                              ),
+                              const SizedBox(height: 4), // Spasi antara judul dan deskripsi
+                              const Text(
+                                "Hasilkan uang dengan mencari data dengan wawancara, observasi, dan/atau lainnya hingga merekapnya.",
+                                style: TextStyle(
+                                  fontFamily: 'NunitoSans',
+                                  fontSize: 14, // Ukuran font deskripsi lebih kecil
+                                  fontWeight: FontWeight.w400, // Font normal
+                                  color: Color(0xFF3A2B24),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                GestureDetector(
+                  onTap: () {
+                    // Navigasi ke halaman SurveyorProjects
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Respondenprojects()),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Color(0xFFD7CCC8),
+                    ),
+                    child: ListTile(
+                      leading: Image.asset(
+                        'assets/images/responden.png',
+                        width: 50,
+                        height: 50,
+                      ),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Responden",
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700, // Weight 400
+                              color: Color(0xFF705D54), // Warna #705D54
+                            ),
+
+                          ),
+                          SizedBox(height: 2), // Spasi antara dua teks
+                          Text("Hasilkan uang dengan menjadi narasumber. Anda akan mengisi survei, diwawancarai, dan lainnya.",
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400, // Weight 400
+                              color: Color(0xFF3A2B24), // Warna #705D54
+                            ),
+                          ), // Teks kedua
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 }
