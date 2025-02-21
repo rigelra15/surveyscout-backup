@@ -10,6 +10,7 @@ import 'pages/respondenprojects.dart';
 import 'pages/respondenchat.dart';
 import 'pages/respondenakun.dart';
 import 'pages/clientproyekdetailmerekrut.dart';
+import 'pages/clientproyekdetaildikerjakan.dart';
 import 'pages/surveyorsignup.dart';
 import 'pages/respondensignup.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Clientproyekdetailmerekrut(),
+        '/': (context) => Welcome(),
       },
     );
   }

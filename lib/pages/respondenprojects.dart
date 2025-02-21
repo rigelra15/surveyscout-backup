@@ -227,11 +227,11 @@ class _Respondenprojects extends State<Respondenprojects> {
                           padding: EdgeInsets.all(8.0), // Padding untuk memberi ruang di dalam container
                           child: Text(
                             "Anda diminta mengisi kuesioner terkait pengalaman Anda menggunakan transportasi umum seperti bus, KRL, atau MRT di Jakarta.",
-                            maxLines: 3, // Maksimal hanya 3 baris
-                            overflow: TextOverflow.ellipsis, // Teks yang kelebihan akan dipotong dengan ...
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              color: Color(0xFFA3948D), // Warna teks
-                              fontSize: 12, // Ukuran font
+                              color: Color(0xFFA3948D),
+                              fontSize: 12,
                               fontFamily: "NunitoSans",
                               fontWeight: FontWeight.w400,
                             ),

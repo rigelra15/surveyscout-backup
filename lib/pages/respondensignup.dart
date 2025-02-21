@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'clientprojects.dart';
+import 'respondenprojects.dart';
 
 class Respondensignup extends StatefulWidget {
   const Respondensignup({Key? key}) : super(key: key);
 
   @override
-  State<Respondensignup> createState() => _ClientSignUpState();
+  State<Respondensignup> createState() => _RespondenSignUpState();
 }
 
-class _ClientSignUpState extends State<Respondensignup> {
+class _RespondenSignUpState extends State<Respondensignup> {
   final TextEditingController _controller1 = TextEditingController();
   final TextEditingController _controller2 = TextEditingController();
   final TextEditingController _controller3 = TextEditingController();
@@ -1218,7 +1218,7 @@ class _ClientSignUpState extends State<Respondensignup> {
                     ? () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SecondPage()),
+                    MaterialPageRoute(builder: (context) =>Respondenprojects()),
                   );
                 }
                     : null, // Tombol dinonaktifkan jika `nomortext` bukan 1

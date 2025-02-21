@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
-import 'clientprojects.dart';
+import 'package:surveyscout/pages/surveyorprojects.dart';
+import 'surveyorprojects.dart';
 import 'package:file_picker/file_picker.dart';
 
 class Surveyorsignup extends StatefulWidget {
   const Surveyorsignup({Key? key}) : super(key: key);
 
   @override
-  State<Surveyorsignup> createState() => _ClientSignUpState();
+  State<Surveyorsignup> createState() => _SurveyorSignUpState();
 }
 
-class _ClientSignUpState extends State<Surveyorsignup> {
-  final TextEditingController _controller1 = TextEditingController();
-  final TextEditingController _controller2 = TextEditingController();
-  final TextEditingController _controller3 = TextEditingController();
-  final TextEditingController _controller4 = TextEditingController();
-  final TextEditingController _controller5 = TextEditingController();
-  final TextEditingController _controller6 = TextEditingController();
-  final TextEditingController _controller7 = TextEditingController();
-  final TextEditingController _controller8 = TextEditingController();
-  final TextEditingController _controller9 = TextEditingController();
-  final TextEditingController _controller10 = TextEditingController();
-  final TextEditingController _controller11 = TextEditingController();
-  final TextEditingController _controller12 = TextEditingController();
+class _SurveyorSignUpState extends State<Surveyorsignup> {
+  final TextEditingController _controller1 = TextEditingController(); //nama lengkap
+  final TextEditingController _controller2 = TextEditingController(); //jenis kelamin
+  final TextEditingController _controller3 = TextEditingController(); //tanggal lahir
+  final TextEditingController _controller4 = TextEditingController(); //nomor telepon
+  final TextEditingController _controller5 = TextEditingController(); //nik
+  final TextEditingController _controller6 = TextEditingController(); //nama bank
+  final TextEditingController _controller7 = TextEditingController(); //nomor rekening
+  final TextEditingController _controller8 = TextEditingController(); //kabupaten / kota tempat tinggal
+  final TextEditingController _controller9 = TextEditingController(); //keahlian
+  final TextEditingController _controller10 = TextEditingController(); //pin akses
+  final TextEditingController _controller11 = TextEditingController(); // konfirmasi pin akses
+  //final TextEditingController _controller12 = TextEditingController(); //cv ats
 
   int nomortext = 0;
 
@@ -38,8 +39,8 @@ class _ClientSignUpState extends State<Surveyorsignup> {
           _controller8.text.isNotEmpty &&
           _controller9.text.isNotEmpty &&
           _controller10.text.isNotEmpty &&
-          _controller11.text.isNotEmpty &&
-          _controller12.text.isNotEmpty;
+          _controller11.text.isNotEmpty;
+          //_controller12.text.isNotEmpty;
 
       nomortext = allFilled ? 1 : 0;
     });
@@ -807,10 +808,10 @@ class _ClientSignUpState extends State<Surveyorsignup> {
                         if (result != null) {
                           String filePath = result.files.single.path!;
                           print("File terpilih: $filePath");
-                          setState(() {
-                            _controller12.text = filePath; // Simpan path ke controller
-                            _validateFields(); // Panggil validasi ulang setelah file diunggah
-                          });
+                          //setState(() {
+                          //  _controller12.text = filePath; // Simpan path ke controller
+                          //  _validateFields(); // Panggil validasi ulang setelah file diunggah
+                          //});
                         } else {
                           print("Tidak ada file yang dipilih.");
                         }
@@ -1092,7 +1093,7 @@ class _ClientSignUpState extends State<Surveyorsignup> {
                     ? () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SecondPage()),
+                    MaterialPageRoute(builder: (context) => SurveyorProjects()),
                   );
                 }
                     : null, // Tombol dinonaktifkan jika `nomortext` bukan 1

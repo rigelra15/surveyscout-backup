@@ -4,6 +4,8 @@ import 'dart:async'; // Import untuk Future.delayed
 import 'clientsignup.dart';
 import 'surveyorprojects.dart';
 import 'respondenprojects.dart';
+import 'respondensignup.dart';
+import 'surveyorsignup.dart';
 
 class Welcome extends StatefulWidget {
   @override
@@ -229,57 +231,50 @@ class _WelcomeState extends State<Welcome> {
                   ),
                 ),
                 SizedBox(height: 10),
-                // Kontainer kedua
                 GestureDetector(
                   onTap: () {
-                    // Navigasi ke halaman SurveyorProjects
+                    // Navigasi ke halaman clientsignup2.dart
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SurveyorProjects()),
+                      MaterialPageRoute(builder: (context) => Surveyorsignup()),
                     );
                   },
                   child: Container(
-                    padding: const EdgeInsets.all(16), // Padding untuk kontainer
+                    padding: EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: const Color(0xFFD7CCC8), // Warna latar belakang
+                      color: Color(0xFFD7CCC8),
                     ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          'assets/images/surveyor.png',
-                          width: 50,
-                          height: 50,
-                        ),
-                        const SizedBox(width: 12), // Spasi antara gambar dan teks
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Surveyor",
-                                style: TextStyle(
-                                  fontFamily: 'NunitoSans',
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700, // Font tebal
-                                  color: Color(0xFF705D54),
-                                ),
-                              ),
-                              const SizedBox(height: 4), // Spasi antara judul dan deskripsi
-                              const Text(
-                                "Hasilkan uang dengan mencari data dengan wawancara, observasi, dan/atau lainnya hingga merekapnya.",
-                                style: TextStyle(
-                                  fontFamily: 'NunitoSans',
-                                  fontSize: 14, // Ukuran font deskripsi lebih kecil
-                                  fontWeight: FontWeight.w400, // Font normal
-                                  color: Color(0xFF3A2B24),
-                                ),
-                              ),
-                            ],
+                    child: ListTile(
+                      leading: Image.asset(
+                        'assets/images/surveyor.png',
+                        width: 50,
+                        height: 50,
+                      ),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Surveyor",
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700, // Weight 700
+                              color: Color(0xFF705D54), // Warna #705D54
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 2), // Spasi antara dua teks
+                          Text(
+                            "Hasilkan uang dengan mencari data dengan wawancara, observasi, dan/atau lainnya hingga merekapnya.",
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400, // Weight 400
+                              color: Color(0xFF3A2B24), // Warna #3A2B24
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -289,7 +284,7 @@ class _WelcomeState extends State<Welcome> {
                     // Navigasi ke halaman SurveyorProjects
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Respondenprojects()),
+                      MaterialPageRoute(builder: (context) => Respondensignup()),
                     );
                   },
                   child: Container(
