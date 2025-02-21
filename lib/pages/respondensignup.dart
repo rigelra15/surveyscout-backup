@@ -621,7 +621,7 @@ class _ClientSignUpState extends State<Respondensignup> {
               ),
               SizedBox(height: 15),
 
-              //Nama Perusahaan########################################################################
+              //Kabupaten/Kota Tempat Tinggal########################################################################
               Container(
                 width: double.infinity,
                 child: Row(
@@ -631,7 +631,7 @@ class _ClientSignUpState extends State<Respondensignup> {
                       child: Align(
                         alignment: Alignment.center, // Posisi gambar di tengah
                         child: Image(
-                          image: AssetImage('assets/images/namaperusahaan.png'),
+                          image: AssetImage('assets/images/kabupaten.png'),
                           width: 30,
                           height: 30,
                           fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
@@ -647,7 +647,7 @@ class _ClientSignUpState extends State<Respondensignup> {
                           crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
                           children: [
                             Text(
-                              'Nama Perusahaan',
+                              'Kabupaten/Kota Tempat Tinggal',
                               style: TextStyle(
                                 color: Color(0xFF705D54),
                                 fontSize: 16,
@@ -662,7 +662,7 @@ class _ClientSignUpState extends State<Respondensignup> {
                                 controller: _controller8,
                                 onChanged: (value) => _validateFields(),
                                 decoration: InputDecoration(
-                                  hintText: 'PT Maju Mapan',
+                                  hintText: 'Surabaya',
                                   hintStyle: TextStyle(
                                     color: Color(0xFFB0B0B0),
                                     fontSize: 16,
@@ -692,7 +692,7 @@ class _ClientSignUpState extends State<Respondensignup> {
               ),
               SizedBox(height: 15),
 
-              //Jenis Perusahaan########################################################################
+              //Hobi########################################################################
               Container(
                 width: double.infinity,
                 child: Row(
@@ -702,7 +702,7 @@ class _ClientSignUpState extends State<Respondensignup> {
                       child: Align(
                         alignment: Alignment.center, // Posisi gambar di tengah
                         child: Image(
-                          image: AssetImage('assets/images/jenisperusahaan.png'),
+                          image: AssetImage('assets/images/hobi.png'),
                           width: 30,
                           height: 30,
                           fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
@@ -718,7 +718,7 @@ class _ClientSignUpState extends State<Respondensignup> {
                           crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
                           children: [
                             Text(
-                              'Jenis Perusahaan',
+                              'Hobi',
                               style: TextStyle(
                                 color: Color(0xFF705D54),
                                 fontSize: 16,
@@ -730,10 +730,223 @@ class _ClientSignUpState extends State<Respondensignup> {
                             Container(
                               width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                               child: TextField(
-                                controller: _controller9,
+                                controller: _controller8,
                                 onChanged: (value) => _validateFields(),
                                 decoration: InputDecoration(
-                                  hintText: 'Swasta',
+                                  hintText: 'Memasak, menyanyi',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xFFB0B0B0),
+                                    fontSize: 16,
+                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
+                                    fontStyle: FontStyle.italic, // Gaya italic
+                                    fontWeight: FontWeight.w400, // Bobot reguler
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
+                                  isDense: true, // Mengurangi padding vertikal
+                                  border: InputBorder.none, // Menghilangkan garis bawah
+                                ),
+                                // Pastikan TextField mengisi lebar Container
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity, // Lebar mengikuti lebar layar
+                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
+                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
+              ),
+              SizedBox(height: 15),
+
+              //Status Perkawinan########################################################################
+              Container(
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Align(
+                        alignment: Alignment.center, // Posisi gambar di tengah
+                        child: Image(
+                          image: AssetImage('assets/images/statusperkawinan.png'),
+                          width: 30,
+                          height: 30,
+                          fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Container(
+                      width: 250, // Tentukan lebar maksimum untuk kolom teks
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
+                          children: [
+                            Text(
+                              'Status Perkawinan',
+                              style: TextStyle(
+                                color: Color(0xFF705D54),
+                                fontSize: 16,
+                                fontFamily: 'NunitoSans',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            SizedBox(height: 2),
+                            Container(
+                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
+                              child: TextField(
+                                controller: _controller8,
+                                onChanged: (value) => _validateFields(),
+                                decoration: InputDecoration(
+                                  hintText: 'Belum menikah',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xFFB0B0B0),
+                                    fontSize: 16,
+                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
+                                    fontStyle: FontStyle.italic, // Gaya italic
+                                    fontWeight: FontWeight.w400, // Bobot reguler
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
+                                  isDense: true, // Mengurangi padding vertikal
+                                  border: InputBorder.none, // Menghilangkan garis bawah
+                                ),
+                                // Pastikan TextField mengisi lebar Container
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity, // Lebar mengikuti lebar layar
+                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
+                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
+              ),
+              SizedBox(height: 15),
+
+              //Tingkat Pendidikan########################################################################
+              Container(
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Align(
+                        alignment: Alignment.center, // Posisi gambar di tengah
+                        child: Image(
+                          image: AssetImage('assets/images/tingkatpendidikan.png'),
+                          width: 30,
+                          height: 30,
+                          fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Container(
+                      width: 250, // Tentukan lebar maksimum untuk kolom teks
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
+                          children: [
+                            Text(
+                              'Tingkat Pendidikan',
+                              style: TextStyle(
+                                color: Color(0xFF705D54),
+                                fontSize: 16,
+                                fontFamily: 'NunitoSans',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            SizedBox(height: 2),
+                            Container(
+                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
+                              child: TextField(
+                                controller: _controller8,
+                                onChanged: (value) => _validateFields(),
+                                decoration: InputDecoration(
+                                  hintText: 'Lulus SMA/K',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xFFB0B0B0),
+                                    fontSize: 16,
+                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
+                                    fontStyle: FontStyle.italic, // Gaya italic
+                                    fontWeight: FontWeight.w400, // Bobot reguler
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
+                                  isDense: true, // Mengurangi padding vertikal
+                                  border: InputBorder.none, // Menghilangkan garis bawah
+                                ),
+                                // Pastikan TextField mengisi lebar Container
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity, // Lebar mengikuti lebar layar
+                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
+                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
+              ),
+              SizedBox(height: 15),
+
+              //Pekerjaan########################################################################
+              Container(
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Align(
+                        alignment: Alignment.center, // Posisi gambar di tengah
+                        child: Image(
+                          image: AssetImage('assets/images/pekerjaan.png'),
+                          width: 30,
+                          height: 30,
+                          fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Container(
+                      width: 250, // Tentukan lebar maksimum untuk kolom teks
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
+                          children: [
+                            Text(
+                              'Pekerjaan',
+                              style: TextStyle(
+                                color: Color(0xFF705D54),
+                                fontSize: 16,
+                                fontFamily: 'NunitoSans',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            SizedBox(height: 2),
+                            Container(
+                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
+                              child: TextField(
+                                controller: _controller8,
+                                onChanged: (value) => _validateFields(),
+                                decoration: InputDecoration(
+                                  hintText: 'Pegawai Swasta',
                                   hintStyle: TextStyle(
                                     color: Color(0xFFB0B0B0),
                                     fontSize: 16,
