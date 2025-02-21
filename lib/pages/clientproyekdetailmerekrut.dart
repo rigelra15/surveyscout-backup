@@ -11,23 +11,31 @@ class Clientproyekdetailmerekrut extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Color(0xFFF2EEE9), // Warna latar belakang
-        appBar: AppBar(
-          backgroundColor: Color(0xFFD7CCC8),
-          toolbarHeight: 80,
-          centerTitle: true,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Color(0xFF705D54)),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: Text(
-            'Detail Proyek Survey',
-            style: TextStyle(
-              fontFamily: 'NutinoSans',
-              fontWeight: FontWeight.w700,
-              fontSize: 12,
-              color: Color(0xFF705D54),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60), // Tinggi total AppBar (50 + 10 padding)
+          child: Container(
+            padding: EdgeInsets.only(top: 20), // Padding atas 10
+            color: Color(0xFFD7CCC8), // Warna background AppBar
+            child: AppBar(
+              backgroundColor: Colors.transparent, // Transparan agar tidak menimpa warna Container
+              toolbarHeight: 50,
+              centerTitle: true,
+              elevation: 0, // Hilangkan shadow agar lebih rapi
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back, color: Color(0xFF705D54)),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              title: Text(
+                'Detail Proyek Survey',
+                style: TextStyle(
+                  fontFamily: 'NutinoSans',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                  color: Color(0xFF705D54),
+                ),
+              ),
             ),
           ),
         ),
