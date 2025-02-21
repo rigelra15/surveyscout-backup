@@ -42,16 +42,6 @@ class _ClientSignUpState extends State<ClientSignUp> {
     });
   }
 
-  @override
-  void dispose() {
-    // Bersihkan semua controller
-    _controller1.dispose();
-    _controller2.dispose();
-    _controller3.dispose();
-    _controller4.dispose();
-    _controller5.dispose();
-    super.dispose();
-  }
   bool _isObscured = true;
 
   final int nomorselesai = 12;

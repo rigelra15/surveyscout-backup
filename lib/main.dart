@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:surveyscout/pages/clientsignup.dart';
 import 'package:surveyscout/pages/respondenproyeksaya.dart';
 import 'pages/clientsaya.dart';
 import 'pages/welcome.dart';

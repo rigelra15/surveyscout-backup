@@ -20,6 +20,10 @@ class _ClientSignUpState extends State<Respondensignup> {
   final TextEditingController _controller9 = TextEditingController();
   final TextEditingController _controller10 = TextEditingController();
   final TextEditingController _controller11 = TextEditingController();
+  final TextEditingController _controller12 = TextEditingController();
+  final TextEditingController _controller13 = TextEditingController();
+  final TextEditingController _controller14 = TextEditingController();
+
 
   int nomortext = 0;
 
@@ -36,22 +40,15 @@ class _ClientSignUpState extends State<Respondensignup> {
           _controller8.text.isNotEmpty &&
           _controller9.text.isNotEmpty &&
           _controller10.text.isNotEmpty &&
-          _controller11.text.isNotEmpty;
+          _controller11.text.isNotEmpty &&
+          _controller12.text.isNotEmpty &&
+          _controller13.text.isNotEmpty &&
+          _controller14.text.isNotEmpty;
 
       nomortext = allFilled ? 1 : 0;
     });
   }
 
-  @override
-  void dispose() {
-    // Bersihkan semua controller
-    _controller1.dispose();
-    _controller2.dispose();
-    _controller3.dispose();
-    _controller4.dispose();
-    _controller5.dispose();
-    super.dispose();
-  }
   bool _isObscured = true;
 
   final int nomorselesai = 12;
@@ -730,7 +727,7 @@ class _ClientSignUpState extends State<Respondensignup> {
                             Container(
                               width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                               child: TextField(
-                                controller: _controller8,
+                                controller: _controller9,
                                 onChanged: (value) => _validateFields(),
                                 decoration: InputDecoration(
                                   hintText: 'Memasak, menyanyi',
@@ -801,7 +798,7 @@ class _ClientSignUpState extends State<Respondensignup> {
                             Container(
                               width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                               child: TextField(
-                                controller: _controller8,
+                                controller: _controller10,
                                 onChanged: (value) => _validateFields(),
                                 decoration: InputDecoration(
                                   hintText: 'Belum menikah',
@@ -872,7 +869,7 @@ class _ClientSignUpState extends State<Respondensignup> {
                             Container(
                               width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                               child: TextField(
-                                controller: _controller8,
+                                controller: _controller11,
                                 onChanged: (value) => _validateFields(),
                                 decoration: InputDecoration(
                                   hintText: 'Lulus SMA/K',
@@ -943,7 +940,7 @@ class _ClientSignUpState extends State<Respondensignup> {
                             Container(
                               width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
                               child: TextField(
-                                controller: _controller8,
+                                controller: _controller12,
                                 onChanged: (value) => _validateFields(),
                                 decoration: InputDecoration(
                                   hintText: 'Pegawai Swasta',
@@ -1018,7 +1015,7 @@ class _ClientSignUpState extends State<Respondensignup> {
                                   Expanded(
                                     flex: 9, // Memberikan lebih banyak ruang pada TextField
                                     child: TextField(
-                                      controller: _controller10,
+                                      controller: _controller13,
                                       onChanged: (value) => _validateFields(),
                                       obscureText: _isObscured, // Kontrol apakah teks disembunyikan
                                       decoration: InputDecoration(
@@ -1108,7 +1105,7 @@ class _ClientSignUpState extends State<Respondensignup> {
                                   Expanded(
                                     flex: 9, // Memberikan lebih banyak ruang pada TextField
                                     child: TextField(
-                                      controller: _controller11,
+                                      controller: _controller14,
                                       onChanged: (value) => _validateFields(),
                                       obscureText: _isObscured, // Kontrol apakah teks disembunyikan
                                       decoration: InputDecoration(
