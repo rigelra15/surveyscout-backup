@@ -537,7 +537,22 @@ class Clientproyekdetaildikerjakanchat extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(width: 8),
+              Container(
+                height: 600,
+                width: 30,
+                decoration: BoxDecoration(
+                  color: Color(0xFF826754),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.more_vert, color: Color(0xFFEDE7E2)),
 
+                  ],
+                ),
+              ),
             ],
           ),
         ),
