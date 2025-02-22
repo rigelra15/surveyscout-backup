@@ -6,16 +6,16 @@ import 'surveyorprojects.dart';
 import 'respondenprojects.dart';
 
 void main() {
-  runApp(Clientproyekdetailbutuhtinjau());
+  runApp(Clientsurveyorproyekdetaildikerjakanchat());
 }
 
-class Clientproyekdetailbutuhtinjau extends StatelessWidget {
+class Clientsurveyorproyekdetaildikerjakanchat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Color(0xFFF2EEE9),
+        backgroundColor: Color(0xFFF2EEE9), // Warna latar belakang
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60), // Tinggi total AppBar (50 + 10 padding)
           child: Container(
@@ -64,20 +64,20 @@ class Clientproyekdetailbutuhtinjau extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8), // Padding dalam container
                   decoration: BoxDecoration(
-                    color: Color(0xFFFFC107), // Warna latar belakang container
+                    color: Color(0xFFFF9800), // Warna latar belakang container
                     borderRadius: BorderRadius.circular(16), // Membuat sudut melengkung
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min, // Sesuaikan ukuran Container dengan konten
                     children: [
                       Icon(
-                        Icons.pause_circle_filled, // Ganti dengan ikon sesuai kebutuhan
+                        Icons.timelapse, // Ganti dengan ikon sesuai kebutuhan
                         color: Colors.white,
                         size: 14, // Ukuran ikon sesuai teks
                       ),
                       SizedBox(width: 6), // Jarak antara ikon dan teks
                       Text(
-                        'Butuh Tinjau',
+                        'Dikerjakan',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -449,38 +449,59 @@ class Clientproyekdetailbutuhtinjau extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 30),
 
               ],
             ),
           ),
 
         ),
-        bottomNavigationBar: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Positioned(
-              top: -30,
-              left: 0,
-              right: 0,
-              child: Container(
-                padding: EdgeInsets.all(5),
-                height: 120,
-                decoration: BoxDecoration(
-                  color: Color(0xFF3A2B24),
-                ),
-                child: Align(
-                  alignment: Alignment.topCenter, // Menempatkan isi di atas
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min, // Menghindari Column memenuhi seluruh ruang
+        bottomNavigationBar: Container(
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 27),
+          height: 80,
+          decoration: BoxDecoration(
+            color: Color(0xFF826754),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: Container(
+                  height: 600,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF1E9E5),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Icon(Icons.chat, color: Color(0xFF826754)),
+                      SizedBox(width: 10),
                       Text(
-                        'Konfirmasi luaran atau ajukan revisi dalam 3 hari',
+                        'Chat',
                         style: TextStyle(
                           fontFamily: 'NutinoSans',
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w700,
                           fontSize: 14,
-                          color: Color(0xFFF1E9E5),
+                          color: Color(0xFF826754),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Container(
+                        width: 20,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFB3261E),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            "3",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                         ),
                       ),
 
@@ -488,110 +509,53 @@ class Clientproyekdetailbutuhtinjau extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+              SizedBox(width: 8),
+              Expanded(
+                child: Container(
+                  height: 600,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF826754),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Color(0xFFEDE7E2), width: 1)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.text_snippet, color: Color(0xFFEDE7E2)),
+                      SizedBox(width: 10),
+                      Text(
+                        'Luaran',
+                        style: TextStyle(
+                          fontFamily: 'NutinoSans',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                          color: Color(0xFFEDE7E2),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(width: 8),
+              Container(
+                height: 600,
+                width: 30,
+                decoration: BoxDecoration(
+                  color: Color(0xFF826754),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.more_vert, color: Color(0xFFEDE7E2)),
 
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 27),
-              height: 80,
-              decoration: BoxDecoration(
-                color: Color(0xFF826754),
+                  ],
+                ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF1E9E5),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.chat, color: Color(0xFF826754)),
-                          SizedBox(width: 10),
-                          Text(
-                            'Chat',
-                            style: TextStyle(
-                              fontFamily: 'NutinoSans',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                              color: Color(0xFF826754),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF826754),
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Color(0xFFEDE7E2), width: 1),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.text_snippet, color: Color(0xFFEDE7E2)),
-                          SizedBox(width: 10),
-                          Text(
-                            'Luaran',
-                            style: TextStyle(
-                              fontFamily: 'NutinoSans',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                              color: Color(0xFFEDE7E2),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFB3261E),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Text(
-                                "3",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8),
-                  Container(
-                    height: 60,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF826754),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.more_vert, color: Color(0xFFEDE7E2)),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-
 
 
       ),

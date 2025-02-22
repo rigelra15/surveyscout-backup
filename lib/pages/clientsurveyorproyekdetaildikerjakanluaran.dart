@@ -6,16 +6,16 @@ import 'surveyorprojects.dart';
 import 'respondenprojects.dart';
 
 void main() {
-  runApp(Clientproyekdetaildikerjakanchat());
+  runApp(Clientsurveyorproyekdetaildikerjakanluaran());
 }
 
-class Clientproyekdetaildikerjakanchat extends StatelessWidget {
+class Clientsurveyorproyekdetaildikerjakanluaran extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Color(0xFFF2EEE9), // Warna latar belakang
+        backgroundColor: Color(0xFFF2EEE9),
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60), // Tinggi total AppBar (50 + 10 padding)
           child: Container(
@@ -121,7 +121,7 @@ class Clientproyekdetaildikerjakanchat extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Tenggat Waktu',
+                                'Tenggat Waktu Pengerjaan Revisi',
                                 style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
@@ -131,7 +131,7 @@ class Clientproyekdetaildikerjakanchat extends StatelessWidget {
                               ),
                               SizedBox(height: 4),
                               Text(
-                                '10.00 WIB, Kamis, 20 Februari 2025 (1 bulan lagi)',
+                                '10.00 WIB, Kamis, 20 Februari 2025 (7 hari lagi)',
                                 style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w400,
@@ -344,7 +344,7 @@ class Clientproyekdetaildikerjakanchat extends StatelessWidget {
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: 'Richard: ',
+                              text: 'Anda : ',
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
@@ -353,7 +353,7 @@ class Clientproyekdetaildikerjakanchat extends StatelessWidget {
                               ),
                             ),
                             TextSpan(
-                              text: 'Untuk selanjutnya, saya coba untuk ke halte bus yang sebelah utara, Pak. Akan segera saya kabarkan ',
+                              text: ' Mas, ini per kolom excelnya tolong rapikan sesuai format datanya ya, misal kalau angka dijadikan number jangan text, makasih',
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
@@ -449,113 +449,149 @@ class Clientproyekdetaildikerjakanchat extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(height: 30),
 
               ],
             ),
           ),
 
         ),
-        bottomNavigationBar: Container(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 27),
-          height: 80,
-          decoration: BoxDecoration(
-            color: Color(0xFF826754),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                child: Container(
-                  height: 600,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF1E9E5),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+        bottomNavigationBar: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              top: -30,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: EdgeInsets.all(5),
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Color(0xFF3A2B24),
+                ),
+                child: Align(
+                  alignment: Alignment.topCenter, // Menempatkan isi di atas
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min, // Menghindari Column memenuhi seluruh ruang
                     children: [
-                      Icon(Icons.chat, color: Color(0xFF826754)),
-                      SizedBox(width: 10),
                       Text(
-                        'Chat',
+                        'File hasil revisi dapat diperiksa di luaran.',
                         style: TextStyle(
                           fontFamily: 'NutinoSans',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w400,
                           fontSize: 14,
-                          color: Color(0xFF826754),
+                          color: Color(0xFFF1E9E5),
                         ),
                       ),
-                      SizedBox(width: 10),
-                      Container(
-                        width: 20,
-                        height: 20,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFB3261E),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            "3",
+
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 27),
+              height: 80,
+              decoration: BoxDecoration(
+                color: Color(0xFF826754),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF1E9E5),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.chat, color: Color(0xFF826754)),
+                          SizedBox(width: 10),
+                          Text(
+                            'Chat',
                             style: TextStyle(
-                              color: Colors.white,
+                              fontFamily: 'NutinoSans',
                               fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                              color: Color(0xFF826754),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-
-                    ],
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(width: 8),
-              Expanded(
-                child: Container(
-                  height: 600,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF826754),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Color(0xFFEDE7E2), width: 1)
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.text_snippet, color: Color(0xFFEDE7E2)),
-                      SizedBox(width: 10),
-                      Text(
-                        'Luaran',
-                        style: TextStyle(
-                          fontFamily: 'NutinoSans',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          color: Color(0xFFEDE7E2),
-                        ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF826754),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Color(0xFFEDE7E2), width: 1),
                       ),
-                    ],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.text_snippet, color: Color(0xFFEDE7E2)),
+                          SizedBox(width: 10),
+                          Text(
+                            'Luaran',
+                            style: TextStyle(
+                              fontFamily: 'NutinoSans',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                              color: Color(0xFFEDE7E2),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Container(
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFB3261E),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                "4",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(width: 8),
+                  Container(
+                    height: 60,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF826754),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.more_vert, color: Color(0xFFEDE7E2)),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(width: 8),
-              Container(
-                height: 600,
-                width: 30,
-                decoration: BoxDecoration(
-                  color: Color(0xFF826754),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.more_vert, color: Color(0xFFEDE7E2)),
-
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
+
 
 
       ),

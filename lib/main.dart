@@ -9,12 +9,12 @@ import 'pages/surveyorakun.dart';
 import 'pages/respondenprojects.dart';
 import 'pages/respondenchat.dart';
 import 'pages/respondenakun.dart';
-import 'pages/clientproyekdetailmerekrut.dart';
-import 'pages/clientproyekdetaildikerjakanchat.dart';
+import 'pages/clientsurveyorproyekdetailmerekrut.dart';
+import 'pages/clientsurveyorproyekdetaildikerjakanchat.dart';
 import 'pages/surveyorsignup.dart';
 import 'pages/respondensignup.dart';
-import 'pages/clientproyekdetailbutuhtinjau.dart';
-import 'pages/clientproyekdetaildikerjakanluaran.dart';
+import 'pages/clientsurveyorproyekdetailbutuhtinjau.dart';
+import 'pages/clientsurveyorproyekdetaildikerjakanluaran.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Clientproyekdetaildikerjakanluaran(),
+        '/': (context) => Clientsurveyorproyekdetaildikerjakanluaran(),
       },
     );
   }
