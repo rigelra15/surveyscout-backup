@@ -6,10 +6,10 @@ import 'surveyorprojects.dart';
 import 'respondenprojects.dart';
 
 void main() {
-  runApp(Clientproyekdetaildikerjakan());
+  runApp(Clientproyekdetaildikerjakanchat());
 }
 
-class Clientproyekdetaildikerjakan extends StatelessWidget {
+class Clientproyekdetaildikerjakanchat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -456,11 +456,92 @@ class Clientproyekdetaildikerjakan extends StatelessWidget {
 
         ),
         bottomNavigationBar: Container(
-          height: 50,
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 27),
+          height: 80,
           decoration: BoxDecoration(
             color: Color(0xFF826754),
           ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: Container(
+                  height: 600,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF1E9E5),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.chat, color: Color(0xFF826754)),
+                      SizedBox(width: 10),
+                      Text(
+                        'Chat',
+                        style: TextStyle(
+                          fontFamily: 'NutinoSans',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                          color: Color(0xFF826754),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Container(
+                        width: 20,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFB3261E),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            "3",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: Container(
+                  height: 600,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF826754),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Color(0xFFEDE7E2), width: 1)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.text_snippet, color: Color(0xFFEDE7E2)),
+                      SizedBox(width: 10),
+                      Text(
+                        'Luaran',
+                        style: TextStyle(
+                          fontFamily: 'NutinoSans',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                          color: Color(0xFFEDE7E2),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+            ],
+          ),
         ),
+
 
       ),
 
