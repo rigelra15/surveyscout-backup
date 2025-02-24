@@ -191,8 +191,313 @@ class _RespondenSignUpState extends State<RespondenSignUp> {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 80),
+              const Text(
+                'Selangkah Lagi!',
+                style: TextStyle(
+                  color: Color(0xFF705D54),
+                  fontSize: 32,
+                  fontFamily: 'SourceSans3',
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 5),
+              const Text(
+                'Mohon isi data diri berikut',
+                style: TextStyle(
+                  color: Color(0xFFA3948D),
+                  fontSize: 16,
+                  fontFamily: 'NunitoSans',
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              const SizedBox(height: 30),
+              _buildInputField(
+                controller: _namaLengkapController,
+                label: "Nama Lengkap",
+                hint: "John Doe",
+                iconPath: "assets/images/namalengkap.png",
+              ),
+              _buildDivider(),
+
+              _buildInputField(
+                controller: _jenisKelaminController,
+                label: "Jenis Kelamin",
+                hint: "Laki-laki / Perempuan",
+                iconPath: "assets/images/jeniskelamin.png",
+              ),
+              _buildDivider(),
+
+              _buildInputField(
+                controller: _tanggalLahirController,
+                label: "Tanggal Lahir",
+                hint: "1-Januari-1999",
+                iconPath: "assets/images/tanggallahir.png",
+              ),
+              _buildDivider(),
+
+              _buildInputField(
+                controller: _nomorTeleponController,
+                label: "Nomor Telepon",
+                hint: "081234567890",
+                iconPath: "assets/images/nomortelepon.png",
+                keyboardType: TextInputType.phone,
+              ),
+              _buildDivider(),
+
+              _buildInputField(
+                controller: _nikController,
+                label: "NIK",
+                hint: "3403130101901001",
+                iconPath: "assets/images/nik.png",
+                keyboardType: TextInputType.number,
+              ),
+              _buildDivider(),
+
+              _buildInputField(
+                controller: _namaBankController,
+                label: "Nama Bank",
+                hint: "Bank Saya",
+                iconPath: "assets/images/namabank.png",
+              ),
+              _buildDivider(),
+
+              _buildInputField(
+                controller: _nomorRekeningController,
+                label: "Nomor Rekening",
+                hint: "1234567890",
+                iconPath: "assets/images/namaperusahaan.png",
+                keyboardType: TextInputType.number,
+              ),
+              _buildDivider(),
+
+              _buildInputField(
+                controller: _tempatTinggalController,
+                label: "Kabupaten/Kota Tempat Tinggal",
+                hint: "Surabaya",
+                iconPath: "assets/images/kabupaten.png",
+              ),
+              _buildDivider(),
+
+              _buildInputField(
+                controller: _hobiController,
+                label: "Hobi",
+                hint: "Memasak, menyanyi",
+                iconPath: "assets/images/hobi.png",
+              ),
+              _buildDivider(),
+
+              _buildInputField(
+                controller: _statusPerkawinanController,
+                label: "Status Perkawinan",
+                hint: "Belum menikah",
+                iconPath: "assets/images/statusperkawinan.png",
+              ),
+              _buildDivider(),
+
+              _buildInputField(
+                controller: _tingkatPendidikanController,
+                label: "Tingkat Pendidikan",
+                hint: "Lulus SMA/K",
+                iconPath: "assets/images/tingkatpendidikan.png",
+              ),
+              _buildDivider(),
+
+              _buildInputField(
+                controller: _pekerjaanController,
+                label: "Pekerjaan",
+                hint: "Pegawai Swasta",
+                iconPath: "assets/images/pekerjaan.png",
+              ),
+              _buildDivider(),
+
+              _buildPasswordField(
+                controller: _pinAksesController,
+                label: "PIN Akses",
+                hint: "6 digit angka",
+                iconPath: "assets/images/pinakses.png",
+                keyboardType: TextInputType.number,
+              ),
+              _buildDivider(),
+
+              _buildPasswordField(
+                controller: _konfirmasiPinController,
+                label: "Konfirmasi PIN Akses",
+                hint: "Masukkan kembali PIN",
+                iconPath: "assets/images/pinakses.png",
+                keyboardType: TextInputType.number,
+              ),
+              _buildDivider(),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _isButtonEnabled ? Color(0xFF826754) : Color(0xFFC4B8B1),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                onPressed: _isButtonEnabled ? _submitForm : null,
+                child: Container(
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Lanjut",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'NunitoSans',
+                      color: _isButtonEnabled ? Colors.white : Color(0xFFD7CCC8),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
+      ),
+    );
+  }
+  Widget _buildInputField({
+    required TextEditingController controller,
+    required String label,
+    required String hint,
+    required String iconPath,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Image.asset(
+              iconPath,
+              width: 30,
+              height: 30,
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: const TextStyle(
+                      color: Color(0xFF705D54),
+                      fontSize: 16,
+                      fontFamily: 'NunitoSans',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  TextField(
+                    controller: controller,
+                    onChanged: (value) => _validateForm(),
+                    keyboardType: keyboardType,
+                    decoration: InputDecoration(
+                      hintText: hint,
+                      hintStyle: const TextStyle(
+                        color: Color(0xFFB0B0B0),
+                        fontSize: 16,
+                        fontFamily: 'NunitoSans',
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 0,
+                        vertical: 10,
+                      ),
+                      isDense: true,
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+  Widget _buildPasswordField({
+    required TextEditingController controller,
+    required String label,
+    required String hint,
+    required String iconPath,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Image.asset(
+              iconPath,
+              width: 30,
+              height: 30,
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: const TextStyle(
+                      color: Color(0xFF705D54),
+                      fontSize: 16,
+                      fontFamily: 'NunitoSans',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  TextField(
+                    controller: controller,
+                    onChanged: (value) => _validateForm(),
+                    obscureText: _isObscured,
+                    decoration: InputDecoration(
+                      hintText: hint,
+                      hintStyle: const TextStyle(
+                        color: Color(0xFFB0B0B0),
+                        fontSize: 16,
+                        fontFamily: 'NunitoSans',
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 0,
+                        vertical: 10,
+                      ),
+                      isDense: true,
+                      border: InputBorder.none,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isObscured ? Icons.visibility_off : Icons.visibility,
+                          color: const Color(0xFF705D54),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isObscured = !_isObscured;
+                          });
+                        },
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+  Widget _buildDivider() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Divider(
+        height: 1,
+        color: Color(0xFF705D54),
       ),
     );
   }
