@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'respondenproyeksaya.dart';
+import 'respondenmyprojects.dart';
 import 'respondenchat.dart';
-import 'respondenakun.dart';
+import 'respondenaccount.dart';
 
 
 class RespondenProjects extends StatefulWidget {
@@ -1230,7 +1230,7 @@ class _RespondenProjects extends State<RespondenProjects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Respondenproyeksaya()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => RespondenMyProjects()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
@@ -1267,7 +1267,7 @@ class _RespondenProjects extends State<RespondenProjects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Respondenchat()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => RespondenChat()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
@@ -1301,7 +1301,7 @@ class _RespondenProjects extends State<RespondenProjects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Respondenakun()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => RespondenAccount()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(

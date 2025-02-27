@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'clientprojects.dart';
 import 'clientchat.dart';
 
-class Clientsaya extends StatefulWidget {
+class ClientSaya extends StatefulWidget {
   @override
-  _SecondPageState createState() => _SecondPageState();
+  _ClientSaya createState() => _ClientSaya();
 }
 
-
-
-class _SecondPageState extends State<Clientsaya> {
+class _ClientSaya extends State<ClientSaya> {
   int activeButton = -1; // Tombol default yang tidak aktif
   bool isOn = false;
   bool isOn2 = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -876,7 +873,7 @@ class _SecondPageState extends State<Clientsaya> {
                   // Navigasi ke halaman baru
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Clientchat()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => ClientChat()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(

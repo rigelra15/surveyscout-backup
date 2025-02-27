@@ -1,35 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/survey_card.dart';
 import 'package:surveyscout/components/survey_status.dart';
-import 'clientchat.dart';
-import 'clientsaya.dart';
-import 'package:surveyscout/services/api_service.dart';
+import 'package:surveyscout/pages/client/clientchat.dart';
+import 'package:surveyscout/pages/client/clientsaya.dart';
+import 'package:surveyscout/services/api_clientprojects.dart';
 
 class ClientProjects extends StatefulWidget {
   @override
-  _ClientProjectsState createState() => _ClientProjectsState();
+  _ClientProjects createState() => _ClientProjects();
 }
 
-class _ClientProjectsState extends State<ClientProjects> {
-  final ApiService apiService = ApiService(
-      "https://bcbf-118-99-84-39.ngrok-free.app/api/v1",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoiM2JmODgxYmMtMmNmZi00YTc4LTgxNGUtMDM3YjhmMzI1NzIzIiwiZW1haWwiOiJnZWRlYXJpc3VkYW5hMTZAZ21haWwuY29tIiwiaWF0IjoxNzM5ODgxNzIzLCJleHAiOjE3Mzk5NjgxMjN9.3hBQlNz1qWVlfPszuileSpieALQbvhp-OGLyf8e7dTo");
-  late Future<List<Survey>> futureSurveys;
+class _ClientProjects extends State<ClientProjects> {
+  ApiService? apiService;
   List<Survey> allSurveys = [];
   List<Survey> filteredSurveys = [];
-
   String searchQuery = "";
 
   @override
   void initState() {
     super.initState();
-    futureSurveys = apiService.getSurveys().then((surveys) {
-      allSurveys = surveys;
-      filteredSurveys = surveys;
-      return surveys;
-    }).whenComplete(() {
-      _filterSurveys();
-    });
+    _initializeApiService();
+  }
+
+  Future<void> _initializeApiService() async {
+    String? token = await _getToken();
+    if (token != null) {
+      setState(() {
+        apiService = ApiService(
+          "https://b2b8-118-99-84-24.ngrok-free.app/api/v1",
+          token,
+        );
+      });
+      _fetchSurveys();
+    } else {
+      print("Token tidak ditemukan");
+    }
+  }
+
+  Future<void> _fetchSurveys() async {
+    if (apiService != null) {
+      try {
+        List<Survey> surveys = await apiService!.getSurveys();
+        setState(() {
+          allSurveys = surveys;
+          filteredSurveys = surveys;
+        });
+      } catch (e) {
+        print("Error mengambil data survei: $e");
+      }
+    }
+  }
+
+  Future<String?> _getToken() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getString('jwt_token');
+    } catch (e) {
+      print("Error mengambil token: $e");
+      return null;
+    }
   }
 
   void _filterSurveys() {
@@ -225,14 +255,13 @@ class _ClientProjectsState extends State<ClientProjects> {
                           height: 100,
                           padding: EdgeInsets.all(0),
                           child: FutureBuilder<List<Survey>>(
-                            future: apiService.getSurveys(),
+                            future: apiService != null ?
+                            apiService!.getSurveys() : Future.value([]),
                             builder: (context, snapshot) {
                               List<Survey> surveys = [];
-
                               if (snapshot.hasData && snapshot.data != null) {
                                 surveys = snapshot.data!;
                               }
-
                               return SurveyStatusWidget(surveys: surveys);
                             },
                           ),
@@ -245,7 +274,6 @@ class _ClientProjectsState extends State<ClientProjects> {
                               SizedBox(height: 12),
                           itemBuilder: (context, index) {
                             Survey survey = filteredSurveys[index];
-
                             return SurveyCard(
                               title: survey.namaProyek,
                               timeAgo: survey.calculateDeadline(),
@@ -399,7 +427,7 @@ class _ClientProjectsState extends State<ClientProjects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Clientchat()),
+                    MaterialPageRoute(builder: (context) => ClientChat()),
                   );
                 },
                 child: Container(
@@ -432,7 +460,9 @@ class _ClientProjectsState extends State<ClientProjects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Clientsaya()),
+                    MaterialPageRoute(
+                      builder: (context) => ClientSaya(),
+                    ),
                   );
                 },
                 child: Container(

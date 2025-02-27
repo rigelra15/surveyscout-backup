@@ -8,10 +8,10 @@ class RespondenSignUp extends StatefulWidget {
   const RespondenSignUp({Key? key}) : super(key: key);
 
   @override
-  State<RespondenSignUp> createState() => _RespondenSignUpState();
+  State<RespondenSignUp> createState() => _RespondenSignUp();
 }
 
-class _RespondenSignUpState extends State<RespondenSignUp> {
+class _RespondenSignUp extends State<RespondenSignUp> {
   final TextEditingController _namaLengkapController = TextEditingController();
   final TextEditingController _jenisKelaminController = TextEditingController();
   final TextEditingController _tanggalLahirController = TextEditingController();

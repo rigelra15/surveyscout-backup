@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -86,7 +85,6 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
     setState(() {
       _isLoading = true;
     });
-
     try {
       String? token = await _getToken();
       if (token == null) {
@@ -99,7 +97,6 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
         );
         return;
       }
-
       var request = http.MultipartRequest(
         'POST',
         Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/surveyors/signInSurveyor"),
@@ -117,24 +114,20 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
         "keahlian": _keahlianController.text,
         "pin_akses": _pinAksesController.text,
       });
-
       if (_selectedFile != null) {
         request.files.add(await http.MultipartFile.fromPath(
           'cv_ats',
           _selectedFile!.path,
         ));
       }
-
       var response = await request.send();
       var responseData = await response.stream.bytesToString();
       var decodedData = jsonDecode(responseData);
-
       if (response.statusCode == 200) {
         print("Registrasi berhasil: $responseData");
         if (decodedData.containsKey("token")) {
           await _saveToken(decodedData["token"]);
         }
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Registrasi berhasil"),
@@ -142,7 +135,6 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
             duration: const Duration(seconds: 3),
           ),
         );
-
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => SurveyorProjects()),
@@ -172,7 +164,6 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
       type: FileType.custom,
       allowedExtensions: ['pdf'],
     );
-
     if (result != null) {
       setState(() {
         _selectedFile = File(result.files.single.path!);
@@ -305,7 +296,6 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
                 iconPath: "assets/images/keahlian.png",
               ),
               _buildDivider(),
-
               Container(
                 width: double.infinity,
                 child: Row(
@@ -368,7 +358,6 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
                 style: TextStyle(color: Colors.black54, fontSize: 14),
               )
                   : Container(),
-
               _buildPasswordField(
                 controller: _pinAksesController,
                 label: "PIN Akses",

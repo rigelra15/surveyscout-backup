@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'surveyorprojects.dart';
 import 'surveyorchat.dart';
-import 'surveyorproyeksaya.dart';
+import 'surveyormyprojects.dart';
 
-class Surveyorakun extends StatefulWidget {
+class SurveyorAccount extends StatefulWidget {
   @override
-  _Surveyorakun createState() => _Surveyorakun();
+  _SurveyorAccount createState() => _SurveyorAccount();
 }
 
-class _Surveyorakun extends State<Surveyorakun> {
+class _SurveyorAccount extends State<SurveyorAccount> {
   int activeButton = -1; // Tombol default yang tidak aktif
   bool isOn = false;
   bool isOn2 = false;
@@ -928,7 +928,7 @@ class _Surveyorakun extends State<Surveyorakun> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SurveyorProyekSaya()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => SurveyorMyProjects()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
@@ -962,7 +962,7 @@ class _Surveyorakun extends State<Surveyorakun> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Surveyorchat()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => SurveyorChat()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(

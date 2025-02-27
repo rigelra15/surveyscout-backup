@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'clientprojects.dart';
 import 'clientsaya.dart';
 
-class Clientchat extends StatefulWidget {
+class ClientChat extends StatefulWidget {
   @override
-  _SecondPageState createState() => _SecondPageState();
+  _ClientChat createState() => _ClientChat();
 }
 
-class _SecondPageState extends State<Clientchat> {
-  int activeButton = -1; // Tombol default yang tidak aktif
+class _ClientChat extends State<ClientChat> {
+  int activeButton = -1;
 
 
   @override
@@ -1168,7 +1168,9 @@ class _SecondPageState extends State<Clientchat> {
                   // Navigasi ke halaman baru
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ClientProjects()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(
+                      builder: (context) => ClientProjects(),
+                    ), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
@@ -1229,7 +1231,9 @@ class _SecondPageState extends State<Clientchat> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Clientsaya()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(
+                      builder: (context) => ClientSaya(),
+                    ), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(

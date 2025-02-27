@@ -43,7 +43,6 @@ class _WelcomeState extends State<Welcome> {
         serverClientId: "793947844120-od7vlmcqtbh7chhne8838t1er0nc6cnq.apps.googleusercontent.com",
         scopes: ['email', 'profile'],
       );
-
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
         print("Google Sign-In dibatalkan oleh pengguna.");
@@ -54,27 +53,22 @@ class _WelcomeState extends State<Welcome> {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-
       UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
       User? user = userCredential.user;
       if (user != null) {
         String? idToken = await user.getIdToken(true);
         print("ID Token dari Firebase: $idToken");
-
         final response = await http.post(
           Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/users/GloginFirebase"),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({"idToken": idToken}),
         );
-
         if (response.statusCode == 200) {
           print("Backend response: ${response.body}");
           final data = jsonDecode(response.body);
           String status = data["status"];
           String token = data["token"];
-
           await _saveToken(token);
-
           if (status == "0") {
             _showGoogleSignupMenu(context);
           } else if (status == "1") {
@@ -109,7 +103,6 @@ class _WelcomeState extends State<Welcome> {
         );
         return;
       }
-
       final response = await http.post(
         Uri.parse("https://a0f5-118-99-84-39.ngrok-free.app/api/v1/users/selectRole"),
         headers: {
@@ -118,7 +111,6 @@ class _WelcomeState extends State<Welcome> {
         },
         body: jsonEncode({"role": role}),
       );
-
       if (response.statusCode == 200) {
         print("Role berhasil diperbarui: ${response.body}");
         ScaffoldMessenger.of(context).showSnackBar(
@@ -128,7 +120,6 @@ class _WelcomeState extends State<Welcome> {
             duration: Duration(seconds: 3),
           ),
         );
-
         switch (role) {
           case "client":
             Navigator.pushReplacement(
@@ -175,7 +166,8 @@ class _WelcomeState extends State<Welcome> {
   }
 
   void _startContainerLoop() {
-    Timer.periodic(Duration(seconds: 3), (timer) {
+    Timer.periodic(Duration(
+        seconds: 3), (timer) {
       setState(() {
         currentIndex = (currentIndex + 1) % containers.length;
       });
@@ -461,7 +453,7 @@ class _WelcomeState extends State<Welcome> {
                               fontWeight: FontWeight.w400,
                               color: Color(0xFF3A2B24),
                             ),
-                          ), // Teks kedua
+                          ),
                         ],
                       ),
                     ),

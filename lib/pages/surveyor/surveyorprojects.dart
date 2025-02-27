@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'surveyorproyeksaya.dart';
+import 'surveyormyprojects.dart';
 import 'surveyorchat.dart';
 import 'surveyorakun.dart';
 
@@ -1194,7 +1194,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SurveyorProyekSaya()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => SurveyorMyProjects()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
@@ -1228,7 +1228,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SurveyorProyekSaya()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => SurveyorMyProjects()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
@@ -1265,7 +1265,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Surveyorchat()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => SurveyorChat()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
@@ -1299,7 +1299,7 @@ class _SurveyorProjects extends State<SurveyorProjects> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Surveyorakun()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => SurveyorAccount()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(

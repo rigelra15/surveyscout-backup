@@ -3,12 +3,12 @@ import 'surveyorprojects.dart';
 import 'surveyorchat.dart';
 import 'surveyorakun.dart';
 
-class SurveyorProyekSaya extends StatefulWidget {
+class SurveyorMyProjects extends StatefulWidget {
   @override
-  _SurveyorProyekSaya createState() => _SurveyorProyekSaya();
+  _SurveyorMyProjects createState() => _SurveyorMyProjects();
 }
 
-class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
+class _SurveyorMyProjects extends State<SurveyorMyProjects> {
   int activeButton = -1; // Tombol default yang tidak aktif
   bool _isSaved = false;
   bool _isSaved2 = false;
@@ -948,7 +948,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Surveyorchat()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => SurveyorChat()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
@@ -982,7 +982,7 @@ class _SurveyorProyekSaya extends State<SurveyorProyekSaya> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Surveyorakun()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => SurveyorAccount()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(

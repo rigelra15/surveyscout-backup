@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:surveyscout/components/custom_container.dart';
 import 'package:surveyscout/pages/client/clientprojects.dart';
 import 'package:surveyscout/pages/responden/respondenprojects.dart';
 import 'package:surveyscout/pages/surveyor/surveyorprojects.dart';
@@ -24,44 +25,35 @@ class _LoginState extends State<Login> {
         serverClientId: "793947844120-od7vlmcqtbh7chhne8838t1er0nc6cnq.apps.googleusercontent.com",
         scopes: ['email', 'profile'],
       );
-
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
         print("Google Sign-In dibatalkan oleh pengguna.");
         return;
       }
-
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-
       UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
       User? user = userCredential.user;
-
       if (user != null) {
         String? idToken = await user.getIdToken(true);
         print("ID Token dari Firebase: $idToken");
-
         final response = await http.post(
           Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/users/GloginFirebase"),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({"idToken": idToken}),
         );
-
         if (response.statusCode == 200) {
           print("Backend response: ${response.body}");
           final data = jsonDecode(response.body);
-
           String status = data["status"];
           String role = data["role"];
           String token = data["token"];
-
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString('jwt_token', token);
           await prefs.setString('user_role', role);
-
           if (status == "0") {
             Navigator.pushReplacement(
               context,
@@ -82,7 +74,6 @@ class _LoginState extends State<Login> {
 
   void _navigateToRolePage(String role) {
     Widget nextPage;
-
     switch (role) {
       case "client":
         nextPage = ClientProjects();
@@ -97,7 +88,6 @@ class _LoginState extends State<Login> {
         nextPage = Login();
         break;
     }
-
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -195,7 +185,6 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 16),
                 ],
               ),
             ),
@@ -206,232 +195,26 @@ class _LoginState extends State<Login> {
   }
 
   Widget containerA() {
-    return Container(
-      padding: EdgeInsets.all(16), // Tambahkan padding agar konten tidak terlalu menempel ke tepi
-      child: Column(
-        mainAxisSize: MainAxisSize.min, // Agar Column hanya mengambil ruang yang dibutuhkan
-        mainAxisAlignment: MainAxisAlignment.center, // Pusatkan konten secara vertikal
-        crossAxisAlignment: CrossAxisAlignment.center, // Pusatkan konten secara horizontal
-        children: [
-          Image.asset(
-            'assets/images/caridata.png',
-            width: 200,
-            height: 200,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 30), // Spasi antara gambar dan teks
-          Text(
-            "Cari data tak pernah semudah ini",
-            textAlign: TextAlign.center, // Rata tengah teks
-            style: TextStyle(
-              fontFamily: 'SourceSans3', // Gunakan font yang sudah di-load
-              fontSize: 24,
-              fontWeight: FontWeight.w400, // Weight 400
-              color: Color(0xFF705D54), // Warna #705D54
-            ),
-          ),
-          SizedBox(height: 10), // Spasi antara teks pertama dan teks kedua
-          Text(
-            "Tak perlu pusing lagi mencari responden dan data, surveyor kami akan melakukannya untuk Anda",
-            textAlign: TextAlign.center, // Rata tengah teks
-            style: TextStyle(
-              fontFamily: 'NunitoSans',
-              fontWeight: FontWeight.w400,
-              fontSize: 16,
-              color: Color(0xFFA3948D),
-            ),
-          ),
-          SizedBox(height: 20), // Spasi antara teks dan bulatan
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center, // Pusatkan bulatan secara horizontal
-            children: [
-              Container(
-                width: 30, // Lebar elips (horizontal)
-                height: 10, // Tinggi elips (vertikal)
-                decoration: BoxDecoration(
-                  color: Color(0xFF826754), // Warna elips
-                  borderRadius: BorderRadius.horizontal(
-                    left: Radius.circular(20), // Radius sudut kiri
-                    right: Radius.circular(20), // Radius sudut kanan
-                  ),
-                ),
-              ),
-              SizedBox(width: 5), // Jarak antara bulatan
-              Container(
-                width: 10, // Diameter bulatan
-                height: 10, // Diameter bulatan
-                decoration: BoxDecoration(
-                  color: Color(0xFFC4B8B1), // Warna bulatan
-                  shape: BoxShape.circle, // Bentuk lingkaran
-                ),
-              ),
-              SizedBox(width: 5), // Jarak antara bulatan
-              Container(
-                width: 10, // Diameter bulatan
-                height: 10, // Diameter bulatan
-                decoration: BoxDecoration(
-                  color: Color(0xFFC4B8B1), // Warna bulatan
-                  shape: BoxShape.circle, // Bentuk lingkaran
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+    return CustomContainer(
+      imagePath: "assets/images/caridata.png",
+      title: "Cari data tak pernah semudah ini",
+      description: "Tak perlu pusing lagi mencari responden dan data, surveyor kami akan melakukannya untuk Anda",
     );
   }
 
   Widget containerB() {
-    return Container(
-      padding: EdgeInsets.all(16), // Tambahkan padding agar konten tidak terlalu menempel ke tepi
-      child: Column(
-        mainAxisSize: MainAxisSize.min, // Agar Column hanya mengambil ruang yang dibutuhkan
-        mainAxisAlignment: MainAxisAlignment.center, // Pusatkan konten secara vertikal
-        crossAxisAlignment: CrossAxisAlignment.center, // Pusatkan konten secara horizontal
-        children: [
-          Image.asset(
-            'assets/images/kepuasananda.png',
-            width: 200,
-            height: 200,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 30), // Spasi antara gambar dan teks
-          Text(
-            "Kepuasan Anda ada di setiap visi kami",
-            textAlign: TextAlign.center, // Rata tengah teks
-            style: TextStyle(
-              fontFamily: 'SourceSans3', // Gunakan font yang sudah di-load
-              fontSize: 24,
-              fontWeight: FontWeight.w400, // Weight 400
-              color: Color(0xFF705D54), // Warna #705D54
-            ),
-          ),
-          SizedBox(height: 10), // Spasi antara teks pertama dan teks kedua
-          Text(
-            "Kami memastikan tenaga surveyor dan responden yang terpercaya dan andal dalam bidangnya",
-            textAlign: TextAlign.center, // Rata tengah teks
-            style: TextStyle(
-              fontFamily: 'NunitoSans',
-              fontWeight: FontWeight.w400,
-              fontSize: 16,
-              color: Color(0xFFA3948D),
-            ),
-          ),
-          SizedBox(height: 20), // Spasi antara teks dan bulatan
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center, // Pusatkan bulatan secara horizontal
-            children: [
-              // Bulatan 1
-              Container(
-                width: 10, // Diameter bulatan
-                height: 10, // Diameter bulatan
-                decoration: BoxDecoration(
-                  color: Color(0xFFC4B8B1), // Warna bulatan
-                  shape: BoxShape.circle, // Bentuk lingkaran
-                ),
-              ),
-              SizedBox(width: 5), // Jarak antara bulatan
-              Container(
-                width: 30, // Lebar elips (horizontal)
-                height: 10, // Tinggi elips (vertikal)
-                decoration: BoxDecoration(
-                  color: Color(0xFF826754), // Warna elips
-                  borderRadius: BorderRadius.horizontal(
-                    left: Radius.circular(20), // Radius sudut kiri
-                    right: Radius.circular(20), // Radius sudut kanan
-                  ),
-                ),
-              ),
-              SizedBox(width: 5), // Jarak antara bulatan
-              Container(
-                width: 10, // Diameter bulatan
-                height: 10, // Diameter bulatan
-                decoration: BoxDecoration(
-                  color: Color(0xFFC4B8B1), // Warna bulatan
-                  shape: BoxShape.circle, // Bentuk lingkaran
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+    return CustomContainer(
+      imagePath: "assets/images/kepuasananda.png",
+      title: "Kepuasan Anda ada di setiap visi kami",
+      description: "Kami memastikan tenaga surveyor dan responden yang terpercaya dan andal dalam bidangnya",
     );
   }
 
   Widget containerC() {
-    return Container(
-      padding: EdgeInsets.all(16), // Tambahkan padding agar konten tidak terlalu menempel ke tepi
-      child: Column(
-        mainAxisSize: MainAxisSize.min, // Agar Column hanya mengambil ruang yang dibutuhkan
-        mainAxisAlignment: MainAxisAlignment.center, // Pusatkan konten secara vertikal
-        crossAxisAlignment: CrossAxisAlignment.center, // Pusatkan konten secara horizontal
-        children: [
-          Image.asset(
-            'assets/images/ataujadilah.png',
-            width: 200,
-            height: 200,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 30), // Spasi antara gambar dan teks
-          Text(
-            "Atau, jadilah bagian dari kami dan dapatkan komisi",
-            textAlign: TextAlign.center, // Rata tengah teks
-            style: TextStyle(
-              fontFamily: 'SourceSans3', // Gunakan font yang sudah di-load
-              fontSize: 24,
-              fontWeight: FontWeight.w400, // Weight 400
-              color: Color(0xFF705D54), // Warna #705D54
-            ),
-          ),
-          SizedBox(height: 10), // Spasi antara teks pertama dan teks kedua
-          Text(
-            "Anda dapat menjadi surveyor atau responden dan memperoleh komisi setelah melaksanakan tugas",
-            textAlign: TextAlign.center, // Rata tengah teks
-            style: TextStyle(
-              fontFamily: 'NunitoSans',
-              fontWeight: FontWeight.w400,
-              fontSize: 16,
-              color: Color(0xFFA3948D),
-            ),
-          ),
-          SizedBox(height: 20), // Spasi antara teks dan bulatan
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center, // Pusatkan bulatan secara horizontal
-            children: [
-              // Bulatan 1
-              Container(
-                width: 10, // Diameter bulatan
-                height: 10, // Diameter bulatan
-                decoration: BoxDecoration(
-                  color: Color(0xFFC4B8B1), // Warna bulatan
-                  shape: BoxShape.circle, // Bentuk lingkaran
-                ),
-              ),
-              SizedBox(width: 5), // Jarak antara bulatan
-              Container(
-                width: 10, // Diameter bulatan
-                height: 10, // Diameter bulatan
-                decoration: BoxDecoration(
-                  color: Color(0xFFC4B8B1), // Warna bulatan
-                  shape: BoxShape.circle, // Bentuk lingkaran
-                ),
-              ),
-              SizedBox(width: 5), // Jarak antara bulatan
-              Container(
-                width: 30, // Lebar elips (horizontal)
-                height: 10, // Tinggi elips (vertikal)
-                decoration: BoxDecoration(
-                  color: Color(0xFF826754), // Warna elips
-                  borderRadius: BorderRadius.horizontal(
-                    left: Radius.circular(20), // Radius sudut kiri
-                    right: Radius.circular(20), // Radius sudut kanan
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+    return CustomContainer(
+      imagePath: "assets/images/ataujadilah.png",
+      title: "Atau, jadilah bagian dari kami dan dapatkan komisi!",
+      description: "Anda dapat menjadi surveyor atau responden dan memperoleh komisi setelah melaksanakan tugas",
     );
   }
 }

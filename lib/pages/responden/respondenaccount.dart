@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'respondenproyeksaya.dart';
+import 'respondenmyprojects.dart';
 import 'respondenprojects.dart';
 import 'respondenchat.dart';
 
-class Respondenakun extends StatefulWidget {
+class RespondenAccount extends StatefulWidget {
   @override
-  _Respondenakun createState() => _Respondenakun();
+  _RespondenAccount createState() => _RespondenAccount();
 }
 
-class _Respondenakun extends State<Respondenakun> {
+class _RespondenAccount extends State<RespondenAccount> {
   int activeButton = -1; // Tombol default yang tidak aktif
   bool isOn = false;
   bool isOn2 = false;
@@ -880,7 +880,7 @@ class _Respondenakun extends State<Respondenakun> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Respondenproyeksaya()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => RespondenMyProjects()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
@@ -914,7 +914,7 @@ class _Respondenakun extends State<Respondenakun> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Respondenchat()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(builder: (context) => RespondenChat()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(

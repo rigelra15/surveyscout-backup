@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(Clientproyekdetailmerekrut());
+  runApp(ClientProjectsDetail());
 }
 
-class Clientproyekdetailmerekrut extends StatelessWidget {
+class ClientProjectsDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

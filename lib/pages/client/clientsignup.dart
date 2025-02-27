@@ -8,10 +8,10 @@ class ClientSignUp extends StatefulWidget {
   const ClientSignUp({Key? key}) : super(key: key);
 
   @override
-  State<ClientSignUp> createState() => _ClientSignUpState();
+  State<ClientSignUp> createState() => _ClientSignUp();
 }
 
-class _ClientSignUpState extends State<ClientSignUp> {
+class _ClientSignUp extends State<ClientSignUp> {
   final TextEditingController _namaLengkapController = TextEditingController();
   final TextEditingController _jenisKelaminController = TextEditingController();
   final TextEditingController _tanggalLahirController = TextEditingController();
@@ -57,7 +57,6 @@ class _ClientSignUpState extends State<ClientSignUp> {
   bool _validateForm() {
     String pin = _pinAksesController.text.trim();
     String confirmPin = _konfirmasiPinController.text.trim();
-
     setState(() {
       _isButtonEnabled = pin.length == 6 &&
           confirmPin.length == 6 &&
@@ -80,7 +79,6 @@ class _ClientSignUpState extends State<ClientSignUp> {
     setState(() {
       _isLoading = true;
     });
-
     try {
       String? token = await _getToken();
       if (token == null) {
