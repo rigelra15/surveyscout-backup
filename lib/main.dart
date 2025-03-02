@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:surveyscout/pages/clientrespondenproyekdetailmerekrut.dart';
 import 'package:surveyscout/pages/clientsignup.dart';
 import 'package:surveyscout/pages/respondenproyeksaya.dart';
 import 'pages/clientsaya.dart';
@@ -17,6 +18,8 @@ import 'pages/clientsurveyorproyekdetailbutuhtinjau.dart';
 import 'pages/clientsurveyorproyekdetaildikerjakanluaran.dart';
 import 'pages/clientsurveyorproyekdetailperingatan.dart';
 import 'pages/clientsurveyorproyekdetailselesai.dart';
+import 'pages/clientrespondenproyekdetailmerekrut.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Clientsurveyorproyekdetailselesai(),
+        '/': (context) => Clientrespondenproyekdetailmerekrut(),
       },
     );
   }
