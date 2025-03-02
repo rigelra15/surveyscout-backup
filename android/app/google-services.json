@@ -14,11 +14,27 @@
       },
       "oauth_client": [
         {
-          "client_id": "793947844120-7j4nnhard485ho1igt71je4pbouflb83.apps.googleusercontent.com",
+          "client_id": "793947844120-e9g13p37sdu5e4gkvk6nlk9i74ehncqo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.surveyscout",
-            "certificate_hash": "96b580b16a1aee96cf7c395a4cfb921570cc82bf"
+            "certificate_hash": "d63f1e9a419b839b4d15cdeffe0df7bf0cdb8208"
+          }
+        },
+        {
+          "client_id": "793947844120-lc8b7khaun73qqdkteoon2hhvodom069.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.surveyscout",
+            "certificate_hash": "d7e37663999ae78219e86d2988c26726815719b5"
+          }
+        },
+        {
+          "client_id": "793947844120-v8crrb824d15f26bq4ja9ntma35367g8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.surveyscout",
+            "certificate_hash": "5aa8936d3f118b93127aab6b99adc4e78de60ea3"
           }
         },
         {

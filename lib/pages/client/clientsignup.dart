@@ -18,11 +18,14 @@ class _ClientSignUp extends State<ClientSignUp> {
   final TextEditingController _nomorTeleponController = TextEditingController();
   final TextEditingController _nikController = TextEditingController();
   final TextEditingController _namaBankController = TextEditingController();
-  final TextEditingController _nomorRekeningController = TextEditingController();
-  final TextEditingController _namaPerusahaanController = TextEditingController();
+  final TextEditingController _nomorRekeningController =
+      TextEditingController();
+  final TextEditingController _namaPerusahaanController =
+      TextEditingController();
   final TextEditingController _jenisUsahaController = TextEditingController();
   final TextEditingController _pinAksesController = TextEditingController();
-  final TextEditingController _konfirmasiPinController = TextEditingController();
+  final TextEditingController _konfirmasiPinController =
+      TextEditingController();
 
   bool _isObscured = true;
   bool _isLoading = false;
@@ -105,7 +108,8 @@ class _ClientSignUp extends State<ClientSignUp> {
       };
 
       final response = await http.post(
-        Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/clients/signInClient"),
+        Uri.parse(
+            "https://0681-118-99-84-24.ngrok-free.app/api/v1/clients/signInClient"),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",
@@ -168,7 +172,7 @@ class _ClientSignUp extends State<ClientSignUp> {
     super.dispose();
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF1E9E5),
@@ -206,7 +210,6 @@ class _ClientSignUp extends State<ClientSignUp> {
                 iconPath: "assets/images/namalengkap.png",
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _jenisKelaminController,
                 label: "Jenis Kelamin",
@@ -214,15 +217,13 @@ class _ClientSignUp extends State<ClientSignUp> {
                 iconPath: "assets/images/jeniskelamin.png",
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _tanggalLahirController,
                 label: "Tanggal Lahir",
-                hint: "1-Januari-1999",
+                hint: "1 Januari 1999",
                 iconPath: "assets/images/tanggallahir.png",
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _nomorTeleponController,
                 label: "Nomor Telepon",
@@ -231,7 +232,6 @@ class _ClientSignUp extends State<ClientSignUp> {
                 keyboardType: TextInputType.phone,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _nikController,
                 label: "NIK",
@@ -240,7 +240,6 @@ class _ClientSignUp extends State<ClientSignUp> {
                 keyboardType: TextInputType.number,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _namaBankController,
                 label: "Nama Bank",
@@ -248,7 +247,6 @@ class _ClientSignUp extends State<ClientSignUp> {
                 iconPath: "assets/images/namabank.png",
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _nomorRekeningController,
                 label: "Nomor Rekening",
@@ -257,7 +255,6 @@ class _ClientSignUp extends State<ClientSignUp> {
                 keyboardType: TextInputType.number,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _namaPerusahaanController,
                 label: "Nama Perusahaan",
@@ -265,7 +262,6 @@ class _ClientSignUp extends State<ClientSignUp> {
                 iconPath: "assets/images/namaperusahaan.png",
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _jenisUsahaController,
                 label: "Jenis Usaha",
@@ -273,7 +269,6 @@ class _ClientSignUp extends State<ClientSignUp> {
                 iconPath: "assets/images/jenisperusahaan.png",
               ),
               _buildDivider(),
-
               _buildPasswordField(
                 controller: _pinAksesController,
                 label: "PIN Akses",
@@ -282,7 +277,6 @@ class _ClientSignUp extends State<ClientSignUp> {
                 keyboardType: TextInputType.number,
               ),
               _buildDivider(),
-
               _buildPasswordField(
                 controller: _konfirmasiPinController,
                 label: "Konfirmasi PIN Akses",
@@ -294,7 +288,8 @@ class _ClientSignUp extends State<ClientSignUp> {
               const SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _isButtonEnabled ? Color(0xFF826754) : Color(0xFFC4B8B1),
+                  backgroundColor:
+                      _isButtonEnabled ? Color(0xFF826754) : Color(0xFFC4B8B1),
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
@@ -310,7 +305,8 @@ class _ClientSignUp extends State<ClientSignUp> {
                       fontSize: 16.0,
                       fontWeight: FontWeight.w700,
                       fontFamily: 'NunitoSans',
-                      color: _isButtonEnabled ? Colors.white : Color(0xFFD7CCC8),
+                      color:
+                          _isButtonEnabled ? Colors.white : Color(0xFFD7CCC8),
                     ),
                   ),
                 ),
@@ -321,6 +317,7 @@ class _ClientSignUp extends State<ClientSignUp> {
       ),
     );
   }
+
   Widget _buildInputField({
     required TextEditingController controller,
     required String label,
@@ -381,6 +378,7 @@ class _ClientSignUp extends State<ClientSignUp> {
       ],
     );
   }
+
   Widget _buildPasswordField({
     required TextEditingController controller,
     required String label,
@@ -454,6 +452,7 @@ class _ClientSignUp extends State<ClientSignUp> {
       ],
     );
   }
+
   Widget _buildDivider() {
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),

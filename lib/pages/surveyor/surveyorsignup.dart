@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,17 +21,22 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
   final TextEditingController _nomorTeleponController = TextEditingController();
   final TextEditingController _nikController = TextEditingController();
   final TextEditingController _namaBankController = TextEditingController();
-  final TextEditingController _nomorRekeningController = TextEditingController();
-  final TextEditingController _tempatTinggalController = TextEditingController();
+  final TextEditingController _nomorRekeningController =
+      TextEditingController();
+  final TextEditingController _tempatTinggalController =
+      TextEditingController();
   final TextEditingController _keahlianController = TextEditingController();
   final TextEditingController _cvATSController = TextEditingController();
   final TextEditingController _pinAksesController = TextEditingController();
-  final TextEditingController _konfirmasiPinController = TextEditingController();
+  final TextEditingController _konfirmasiPinController =
+      TextEditingController();
   File? _selectedFile;
 
   bool _isObscured = true;
   bool _isLoading = false;
   bool _isButtonEnabled = false;
+
+  Map<String, String?> _errorMessages = {};
 
   @override
   void initState() {
@@ -71,9 +77,13 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
           _jenisKelaminController.text.isNotEmpty &&
           _tanggalLahirController.text.isNotEmpty &&
           _nomorTeleponController.text.isNotEmpty &&
+          _nomorTeleponController.text.length >= 10 &&
+          _nomorTeleponController.text.length <= 15 &&
           _nikController.text.isNotEmpty &&
+          _nikController.text.length == 16 &&
           _namaBankController.text.isNotEmpty &&
           _nomorRekeningController.text.isNotEmpty &&
+          _nomorRekeningController.text.length >= 8 &&
           _tempatTinggalController.text.isNotEmpty &&
           _keahlianController.text.isNotEmpty;
     });
@@ -99,7 +109,8 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
       }
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/surveyors/signInSurveyor"),
+        Uri.parse(
+            "https://0681-118-99-84-24.ngrok-free.app/api/v1/surveyors/signInSurveyor"),
       );
       request.headers['Authorization'] = "Bearer $token";
       request.fields.addAll({
@@ -110,20 +121,21 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
         "nik": _nikController.text,
         "nama_bank": _namaBankController.text,
         "nomor_rekening": _nomorRekeningController.text,
-        "tempat_tinggal": _tempatTinggalController.text,
+        "domisili": _tempatTinggalController.text,
         "keahlian": _keahlianController.text,
         "pin_akses": _pinAksesController.text,
       });
       if (_selectedFile != null) {
         request.files.add(await http.MultipartFile.fromPath(
-          'cv_ats',
+          'file',
           _selectedFile!.path,
+          contentType: MediaType('application', 'pdf'),
         ));
       }
       var response = await request.send();
       var responseData = await response.stream.bytesToString();
       var decodedData = jsonDecode(responseData);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         print("Registrasi berhasil: $responseData");
         if (decodedData.containsKey("token")) {
           await _saveToken(decodedData["token"]);
@@ -227,73 +239,74 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
                 label: "Nama Lengkap",
                 hint: "John Doe",
                 iconPath: "assets/images/namalengkap.png",
+                onChanged: _validateForm,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _jenisKelaminController,
                 label: "Jenis Kelamin",
                 hint: "Laki-laki / Perempuan",
                 iconPath: "assets/images/jeniskelamin.png",
+                onChanged: _validateForm,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _tanggalLahirController,
                 label: "Tanggal Lahir",
-                hint: "1-Januari-1999",
+                hint: "1 Januari 1999",
                 iconPath: "assets/images/tanggallahir.png",
+                onChanged: _validateForm,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _nomorTeleponController,
                 label: "Nomor Telepon",
                 hint: "081234567890",
                 iconPath: "assets/images/nomortelepon.png",
                 keyboardType: TextInputType.phone,
+                onChanged: _validateForm,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _nikController,
                 label: "NIK",
                 hint: "3403130101901001",
                 iconPath: "assets/images/nik.png",
                 keyboardType: TextInputType.number,
+                onChanged: _validateForm,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _namaBankController,
                 label: "Nama Bank",
                 hint: "Bank Saya",
                 iconPath: "assets/images/namabank.png",
+                onChanged: _validateForm,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _nomorRekeningController,
                 label: "Nomor Rekening",
                 hint: "1234567890",
                 iconPath: "assets/images/namaperusahaan.png",
                 keyboardType: TextInputType.number,
+                onChanged: _validateForm,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _tempatTinggalController,
                 label: "Kabupaten/Kota Tempat Tinggal",
                 hint: "Surabaya",
                 iconPath: "assets/images/kabupaten.png",
+                onChanged: _validateForm,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _keahlianController,
                 label: "Keahlian",
                 hint: "Excel, hitung manual, ...",
                 iconPath: "assets/images/keahlian.png",
+                onChanged: _validateForm,
               ),
               _buildDivider(),
               Container(
@@ -354,9 +367,9 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
               SizedBox(height: 10),
               _selectedFile != null
                   ? Text(
-                "File dipilih: ${_selectedFile!.path.split('/').last}",
-                style: TextStyle(color: Colors.black54, fontSize: 14),
-              )
+                      "File dipilih: ${_selectedFile!.path.split('/').last}",
+                      style: TextStyle(color: Colors.black54, fontSize: 14),
+                    )
                   : Container(),
               _buildPasswordField(
                 controller: _pinAksesController,
@@ -366,7 +379,6 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
                 keyboardType: TextInputType.number,
               ),
               _buildDivider(),
-
               _buildPasswordField(
                 controller: _konfirmasiPinController,
                 label: "Konfirmasi PIN Akses",
@@ -378,7 +390,8 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
               const SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _isButtonEnabled ? Color(0xFF826754) : Color(0xFFC4B8B1),
+                  backgroundColor:
+                      _isButtonEnabled ? Color(0xFF826754) : Color(0xFFC4B8B1),
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
@@ -394,7 +407,8 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
                       fontSize: 16.0,
                       fontWeight: FontWeight.w700,
                       fontFamily: 'NunitoSans',
-                      color: _isButtonEnabled ? Colors.white : Color(0xFFD7CCC8),
+                      color:
+                          _isButtonEnabled ? Colors.white : Color(0xFFD7CCC8),
                     ),
                   ),
                 ),
@@ -405,13 +419,33 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
       ),
     );
   }
+
   Widget _buildInputField({
     required TextEditingController controller,
     required String label,
     required String hint,
     required String iconPath,
+    required Function() onChanged,
     TextInputType keyboardType = TextInputType.text,
   }) {
+    void _validateInput(String value) {
+      String? errorMessage;
+
+      if (label == "NIK") {
+        errorMessage = (value.isNotEmpty && value.length != 16)
+            ? "NIK harus terdiri dari 16 digit"
+            : null;
+      } else if (label == "Nomor Telepon") {
+        errorMessage =
+            (value.isNotEmpty && (value.length < 10 || value.length > 15))
+                ? "Nomor telepon harus 10-15 digit"
+                : null;
+      }
+
+      _errorMessages[label] = errorMessage;
+      onChanged();
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -438,8 +472,11 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
                   ),
                   TextField(
                     controller: controller,
-                    onChanged: (value) => _validateForm(),
                     keyboardType: keyboardType,
+                    onChanged: (value) {
+                      _validateInput(value);
+                      onChanged();
+                    },
                     decoration: InputDecoration(
                       hintText: hint,
                       hintStyle: const TextStyle(
@@ -455,6 +492,7 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
                       ),
                       isDense: true,
                       border: InputBorder.none,
+                      errorText: _errorMessages[label],
                     ),
                   ),
                 ],
@@ -465,6 +503,7 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
       ],
     );
   }
+
   Widget _buildPasswordField({
     required TextEditingController controller,
     required String label,
@@ -538,6 +577,7 @@ class _SurveyorSignUpState extends State<SurveyorSignUp> {
       ],
     );
   }
+
   Widget _buildDivider() {
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),

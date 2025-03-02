@@ -1,11 +1,11 @@
 name: surveyscout
 description: "A new Flutter project."
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.1 <4.0.0'
+  sdk: ">=3.4.1 <4.0.0"
 
 dependencies:
   flutter:
@@ -47,53 +47,4 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/surveyscoutlogo.png
-    - assets/images/surveyscout1.png
-    - assets/images/google.png
-    - assets/images/merekrut.png
-    - assets/images/selesai.png
-    - assets/images/butuhtinjau.png
-    - assets/images/dikerjakan.png
-    - assets/images/duaharilalu.png
-    - assets/images/pdfexcel.png
-    - assets/images/chat.png
-    - assets/images/aksi.png
-    - assets/images/2bulanlagi.png
-    - assets/images/foto1.png
-    - assets/images/foto2.png
-    - assets/images/foto3.png
-    - assets/images/taskantor.png
-    - assets/images/taskantorjam.png
-    - assets/images/titik3.png
-    - assets/images/chat.png
-    - assets/images/peringatan.png
-    - assets/images/gradienmerah.png
-    - assets/images/butuhtinjau2.png
-    - assets/images/selesai2.png
-    - assets/images/download.png
-    - assets/images/chat3.png
-    - assets/images/saya.png
-    - assets/images/proyek.png
-    - assets/images/klien.png
-    - assets/images/surveyor.png
-    - assets/images/responden.png
-    - assets/images/caridata.png
-    - assets/images/kepuasananda.png
-    - assets/images/ataujadilah.png
-    - assets/images/namalengkap.png
-    - assets/images/jeniskelamin.png
-    - assets/images/tanggallahir.png
-    - assets/images/nomortelepon.png
-    - assets/images/nik.png
-    - assets/images/namabank.png
-    - assets/images/namaperusahaan.png
-    - assets/images/jenisperusahaan.png
-    - assets/images/pinakses.png
-    - assets/images/hurufi.png
-    - assets/images/kabupaten.png
-    - assets/images/keahlian.png
-    - assets/images/unggah.png
-    - assets/images/hobi.png
-    - assets/images/statusperkawinan.png
-    - assets/images/tingkatpendidikan.png
-    - assets/images/pekerjaan.png
+    - assets/images/

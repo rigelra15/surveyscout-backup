@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:surveyscout/components/survey_card.dart';
+import 'package:surveyscout/components/project_card.dart';
 import 'package:surveyscout/components/survey_status.dart';
 import 'package:surveyscout/pages/client/clientchat.dart';
 import 'package:surveyscout/pages/client/clientsaya.dart';
@@ -13,8 +13,8 @@ class ClientProjects extends StatefulWidget {
 
 class _ClientProjects extends State<ClientProjects> {
   ApiService? apiService;
-  List<Survey> allSurveys = [];
-  List<Survey> filteredSurveys = [];
+  List<Project> allProjects = [];
+  List<Project> filteredProjects = [];
   String searchQuery = "";
 
   @override
@@ -28,7 +28,7 @@ class _ClientProjects extends State<ClientProjects> {
     if (token != null) {
       setState(() {
         apiService = ApiService(
-          "https://b2b8-118-99-84-24.ngrok-free.app/api/v1",
+          "https://0681-118-99-84-24.ngrok-free.app/api/v1",
           token,
         );
       });
@@ -41,10 +41,10 @@ class _ClientProjects extends State<ClientProjects> {
   Future<void> _fetchSurveys() async {
     if (apiService != null) {
       try {
-        List<Survey> surveys = await apiService!.getSurveys();
+        List<Project> surveys = await apiService!.getSurveys();
         setState(() {
-          allSurveys = surveys;
-          filteredSurveys = surveys;
+          allProjects = surveys;
+          filteredProjects = surveys;
         });
       } catch (e) {
         print("Error mengambil data survei: $e");
@@ -64,15 +64,15 @@ class _ClientProjects extends State<ClientProjects> {
 
   void _filterSurveys() {
     setState(() {
-      filteredSurveys = allSurveys.where((survey) {
+      filteredProjects = allProjects.where((survey) {
         final matchesStatus = selectedStatus == "Semua status" ||
             survey.statusTask.toLowerCase() == selectedStatus.toLowerCase();
         final matchesSearch =
-        survey.namaProyek.toLowerCase().contains(searchQuery.toLowerCase());
+            survey.namaProyek.toLowerCase().contains(searchQuery.toLowerCase());
         return matchesStatus && matchesSearch;
       }).toList();
 
-      filteredSurveys.sort((a, b) {
+      filteredProjects.sort((a, b) {
         DateTime dateA = DateTime.parse(a.createdAt);
         DateTime dateB = DateTime.parse(b.createdAt);
         return dateB.compareTo(dateA);
@@ -157,7 +157,7 @@ class _ClientProjects extends State<ClientProjects> {
                           ),
                         ),
                         prefixIcon:
-                        Icon(Icons.search, color: Color(0xFF826754)),
+                            Icon(Icons.search, color: Color(0xFF826754)),
                         hintStyle: TextStyle(
                           color: Color(0xFFB0B0B0),
                           fontFamily: 'NunitoSans',
@@ -199,18 +199,18 @@ class _ClientProjects extends State<ClientProjects> {
                       _buildDropdown("Semua Peran",
                           ["Semua peran", "Surveyor", "Responden"],
                           selectedValue: selectedPeran, onChanged: (value) {
-                            setState(() {
-                              selectedPeran = value!;
-                            });
-                          }),
+                        setState(() {
+                          selectedPeran = value!;
+                        });
+                      }),
                       SizedBox(width: 8),
                       _buildDropdown("Semua Lokasi",
                           ["Semua lokasi", "Sidoarjo", "Surabaya"],
                           selectedValue: selectedLokasi, onChanged: (value) {
-                            setState(() {
-                              selectedLokasi = value!;
-                            });
-                          }),
+                        setState(() {
+                          selectedLokasi = value!;
+                        });
+                      }),
                       SizedBox(width: 8),
                       _buildDropdown(
                           "Semua Komisi",
@@ -254,11 +254,12 @@ class _ClientProjects extends State<ClientProjects> {
                           width: double.infinity,
                           height: 100,
                           padding: EdgeInsets.all(0),
-                          child: FutureBuilder<List<Survey>>(
-                            future: apiService != null ?
-                            apiService!.getSurveys() : Future.value([]),
+                          child: FutureBuilder<List<Project>>(
+                            future: apiService != null
+                                ? apiService!.getSurveys()
+                                : Future.value([]),
                             builder: (context, snapshot) {
-                              List<Survey> surveys = [];
+                              List<Project> surveys = [];
                               if (snapshot.hasData && snapshot.data != null) {
                                 surveys = snapshot.data!;
                               }
@@ -269,36 +270,36 @@ class _ClientProjects extends State<ClientProjects> {
                         ListView.separated(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: filteredSurveys.length,
+                          itemCount: filteredProjects.length,
                           separatorBuilder: (context, index) =>
                               SizedBox(height: 12),
                           itemBuilder: (context, index) {
-                            Survey survey = filteredSurveys[index];
-                            return SurveyCard(
-                              title: survey.namaProyek,
-                              timeAgo: survey.calculateDeadline(),
-                              fileType: survey.tipeHasil.join(", "),
-                              status: survey.statusTask,
-                              showRating: survey.statusTask == "selesai",
-                              onDownload: survey.statusTask == "selesai"
+                            Project project = filteredProjects[index];
+                            return ProjectCard(
+                              title: project.namaProyek,
+                              timeAgo: project.calculateDeadline(),
+                              fileType: project.tipeHasil.join(", "),
+                              status: project.statusTask,
+                              showRating: project.statusTask == "selesai",
+                              onDownload: project.statusTask == "selesai"
                                   ? () => print("Download tapped")
                                   : null,
-                              onChat: survey.statusTask == "ditinjau" ||
-                                  survey.statusTask == "dikerjakan"
+                              onChat: project.statusTask == "ditinjau" ||
+                                      project.statusTask == "dikerjakan"
                                   ? () => print("Chat tapped")
                                   : null,
                               onMore: () => print("More options tapped"),
-                              chatCount: (survey.statusTask == "dikerjakan")
+                              chatCount: (project.statusTask == "dikerjakan")
                                   ? 3
                                   : null,
-                              onWork: survey.statusTask == "merekrut"
+                              onWork: project.statusTask == "merekrut"
                                   ? () => print("Work tapped")
                                   : null,
                             );
                           },
                         ),
                         SizedBox(height: 40),
-                        if (filteredSurveys.isEmpty)
+                        if (filteredProjects.isEmpty)
                           Center(
                             child: Text(
                               'Tidak ada survei yang ditemukan.',
@@ -311,13 +312,13 @@ class _ClientProjects extends State<ClientProjects> {
                               ),
                             ),
                           ),
-                        if (filteredSurveys.isNotEmpty)
+                        if (filteredProjects.isNotEmpty)
                           Center(
                             child: Container(
                               width: double.infinity,
                               child: Center(
                                 child: Text(
-                                  'Anda memiliki total ${filteredSurveys.length} proyek',
+                                  'Anda memiliki total ${filteredProjects.length} proyek',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Color(0xFFA3948D),
@@ -500,8 +501,8 @@ class _ClientProjects extends State<ClientProjects> {
 
   Widget _buildDropdown(String hint, List<String> options,
       {required String selectedValue,
-        required ValueChanged<String?> onChanged,
-        bool isWide = false}) {
+      required ValueChanged<String?> onChanged,
+      bool isWide = false}) {
     return Container(
       width: isWide ? 300 : 200,
       height: 40,

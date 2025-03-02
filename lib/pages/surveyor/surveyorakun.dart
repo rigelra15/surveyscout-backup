@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:surveyscout/components/custom_signout.dart';
+import 'package:surveyscout/pages/welcome.dart';
 import 'surveyorprojects.dart';
 import 'surveyorchat.dart';
 import 'surveyormyprojects.dart';
@@ -13,6 +18,36 @@ class _SurveyorAccount extends State<SurveyorAccount> {
   bool isOn = false;
   bool isOn2 = false;
 
+  Future<void> _handleGoogleSignOut(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) => CustomSignOut(
+        title: 'Konfirmasi Keluar Akun',
+        message: 'Apakah Anda yakin ingin keluar?',
+        confirmText: 'Ya',
+        cancelText: 'Batal',
+        onConfirm: () async {
+          Navigator.of(context).pop(); // Tutup dialog sebelum sign out
+          
+          final GoogleSignIn googleSignIn = GoogleSignIn();
+          await googleSignIn.signOut();
+          await FirebaseAuth.instance.signOut();
+
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.remove('jwt_token');
+          await prefs.remove('user_role');
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Welcome()),
+          );
+        },
+        onCancel: () {
+          Navigator.of(context).pop(); // Tutup dialog tanpa sign out
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -284,6 +319,28 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                             },
                             child: const Text(
                               'Ubah Profil',
+                              style: TextStyle(
+                                color: Color(0xFFEDE7E2),
+                                fontFamily: "NunitoSans",
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12), // Jarak antara tombol dan teks
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFFFF0000), // Warna tombol
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            ),
+                            onPressed: () {
+                              _handleGoogleSignOut(context);
+                            },
+                            child: const Text(
+                              'Keluar Akun',
                               style: TextStyle(
                                 color: Color(0xFFEDE7E2),
                                 fontFamily: "NunitoSans",

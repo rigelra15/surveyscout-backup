@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:surveyscout/services/api_clientprojects.dart';
 
 class SurveyStatusWidget extends StatelessWidget {
-  final List<Survey> surveys;
+  final List<Project> surveys;
 
   const SurveyStatusWidget({Key? key, required this.surveys}) : super(key: key);
 

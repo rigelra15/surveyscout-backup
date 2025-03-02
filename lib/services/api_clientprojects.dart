@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class Survey {
+class Project {
   String idSurvey;
   String namaProyek;
   String deskripsiProyek;
@@ -19,7 +19,7 @@ class Survey {
   String? midtransLink;
   int? jumlahResponden;
 
-  Survey({
+  Project({
     required this.idSurvey,
     required this.namaProyek,
     required this.deskripsiProyek,
@@ -59,8 +59,8 @@ class Survey {
     };
   }
 
-  static Survey fromJson(Map<String, dynamic> json) {
-    return Survey(
+  static Project fromJson(Map<String, dynamic> json) {
+    return Project(
       idSurvey: json['id_survey'] ?? '',
       namaProyek: json['nama_proyek'] ?? '',
       deskripsiProyek: json['deskripsi_proyek'] ?? '',
@@ -118,7 +118,7 @@ class ApiService {
 
   ApiService(this.baseUrl, this.authToken);
 
-  Future<List<Survey>> getSurveys() async {
+  Future<List<Project>> getSurveys() async {
     final response = await http.get(
       Uri.parse('$baseUrl/surveys/clientSurveys'),
       headers: {
@@ -135,7 +135,7 @@ class ApiService {
 
       if (jsonResponse['data'] is List) {
         List<dynamic> data = jsonResponse['data'];
-        return data.map((survey) => Survey.fromJson(survey)).toList();
+        return data.map((survey) => Project.fromJson(survey)).toList();
       } else {
         throw Exception("Unexpected data format: ${jsonResponse['data']}");
       }
@@ -144,7 +144,7 @@ class ApiService {
     }
   }
 
-  Future<Survey> getSurvey(String id) async {
+  Future<Project> getSurvey(String id) async {
     final response = await http.get(
       Uri.parse('$baseUrl/surveys/clientSurveys/$id'),
       headers: {
@@ -157,7 +157,7 @@ class ApiService {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
 
       if (jsonResponse['data'] is Map<String, dynamic>) {
-        return Survey.fromJson(jsonResponse['data']);
+        return Project.fromJson(jsonResponse['data']);
       } else {
         throw Exception("Unexpected data format: ${jsonResponse['data']}");
       }

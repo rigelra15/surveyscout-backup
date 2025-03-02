@@ -14,9 +14,11 @@ class Welcome extends StatefulWidget {
   @override
   _WelcomeState createState() => _WelcomeState();
 }
+
 class _WelcomeState extends State<Welcome> {
   int currentIndex = 0;
   late List<Widget> containers;
+  Timer? _timer;
 
   Future<void> _saveToken(String token) async {
     try {
@@ -40,7 +42,8 @@ class _WelcomeState extends State<Welcome> {
   Future<void> _handleGoogleSignIn() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(
-        serverClientId: "793947844120-od7vlmcqtbh7chhne8838t1er0nc6cnq.apps.googleusercontent.com",
+        serverClientId:
+            "793947844120-od7vlmcqtbh7chhne8838t1er0nc6cnq.apps.googleusercontent.com",
         scopes: ['email', 'profile'],
       );
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
@@ -48,18 +51,21 @@ class _WelcomeState extends State<Welcome> {
         print("Google Sign-In dibatalkan oleh pengguna.");
         return;
       }
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
       User? user = userCredential.user;
       if (user != null) {
         String? idToken = await user.getIdToken(true);
         print("ID Token dari Firebase: $idToken");
         final response = await http.post(
-          Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/users/GloginFirebase"),
+          Uri.parse(
+              "https://0681-118-99-84-24.ngrok-free.app/api/v1/users/GloginFirebase"),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({"idToken": idToken}),
         );
@@ -104,7 +110,8 @@ class _WelcomeState extends State<Welcome> {
         return;
       }
       final response = await http.post(
-        Uri.parse("https://a0f5-118-99-84-39.ngrok-free.app/api/v1/users/selectRole"),
+        Uri.parse(
+            "https://0681-118-99-84-24.ngrok-free.app/api/v1/users/selectRole"),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",
@@ -166,12 +173,21 @@ class _WelcomeState extends State<Welcome> {
   }
 
   void _startContainerLoop() {
-    Timer.periodic(Duration(
-        seconds: 3), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+      if (!mounted) {
+        _timer?.cancel();
+        return;
+      }
       setState(() {
         currentIndex = (currentIndex + 1) % containers.length;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -437,7 +453,8 @@ class _WelcomeState extends State<Welcome> {
                       title: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Responden",
+                          Text(
+                            "Responden",
                             style: TextStyle(
                               fontFamily: 'NunitoSans',
                               fontSize: 16,
@@ -446,7 +463,8 @@ class _WelcomeState extends State<Welcome> {
                             ),
                           ),
                           SizedBox(height: 2),
-                          Text("Hasilkan uang dengan menjadi narasumber. Anda akan mengisi survei, diwawancarai, dan lainnya.",
+                          Text(
+                            "Hasilkan uang dengan menjadi narasumber. Anda akan mengisi survei, diwawancarai, dan lainnya.",
                             style: TextStyle(
                               fontFamily: 'NunitoSans',
                               fontSize: 16,

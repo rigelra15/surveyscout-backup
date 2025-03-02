@@ -18,14 +18,19 @@ class _RespondenSignUp extends State<RespondenSignUp> {
   final TextEditingController _nomorTeleponController = TextEditingController();
   final TextEditingController _nikController = TextEditingController();
   final TextEditingController _namaBankController = TextEditingController();
-  final TextEditingController _nomorRekeningController = TextEditingController();
-  final TextEditingController _tempatTinggalController = TextEditingController();
+  final TextEditingController _nomorRekeningController =
+      TextEditingController();
+  final TextEditingController _tempatTinggalController =
+      TextEditingController();
   final TextEditingController _hobiController = TextEditingController();
-  final TextEditingController _statusPerkawinanController = TextEditingController();
-  final TextEditingController _tingkatPendidikanController = TextEditingController();
+  final TextEditingController _statusPerkawinanController =
+      TextEditingController();
+  final TextEditingController _tingkatPendidikanController =
+      TextEditingController();
   final TextEditingController _pekerjaanController = TextEditingController();
   final TextEditingController _pinAksesController = TextEditingController();
-  final TextEditingController _konfirmasiPinController = TextEditingController();
+  final TextEditingController _konfirmasiPinController =
+      TextEditingController();
 
   bool _isObscured = true;
   bool _isLoading = false;
@@ -107,7 +112,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
         "nik": _nikController.text,
         "nama_bank": _namaBankController.text,
         "nomor_rekening": _nomorRekeningController.text,
-        "tempat_tinggal": _tempatTinggalController.text,
+        "domisili": _tempatTinggalController.text,
         "hobi": _hobiController.text,
         "status_perkawinan": _statusPerkawinanController.text,
         "tingkat_pendidikan": _tingkatPendidikanController.text,
@@ -116,7 +121,8 @@ class _RespondenSignUp extends State<RespondenSignUp> {
       };
 
       final response = await http.post(
-        Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/responden/signInResponden"),
+        Uri.parse(
+            "https://0681-118-99-84-24.ngrok-free.app/api/v1/respondents/signInResponden"),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",
@@ -124,7 +130,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
         body: jsonEncode(requestData),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         print("Registrasi berhasil: ${response.body}");
         final data = jsonDecode(response.body);
         if (data.containsKey("token")) {
@@ -220,7 +226,6 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 iconPath: "assets/images/namalengkap.png",
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _jenisKelaminController,
                 label: "Jenis Kelamin",
@@ -228,15 +233,13 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 iconPath: "assets/images/jeniskelamin.png",
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _tanggalLahirController,
                 label: "Tanggal Lahir",
-                hint: "1-Januari-1999",
+                hint: "1 Januari 1999",
                 iconPath: "assets/images/tanggallahir.png",
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _nomorTeleponController,
                 label: "Nomor Telepon",
@@ -245,7 +248,6 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 keyboardType: TextInputType.phone,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _nikController,
                 label: "NIK",
@@ -254,7 +256,6 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 keyboardType: TextInputType.number,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _namaBankController,
                 label: "Nama Bank",
@@ -262,7 +263,6 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 iconPath: "assets/images/namabank.png",
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _nomorRekeningController,
                 label: "Nomor Rekening",
@@ -271,7 +271,6 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 keyboardType: TextInputType.number,
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _tempatTinggalController,
                 label: "Kabupaten/Kota Tempat Tinggal",
@@ -279,7 +278,6 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 iconPath: "assets/images/kabupaten.png",
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _hobiController,
                 label: "Hobi",
@@ -287,7 +285,6 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 iconPath: "assets/images/hobi.png",
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _statusPerkawinanController,
                 label: "Status Perkawinan",
@@ -295,7 +292,6 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 iconPath: "assets/images/statusperkawinan.png",
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _tingkatPendidikanController,
                 label: "Tingkat Pendidikan",
@@ -303,7 +299,6 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 iconPath: "assets/images/tingkatpendidikan.png",
               ),
               _buildDivider(),
-
               _buildInputField(
                 controller: _pekerjaanController,
                 label: "Pekerjaan",
@@ -311,7 +306,6 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 iconPath: "assets/images/pekerjaan.png",
               ),
               _buildDivider(),
-
               _buildPasswordField(
                 controller: _pinAksesController,
                 label: "PIN Akses",
@@ -320,7 +314,6 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 keyboardType: TextInputType.number,
               ),
               _buildDivider(),
-
               _buildPasswordField(
                 controller: _konfirmasiPinController,
                 label: "Konfirmasi PIN Akses",
@@ -332,7 +325,8 @@ class _RespondenSignUp extends State<RespondenSignUp> {
               const SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _isButtonEnabled ? Color(0xFF826754) : Color(0xFFC4B8B1),
+                  backgroundColor:
+                      _isButtonEnabled ? Color(0xFF826754) : Color(0xFFC4B8B1),
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
@@ -348,7 +342,8 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                       fontSize: 16.0,
                       fontWeight: FontWeight.w700,
                       fontFamily: 'NunitoSans',
-                      color: _isButtonEnabled ? Colors.white : Color(0xFFD7CCC8),
+                      color:
+                          _isButtonEnabled ? Colors.white : Color(0xFFD7CCC8),
                     ),
                   ),
                 ),
@@ -359,6 +354,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
       ),
     );
   }
+
   Widget _buildInputField({
     required TextEditingController controller,
     required String label,
@@ -419,6 +415,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
       ],
     );
   }
+
   Widget _buildPasswordField({
     required TextEditingController controller,
     required String label,
@@ -492,6 +489,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
       ],
     );
   }
+
   Widget _buildDivider() {
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),

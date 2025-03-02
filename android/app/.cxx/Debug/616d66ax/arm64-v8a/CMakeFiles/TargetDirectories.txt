@@ -1,0 +1,2 @@
+G:/Kuliah/Projects/googlebabi/android/app/.cxx/Debug/616d66ax/arm64-v8a/CMakeFiles/edit_cache.dir
+G:/Kuliah/Projects/googlebabi/android/app/.cxx/Debug/616d66ax/arm64-v8a/CMakeFiles/rebuild_cache.dir

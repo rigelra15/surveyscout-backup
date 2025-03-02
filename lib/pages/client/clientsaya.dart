@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:surveyscout/components/custom_signout.dart';
+import 'package:surveyscout/pages/welcome.dart';
 import 'clientprojects.dart';
 import 'clientchat.dart';
 
@@ -11,6 +16,37 @@ class _ClientSaya extends State<ClientSaya> {
   int activeButton = -1; // Tombol default yang tidak aktif
   bool isOn = false;
   bool isOn2 = false;
+
+  Future<void> _handleGoogleSignOut(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) => CustomSignOut(
+        title: 'Konfirmasi Logout',
+        message: 'Apakah Anda yakin ingin keluar?',
+        confirmText: 'Ya',
+        cancelText: 'Batal',
+        onConfirm: () async {
+          Navigator.of(context).pop();
+
+          final GoogleSignIn googleSignIn = GoogleSignIn();
+          await googleSignIn.signOut();
+          await FirebaseAuth.instance.signOut();
+
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.remove('jwt_token');
+          await prefs.remove('user_role');
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Welcome()),
+          );
+        },
+        onCancel: () {
+          Navigator.of(context).pop();
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -229,6 +265,26 @@ class _ClientSaya extends State<ClientSaya> {
                       child: const Center(
                         child: Text(
                           'Ubah Profil',
+                          style: TextStyle(
+                            color: Color(0xFFEDE7E2),
+                            fontFamily: "NunitoSans",
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Container(
+                      width: double.infinity,
+                      height: 35, // Tinggi kontainer keempat
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFF0000),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Keluar Akun',
                           style: TextStyle(
                             color: Color(0xFFEDE7E2),
                             fontFamily: "NunitoSans",

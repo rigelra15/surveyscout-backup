@@ -15,6 +15,7 @@ class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
+
 class _LoginState extends State<Login> {
   int currentIndex = 0;
   late List<Widget> containers;
@@ -22,7 +23,8 @@ class _LoginState extends State<Login> {
   Future<void> _handleGoogleSignIn() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(
-        serverClientId: "793947844120-od7vlmcqtbh7chhne8838t1er0nc6cnq.apps.googleusercontent.com",
+        serverClientId:
+            "793947844120-od7vlmcqtbh7chhne8838t1er0nc6cnq.apps.googleusercontent.com",
         scopes: ['email', 'profile'],
       );
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
@@ -30,18 +32,21 @@ class _LoginState extends State<Login> {
         print("Google Sign-In dibatalkan oleh pengguna.");
         return;
       }
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
       User? user = userCredential.user;
       if (user != null) {
         String? idToken = await user.getIdToken(true);
         print("ID Token dari Firebase: $idToken");
         final response = await http.post(
-          Uri.parse("https://bcbf-118-99-84-39.ngrok-free.app/api/v1/users/GloginFirebase"),
+          Uri.parse(
+              "https://0681-118-99-84-24.ngrok-free.app/api/v1/users/GloginFirebase"),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({"idToken": idToken}),
         );
@@ -198,7 +203,8 @@ class _LoginState extends State<Login> {
     return CustomContainer(
       imagePath: "assets/images/caridata.png",
       title: "Cari data tak pernah semudah ini",
-      description: "Tak perlu pusing lagi mencari responden dan data, surveyor kami akan melakukannya untuk Anda",
+      description:
+          "Tak perlu pusing lagi mencari responden dan data, surveyor kami akan melakukannya untuk Anda",
     );
   }
 
@@ -206,7 +212,8 @@ class _LoginState extends State<Login> {
     return CustomContainer(
       imagePath: "assets/images/kepuasananda.png",
       title: "Kepuasan Anda ada di setiap visi kami",
-      description: "Kami memastikan tenaga surveyor dan responden yang terpercaya dan andal dalam bidangnya",
+      description:
+          "Kami memastikan tenaga surveyor dan responden yang terpercaya dan andal dalam bidangnya",
     );
   }
 
@@ -214,7 +221,8 @@ class _LoginState extends State<Login> {
     return CustomContainer(
       imagePath: "assets/images/ataujadilah.png",
       title: "Atau, jadilah bagian dari kami dan dapatkan komisi!",
-      description: "Anda dapat menjadi surveyor atau responden dan memperoleh komisi setelah melaksanakan tugas",
+      description:
+          "Anda dapat menjadi surveyor atau responden dan memperoleh komisi setelah melaksanakan tugas",
     );
   }
 }
