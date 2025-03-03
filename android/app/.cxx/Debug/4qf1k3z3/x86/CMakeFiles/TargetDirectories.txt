@@ -1,0 +1,2 @@
+G:/Kuliah/Projects/surveyscout-backup/android/app/.cxx/Debug/4qf1k3z3/x86/CMakeFiles/edit_cache.dir
+G:/Kuliah/Projects/surveyscout-backup/android/app/.cxx/Debug/4qf1k3z3/x86/CMakeFiles/rebuild_cache.dir

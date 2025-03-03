@@ -15,7 +15,7 @@ class Project {
   String createdAt;
   String statusTask;
   String? midtransToken;
-  String? orderId;
+  String orderId;
   String? midtransLink;
   int? jumlahResponden;
 
@@ -33,7 +33,7 @@ class Project {
     required this.createdAt,
     required this.statusTask,
     this.midtransToken,
-    this.orderId,
+    required this.orderId,
     this.midtransLink,
     this.jumlahResponden,
   });

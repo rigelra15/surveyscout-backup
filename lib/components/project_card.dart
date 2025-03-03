@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
+import 'package:iconify_flutter_plus/icons/ic.dart';
+import 'package:iconify_flutter_plus/icons/ph.dart';
+import 'package:iconify_flutter_plus/icons/mdi.dart';
+import 'package:iconify_flutter_plus/icons/material_symbols.dart';
 
 class ProjectCard extends StatelessWidget {
+  final String orderId;
   final String title;
   final String timeAgo;
   final String fileType;
@@ -10,10 +16,12 @@ class ProjectCard extends StatelessWidget {
   final VoidCallback? onChat;
   final VoidCallback? onWork;
   final VoidCallback? onMore;
+  final VoidCallback? onEdit;
   final int? chatCount;
 
   const ProjectCard({
     Key? key,
+    required this.orderId,
     required this.title,
     required this.timeAgo,
     required this.fileType,
@@ -23,6 +31,7 @@ class ProjectCard extends StatelessWidget {
     this.onMore,
     this.onChat,
     this.onWork,
+    this.onEdit,
     this.chatCount,
   }) : super(key: key);
 
@@ -34,8 +43,14 @@ class ProjectCard extends StatelessWidget {
         return 'Butuh Tinjau';
       case 'dikerjakan':
         return 'Dikerjakan';
+      case 'draft':
+        return 'Draft';
+      case 'pembayaran':
+        return 'Tunggu Bayar';
+      case 'kadaluwarsa':
+        return 'Kadaluwarsa';
       default:
-        return '';
+        return 'Draft';
     }
   }
 
@@ -47,21 +62,36 @@ class ProjectCard extends StatelessWidget {
         return Color(0xFFFFC107);
       case 'dikerjakan':
         return Color(0xFFFF9800);
+      case 'draft':
+        return Color(0xFF2196F3);
+      case 'pembayaran':
+        return Color(0xFF000080);
+      case 'kadaluwarsa':
+        return Color(0xFF9E9E9E);
       default:
         return Colors.transparent;
     }
   }
 
-  String getImageByStatus(String status) {
+  Iconify getIconByStatus(String status) {
     switch (status) {
       case 'selesai':
-        return 'assets/images/selesai2.png';
+        return const Iconify(Ic.outline_check, color: Colors.white, size: 16);
       case 'ditinjau':
-        return 'assets/images/butuhtinjau2.png';
+        return const Iconify(Ph.circle_dashed, color: Colors.white, size: 16);
       case 'dikerjakan':
-        return 'assets/images/taskantorjam.png';
+        return const Iconify(Ic.twotone_work_history,
+            color: Colors.white, size: 16);
+      case 'draft':
+        return const Iconify(Ic.round_insert_drive_file,
+            color: Colors.white, size: 16);
+      case 'pembayaran':
+        return const Iconify(MaterialSymbols.payments_rounded,
+            color: Colors.white, size: 16);
+      case 'kadaluwarsa':
+        return const Iconify(Mdi.clock_alert, color: Colors.white, size: 16);
       default:
-        return '';
+        return const Iconify(Ic.outline_check, color: Colors.white, size: 16);
     }
   }
 
@@ -143,32 +173,33 @@ class ProjectCard extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: 8),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/pdfexcel.png',
-                                height: 24,
-                                width: 24,
-                                fit: BoxFit.contain,
-                              ),
-                              SizedBox(width: 8),
-                              Flexible(
-                                child: Text(
-                                  fileType,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'NunitoSans',
-                                    color: Color(0xFFA3948D),
-                                  ),
-                                  softWrap: true,
-                                  overflow: TextOverflow.visible,
+                          if (orderId.startsWith("SURVEY"))
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/pdfexcel.png',
+                                  height: 24,
+                                  width: 24,
+                                  fit: BoxFit.contain,
                                 ),
-                              ),
-                            ],
-                          ),
+                                SizedBox(width: 8),
+                                Flexible(
+                                  child: Text(
+                                    fileType,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'NunitoSans',
+                                      color: Color(0xFFA3948D),
+                                    ),
+                                    softWrap: true,
+                                    overflow: TextOverflow.visible,
+                                  ),
+                                ),
+                              ],
+                            ),
                         ],
                       ),
                     ],
@@ -187,7 +218,7 @@ class ProjectCard extends StatelessWidget {
                     children: [
                       Container(
                         width: (MediaQuery.of(context).size.width - 47 * 2) *
-                            (2 / 5) -
+                                (2 / 5) -
                             4,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +247,7 @@ class ProjectCard extends StatelessWidget {
                       ),
                       Container(
                         width: (MediaQuery.of(context).size.width - 47 * 2) *
-                            (1.5 / 5) -
+                                (1.5 / 5) -
                             4,
                         padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
@@ -245,7 +276,7 @@ class ProjectCard extends StatelessWidget {
                       ),
                       Container(
                         width: (MediaQuery.of(context).size.width - 47 * 2) *
-                            (1.5 / 5) -
+                                (1.5 / 5) -
                             4,
                         padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
@@ -377,7 +408,7 @@ class ProjectCard extends StatelessWidget {
                     if (status == 'merekrut')
                       Container(
                         width: (MediaQuery.of(context).size.width - 27 * 2) *
-                            (1 / 3) -
+                                (1 / 3) -
                             4,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -388,9 +419,9 @@ class ProjectCard extends StatelessWidget {
                           children: [
                             Container(
                               width:
-                              (MediaQuery.of(context).size.width - 27 * 2) *
-                                  (1 / 3) -
-                                  4,
+                                  (MediaQuery.of(context).size.width - 27 * 2) *
+                                          (1 / 3) -
+                                      4,
                               height: 44,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
@@ -410,70 +441,70 @@ class ProjectCard extends StatelessWidget {
                                       right: (index == 0)
                                           ? 0.0
                                           : (index == 1)
-                                          ? 29.0
-                                          : (index == 2)
-                                          ? 39.0
-                                          : 49.0,
+                                              ? 29.0
+                                              : (index == 2)
+                                                  ? 39.0
+                                                  : 49.0,
                                       top: 0,
                                       child: index == 0
                                           ? Container(
-                                        width: 80,
-                                        height: 44,
-                                        decoration: BoxDecoration(
-                                          color: colors[index],
-                                          shape: BoxShape.rectangle,
-                                          borderRadius:
-                                          BorderRadius.circular(22),
-                                        ),
-                                        child: Align(
-                                          alignment:
-                                          Alignment.centerRight,
-                                          child: Padding(
-                                            padding:
-                                            EdgeInsets.only(right: 8),
-                                            child: Text(
-                                              "+20",
-                                              style: TextStyle(
-                                                fontFamily: 'NunitoSans',
-                                                fontSize: 12,
-                                                fontWeight:
-                                                FontWeight.w700,
-                                                color: Color(0xFF826754),
+                                              width: 80,
+                                              height: 44,
+                                              decoration: BoxDecoration(
+                                                color: colors[index],
+                                                shape: BoxShape.rectangle,
+                                                borderRadius:
+                                                    BorderRadius.circular(22),
+                                              ),
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Padding(
+                                                  padding:
+                                                      EdgeInsets.only(right: 8),
+                                                  child: Text(
+                                                    "+20",
+                                                    style: TextStyle(
+                                                      fontFamily: 'NunitoSans',
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Color(0xFF826754),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          : Container(
+                                              decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Color(0x66000000),
+                                                    offset: Offset(4, 0),
+                                                    blurRadius: 4,
+                                                  ),
+                                                ],
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: CircleAvatar(
+                                                radius: 22,
+                                                backgroundColor: colors[index],
+                                                child: ClipOval(
+                                                  child: Image.asset(
+                                                    index == 1
+                                                        ? 'assets/images/surveyscout1.png'
+                                                        : index == 2
+                                                            ? 'assets/images/surveyscout1.png'
+                                                            : index == 3
+                                                                ? 'assets/images/surveyscout1.png'
+                                                                : '',
+                                                    width: 44,
+                                                    height: 44,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      )
-                                          : Container(
-                                        decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Color(0x66000000),
-                                              offset: Offset(4, 0),
-                                              blurRadius: 4,
-                                            ),
-                                          ],
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: CircleAvatar(
-                                          radius: 22,
-                                          backgroundColor: colors[index],
-                                          child: ClipOval(
-                                            child: Image.asset(
-                                              index == 1
-                                                  ? 'assets/images/surveyscout1.png'
-                                                  : index == 2
-                                                  ? 'assets/images/surveyscout1.png'
-                                                  : index == 3
-                                                  ? 'assets/images/surveyscout1.png'
-                                                  : '',
-                                              width: 44,
-                                              height: 44,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
                                     );
                                   }),
                                 ),
@@ -482,9 +513,9 @@ class ProjectCard extends StatelessWidget {
                             SizedBox(height: 10),
                             Container(
                               width:
-                              (MediaQuery.of(context).size.width - 27 * 2) *
-                                  (1 / 3) -
-                                  4,
+                                  (MediaQuery.of(context).size.width - 27 * 2) *
+                                          (1 / 3) -
+                                      4,
                               padding: EdgeInsets.all(0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
@@ -521,11 +552,7 @@ class ProjectCard extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            Image.asset(
-                              getImageByStatus(status),
-                              height: 16,
-                              width: 16,
-                            ),
+                            getIconByStatus(status),
                             const SizedBox(width: 4),
                             Text(
                               getStatusText(status),
@@ -541,7 +568,7 @@ class ProjectCard extends StatelessWidget {
                       ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -569,47 +596,50 @@ class ProjectCard extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Image.asset(
-                              'assets/images/pdfexcel.png',
-                              height: 24,
-                              width: 24,
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              fileType,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: 'NunitoSans',
-                                color: Color(0xFFA3948D),
+                        if (orderId.startsWith("SURVEY"))
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/pdfexcel.png',
+                                height: 24,
+                                width: 24,
                               ),
-                            ),
-                          ],
-                        ),
+                              const SizedBox(width: 8),
+                              Text(
+                                fileType,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'NunitoSans',
+                                  color: Color(0xFFA3948D),
+                                ),
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                     Row(
                       children: [
                         if (onDownload != null) ...[
-                          _buildCircleButton(
-                              'assets/images/download.png', onDownload),
+                          _buildCircleButton(Ic.round_download, onDownload),
                           const SizedBox(width: 8),
                         ],
                         if (onChat != null) ...[
-                          _buildCircleButton('assets/images/chat.png', onChat,
+                          _buildCircleButton(Ic.round_chat, onChat,
                               showDot: status == 'ditinjau' ||
                                   status == 'dikerjakan',
                               count: chatCount),
                           const SizedBox(width: 8),
                         ],
                         if (onWork != null) ...[
-                          _buildCircleButton(
-                              'assets/images/taskantor.png', onWork),
+                          _buildCircleButton(Ic.outline_work, onWork),
                           const SizedBox(width: 8),
                         ],
-                        _buildCircleButton('assets/images/titik3.png', onMore),
+                        if (status == 'draft' || status == 'pembayaran' && onMore != null) ...[
+                          _buildCircleButton(Mdi.pencil, onEdit),
+                          const SizedBox(width: 8),
+                        ],
+                        _buildCircleButton(Mdi.dots_vertical, onMore),
                       ],
                     ),
                   ],
@@ -696,7 +726,7 @@ class ProjectCard extends StatelessWidget {
     );
   }
 
-  Widget _buildCircleButton(String asset, VoidCallback? onPressed,
+  Widget _buildCircleButton(String icon, VoidCallback? onPressed,
       {bool showDot = false, int? count}) {
     return Stack(
       clipBehavior: Clip.none,
@@ -711,11 +741,10 @@ class ProjectCard extends StatelessWidget {
               border: Border.all(color: const Color(0xFF826754), width: 1),
             ),
             child: Center(
-              child: Image.asset(
-                asset,
-                width: 21,
-                height: 21,
-                fit: BoxFit.contain,
+              child: Iconify(
+                icon,
+                size: 21,
+                color: const Color(0xFF826754),
               ),
             ),
           ),

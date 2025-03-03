@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:surveyscout/components/custom_choose_sort.dart';
 import 'package:surveyscout/components/project_card.dart';
 import 'package:surveyscout/components/survey_status.dart';
 import 'package:surveyscout/pages/client/clientchat.dart';
@@ -28,7 +29,7 @@ class _ClientProjects extends State<ClientProjects> {
     if (token != null) {
       setState(() {
         apiService = ApiService(
-          "https://0681-118-99-84-24.ngrok-free.app/api/v1",
+          "https://3c20-118-99-84-24.ngrok-free.app/api/v1",
           token,
         );
       });
@@ -42,6 +43,19 @@ class _ClientProjects extends State<ClientProjects> {
     if (apiService != null) {
       try {
         List<Project> surveys = await apiService!.getSurveys();
+
+        DateTime now = DateTime.now();
+
+        surveys.sort((a, b) {
+          DateTime dateA = DateTime.parse(a.tenggatPengerjaan);
+          DateTime dateB = DateTime.parse(b.tenggatPengerjaan);
+
+          int diffA = dateA.difference(now).inMilliseconds;
+          int diffB = dateB.difference(now).inMilliseconds;
+
+          return diffA.compareTo(diffB);
+        });
+
         setState(() {
           allProjects = surveys;
           filteredProjects = surveys;
@@ -62,39 +76,51 @@ class _ClientProjects extends State<ClientProjects> {
     }
   }
 
-  void _filterSurveys() {
+  void _filterSortProjects() {
     setState(() {
       filteredProjects = allProjects.where((survey) {
         final matchesStatus = selectedStatus == "Semua status" ||
-            survey.statusTask.toLowerCase() == selectedStatus.toLowerCase();
+            survey.statusTask.toLowerCase() == selectedStatus.toLowerCase() ||
+            survey.statusTask.toLowerCase() == "pembayaran" &&
+                selectedStatus.toLowerCase() == "menunggu bayar";
         final matchesSearch =
             survey.namaProyek.toLowerCase().contains(searchQuery.toLowerCase());
-        return matchesStatus && matchesSearch;
+        final matchesRole = selectedPeran == "Semua peran" ||
+            survey.orderId.toLowerCase().startsWith("respond") ==
+                (selectedPeran == "Respond") ||
+            survey.orderId.toLowerCase().startsWith("survey") ==
+                (selectedPeran == "Survey");
+        return matchesStatus && matchesSearch && matchesRole;
       }).toList();
 
+      DateTime now = DateTime.now();
       filteredProjects.sort((a, b) {
-        DateTime dateA = DateTime.parse(a.createdAt);
-        DateTime dateB = DateTime.parse(b.createdAt);
-        return dateB.compareTo(dateA);
+        DateTime dateA = DateTime.parse(a.tenggatPengerjaan);
+        DateTime dateB = DateTime.parse(b.tenggatPengerjaan);
+        DateTime uploadA = DateTime.parse(a.createdAt);
+        DateTime uploadB = DateTime.parse(b.createdAt);
+
+        switch (selectedSort) {
+          case "Tenggat Pengerjaan Terdekat":
+            return dateA.difference(now).compareTo(dateB.difference(now));
+          case "Tenggat Pengerjaan Terjauh":
+            return dateB.difference(now).compareTo(dateA.difference(now));
+          case "Tanggal Unggah Terbaru":
+            return uploadB.compareTo(uploadA);
+          case "Tanggal Unggah Terlama":
+            return uploadA.compareTo(uploadB);
+          default:
+            return dateA.difference(now).compareTo(dateB.difference(now));
+        }
       });
     });
   }
-
-  final Map<String, String> statusMap = {
-    "Semua status": "Semua status",
-    "Peringatan": "peringatan",
-    "Dikerjakan": "dikerjakan",
-    "Butuh konfirmasi": "butuh konfirmasi",
-    "Selesai": "selesai",
-    "Kadaluwarsa": "kadaluwarsa",
-    "Draft": "draft",
-    "Menunggu bayar": "menunggu bayar",
-  };
 
   String selectedStatus = "Semua status";
   String selectedPeran = "Semua peran";
   String selectedLokasi = "Semua lokasi";
   String selectedKomisi = "Semua komisi";
+  String selectedSort = "Tenggat Pengerjaan Terdekat";
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +154,7 @@ class _ClientProjects extends State<ClientProjects> {
                     child: TextField(
                       onChanged: (value) {
                         searchQuery = value;
-                        _filterSurveys();
+                        _filterSortProjects();
                       },
                       decoration: InputDecoration(
                         hintText: "Cari proyek Anda...",
@@ -192,15 +218,16 @@ class _ClientProjects extends State<ClientProjects> {
                           selectedValue: selectedStatus, onChanged: (value) {
                         setState(() {
                           selectedStatus = value!;
-                          _filterSurveys();
+                          _filterSortProjects();
                         });
                       }),
                       SizedBox(width: 8),
-                      _buildDropdown("Semua Peran",
-                          ["Semua peran", "Surveyor", "Responden"],
+                      _buildDropdown(
+                          "Semua Peran", ["Semua peran", "Survey", "Respond"],
                           selectedValue: selectedPeran, onChanged: (value) {
                         setState(() {
                           selectedPeran = value!;
+                          _filterSortProjects();
                         });
                       }),
                       SizedBox(width: 8),
@@ -276,6 +303,7 @@ class _ClientProjects extends State<ClientProjects> {
                           itemBuilder: (context, index) {
                             Project project = filteredProjects[index];
                             return ProjectCard(
+                              orderId: project.orderId,
                               title: project.namaProyek,
                               timeAgo: project.calculateDeadline(),
                               fileType: project.tipeHasil.join(", "),
@@ -356,7 +384,7 @@ class _ClientProjects extends State<ClientProjects> {
               child: TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.transparent,
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -569,12 +597,16 @@ class _ClientProjects extends State<ClientProjects> {
   Widget _buildIconBox() {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          selectedStatus = "Semua status";
-          selectedPeran = "Semua peran";
-          selectedLokasi = "Semua lokasi";
-          selectedKomisi = "Semua komisi";
-        });
+        showFilterBottomSheet(
+          context,
+          selectedSort,
+          (selectedFilter) {
+            setState(() {
+              selectedSort = selectedFilter;
+            });
+            _filterSortProjects();
+          },
+        );
       },
       child: Container(
         width: 40,
