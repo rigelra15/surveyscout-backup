@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/custom_signout.dart';
 import 'package:surveyscout/pages/welcome.dart';
+import 'package:surveyscout/services/api_clientprofile.dart';
 import 'clientprojects.dart';
 import 'clientchat.dart';
 
@@ -13,6 +14,67 @@ class ClientSaya extends StatefulWidget {
 }
 
 class _ClientSaya extends State<ClientSaya> {
+  ApiService? apiService;
+  late ClientProfile clientProfile = ClientProfile(
+    idClient: '',
+    pinAkses: 0,
+    namaLengkap: '',
+    jenisKelamin: '',
+    nomorTelepon: '',
+    email: '',
+    nik: '',
+    namaPerusahaan: '',
+    jenisUsaha: '',
+    nomorRekening: '',
+    profilePicture: '',
+    namaBank: '',
+    tanggalLahir: '',
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeApiService();
+  }
+
+  Future<void> _initializeApiService() async {
+    String? token = await _getToken();
+    if (token != null) {
+      setState(() {
+        apiService = ApiService(
+          "https://4481-118-99-84-24.ngrok-free.app/api/v1",
+          token,
+        );
+      });
+      _fetchClientProfile();
+    } else {
+      print("Token tidak ditemukan");
+    }
+  }
+
+  Future<String?> _getToken() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getString('jwt_token');
+    } catch (e) {
+      print("Error mengambil token: $e");
+      return null;
+    }
+  }
+
+  Future<void> _fetchClientProfile() async {
+    try {
+      if (apiService != null) {
+        ClientProfile profile = await apiService!.getClientProfile();
+        setState(() {
+          clientProfile = profile;
+        });
+      }
+    } catch (e) {
+      print("Error mengambil profil klien: $e");
+    }
+  }
+
   int activeButton = -1; // Tombol default yang tidak aktif
   bool isOn = false;
   bool isOn2 = false;
@@ -21,30 +83,33 @@ class _ClientSaya extends State<ClientSaya> {
     showDialog(
       context: context,
       builder: (context) => CustomSignOut(
-        title: 'Konfirmasi Logout',
+        title: 'Konfirmasi Keluar Akun',
         message: 'Apakah Anda yakin ingin keluar?',
         confirmText: 'Ya',
         cancelText: 'Batal',
-        onConfirm: () async {
-          Navigator.of(context).pop();
-
-          final GoogleSignIn googleSignIn = GoogleSignIn();
-          await googleSignIn.signOut();
-          await FirebaseAuth.instance.signOut();
-
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.remove('jwt_token');
-          await prefs.remove('user_role');
-
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Welcome()),
-          );
+        onConfirm: () {
+          Navigator.of(context).pop(); // Tutup dialog dulu
+          _signOutAndNavigate(context);
         },
         onCancel: () {
           Navigator.of(context).pop();
         },
       ),
+    );
+  }
+
+  Future<void> _signOutAndNavigate(BuildContext context) async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut();
+    await FirebaseAuth.instance.signOut();
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('jwt_token');
+    await prefs.remove('user_role');
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => Welcome()),
     );
   }
 
@@ -143,8 +208,7 @@ class _ClientSaya extends State<ClientSaya> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/layananpelanggan.png'),
+                              image: NetworkImage(clientProfile.profilePicture),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -155,15 +219,16 @@ class _ClientSaya extends State<ClientSaya> {
                       padding: EdgeInsets.all(5),
                       width: double.infinity,
                       //color: Colors.green, // Warna kontainer kedua
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          'Agus Ginting',
+                          clientProfile.namaLengkap,
                           style: TextStyle(
                             color: Color(0xFF705D54),
                             fontFamily: "NunitoSans",
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
                           ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
@@ -607,11 +672,11 @@ class _ClientSaya extends State<ClientSaya> {
                           ],
                         ),
                         // Kontainer Tengah
-                        const Expanded(
+                        Expanded(
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              'BCA | XXX130',
+                              '${clientProfile.namaBank} | ${clientProfile.nomorRekening}',
                               style: TextStyle(
                                 color: Color(0xFFA3948D),
                                 fontFamily: "NunitoSans",

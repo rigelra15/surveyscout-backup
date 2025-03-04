@@ -97,9 +97,6 @@ class ApiService {
       },
     );
 
-    print("Response Status Code: ${response.statusCode}");
-    print("Response Body: ${response.body}");
-
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
 

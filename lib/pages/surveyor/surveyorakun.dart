@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:surveyscout/components/custom_pdfviewer.dart';
 import 'package:surveyscout/components/custom_signout.dart';
 import 'package:surveyscout/pages/welcome.dart';
+import 'package:surveyscout/services/api_surveyorprofile.dart';
 import 'surveyorprojects.dart';
 import 'surveyorchat.dart';
 import 'surveyormyprojects.dart';
@@ -14,6 +16,83 @@ class SurveyorAccount extends StatefulWidget {
 }
 
 class _SurveyorAccount extends State<SurveyorAccount> {
+  ApiService? apiService;
+  late SurveyorProfile surveyorProfile = SurveyorProfile(
+    idSurveyor: '',
+    pinAkses: 0,
+    namaLengkap: '',
+    jenisKelamin: '',
+    nomorTelepon: '',
+    email: '',
+    nik: '',
+    domisili: '',
+    cvATS: '',
+    nomorRekening: '',
+    sumRating: '',
+    totalProject: '',
+    avgRating: '',
+    scoutTrust: 0,
+    goodProject: '',
+    namaBank: '',
+    keahlian: [],
+    tanggalLahir: '',
+    profilePicture: '',
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeApiService();
+  }
+
+  Future<void> _initializeApiService() async {
+    String? token = await _getToken();
+    if (token != null) {
+      setState(() {
+        apiService = ApiService(
+          "https://4481-118-99-84-24.ngrok-free.app/api/v1",
+          token,
+        );
+      });
+      _fetchRespondenProfile();
+    } else {
+      print("Token tidak ditemukan");
+    }
+  }
+
+  Future<String?> _getToken() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getString('jwt_token');
+    } catch (e) {
+      print("Error mengambil token: $e");
+      return null;
+    }
+  }
+
+  Future<void> _fetchRespondenProfile() async {
+    try {
+      if (apiService != null) {
+        SurveyorProfile profile = await apiService!.getSurveyorProfile();
+        setState(() {
+          surveyorProfile = profile;
+        });
+      }
+    } catch (e) {
+      print("Error mengambil profil klien: $e");
+    }
+  }
+
+  void _showPdfDialog(BuildContext context, String title, String pdfUrl) {
+    showDialog(
+      context: context,
+      builder: (context) => CustomPdfViewer(
+        title: title,
+        pdfUrl: pdfUrl,
+      ),
+    );
+  }
+
   int activeButton = -1; // Tombol default yang tidak aktif
   bool isOn = false;
   bool isOn2 = false;
@@ -26,33 +105,35 @@ class _SurveyorAccount extends State<SurveyorAccount> {
         message: 'Apakah Anda yakin ingin keluar?',
         confirmText: 'Ya',
         cancelText: 'Batal',
-        onConfirm: () async {
-          Navigator.of(context).pop(); // Tutup dialog sebelum sign out
-          
-          final GoogleSignIn googleSignIn = GoogleSignIn();
-          await googleSignIn.signOut();
-          await FirebaseAuth.instance.signOut();
-
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.remove('jwt_token');
-          await prefs.remove('user_role');
-
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Welcome()),
-          );
+        onConfirm: () {
+          Navigator.of(context).pop(); // Tutup dialog dulu
+          _signOutAndNavigate(context);
         },
         onCancel: () {
-          Navigator.of(context).pop(); // Tutup dialog tanpa sign out
+          Navigator.of(context).pop();
         },
       ),
+    );
+  }
+
+  Future<void> _signOutAndNavigate(BuildContext context) async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut();
+    await FirebaseAuth.instance.signOut();
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('jwt_token');
+    await prefs.remove('user_role');
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => Welcome()),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: Color(0xFFF1E9E5), // Background berwarna #F1E9E5
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(110), // Tinggi AppBar diatur menjadi 130
@@ -68,21 +149,24 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                   width: double.infinity,
                   //color: Colors.blue,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween, // Mengatur jarak space-between
+                    mainAxisAlignment: MainAxisAlignment
+                        .spaceBetween, // Mengatur jarak space-between
                     children: [
                       Container(
                         width: 50,
                         height: 50, // Tinggi container
                         //color: Colors.yellow,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start, // Mengatur jarak space-between
+                          mainAxisAlignment: MainAxisAlignment
+                              .start, // Mengatur jarak space-between
                           children: [
                             Container(
                               width: 50, // Lebar kontainer kiri
                               height: 50, // Tinggi kontainer kiri
                               child: Image.asset(
                                 'assets/images/surveyscoutlogo.png', // Gambar dari folder aset
-                                fit: BoxFit.contain, // Agar gambar tidak terpotong
+                                fit: BoxFit
+                                    .contain, // Agar gambar tidak terpotong
                               ),
                             ),
                           ],
@@ -94,7 +178,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                            image: AssetImage('assets/images/layananpelanggan.png'),
+                            image: AssetImage(
+                                'assets/images/layananpelanggan.png'),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -115,7 +200,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
         color: const Color(0xFFF2EEE9), // Warna latar belakang
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, // Menyusun konten di kiri
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Menyusun konten di kiri
             children: [
               Container(
                 decoration: BoxDecoration(
@@ -126,7 +212,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                 padding: EdgeInsets.all(30), // Jarak antar kontainer utama
 
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Spasi rata antar kontainer
+                  mainAxisAlignment: MainAxisAlignment
+                      .spaceBetween, // Spasi rata antar kontainer
                   children: [
                     Container(
                       padding: EdgeInsets.all(5),
@@ -139,21 +226,21 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                              image: AssetImage('assets/images/hermanwalton.png'),
+                              image:
+                                  NetworkImage(surveyorProfile.profilePicture),
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
                       ),
                     ),
-
                     Container(
                       padding: EdgeInsets.all(5),
                       width: double.infinity,
                       //color: Colors.green, // Warna kontainer kedua
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          'Herman Walton',
+                          surveyorProfile.namaLengkap,
                           style: TextStyle(
                             color: Color(0xFF705D54),
                             fontFamily: "NunitoSans",
@@ -172,7 +259,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                             // Jika lebar kurang dari 600, ubah menjadi Column
                             bool isNarrow = constraints.maxWidth < 300;
                             return Flex(
-                              direction: isNarrow ? Axis.vertical : Axis.horizontal,
+                              direction:
+                                  isNarrow ? Axis.vertical : Axis.horizontal,
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -219,14 +307,15 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                                               height: 20,
                                               decoration: const BoxDecoration(
                                                 image: DecorationImage(
-                                                  image: AssetImage('assets/images/like.png'),
+                                                  image: AssetImage(
+                                                      'assets/images/like.png'),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
                                             ),
                                             const SizedBox(width: 8),
-                                            const Text(
-                                              '90%',
+                                            Text(
+                                              '${surveyorProfile.scoutTrust}%',
                                               style: TextStyle(
                                                 color: Color(0xFF705D54),
                                                 fontFamily: "NunitoSans",
@@ -246,14 +335,15 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                                               height: 20,
                                               decoration: const BoxDecoration(
                                                 image: DecorationImage(
-                                                  image: AssetImage('assets/images/surabaya.png'),
+                                                  image: AssetImage(
+                                                      'assets/images/surabaya.png'),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
                                             ),
                                             const SizedBox(width: 8),
-                                            const Text(
-                                              'Surabaya',
+                                            Text(
+                                              surveyorProfile.domisili,
                                               style: TextStyle(
                                                 color: Color(0xFF705D54),
                                                 fontFamily: "NunitoSans",
@@ -264,7 +354,6 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                                           ],
                                         ),
                                       ),
-
                                     ],
                                   ),
                                 ),
@@ -286,15 +375,19 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF705D54), // Warna tombol
+                              backgroundColor:
+                                  Color(0xFF705D54), // Warna tombol
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 6),
                             ),
-                            onPressed: () {
-                              // Aksi ketika tombol ditekan
-                            },
+                            onPressed: () => _showPdfDialog(
+                              context,
+                              'CV Saya',
+                              surveyorProfile.cvATS,
+                            ),
                             child: const Text(
                               'CV Saya',
                               style: TextStyle(
@@ -305,14 +398,17 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                               ),
                             ),
                           ),
-                          const SizedBox(width: 12), // Jarak antara tombol dan teks
+                          const SizedBox(
+                              width: 12), // Jarak antara tombol dan teks
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFA3948D), // Warna tombol
+                              backgroundColor:
+                                  Color(0xFFA3948D), // Warna tombol
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 6),
                             ),
                             onPressed: () {
                               // Aksi ketika tombol ditekan
@@ -327,14 +423,17 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                               ),
                             ),
                           ),
-                          const SizedBox(width: 12), // Jarak antara tombol dan teks
+                          const SizedBox(
+                              width: 12), // Jarak antara tombol dan teks
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFFF0000), // Warna tombol
+                              backgroundColor:
+                                  Color(0xFFFF0000), // Warna tombol
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 6),
                             ),
                             onPressed: () {
                               _handleGoogleSignOut(context);
@@ -381,7 +480,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
                       children: [
                         // Kontainer Kiri
                         Row(
@@ -392,12 +492,14 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                               height: 24,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage('assets/images/pinakses2.png'),
+                                  image:
+                                      AssetImage('assets/images/pinakses2.png'),
                                   fit: BoxFit.cover, // Menjaga proporsi gambar
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 8), // Jarak antara gambar dan teks
+                            const SizedBox(
+                                width: 8), // Jarak antara gambar dan teks
                             // Teks di sebelah kanan
                             Container(
                               width: 100, // Atur lebar kontainer
@@ -449,7 +551,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                     ),
                     const SizedBox(height: 8),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
                       children: [
                         // Kontainer Kiri
                         Row(
@@ -460,12 +563,14 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                               height: 24,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage('assets/images/autentikasi.png'),
+                                  image: AssetImage(
+                                      'assets/images/autentikasi.png'),
                                   fit: BoxFit.cover, // Menjaga proporsi gambar
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 8), // Jarak antara gambar dan teks
+                            const SizedBox(
+                                width: 8), // Jarak antara gambar dan teks
                             // Teks di sebelah kanan
                             Container(
                               width: 100, // Atur lebar kontainer
@@ -493,7 +598,6 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12,
                               ),
-
                             ),
                           ),
                         ),
@@ -516,7 +620,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                     ),
                     const SizedBox(height: 8),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
                       children: [
                         // Kontainer Kiri
                         Row(
@@ -527,12 +632,14 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                               height: 24,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage('assets/images/perangkat.png'),
+                                  image:
+                                      AssetImage('assets/images/perangkat.png'),
                                   fit: BoxFit.cover, // Menjaga proporsi gambar
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 8), // Jarak antara gambar dan teks
+                            const SizedBox(
+                                width: 8), // Jarak antara gambar dan teks
                             // Teks di sebelah kanan
                             Container(
                               width: 100, // Atur lebar kontainer
@@ -604,7 +711,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
                       children: [
                         // Kontainer Kiri
                         Row(
@@ -615,12 +723,14 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                               height: 24,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage('assets/images/rekening.png'),
+                                  image:
+                                      AssetImage('assets/images/rekening.png'),
                                   fit: BoxFit.cover, // Menjaga proporsi gambar
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 8), // Jarak antara gambar dan teks
+                            const SizedBox(
+                                width: 8), // Jarak antara gambar dan teks
                             // Teks di sebelah kanan
                             Container(
                               width: 100, // Atur lebar kontainer
@@ -637,11 +747,11 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                           ],
                         ),
                         // Kontainer Tengah
-                        const Expanded(
+                        Expanded(
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              'OkePay | XXX122',
+                              '${surveyorProfile.namaBank} | ${surveyorProfile.nomorRekening}',
                               style: TextStyle(
                                 color: Color(0xFFA3948D),
                                 fontFamily: "NunitoSans",
@@ -672,7 +782,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                     ),
                     const SizedBox(height: 8),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
                       children: [
                         // Kontainer Kiri
                         Row(
@@ -683,12 +794,14 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                               height: 24,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage('assets/images/riwayat.png'),
+                                  image:
+                                      AssetImage('assets/images/riwayat.png'),
                                   fit: BoxFit.cover, // Menjaga proporsi gambar
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 8), // Jarak antara gambar dan teks
+                            const SizedBox(
+                                width: 8), // Jarak antara gambar dan teks
                             // Teks di sebelah kanan
                             Container(
                               width: 100, // Atur lebar kontainer
@@ -716,7 +829,6 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12,
                               ),
-
                             ),
                           ),
                         ),
@@ -731,7 +843,6 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                         ),
                       ],
                     ),
-
                   ],
                 ),
               ),
@@ -761,7 +872,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
                       children: [
                         // Kontainer Kiri
                         Row(
@@ -772,18 +884,22 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                               height: 24,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage('assets/images/informasiumum.png'),
+                                  image: AssetImage(
+                                      'assets/images/informasiumum.png'),
                                   fit: BoxFit.cover, // Menjaga proporsi gambar
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 8), // Jarak antara gambar dan teks
+                            const SizedBox(
+                                width: 8), // Jarak antara gambar dan teks
                             // Teks di sebelah kanan
                             Container(
                               width: 150,
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Atur jarak antara teks atas dan bawah
-                                crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween, // Atur jarak antara teks atas dan bawah
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start, // Rata kiri
                                 children: [
                                   Text(
                                     'Informasi umum, tips, dan pengenalan produk', // Teks atas
@@ -793,12 +909,13 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                                       fontFamily: "NunitoSans",
                                       fontWeight: FontWeight.w700,
                                     ),
-                                    softWrap: true, // Aktifkan pembungkusan teks
-                                    overflow: TextOverflow.visible, // Tampilkan teks penuh jika terlalu panjang
-                                    maxLines: null, // Izinkan teks menggunakan baris sebanyak yang diperlukan
+                                    softWrap:
+                                        true, // Aktifkan pembungkusan teks
+                                    overflow: TextOverflow
+                                        .visible, // Tampilkan teks penuh jika terlalu panjang
+                                    maxLines:
+                                        null, // Izinkan teks menggunakan baris sebanyak yang diperlukan
                                   ),
-
-
                                   Text(
                                     'Kiat menggunakan SurveyScout', // Teks bawah
                                     style: TextStyle(
@@ -811,8 +928,6 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                                 ],
                               ),
                             ),
-
-
                           ],
                         ),
                         // Kontainer Tengah
@@ -829,12 +944,14 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                                 isOn2 = value; // Ubah status tombol
                               });
                             },
-                            activeColor: Color(0xFF826754), // Warna tombol saat aktifColors.white,
-                            inactiveThumbColor: Color(0xFFD7CCC8), // Warna tombol saat tidak aktif
-                            inactiveTrackColor: Colors.white, // Warna track saat tidak aktifColor(0xFF826754),
+                            activeColor: Color(
+                                0xFF826754), // Warna tombol saat aktifColors.white,
+                            inactiveThumbColor: Color(
+                                0xFFD7CCC8), // Warna tombol saat tidak aktif
+                            inactiveTrackColor: Colors
+                                .white, // Warna track saat tidak aktifColor(0xFF826754),
                           ),
                         )
-
                       ],
                     ),
                     const SizedBox(height: 8), // Jarak antara Row dan Garis
@@ -846,7 +963,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                     ),
                     const SizedBox(height: 8),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
                       children: [
                         // Kontainer Kiri
                         Row(
@@ -857,18 +975,22 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                               height: 24,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage('assets/images/newsletter.png'),
+                                  image: AssetImage(
+                                      'assets/images/newsletter.png'),
                                   fit: BoxFit.cover, // Menjaga proporsi gambar
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 8), // Jarak antara gambar dan teks
+                            const SizedBox(
+                                width: 8), // Jarak antara gambar dan teks
                             // Teks di sebelah kanan
                             Container(
                               width: 150,
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Atur jarak antara teks atas dan bawah
-                                crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween, // Atur jarak antara teks atas dan bawah
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start, // Rata kiri
                                 children: [
                                   Text(
                                     'Newsletter dan promosi', // Teks atas
@@ -878,11 +1000,13 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                                       fontFamily: "NunitoSans",
                                       fontWeight: FontWeight.w700,
                                     ),
-                                    softWrap: true, // Aktifkan pembungkusan teks
-                                    overflow: TextOverflow.visible, // Tampilkan teks penuh jika terlalu panjang
-                                    maxLines: null, // Izinkan teks menggunakan baris sebanyak yang diperlukan
+                                    softWrap:
+                                        true, // Aktifkan pembungkusan teks
+                                    overflow: TextOverflow
+                                        .visible, // Tampilkan teks penuh jika terlalu panjang
+                                    maxLines:
+                                        null, // Izinkan teks menggunakan baris sebanyak yang diperlukan
                                   ),
-
                                   Text(
                                     'Jadilah yang pertama mendapatkan penawaran terbaik', // Teks bawah
                                     style: TextStyle(
@@ -895,8 +1019,6 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                                 ],
                               ),
                             ),
-
-
                           ],
                         ),
                         // Kontainer Tengah
@@ -913,15 +1035,16 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                                 isOn = value; // Ubah status tombol
                               });
                             },
-                            activeColor: Color(0xFF826754), // Warna tombol saat aktifColors.white,
-                            inactiveThumbColor: Color(0xFFD7CCC8), // Warna tombol saat tidak aktif
-                            inactiveTrackColor: Colors.white, // Warna track saat tidak aktifColor(0xFF826754),
+                            activeColor: Color(
+                                0xFF826754), // Warna tombol saat aktifColors.white,
+                            inactiveThumbColor: Color(
+                                0xFFD7CCC8), // Warna tombol saat tidak aktif
+                            inactiveTrackColor: Colors
+                                .white, // Warna track saat tidak aktifColor(0xFF826754),
                           ),
                         )
-
                       ],
                     ),
-
                   ],
                 ),
               ),
@@ -931,33 +1054,34 @@ class _SurveyorAccount extends State<SurveyorAccount> {
         ),
       ),
 
-
-
-
-      bottomNavigationBar:
-      Container(
+      bottomNavigationBar: Container(
         color: Color(0xffD7CCC8), // Footer berwarna #D7CCC8
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8), // Padding horizontal dan vertikal
+        padding: EdgeInsets.symmetric(
+            horizontal: 32, vertical: 8), // Padding horizontal dan vertikal
         child: GestureDetector(
           onTap: () {
             // Navigasi atau aksi untuk footer
             print("Footer link clicked!");
           },
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Jarak antar container dibuat maksimal
+            mainAxisAlignment: MainAxisAlignment
+                .spaceBetween, // Jarak antar container dibuat maksimal
             children: [
               GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SurveyorProjects()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SurveyorProjects()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
                   width: 60,
                   height: 60,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
+                    mainAxisAlignment: MainAxisAlignment
+                        .center, // Pusatkan isi secara vertikal
                     children: [
                       Image.asset(
                         'assets/images/tersedia2.png', // Path ke gambar
@@ -965,7 +1089,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                         height: 24, // Tinggi gambar
                         fit: BoxFit.contain, // Menyesuaikan ukuran gambar
                       ),
-                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
+                      SizedBox(
+                          height: 4), // Memberikan jarak antara gambar dan teks
                       Text(
                         'Tersedia',
                         style: TextStyle(
@@ -979,20 +1104,21 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                   ),
                 ),
               ),
-
-
               GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SurveyorMyProjects()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SurveyorMyProjects()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
                   width: 100,
                   height: 80,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
+                    mainAxisAlignment: MainAxisAlignment
+                        .center, // Pusatkan isi secara vertikal
                     children: [
                       Image.asset(
                         'assets/images/proyeksaya.png', // Path ke gambar
@@ -1000,7 +1126,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                         height: 24, // Tinggi gambar
                         fit: BoxFit.contain, // Menyesuaikan ukuran gambar
                       ),
-                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
+                      SizedBox(
+                          height: 4), // Memberikan jarak antara gambar dan teks
                       Text(
                         'Proyek Saya',
                         style: TextStyle(
@@ -1014,19 +1141,21 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                   ),
                 ),
               ),
-
               GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SurveyorChat()), // Ganti dengan nama halaman Anda
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SurveyorChat()), // Ganti dengan nama halaman Anda
                   );
                 },
                 child: Container(
                   width: 60,
                   height: 60,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
+                    mainAxisAlignment: MainAxisAlignment
+                        .center, // Pusatkan isi secara vertikal
                     children: [
                       Image.asset(
                         'assets/images/chat3.png', // Path ke gambar
@@ -1034,7 +1163,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                         height: 24, // Tinggi gambar
                         fit: BoxFit.contain, // Menyesuaikan ukuran gambar
                       ),
-                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
+                      SizedBox(
+                          height: 4), // Memberikan jarak antara gambar dan teks
                       Text(
                         'Chat',
                         style: TextStyle(
@@ -1048,15 +1178,14 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                   ),
                 ),
               ),
-
               GestureDetector(
-                onTap: () {
-                },
+                onTap: () {},
                 child: Container(
                   width: 80,
                   height: 60,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
+                    mainAxisAlignment: MainAxisAlignment
+                        .center, // Pusatkan isi secara vertikal
                     children: [
                       Image.asset(
                         'assets/images/saya2.png', // Path ke gambar
@@ -1064,7 +1193,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
                         height: 24, // Tinggi gambar
                         fit: BoxFit.contain, // Menyesuaikan ukuran gambar
                       ),
-                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
+                      SizedBox(
+                          height: 4), // Memberikan jarak antara gambar dan teks
                       Text(
                         'Akun',
                         style: TextStyle(
@@ -1085,14 +1215,19 @@ class _SurveyorAccount extends State<SurveyorAccount> {
     );
   }
 
-  Widget _buildDropdown(String hint, List<String> options, {required String selectedValue, required ValueChanged<String?> onChanged, bool isWide = false}) {
+  Widget _buildDropdown(String hint, List<String> options,
+      {required String selectedValue,
+      required ValueChanged<String?> onChanged,
+      bool isWide = false}) {
     return Container(
       width: isWide ? 300 : 200, // Conditional width based on isWide parameter
       height: 40, // Set the total height of the dropdown to 40
       child: DropdownButtonFormField<String>(
         isDense: true, // Make the dropdown more compact
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 0), // Padding to control internal spacing
+          contentPadding: EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 0), // Padding to control internal spacing
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16), // Rounded corners
             borderSide: BorderSide(
@@ -1144,14 +1279,14 @@ class _SurveyorAccount extends State<SurveyorAccount> {
           );
         }).toList(),
         onChanged: onChanged, // Set the onChanged callback
-        icon: Icon(Icons.keyboard_arrow_down, color: Color(0xFF705D54)), // Icon color
+        icon: Icon(Icons.keyboard_arrow_down,
+            color: Color(0xFF705D54)), // Icon color
       ),
     );
   }
 
   Widget _buildIconBox() {
     return GestureDetector(
-
       child: Container(
         width: 40,
         height: 40,
@@ -1164,8 +1299,10 @@ class _SurveyorAccount extends State<SurveyorAccount> {
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Center align vertically
-          crossAxisAlignment: CrossAxisAlignment.start, // Center align horizontally
+          mainAxisAlignment:
+              MainAxisAlignment.center, // Center align vertically
+          crossAxisAlignment:
+              CrossAxisAlignment.start, // Center align horizontally
           children: [
             // Top line (full width)
             Container(

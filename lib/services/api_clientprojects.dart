@@ -76,9 +76,10 @@ class Project {
       midtransToken: json['midtrans_token'] ?? null,
       orderId: json['order_id'] ?? null,
       midtransLink: json['midtrans_link'] ?? null,
-      jumlahResponden: (
-      json['jumlah_responden'] != null && json['jumlah_responden'] is int
-      ) ? json['jumlah_responden'] : null,
+      jumlahResponden:
+          (json['jumlah_responden'] != null && json['jumlah_responden'] is int)
+              ? json['jumlah_responden']
+              : null,
     );
   }
 
@@ -126,9 +127,6 @@ class ApiService {
         "Content-Type": "application/json",
       },
     );
-
-    print("Response Status Code: ${response.statusCode}");
-    print("Response Body: ${response.body}");
 
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);

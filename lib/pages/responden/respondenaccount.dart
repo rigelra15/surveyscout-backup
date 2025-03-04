@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/custom_signout.dart';
 import 'package:surveyscout/pages/welcome.dart';
+import 'package:surveyscout/services/api_respondenprofile.dart';
 import 'respondenmyprojects.dart';
 import 'respondenprojects.dart';
 import 'respondenchat.dart';
@@ -14,6 +15,70 @@ class RespondenAccount extends StatefulWidget {
 }
 
 class _RespondenAccount extends State<RespondenAccount> {
+  ApiService? apiService;
+  late RespondenProfile respondenProfile = RespondenProfile(
+    idResponden: '',
+    namaLengkap: '',
+    jenisKelamin: '',
+    nomorTelepon: '',
+    email: '',
+    nik: '',
+    statusPerkawinan: '',
+    domisili: '',
+    tingkatPendidikan: '',
+    pekerjaan: '',
+    nomorRekening: '',
+    pinAkses: 0,
+    tanggalLahir: '',
+    namaBank: '',
+    hobi: [],
+    profilePicture: '',
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeApiService();
+  }
+
+  Future<void> _initializeApiService() async {
+    String? token = await _getToken();
+    if (token != null) {
+      setState(() {
+        apiService = ApiService(
+          "https://4481-118-99-84-24.ngrok-free.app/api/v1",
+          token,
+        );
+      });
+      _fetchRespondenProfile();
+    } else {
+      print("Token tidak ditemukan");
+    }
+  }
+
+  Future<String?> _getToken() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getString('jwt_token');
+    } catch (e) {
+      print("Error mengambil token: $e");
+      return null;
+    }
+  }
+
+  Future<void> _fetchRespondenProfile() async {
+    try {
+      if (apiService != null) {
+        RespondenProfile profile = await apiService!.getRespondenProfile();
+        setState(() {
+          respondenProfile = profile;
+        });
+      }
+    } catch (e) {
+      print("Error mengambil profil klien: $e");
+    }
+  }
+
   int activeButton = -1;
   bool isOn = false;
   bool isOn2 = false;
@@ -26,26 +91,29 @@ class _RespondenAccount extends State<RespondenAccount> {
         message: 'Apakah Anda yakin ingin keluar?',
         confirmText: 'Ya',
         cancelText: 'Batal',
-        onConfirm: () async {
-          Navigator.of(context).pop();
-
-          final GoogleSignIn googleSignIn = GoogleSignIn();
-          await googleSignIn.signOut();
-          await FirebaseAuth.instance.signOut();
-
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.remove('jwt_token');
-          await prefs.remove('user_role');
-
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Welcome()),
-          );
+        onConfirm: () {
+          Navigator.of(context).pop(); // Tutup dialog dulu
+          _signOutAndNavigate(context);
         },
         onCancel: () {
           Navigator.of(context).pop();
         },
       ),
+    );
+  }
+
+  Future<void> _signOutAndNavigate(BuildContext context) async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut();
+    await FirebaseAuth.instance.signOut();
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('jwt_token');
+    await prefs.remove('user_role');
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => Welcome()),
     );
   }
 
@@ -138,7 +206,7 @@ class _RespondenAccount extends State<RespondenAccount> {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               image:
-                                  AssetImage('assets/images/hermanwalton.png'),
+                                  NetworkImage(respondenProfile.profilePicture),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -149,15 +217,16 @@ class _RespondenAccount extends State<RespondenAccount> {
                       padding: EdgeInsets.all(5),
                       width: double.infinity,
                       //color: Colors.green,
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          'Herman Walton',
+                          respondenProfile.namaLengkap,
                           style: TextStyle(
                             color: Color(0xFF705D54),
                             fontFamily: "NunitoSans",
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
                           ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
@@ -221,8 +290,8 @@ class _RespondenAccount extends State<RespondenAccount> {
                                               ),
                                             ),
                                             const SizedBox(width: 8),
-                                            const Text(
-                                              'Surabaya',
+                                            Text(
+                                              '${respondenProfile.domisili}',
                                               style: TextStyle(
                                                 color: Color(0xFF705D54),
                                                 fontFamily: "NunitoSans",
@@ -564,11 +633,11 @@ class _RespondenAccount extends State<RespondenAccount> {
                             ),
                           ],
                         ),
-                        const Expanded(
+                        Expanded(
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              'OkePay | XXX122',
+                              '${respondenProfile.namaBank} | ${respondenProfile.nomorRekening}',
                               style: TextStyle(
                                 color: Color(0xFFA3948D),
                                 fontFamily: "NunitoSans",
