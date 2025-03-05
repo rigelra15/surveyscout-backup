@@ -177,6 +177,7 @@ flutter:
     - assets/images/statusperkawinan.png
     - assets/images/tingkatpendidikan.png
     - assets/images/pekerjaan.png
+    - assets/images/indri.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

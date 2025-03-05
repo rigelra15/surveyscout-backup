@@ -19,7 +19,7 @@ import 'pages/clientsurveyorproyekdetaildikerjakanluaran.dart';
 import 'pages/clientsurveyorproyekdetailperingatan.dart';
 import 'pages/clientsurveyorproyekdetailselesai.dart';
 import 'pages/clientrespondenproyekdetailmerekrut.dart';
-
+import 'pages/clientrespondenproyekdetailmerekrutdipilih.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Clientrespondenproyekdetailmerekrut(),
+        '/': (context) => Clientrespondenproyekdetailmerekrutdipilih(),
       },
     );
   }
