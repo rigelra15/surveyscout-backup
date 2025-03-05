@@ -465,38 +465,78 @@ class Clientrespondenproyekdetailmerekrutdipilih extends StatelessWidget {
                           children: [
                             Container(
 
-                              height: 100,
                               //color: Colors.red,
                               child: Row(
                                 children: [
                                   Container(
-                                    height: 100,
                                     //color: Colors.green,
                                     child: Center(
                                       child: ClipOval(
                                         child: Image.asset(
                                           'assets/images/indri.png', // Ganti dengan path gambar kamu
-                                          width: 30, // Sesuaikan ukuran gambar
-                                          height: 30,
+                                          width: 50, // Sesuaikan ukuran gambar
+                                          height: 50,
                                           fit: BoxFit.cover, // Memastikan gambar terisi dengan baik
                                         ),
                                       ),
                                     ),
                                   ),
+                                  SizedBox(width: 10),
                                   Container(
-
-                                    height: 100,
-                                    color: Colors.green,
-                                    child: Center(child: Text('2', style: TextStyle(color: Colors.white, fontSize: 24))),
+                                    //color: Colors.green,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          //color: Colors.green,
+                                          child: Center(child: Text('Indri Putri', style: TextStyle(color: Color(0xFF705D54), fontSize: 16, fontFamily: "NunitoSans", fontWeight: FontWeight.w700,), )),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Container(
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start, // Posisikan elemen di tengah
+                                            children: [
+                                              Text(
+                                                'Responden',
+                                                style: TextStyle(color: Color(0xFFA3948D), fontSize: 12),
+                                              ),
+                                              SizedBox(width: 8), // Beri sedikit jarak antar elemen
+                                              Icon(Icons.location_on, color: Color(0xFFA3948D), size: 15), // Ganti dengan ikon yang diinginkan
+                                              SizedBox(width: 8),
+                                              Text(
+                                                'Jakarta',
+                                                style: TextStyle(color: Color(0xFFA3948D), fontSize: 12),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
                             Container(
-
-                              height: 100,
-                              color: Colors.green,
-                              child: Center(child: Text('2', style: TextStyle(color: Colors.white, fontSize: 24))),
+                              //color: Colors.green, // Warna latar belakang container utama
+                              child: Center(
+                                child: Container(
+                                  width: 50, // Ukuran lingkaran
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: Color(0xFF826754), width: 1), // Border berwarna
+                                    color: Colors.transparent, // Lingkaran transparan
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.chat, // Ganti dengan ikon lain jika diperlukan
+                                      color: Color(0xFF826754),
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
