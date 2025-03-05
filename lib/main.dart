@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:surveyscout/pages/clientrespondenproyekdetaildikerjakan.dart';
 import 'package:surveyscout/pages/clientrespondenproyekdetailmerekrut.dart';
 import 'package:surveyscout/pages/clientsignup.dart';
 import 'package:surveyscout/pages/respondenproyeksaya.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Clientrespondenproyekdetailmerekrutdipilih(),
+        '/': (context) => Clientrespondenproyekdetaildikerjakan(),
       },
     );
   }
