@@ -21,6 +21,7 @@ import 'pages/clientsurveyorproyekdetailperingatan.dart';
 import 'pages/clientsurveyorproyekdetailselesai.dart';
 import 'pages/clientrespondenproyekdetailmerekrut.dart';
 import 'pages/clientrespondenproyekdetailmerekrutdipilih.dart';
+import 'pages/clientchatrichardsantoso.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Clientrespondenproyekdetaildikerjakan(),
+        '/': (context) => ChatPage(),
       },
     );
   }
