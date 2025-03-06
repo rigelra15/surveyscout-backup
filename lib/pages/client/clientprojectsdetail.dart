@@ -16,7 +16,11 @@ class ClientProjectsDetail extends StatelessWidget {
           toolbarHeight: 80,
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Color(0xFF705D54)),
+            icon: Icon(
+              Icons.arrow_back,
+              color:
+                  (widget.type == "survey") ? Color(0xFF705D54) : Colors.white,
+            ),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -48,13 +52,16 @@ class ClientProjectsDetail extends StatelessWidget {
               ),
               SizedBox(height: 10), // Spasi antar elemen
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8), // Padding dalam container
+                padding: EdgeInsets.symmetric(
+                    horizontal: 12, vertical: 8), // Padding dalam container
                 decoration: BoxDecoration(
                   color: Color(0xFF826754), // Warna latar belakang container
-                  borderRadius: BorderRadius.circular(16), // Membuat sudut melengkung
+                  borderRadius:
+                      BorderRadius.circular(16), // Membuat sudut melengkung
                 ),
                 child: Row(
-                  mainAxisSize: MainAxisSize.min, // Sesuaikan ukuran Container dengan konten
+                  mainAxisSize: MainAxisSize
+                      .min, // Sesuaikan ukuran Container dengan konten
                   children: [
                     Icon(
                       Icons.search, // Ganti dengan ikon sesuai kebutuhan
@@ -90,13 +97,16 @@ class ClientProjectsDetail extends StatelessWidget {
                 padding: EdgeInsets.all(8), // Padding dalam container
                 decoration: BoxDecoration(
                   color: Color(0xFFA3948D), // Warna latar belakang container
-                  borderRadius: BorderRadius.circular(8), // Membuat sudut melengkung
+                  borderRadius:
+                      BorderRadius.circular(8), // Membuat sudut melengkung
                 ),
                 child: Row(
-                  mainAxisSize: MainAxisSize.min, // Sesuaikan ukuran Container dengan konten
+                  mainAxisSize: MainAxisSize
+                      .min, // Sesuaikan ukuran Container dengan konten
                   children: [
                     Icon(
-                      Icons.punch_clock_rounded, // Ganti dengan ikon sesuai kebutuhan
+                      Icons
+                          .punch_clock_rounded, // Ganti dengan ikon sesuai kebutuhan
                       color: Colors.white,
                       size: 14, // Ukuran ikon sesuai teks
                     ),
@@ -129,8 +139,6 @@ class ClientProjectsDetail extends StatelessWidget {
                         ),
                       ),
                     ),
-
-
                   ],
                 ),
               ),
@@ -142,18 +150,22 @@ class ClientProjectsDetail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width:MediaQuery.of(context).size.width * 4.55/11,
+                      width: MediaQuery.of(context).size.width * 4.55 / 11,
                       padding: EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Color(0xFFEDE7E2),
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max, // Memastikan Row mengikuti lebar Container
+                        mainAxisSize: MainAxisSize
+                            .max, // Memastikan Row mengikuti lebar Container
                         children: [
-                          Icon(Icons.location_on, color: Color(0xFFA3948D), size: 20), // Ikon di kiri
+                          Icon(Icons.location_on,
+                              color: Color(0xFFA3948D),
+                              size: 20), // Ikon di kiri
                           SizedBox(width: 8), // Jarak antara ikon dan teks
-                          Flexible( // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
+                          Flexible(
+                            // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -187,18 +199,22 @@ class ClientProjectsDetail extends StatelessWidget {
                     ),
                     SizedBox(width: 3),
                     Container(
-                      width:MediaQuery.of(context).size.width * 4.55/11,
+                      width: MediaQuery.of(context).size.width * 4.55 / 11,
                       padding: EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Color(0xFFEDE7E2),
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max, // Memastikan Row mengikuti lebar Container
+                        mainAxisSize: MainAxisSize
+                            .max, // Memastikan Row mengikuti lebar Container
                         children: [
-                          Icon(Icons.money, color: Color(0xFFA3948D), size: 20), // Ikon di kiri
+                          Icon(Icons.money,
+                              color: Color(0xFFA3948D),
+                              size: 20), // Ikon di kiri
                           SizedBox(width: 8), // Jarak antara ikon dan teks
-                          Flexible( // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
+                          Flexible(
+                            // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -241,18 +257,21 @@ class ClientProjectsDetail extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Container(
-                width:double.infinity,
+                width: double.infinity,
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Color(0xFFEDE7E2),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: Row(
-                  mainAxisSize: MainAxisSize.max, // Memastikan Row mengikuti lebar Container
+                  mainAxisSize: MainAxisSize
+                      .max, // Memastikan Row mengikuti lebar Container
                   children: [
-                    Icon(Icons.money, color: Color(0xFFA3948D), size: 20), // Ikon di kiri
+                    Icon(Icons.money,
+                        color: Color(0xFFA3948D), size: 20), // Ikon di kiri
                     SizedBox(width: 8), // Jarak antara ikon dan teks
-                    Flexible( // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
+                    Flexible(
+                      // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -276,20 +295,23 @@ class ClientProjectsDetail extends StatelessWidget {
                                   fontFamily: "NunitoSans",
                                   color: Color(0xFFA3948D),
                                 ),
-
                               ),
                             ],
                           ),
-
                           SizedBox(height: 4),
                           Wrap(
                             children: [
                               Container(
                                 width: double.infinity,
-                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4), // Opsional untuk memberi ruang dalam kontainer
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical:
+                                        4), // Opsional untuk memberi ruang dalam kontainer
                                 decoration: BoxDecoration(
-                                  color: Colors.white, // Sesuaikan warna latar belakang jika perlu
-                                  borderRadius: BorderRadius.circular(8), // Opsional untuk sudut melengkung
+                                  color: Colors
+                                      .white, // Sesuaikan warna latar belakang jika perlu
+                                  borderRadius: BorderRadius.circular(
+                                      8), // Opsional untuk sudut melengkung
                                 ),
                                 child: Text(
                                   'Rp 500.000',
@@ -299,7 +321,6 @@ class ClientProjectsDetail extends StatelessWidget {
                                     fontFamily: "NunitoSans",
                                     color: Color(0xFFA3948D),
                                   ),
-
                                 ),
                               ),
                             ],

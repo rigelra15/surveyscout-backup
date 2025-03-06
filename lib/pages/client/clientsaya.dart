@@ -4,7 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/custom_signout.dart';
 import 'package:surveyscout/pages/welcome.dart';
-import 'package:surveyscout/services/api_clientprofile.dart';
+import 'package:surveyscout/services/profile/api_clientprofile.dart';
 import 'clientprojects.dart';
 import 'clientchat.dart';
 
@@ -42,7 +42,7 @@ class _ClientSaya extends State<ClientSaya> {
     if (token != null) {
       setState(() {
         apiService = ApiService(
-          "https://4481-118-99-84-24.ngrok-free.app/api/v1",
+          "https://d36b-118-99-84-24.ngrok-free.app/api/v1",
           token,
         );
       });
@@ -80,6 +80,8 @@ class _ClientSaya extends State<ClientSaya> {
   bool isOn2 = false;
 
   Future<void> _handleGoogleSignOut(BuildContext context) async {
+    if (!context.mounted) return;
+
     showDialog(
       context: context,
       builder: (context) => CustomSignOut(
@@ -88,7 +90,6 @@ class _ClientSaya extends State<ClientSaya> {
         confirmText: 'Ya',
         cancelText: 'Batal',
         onConfirm: () {
-          Navigator.of(context).pop(); // Tutup dialog dulu
           _signOutAndNavigate(context);
         },
         onCancel: () {
@@ -107,10 +108,16 @@ class _ClientSaya extends State<ClientSaya> {
     await prefs.remove('jwt_token');
     await prefs.remove('user_role');
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Welcome()),
-    );
+    if (context.mounted) {
+      Future.delayed(Duration(milliseconds: 100), () {
+        if (context.mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Welcome()),
+          );
+        }
+      });
+    }
   }
 
   @override

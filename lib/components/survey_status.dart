@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:surveyscout/services/api_clientprojects.dart';
+import 'package:surveyscout/services/projects/api_clientprojects.dart';
 
 class SurveyStatusWidget extends StatelessWidget {
   final List<Project> surveys;

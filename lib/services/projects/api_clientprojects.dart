@@ -7,15 +7,16 @@ class Project {
   String deskripsiProyek;
   String tenggatPengerjaan;
   String lokasi;
-  String alamat;
   List<String> keahlian;
   List<String> tipeHasil;
   String kompensasi;
   String idClient;
   String createdAt;
   String statusTask;
-  String? midtransToken;
+  String? idLuaran;
   String orderId;
+  String statusRating;
+  String? midtransToken;
   String? midtransLink;
   int? jumlahResponden;
 
@@ -25,7 +26,6 @@ class Project {
     required this.deskripsiProyek,
     required this.tenggatPengerjaan,
     required this.lokasi,
-    required this.alamat,
     required this.keahlian,
     required this.tipeHasil,
     required this.kompensasi,
@@ -34,6 +34,8 @@ class Project {
     required this.statusTask,
     this.midtransToken,
     required this.orderId,
+    this.idLuaran,
+    required this.statusRating,
     this.midtransLink,
     this.jumlahResponden,
   });
@@ -45,7 +47,6 @@ class Project {
       'deskripsi_proyek': deskripsiProyek,
       'tenggat_pengerjaan': tenggatPengerjaan,
       'lokasi': lokasi,
-      'alamat': alamat,
       'keahlian': keahlian,
       'tipe_hasil': tipeHasil,
       'kompensasi': kompensasi,
@@ -54,6 +55,8 @@ class Project {
       'status_task': statusTask,
       'midtrans_token': midtransToken,
       'order_id': orderId,
+      'id_luaran': idLuaran,
+      'status_rating': statusRating,
       'midtrans_link': midtransLink,
       'jumlah_responden': jumlahResponden,
     };
@@ -66,7 +69,6 @@ class Project {
       deskripsiProyek: json['deskripsi_proyek'] ?? '',
       tenggatPengerjaan: json['tenggat_pengerjaan'] ?? '',
       lokasi: json['lokasi'] ?? '',
-      alamat: json['alamat'] ?? '',
       keahlian: List<String>.from(json['keahlian'] ?? []),
       tipeHasil: List<String>.from(json['tipe_hasil'] ?? []),
       kompensasi: json['kompensasi'] ?? '',
@@ -75,6 +77,8 @@ class Project {
       statusTask: json['status_task'] ?? '',
       midtransToken: json['midtrans_token'] ?? null,
       orderId: json['order_id'] ?? null,
+      idLuaran: json['id_luaran'] ?? null,
+      statusRating: json['status_rating'] ?? '',
       midtransLink: json['midtrans_link'] ?? null,
       jumlahResponden:
           (json['jumlah_responden'] != null && json['jumlah_responden'] is int)

@@ -5,7 +5,15 @@ import 'package:surveyscout/components/project_card.dart';
 import 'package:surveyscout/components/survey_status.dart';
 import 'package:surveyscout/pages/client/clientchat.dart';
 import 'package:surveyscout/pages/client/clientsaya.dart';
-import 'package:surveyscout/services/api_clientprojects.dart';
+import 'package:surveyscout/pages/clientrespondenproyekdetailmerekrut.dart';
+import 'package:surveyscout/pages/clientsurveyorproyekdetailbutuhtinjau.dart';
+import 'package:surveyscout/pages/clientsurveyorproyekdetaildikerjakan.dart';
+import 'package:surveyscout/pages/clientsurveyorproyekdetaildmenunggubayar.dart';
+import 'package:surveyscout/pages/clientsurveyorproyekdetaildraft.dart';
+import 'package:surveyscout/pages/clientsurveyorproyekdetailkadaluwarsa.dart';
+import 'package:surveyscout/pages/clientsurveyorproyekdetailperingatan.dart';
+import 'package:surveyscout/pages/clientsurveyorproyekdetailselesai.dart';
+import 'package:surveyscout/services/projects/api_clientprojects.dart';
 
 class ClientProjects extends StatefulWidget {
   @override
@@ -29,7 +37,7 @@ class _ClientProjects extends State<ClientProjects> {
     if (token != null) {
       setState(() {
         apiService = ApiService(
-          "https://4481-118-99-84-24.ngrok-free.app/api/v1",
+          "https://d36b-118-99-84-24.ngrok-free.app/api/v1",
           token,
         );
       });
@@ -308,7 +316,8 @@ class _ClientProjects extends State<ClientProjects> {
                               timeAgo: project.calculateDeadline(),
                               fileType: project.tipeHasil.join(", "),
                               status: project.statusTask,
-                              showRating: project.statusTask == "selesai",
+                              showRating: (project.statusTask == "selesai" &&
+                                  project.statusRating == "belum"),
                               onDownload: project.statusTask == "selesai"
                                   ? () => print("Download tapped")
                                   : null,
@@ -320,6 +329,120 @@ class _ClientProjects extends State<ClientProjects> {
                               chatCount: (project.statusTask == "dikerjakan")
                                   ? 3
                                   : null,
+                              onTap: () {
+                                if (project.statusTask == "ditinjau") {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Clientsurveyorproyekdetailbutuhtinjau(
+                                        id: project.idSurvey,
+                                        type: project.orderId
+                                                .startsWith("RESPOND")
+                                            ? "respond"
+                                            : "survey",
+                                      ),
+                                    ),
+                                  );
+                                } else if (project.statusTask ==
+                                    "kadaluwarsa") {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Clientsurveyorproyekdetailkadaluwarsa(
+                                        id: project.idSurvey,
+                                        type: project.orderId
+                                                .startsWith("RESPOND")
+                                            ? "respond"
+                                            : "survey",
+                                      ),
+                                    ),
+                                  );
+                                } else if (project.statusTask == "pembayaran") {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Clientsurveyorproyekdetailmenunggubayar(
+                                        id: project.idSurvey,
+                                        type: project.orderId
+                                                .startsWith("RESPOND")
+                                            ? "respond"
+                                            : "survey",
+                                      ),
+                                    ),
+                                  );
+                                } else if (project.statusTask == "draft") {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Clientsurveyorproyekdetaildraft(
+                                        id: project.idSurvey,
+                                        type: project.orderId
+                                                .startsWith("RESPOND")
+                                            ? "respond"
+                                            : "survey",
+                                      ),
+                                    ),
+                                  );
+                                } else if (project.statusTask == "merekrut") {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Clientrespondenproyekdetailmerekrut(
+                                        id: project.idSurvey,
+                                        type: project.orderId
+                                                .startsWith("RESPOND")
+                                            ? "respond"
+                                            : "survey",
+                                      ),
+                                    ),
+                                  );
+                                } else if (project.statusTask == "dikerjakan") {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Clientsurveyorproyekdetaildikerjakan(
+                                        id: project.idSurvey,
+                                        type: project.orderId
+                                                .startsWith("RESPOND")
+                                            ? "respond"
+                                            : "survey",
+                                      ),
+                                    ),
+                                  );
+                                } else if (project.statusTask == "selesai") {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Clientsurveyorproyekdetailselesai(
+                                        id: project.idSurvey,
+                                        type: project.orderId
+                                                .startsWith("RESPOND")
+                                            ? "respond"
+                                            : "survey",
+                                      ),
+                                    ),
+                                  );
+                                } else if (project.statusTask == "peringatan") {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Clientsurveyorproyekdetailperingatan(
+                                                id: project.idSurvey,
+                                                type: project.orderId
+                                                        .startsWith("RESPOND")
+                                                    ? "respond"
+                                                    : "survey")),
+                                  );
+                                }
+                              },
                               onWork: project.statusTask == "merekrut"
                                   ? () => print("Work tapped")
                                   : null,

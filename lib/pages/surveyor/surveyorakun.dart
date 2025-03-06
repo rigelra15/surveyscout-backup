@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/custom_pdfviewer.dart';
 import 'package:surveyscout/components/custom_signout.dart';
 import 'package:surveyscout/pages/welcome.dart';
-import 'package:surveyscout/services/api_surveyorprofile.dart';
+import 'package:surveyscout/services/profile/api_surveyorprofile.dart';
 import 'surveyorprojects.dart';
 import 'surveyorchat.dart';
 import 'surveyormyprojects.dart';
@@ -50,7 +50,7 @@ class _SurveyorAccount extends State<SurveyorAccount> {
     if (token != null) {
       setState(() {
         apiService = ApiService(
-          "https://4481-118-99-84-24.ngrok-free.app/api/v1",
+          "https://d36b-118-99-84-24.ngrok-free.app/api/v1",
           token,
         );
       });
@@ -98,6 +98,8 @@ class _SurveyorAccount extends State<SurveyorAccount> {
   bool isOn2 = false;
 
   Future<void> _handleGoogleSignOut(BuildContext context) async {
+    if (!context.mounted) return;
+
     showDialog(
       context: context,
       builder: (context) => CustomSignOut(
@@ -106,7 +108,6 @@ class _SurveyorAccount extends State<SurveyorAccount> {
         confirmText: 'Ya',
         cancelText: 'Batal',
         onConfirm: () {
-          Navigator.of(context).pop(); // Tutup dialog dulu
           _signOutAndNavigate(context);
         },
         onCancel: () {
@@ -125,10 +126,16 @@ class _SurveyorAccount extends State<SurveyorAccount> {
     await prefs.remove('jwt_token');
     await prefs.remove('user_role');
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Welcome()),
-    );
+    if (context.mounted) {
+      Future.delayed(Duration(milliseconds: 100), () {
+        if (context.mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Welcome()),
+          );
+        }
+      });
+    }
   }
 
   @override

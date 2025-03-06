@@ -46,7 +46,7 @@ class _LoginState extends State<Login> {
         print("ID Token dari Firebase: $idToken");
         final response = await http.post(
           Uri.parse(
-              "https://4481-118-99-84-24.ngrok-free.app/api/v1/users/GloginFirebase"),
+              "https://d36b-118-99-84-24.ngrok-free.app/api/v1/users/GloginFirebase"),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({"idToken": idToken}),
         );

@@ -90,7 +90,30 @@ class ApiService {
 
   Future<List<Respond>> getResponds() async {
     final response = await http.get(
-      Uri.parse('$baseUrl/responds/getAllRespondTask'),
+      Uri.parse('$baseUrl/responds/'),
+      headers: {
+        "Authorization": "Bearer $authToken",
+        "Content-Type": "application/json",
+      },
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+      if (jsonResponse['data'] is List) {
+        List<dynamic> data = jsonResponse['data'];
+        return data.map((survey) => Respond.fromJson(survey)).toList();
+      } else {
+        throw Exception("Unexpected data format: ${jsonResponse['data']}");
+      }
+    } else {
+      throw Exception('Failed to load surveys');
+    }
+  }
+
+  Future<List<Respond>> getRespondByID(String id) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/responds/$id'),
       headers: {
         "Authorization": "Bearer $authToken",
         "Content-Type": "application/json",

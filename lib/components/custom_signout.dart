@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomSignOut extends StatelessWidget {
+class CustomSignOut extends StatefulWidget {
   final String title;
   final String message;
   final String confirmText;
@@ -17,6 +17,13 @@ class CustomSignOut extends StatelessWidget {
     required this.onConfirm,
     required this.onCancel,
   });
+
+  @override
+  _CustomSignOutState createState() => _CustomSignOutState();
+}
+
+class _CustomSignOutState extends State<CustomSignOut> {
+  bool _isProcessing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +46,7 @@ class CustomSignOut extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Center(
               child: Text(
-                title,
+                widget.title,
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -51,7 +58,7 @@ class CustomSignOut extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              message,
+              widget.message,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 16, color: Colors.black),
             ),
@@ -62,7 +69,7 @@ class CustomSignOut extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: onCancel,
+                    onPressed: _isProcessing ? null : widget.onCancel,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey.shade200,
                       foregroundColor: Colors.black,
@@ -70,13 +77,23 @@ class CustomSignOut extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: Text(cancelText),
+                    child: Text(widget.cancelText),
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: onConfirm,
+                    onPressed: _isProcessing
+                        ? null
+                        : () async {
+                            setState(() {
+                              _isProcessing = true;
+                            });
+
+                            await Future.delayed(Duration(milliseconds: 200));
+
+                            widget.onConfirm();
+                          },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
                       foregroundColor: Colors.white,
@@ -84,7 +101,16 @@ class CustomSignOut extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: Text(confirmText),
+                    child: _isProcessing
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : Text(widget.confirmText),
                   ),
                 ),
               ],

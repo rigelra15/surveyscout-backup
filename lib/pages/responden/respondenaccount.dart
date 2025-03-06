@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/custom_signout.dart';
 import 'package:surveyscout/pages/welcome.dart';
-import 'package:surveyscout/services/api_respondenprofile.dart';
+import 'package:surveyscout/services/profile/api_respondenprofile.dart';
 import 'respondenmyprojects.dart';
 import 'respondenprojects.dart';
 import 'respondenchat.dart';
@@ -46,7 +46,7 @@ class _RespondenAccount extends State<RespondenAccount> {
     if (token != null) {
       setState(() {
         apiService = ApiService(
-          "https://4481-118-99-84-24.ngrok-free.app/api/v1",
+          "https://d36b-118-99-84-24.ngrok-free.app/api/v1",
           token,
         );
       });
@@ -84,6 +84,8 @@ class _RespondenAccount extends State<RespondenAccount> {
   bool isOn2 = false;
 
   Future<void> _handleGoogleSignOut(BuildContext context) async {
+    if (!context.mounted) return;
+
     showDialog(
       context: context,
       builder: (context) => CustomSignOut(
@@ -92,7 +94,6 @@ class _RespondenAccount extends State<RespondenAccount> {
         confirmText: 'Ya',
         cancelText: 'Batal',
         onConfirm: () {
-          Navigator.of(context).pop(); // Tutup dialog dulu
           _signOutAndNavigate(context);
         },
         onCancel: () {
@@ -111,10 +112,16 @@ class _RespondenAccount extends State<RespondenAccount> {
     await prefs.remove('jwt_token');
     await prefs.remove('user_role');
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Welcome()),
-    );
+    if (context.mounted) {
+      Future.delayed(Duration(milliseconds: 100), () {
+        if (context.mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Welcome()),
+          );
+        }
+      });
+    }
   }
 
   @override
