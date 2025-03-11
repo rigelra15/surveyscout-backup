@@ -3,6 +3,7 @@ import 'package:surveyscout/pages/clientrespondenproyekdetaildikerjakan.dart';
 import 'package:surveyscout/pages/clientrespondenproyekdetailmerekrut.dart';
 import 'package:surveyscout/pages/clientsignup.dart';
 import 'package:surveyscout/pages/respondenproyeksaya.dart';
+import 'package:surveyscout/pages/surveyorproyekdetailkirimlamaran.dart';
 import 'pages/clientsaya.dart';
 import 'pages/welcome.dart';
 import 'pages/surveyorprojects.dart';
@@ -22,6 +23,7 @@ import 'pages/clientsurveyorproyekdetailselesai.dart';
 import 'pages/clientrespondenproyekdetailmerekrut.dart';
 import 'pages/clientrespondenproyekdetailmerekrutdipilih.dart';
 import 'pages/clientchatrichardsantoso.dart';
+import 'pages/surveyorproyekdetailkirimlamaran.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => ChatPage(),
+        '/': (context) => Surveyorproyekdetailkirimlamaran(),
       },
     );
   }
