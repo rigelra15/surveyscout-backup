@@ -14,7 +14,26 @@ class Surveyorproyekdetailkirimlamaran extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      home: SurveyorProyekDetail(),
+    );
+  }
+}
+
+class SurveyorProyekDetail extends StatefulWidget {
+  @override
+  _BookmarkButtonState createState() => _BookmarkButtonState();
+}
+
+class _BookmarkButtonState extends State<SurveyorProyekDetail> {
+  bool isBookmarked = false;
+  @override
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
+
         backgroundColor: Color(0xFFF2EEE9), // Warna latar belakang
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60), // Tinggi total AppBar (50 + 10 padding)
@@ -45,22 +64,42 @@ class Surveyorproyekdetailkirimlamaran extends StatelessWidget {
           ),
         ),
         body: Padding(
+
           padding: EdgeInsets.all(27), // Padding di semua sisi
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, // Sejajar ke kiri
               mainAxisAlignment: MainAxisAlignment.start, // Tetap di atas
               children: [
-                Text(
-                  'Kepuasan Pengguna Transportasi Umum di Jakarta',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: "SourceSans3",
-                    color: Color(0xFF705D54),
-                    fontWeight: FontWeight.w700,
+              Row(
+                    children: [
+                    Expanded(
+                    child: Text(
+                      'Kepuasan Pengguna Transportasi Umum di Jakarta',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: "SourceSans3",
+                        color: Color(0xFF705D54),
+                        fontWeight: FontWeight.w700,
+                      ),
+                      overflow: TextOverflow.ellipsis, // Mencegah teks menabrak ikon
+                      maxLines: 2, // Batasi jumlah baris agar tidak berantakan
+                    ),
                   ),
+                  IconButton(
+                    icon: Icon(
+                      isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                      color: Color(0xFF705D54),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isBookmarked = !isBookmarked;
+                      });
+                    },
+                  ),
+                  ],
                 ),
-                SizedBox(height: 10), // Spasi antar elemen
+                  SizedBox(height: 10), // Spasi antar elemen
                 Text(
                   'Diunggah pada 12.31 WIB, Senin, 20 Jan. 2025',
                   style: TextStyle(
