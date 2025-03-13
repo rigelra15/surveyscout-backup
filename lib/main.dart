@@ -24,6 +24,7 @@ import 'pages/clientrespondenproyekdetailmerekrut.dart';
 import 'pages/clientrespondenproyekdetailmerekrutdipilih.dart';
 import 'pages/clientchatrichardsantoso.dart';
 import 'pages/surveyorproyekdetailkirimlamaran.dart';
+import 'pages/surveyorproyekdetailmendaftar.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Surveyorproyekdetailkirimlamaran(),
+        '/': (context) => Surveyorproyekdetailmendaftar(),
       },
     );
   }
