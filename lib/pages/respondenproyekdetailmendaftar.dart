@@ -6,10 +6,10 @@ import 'surveyorprojects.dart';
 import 'respondenprojects.dart';
 
 void main() {
-  runApp(Respondenproyekdetailkirimlamaran());
+  runApp(Respondenproyekdetailmendaftar());
 }
 
-class Respondenproyekdetailkirimlamaran extends StatelessWidget {
+class Respondenproyekdetailmendaftar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,13 +27,10 @@ class SurveyorProyekDetail extends StatefulWidget {
 class _BookmarkButtonState extends State<SurveyorProyekDetail> {
   bool isBookmarked = false;
   @override
-
   Widget build(BuildContext context) {
     return MaterialApp(
-
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-
         backgroundColor: Color(0xFFF2EEE9), // Warna latar belakang
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60), // Tinggi total AppBar (50 + 10 padding)
@@ -64,7 +61,6 @@ class _BookmarkButtonState extends State<SurveyorProyekDetail> {
           ),
         ),
         body: Padding(
-
           padding: EdgeInsets.all(27), // Padding di semua sisi
           child: SingleChildScrollView(
             child: Column(
@@ -100,6 +96,34 @@ class _BookmarkButtonState extends State<SurveyorProyekDetail> {
                   ],
                 ),
                 SizedBox(height: 10), // Spasi antar elemen
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8), // Padding dalam container
+                  decoration: BoxDecoration(
+                    color: Color(0xFF2196F3), // Warna latar belakang container
+                    borderRadius: BorderRadius.circular(16), // Membuat sudut melengkung
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min, // Sesuaikan ukuran Container dengan konten
+                    children: [
+                      Icon(
+                        Icons.local_post_office, // Ganti dengan ikon sesuai kebutuhan
+                        color: Colors.white,
+                        size: 14, // Ukuran ikon sesuai teks
+                      ),
+                      SizedBox(width: 6), // Jarak antara ikon dan teks
+                      Text(
+                        'Mendaftar',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "NunitoSans",
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
                 Text(
                   'Diunggah pada 12.31 WIB, Senin, 20 Jan. 2025',
                   style: TextStyle(
@@ -132,7 +156,7 @@ class _BookmarkButtonState extends State<SurveyorProyekDetail> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Tenggat Waktu Pendaftaran',
+                                'Tenggat Waktu',
                                 style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
@@ -264,6 +288,68 @@ class _BookmarkButtonState extends State<SurveyorProyekDetail> {
                   color: Color(0xFFB0B0B0),
                 ),
                 SizedBox(height: 10),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  width: double.infinity,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFEDE7E2),
+                    border: Border.all(
+                      color: Color(0xFF826754),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        child: Center(
+                          child: Icon(
+                            Icons.local_post_office,
+                            color: Color(0xFF826754),
+                            size: 40,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      // Tambahkan Expanded agar teks tidak menyebabkan overflow
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
+                            children: [
+                              Text(
+                                "Menunggu respons",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: "NunitoSans",
+                                  color: Color(0xFF705D54),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              SizedBox(height: 4), // Beri sedikit jarak antar teks
+                              Flexible(
+                                child: Text(
+                                  'Klien akan memeriksa lamaran atau mengirimkan chat. Anda akan menerima notifikasi mengenai status lamaran Anda.',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: "NunitoSans",
+                                    color: Color(0xFFA3948D),
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  overflow: TextOverflow.ellipsis, // Tambahkan untuk menghindari overflow
+                                  maxLines: 3, // Batasi jumlah baris agar tidak melebar
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
                 Text(
                   'Deskripsi',
                   style: TextStyle(
@@ -295,7 +381,7 @@ class _BookmarkButtonState extends State<SurveyorProyekDetail> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Usia : 18-25 tahun Status Perkawinan : Belum Menikah, Pekerjaan : Mahasiswa, Lainnya : Memiliki akun di salah satu platform e-commerce (misal: Tokopedia, Shopee, Lazada, dll.)., Melakukan transaksi belanja online minimal sekali dalam sebulan.,Bersedia meluangkan waktu sekitar 10 menit untuk mengisi survei secara online.',
+                  'Usia : 18-25 tahun, Status Perkawinan : Belum Menikah, Pekerjaan : Mahasiswa, Lainnya : Memiliki akun di salah satu platform e-commerce (misal: Tokopedia, Shopee, Lazada, dll.)., Melakukan transaksi belanja online minimal sekali dalam sebulan., Bersedia meluangkan waktu sekitar 10 menit untuk mengisi survei secara online.',
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: "NunitoSans",
@@ -358,35 +444,33 @@ class _BookmarkButtonState extends State<SurveyorProyekDetail> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+
               Expanded(
                 child: Container(
                   height: 600,
                   decoration: BoxDecoration(
-                    color: Color(0xFFF1E9E5),
-                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xFF826754),
+
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.edit_document, color: Color(0xFF826754)),
+                      Icon(Icons.check, color: Color(0xFFEDE7E2)),
                       SizedBox(width: 10),
                       Text(
-                        'Kirim Lamaran',
+                        'Lamaran Terkirim',
                         style: TextStyle(
                           fontFamily: 'NutinoSans',
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
-                          color: Color(0xFF826754),
+                          color: Color(0xFFEDE7E2),
                         ),
                       ),
-
-
                     ],
                   ),
                 ),
               ),
-
               SizedBox(width: 8),
               Container(
                 height: 600,
