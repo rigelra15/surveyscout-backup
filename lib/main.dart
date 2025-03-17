@@ -38,6 +38,7 @@ import 'pages/respondenproyekdetailditolak.dart';
 import 'pages/respondenproyekdetailmengerjakan.dart';
 import 'pages/respondenproyekdetailbutuhtinjau.dart';
 import 'pages/respondenproyekdetailmengerjakantugaschat.dart';
+import 'pages/respondenproyekdetailselesai.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Respondenproyekdetailmengerjakantugaschat(),
+        '/': (context) => Respondenproyekdetailselesai(),
       },
     );
   }
