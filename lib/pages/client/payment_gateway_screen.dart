@@ -56,7 +56,7 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
     try {
       final statusResponse = await http.post(
         Uri.parse(
-            "https://03d4-120-188-76-121.ngrok-free.app/api/v1/midtransNotif/midtransResponse"),
+            "https://surveyscoutbe.onrender.com/api/v1/midtransNotif/midtransResponse"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"order_id": _currentOrderId}),
       );
@@ -72,7 +72,7 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
           try {
             final response = await http.post(
               Uri.parse(
-                  "https://03d4-120-188-76-121.ngrok-free.app/api/v1/surveys/createSurveyPayment/$draft"),
+                  "https://surveyscoutbe.onrender.com/api/v1/surveys/createSurveyPayment/$draft"),
             );
 
             if (response.statusCode == 201) {
@@ -154,7 +154,7 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
     try {
       final response = await http.post(
         Uri.parse(
-            "https://03d4-120-188-76-121.ngrok-free.app/api/v1/midtransNotif/midtransResponse"),
+            "https://surveyscoutbe.onrender.com/api/v1/midtransNotif/midtransResponse"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"order_id": _currentOrderId}),
       );

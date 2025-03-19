@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:793947844120:android:d1cde851c970a793c55d6d",
         "android_client_info": {
-          "package_name": "com.example.surveyscout"
+          "package_name": "com.survey.newsurveyscout"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "793947844120-e9g13p37sdu5e4gkvk6nlk9i74ehncqo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.surveyscout",
+            "package_name": "com.survey.newsurveyscout",
             "certificate_hash": "d63f1e9a419b839b4d15cdeffe0df7bf0cdb8208"
           }
         },
@@ -25,15 +25,23 @@
           "client_id": "793947844120-lc8b7khaun73qqdkteoon2hhvodom069.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.surveyscout",
+            "package_name": "com.survey.newsurveyscout",
             "certificate_hash": "d7e37663999ae78219e86d2988c26726815719b5"
+          }
+        },
+        {
+          "client_id": "793947844120-lol0dtpj3bpftfbfmp11trvgu8iljici.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.survey.newsurveyscout",
+            "certificate_hash": "dda8204172094728ba66ca470116d186e1b8d80a"
           }
         },
         {
           "client_id": "793947844120-v8crrb824d15f26bq4ja9ntma35367g8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.surveyscout",
+            "package_name": "com.survey.newsurveyscout",
             "certificate_hash": "5aa8936d3f118b93127aab6b99adc4e78de60ea3"
           }
         },
@@ -45,6 +53,49 @@
       "api_key": [
         {
           "current_key": "AIzaSyD1ekwsstJihsdmT3rcru4JoBPYEJL2Fno"
+        },
+        {
+          "current_key": "AIzaSyAoio5JhYwaRtM1zMdpIRmcQUS8V9jSBpA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "793947844120-od7vlmcqtbh7chhne8838t1er0nc6cnq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793947844120:android:8347ca7f8eddbf16c55d6d",
+        "android_client_info": {
+          "package_name": "com.survey.newsurveyscout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "793947844120-nn9cv303sulihdemj9faq8b40910l7pd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.survey.newsurveyscout",
+            "certificate_hash": "dda8204172094728ba66ca470116d186e1b8d80a"
+          }
+        },
+        {
+          "client_id": "793947844120-od7vlmcqtbh7chhne8838t1er0nc6cnq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1ekwsstJihsdmT3rcru4JoBPYEJL2Fno"
+        },
+        {
+          "current_key": "AIzaSyAoio5JhYwaRtM1zMdpIRmcQUS8V9jSBpA"
         }
       ],
       "services": {

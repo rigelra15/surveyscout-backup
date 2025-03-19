@@ -65,7 +65,7 @@ class _WelcomeState extends State<Welcome> {
         print("ID Token dari Firebase: $idToken");
         final response = await http.post(
           Uri.parse(
-              "https://03d4-120-188-76-121.ngrok-free.app/api/v1/users/GloginFirebase"),
+              "https://surveyscoutbe.onrender.com/api/v1/users/GloginFirebase"),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({"idToken": idToken}),
         );
@@ -111,7 +111,7 @@ class _WelcomeState extends State<Welcome> {
       }
       final response = await http.post(
         Uri.parse(
-            "https://03d4-120-188-76-121.ngrok-free.app/api/v1/users/selectRole"),
+            "https://surveyscoutbe.onrender.com/api/v1/users/selectRole"),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",
@@ -249,7 +249,7 @@ class _WelcomeState extends State<Welcome> {
                             ),
                             SizedBox(width: 8),
                             Text(
-                              "Daftar Dengan Google",
+                              "Daftar dengan Google",
                               style: TextStyle(
                                 fontFamily: 'NunitoSans',
                                 fontWeight: FontWeight.w700,
