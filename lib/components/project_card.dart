@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:iconify_flutter_plus/icons/ic.dart';
@@ -384,7 +386,7 @@ class ProjectCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
-          color: showRating || status == 'ditinjau'
+          color: showRating && orderId.startsWith("SURVEY") || status == 'ditinjau'
               ? const Color(0xFF826754)
               : Colors.black12,
           borderRadius: BorderRadius.circular(10),
@@ -705,7 +707,7 @@ class ProjectCard extends StatelessWidget {
                 ),
               ),
             ],
-            if (showRating) ...[
+            if (showRating && orderId.startsWith("SURVEY")) ...[
               const SizedBox(height: 8),
               Container(
                 width: double.infinity,

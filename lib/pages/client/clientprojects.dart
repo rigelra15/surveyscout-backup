@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/custom_choose_sort.dart';
 import 'package:surveyscout/components/project_card.dart';
 import 'package:surveyscout/components/survey_status.dart';
+import 'package:surveyscout/pages/client/choose_recruitment_screen.dart';
 import 'package:surveyscout/pages/client/clientchat.dart';
 import 'package:surveyscout/pages/client/clientsaya.dart';
 import 'package:surveyscout/pages/clientrespondenproyekdetailmerekrut.dart';
@@ -37,7 +38,7 @@ class _ClientProjects extends State<ClientProjects> {
     if (token != null) {
       setState(() {
         apiService = ApiService(
-          "https://d36b-118-99-84-24.ngrok-free.app/api/v1",
+          "https://03d4-120-188-76-121.ngrok-free.app/api/v1",
           token,
         );
       });
@@ -281,6 +282,8 @@ class _ClientProjects extends State<ClientProjects> {
             child: Column(
               children: [
                 Expanded(
+                    child: RefreshIndicator(
+                  onRefresh: _fetchSurveys,
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
@@ -485,7 +488,7 @@ class _ClientProjects extends State<ClientProjects> {
                       ],
                     ),
                   ),
-                ),
+                )),
               ],
             ),
           ),
@@ -494,11 +497,12 @@ class _ClientProjects extends State<ClientProjects> {
             right: 32,
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xFF3A2B24),
-                borderRadius: BorderRadius.circular(16),
+                color: Color(0xFF3A2B24), // Warna background
+                borderRadius: BorderRadius.circular(16), // Membuat button bulat
                 boxShadow: [
                   BoxShadow(
-                    color: Color(0x40000000),
+                    color:
+                        Color(0x40000000), // Warna shadow dengan opasitas 40%
                     offset: Offset(0, 4),
                     blurRadius: 4,
                   ),
@@ -506,30 +510,37 @@ class _ClientProjects extends State<ClientProjects> {
               ),
               child: TextButton(
                 style: TextButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  backgroundColor:
+                      Colors.transparent, // Background dibiarkan transparan
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
                 onPressed: () {
-                  print('Custom FAB Terklik!');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChooseRecruitmentScreen(),
+                    ),
+                  );
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
                       Icons.add,
-                      color: Colors.white,
+                      color: Colors.white, // Warna ikon
                     ),
-                    SizedBox(width: 4),
+                    SizedBox(width: 4), // Gap antara ikon dan teks
                     Text(
                       "Buat Baru",
                       style: TextStyle(
                         fontFamily: 'NunitoSans',
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        decoration: TextDecoration.none,
+                        decoration:
+                            TextDecoration.none, // Tidak ada dekorasi tambahan
                         color: Color(0xFFffffff),
                       ),
                     ),

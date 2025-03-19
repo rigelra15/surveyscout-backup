@@ -4,6 +4,7 @@ import 'package:surveyscout/pages/responden/respondenprojects.dart';
 import 'package:surveyscout/pages/client/clientsignup.dart';
 import 'package:surveyscout/pages/surveyor/surveyorprojects.dart';
 import 'package:surveyscout/services/projects/api_projectdetail.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Clientrespondenproyekdetailmerekrut extends StatefulWidget {
   final String id;
@@ -22,6 +23,7 @@ class _ClientrespondenproyekdetailmerekrutState
     extends State<Clientrespondenproyekdetailmerekrut> {
   ApiService? apiService;
   late ProjectDetail projectDetail = ProjectDetail();
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -32,13 +34,17 @@ class _ClientrespondenproyekdetailmerekrutState
   Future<void> _initializeApiService() async {
     setState(() {
       apiService =
-          ApiService("https://d36b-118-99-84-24.ngrok-free.app/api/v1");
+          ApiService("https://03d4-120-188-76-121.ngrok-free.app/api/v1");
     });
 
     _fetchClientRespondenDetail(widget.id);
   }
 
   Future<void> _fetchClientRespondenDetail(String id) async {
+    setState(() {
+      isLoading = true;
+    });
+
     try {
       if (apiService != null) {
         ProjectDetail profile = await apiService!.getARespondTask(id);
@@ -48,6 +54,10 @@ class _ClientrespondenproyekdetailmerekrutState
       }
     } catch (e) {
       print("Error mengambil profil klien: $e");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -103,432 +113,383 @@ class _ClientrespondenproyekdetailmerekrutState
             ),
           ),
         ),
-        body: Padding(
-          padding: EdgeInsets.all(27), // Padding di semua sisi
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // Sejajar ke kiri
-              mainAxisAlignment: MainAxisAlignment.start, // Tetap di atas
-              children: [
-                Text(
-                  projectDetail.namaProyek,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: "SourceSans3",
-                    color: Color(0xFF705D54),
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                SizedBox(height: 10), // Spasi antar elemen
-                Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 12, vertical: 8), // Padding dalam container
-                  decoration: BoxDecoration(
-                    color: Color(0xFF826754), // Warna latar belakang container
-                    borderRadius:
-                        BorderRadius.circular(16), // Membuat sudut melengkung
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize
-                        .min, // Sesuaikan ukuran Container dengan konten
-                    children: [
-                      Icon(
-                        Icons.search, // Ganti dengan ikon sesuai kebutuhan
-                        color: Colors.white,
-                        size: 14, // Ukuran ikon sesuai teks
+        body: Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(27), // Padding di semua sisi
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start, // Sejajar ke kiri
+                  mainAxisAlignment: MainAxisAlignment.start, // Tetap di atas
+                  children: [
+                    Text(
+                      projectDetail.namaProyek,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: "SourceSans3",
+                        color: Color(0xFF705D54),
+                        fontWeight: FontWeight.w700,
                       ),
-                      SizedBox(width: 6), // Jarak antara ikon dan teks
-                      Text(
-                        'Merekrut',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "NunitoSans",
-                          color: Colors.white,
-                        ),
+                    ),
+                    SizedBox(height: 10), // Spasi antar elemen
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8), // Padding dalam container
+                      decoration: BoxDecoration(
+                        color:
+                            Color(0xFF826754), // Warna latar belakang container
+                        borderRadius: BorderRadius.circular(
+                            16), // Membuat sudut melengkung
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  projectDetail.createdAt,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontFamily: "NunitoSans",
-                    color: Color(0xFFA3948D),
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: 10),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(8), // Padding dalam container
-                  decoration: BoxDecoration(
-                    color: Color(0xFFA3948D), // Warna latar belakang container
-                    borderRadius:
-                        BorderRadius.circular(8), // Membuat sudut melengkung
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize
-                        .min, // Sesuaikan ukuran Container dengan konten
-                    children: [
-                      Icon(
-                        Icons
-                            .punch_clock_rounded, // Ganti dengan ikon sesuai kebutuhan
-                        color: Colors.white,
-                        size: 14, // Ukuran ikon sesuai teks
-                      ),
-                      SizedBox(width: 6), // Jarak antara ikon dan teks
-                      Expanded(
-                        child: Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Tenggat Waktu',
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: "NunitoSans",
-                                  color: Colors.white,
-                                ),
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                projectDetail.tenggatPengerjaan,
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: "NunitoSans",
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize
+                            .min, // Sesuaikan ukuran Container dengan konten
+                        children: [
+                          Icon(
+                            Icons.search, // Ganti dengan ikon sesuai kebutuhan
+                            color: Colors.white,
+                            size: 14, // Ukuran ikon sesuai teks
                           ),
-                        ),
+                          SizedBox(width: 6), // Jarak antara ikon dan teks
+                          Text(
+                            'Merekrut',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "NunitoSans",
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10),
-                Container(
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 4.55 / 11,
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFEDE7E2),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize
-                              .max, // Memastikan Row mengikuti lebar Container
-                          children: [
-                            Icon(Icons.location_on,
-                                color: Color(0xFFA3948D),
-                                size: 20), // Ikon di kiri
-                            SizedBox(width: 8), // Jarak antara ikon dan teks
-                            Flexible(
-                              // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      projectDetail.createdAt,
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontFamily: "NunitoSans",
+                        color: Color(0xFFA3948D),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(8), // Padding dalam container
+                      decoration: BoxDecoration(
+                        color:
+                            Color(0xFFA3948D), // Warna latar belakang container
+                        borderRadius: BorderRadius.circular(
+                            8), // Membuat sudut melengkung
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize
+                            .min, // Sesuaikan ukuran Container dengan konten
+                        children: [
+                          Icon(
+                            Icons
+                                .punch_clock_rounded, // Ganti dengan ikon sesuai kebutuhan
+                            color: Colors.white,
+                            size: 14, // Ukuran ikon sesuai teks
+                          ),
+                          SizedBox(width: 6), // Jarak antara ikon dan teks
+                          Expanded(
+                            child: Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Lokasi',
+                                    'Tenggat Waktu',
                                     style: TextStyle(
                                       fontSize: 10,
                                       fontWeight: FontWeight.w700,
                                       fontFamily: "NunitoSans",
-                                      color: Color(0xFFA3948D),
+                                      color: Colors.white,
                                     ),
                                   ),
                                   SizedBox(height: 4),
                                   Text(
-                                    capitalizeFirstLetter(projectDetail.lokasi),
+                                    projectDetail.tenggatPengerjaan,
                                     style: TextStyle(
                                       fontSize: 10,
                                       fontWeight: FontWeight.w400,
                                       fontFamily: "NunitoSans",
-                                      color: Color(0xFFA3948D),
+                                      color: Colors.white,
                                     ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    softWrap: false,
                                   ),
                                 ],
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      SizedBox(width: 3),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 4.55 / 11,
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFEDE7E2),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize
-                              .max, // Memastikan Row mengikuti lebar Container
-                          children: [
-                            Icon(Icons.money,
-                                color: Color(0xFFA3948D),
-                                size: 20), // Ikon di kiri
-                            SizedBox(width: 8), // Jarak antara ikon dan teks
-                            Flexible(
-                              // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Komisi',
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: "NunitoSans",
-                                      color: Color(0xFFA3948D),
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    formatCurrency(projectDetail.kompensasi),
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: "NunitoSans",
-                                      color: Color(0xFFA3948D),
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    softWrap: false,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10),
-                Container(
-                  width: double.infinity, // Lebar penuh
-                  height: 1, // Tinggi 1
-                  color: Color(0xFFB0B0B0),
-                ),
-                SizedBox(height: 10),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFEDE7E2),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize
-                        .max, // Memastikan Row mengikuti lebar Container
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Wrap(
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: 57,
-                            height: 100,
+                            width:
+                                MediaQuery.of(context).size.width * 4.55 / 11,
+                            padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              //color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
+                              color: Color(0xFFEDE7E2),
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: Stack(
-                              alignment: Alignment.center,
+                            child: Row(
+                              mainAxisSize: MainAxisSize
+                                  .max, // Memastikan Row mengikuti lebar Container
                               children: [
-                                Positioned(
-                                  left: 30,
-                                  bottom: 33,
-                                  child: CircleAvatar(
-                                    radius: 13,
-                                    backgroundColor:
-                                        Colors.red, // Warna bingkai
-                                    backgroundImage: AssetImage(
-                                        'assets/images/foto1.png'), // Ganti dengan path gambar Anda
+                                Icon(Icons.location_on,
+                                    color: Color(0xFFA3948D),
+                                    size: 20), // Ikon di kiri
+                                SizedBox(
+                                    width: 8), // Jarak antara ikon dan teks
+                                Flexible(
+                                  // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Lokasi',
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: "NunitoSans",
+                                          color: Color(0xFFA3948D),
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Text(
+                                        capitalizeFirstLetter(
+                                            projectDetail.lokasi),
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Color(0xFFA3948D),
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        softWrap: false,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Positioned(
-                                  right: 30,
-                                  bottom: 33,
-                                  child: CircleAvatar(
-                                    radius: 13,
-                                    backgroundColor:
-                                        Colors.blue, // Warna bingkai
-                                    backgroundImage: AssetImage(
-                                        'assets/images/foto2.png'), // Ganti dengan path gambar Anda
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 3),
+                          Container(
+                            width:
+                                MediaQuery.of(context).size.width * 4.55 / 11,
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFEDE7E2),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize
+                                  .max, // Memastikan Row mengikuti lebar Container
+                              children: [
+                                Icon(Icons.money,
+                                    color: Color(0xFFA3948D),
+                                    size: 20), // Ikon di kiri
+                                SizedBox(
+                                    width: 8), // Jarak antara ikon dan teks
+                                Flexible(
+                                  // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Komisi',
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: "NunitoSans",
+                                          color: Color(0xFFA3948D),
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Text(
+                                        formatCurrency(
+                                            projectDetail.kompensasi),
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Color(0xFFA3948D),
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        softWrap: false,
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor:
-                                      Colors.green, // Warna bingkai
-                                  backgroundImage: AssetImage(
-                                      'assets/images/foto3.png'), // Ganti dengan path gambar Anda
                                 ),
                               ],
                             ),
                           ),
                         ],
                       ),
-
-                      SizedBox(width: 8), // Jarak antara ikon dan teks
-                      Flexible(
-                        // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '20 narasumber yang cocok bersedia menjadi responden',
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "NunitoSans",
-                                color: Color(0xFF705D54),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      width: double.infinity, // Lebar penuh
+                      height: 1, // Tinggi 1
+                      color: Color(0xFFB0B0B0),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFEDE7E2),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize
+                            .max, // Memastikan Row mengikuti lebar Container
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Wrap(
+                            children: [
+                              Container(
+                                width: 57,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  //color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Positioned(
+                                      left: 30,
+                                      bottom: 33,
+                                      child: CircleAvatar(
+                                        radius: 13,
+                                        backgroundColor:
+                                            Colors.red, // Warna bingkai
+                                        backgroundImage: AssetImage(
+                                            'assets/images/foto1.png'), // Ganti dengan path gambar Anda
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 30,
+                                      bottom: 33,
+                                      child: CircleAvatar(
+                                        radius: 13,
+                                        backgroundColor:
+                                            Colors.blue, // Warna bingkai
+                                        backgroundImage: AssetImage(
+                                            'assets/images/foto2.png'), // Ganti dengan path gambar Anda
+                                      ),
+                                    ),
+                                    CircleAvatar(
+                                      radius: 15,
+                                      backgroundColor:
+                                          Colors.green, // Warna bingkai
+                                      backgroundImage: AssetImage(
+                                          'assets/images/foto3.png'), // Ganti dengan path gambar Anda
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 4),
-                            Wrap(
+                            ],
+                          ),
+
+                          SizedBox(width: 8), // Jarak antara ikon dan teks
+                          Flexible(
+                            // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Tinjau latar belakang mereka atau konfirmasi dengan chat',
+                                  '20 narasumber yang cocok bersedia menjadi responden',
                                   style: TextStyle(
                                     fontSize: 10,
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: FontWeight.w700,
                                     fontFamily: "NunitoSans",
-                                    color: Color(0xFFA3948D),
+                                    color: Color(0xFF705D54),
                                   ),
                                 ),
-                              ],
-                            ),
-                            SizedBox(height: 4),
-                            Wrap(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    // Show the bottom sheet when the button is pressed
-                                    _showPelamar(context);
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 4),
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFF826754),
-                                      borderRadius: BorderRadius.circular(8),
+                                SizedBox(height: 4),
+                                Wrap(
+                                  children: [
+                                    Text(
+                                      'Tinjau latar belakang mereka atau konfirmasi dengan chat',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: "NunitoSans",
+                                        color: Color(0xFFA3948D),
+                                      ),
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .center, // Pusatkan teks dan ikon
-                                      children: [
-                                        Icon(Icons.local_post_office_sharp,
-                                            size: 14,
-                                            color: Color(
-                                                0xFFEDE7E2)), // Ikon di kiri
-                                        SizedBox(
-                                            width:
-                                                4), // Jarak antara ikon dan teks
-                                        Text(
-                                          'Tinjau',
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily: "NunitoSans",
-                                            color: Color(0xFFEDE7E2),
-                                          ),
+                                  ],
+                                ),
+                                SizedBox(height: 4),
+                                Wrap(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        // Show the bottom sheet when the button is pressed
+                                        _showPelamar(context);
+                                      },
+                                      child: Container(
+                                        width: double.infinity,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFF826754),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
-                                      ],
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment
+                                              .center, // Pusatkan teks dan ikon
+                                          children: [
+                                            Icon(Icons.local_post_office_sharp,
+                                                size: 14,
+                                                color: Color(
+                                                    0xFFEDE7E2)), // Ikon di kiri
+                                            SizedBox(
+                                                width:
+                                                    4), // Jarak antara ikon dan teks
+                                            Text(
+                                              'Tinjau',
+                                              style: TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w400,
+                                                fontFamily: "NunitoSans",
+                                                color: Color(0xFFEDE7E2),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Deskripsi',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: "SourceSans3",
-                    color: Color(0xFF705D54),
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  projectDetail.deskripsiProyek,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: "NunitoSans",
-                    color: Color(0xFFA3948D),
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Kualifikasi',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: "SourceSans3",
-                    color: Color(0xFF705D54),
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  projectDetail.keahlian.join(', '),
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: "NunitoSans",
-                    color: Color(0xFFA3948D),
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Metode',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: "SourceSans3",
-                    color: Color(0xFF705D54),
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  projectDetail.metodeSurvey,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: "NunitoSans",
-                    color: Color(0xFFA3948D),
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                    ),
+                    SizedBox(height: 10),
                     Text(
-                      'Tugas',
+                      'Deskripsi',
                       style: TextStyle(
                         fontSize: 20,
                         fontFamily: "SourceSans3",
@@ -536,52 +497,143 @@ class _ClientrespondenproyekdetailmerekrutState
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    SizedBox(width: 5),
+                    SizedBox(height: 10),
                     Text(
-                      'Ditampilkan hanya untuk responden terpilih',
+                      projectDetail.deskripsiProyek,
                       style: TextStyle(
-                        fontSize: 10,
+                        fontSize: 12,
                         fontFamily: "NunitoSans",
-                        color: Color(0xFFB0B0B0),
-                        fontWeight: FontWeight.w300,
-                        fontStyle: FontStyle.italic,
+                        color: Color(0xFFA3948D),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Kualifikasi',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "SourceSans3",
+                        color: Color(0xFF705D54),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      projectDetail.keahlian.join(', '),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: "NunitoSans",
+                        color: Color(0xFFA3948D),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Metode',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "SourceSans3",
+                        color: Color(0xFF705D54),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      projectDetail.metodeSurvey,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: "NunitoSans",
+                        color: Color(0xFFA3948D),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Tugas',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: "SourceSans3",
+                            color: Color(0xFF705D54),
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Ditampilkan hanya untuk responden terpilih',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontFamily: "NunitoSans",
+                            color: Color(0xFFB0B0B0),
+                            fontWeight: FontWeight.w300,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Bergabunglah ke contoso.zoom.id/DdXs23 pada waktu yang dijanjikan di chat, untuk harinya 25 feb 2025',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: "NunitoSans",
+                        color: Color(0xFFA3948D),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 30),
+                    Container(
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'ID #${widget.id}',
+                            textAlign: TextAlign.center, // Rata tengah
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: "NunitoSans",
+                              color: Color(0xFFB0B0B0),
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
-                Text(
-                  'Bergabunglah ke contoso.zoom.id/DdXs23 pada waktu yang dijanjikan di chat, untuk harinya 25 feb 2025',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: "NunitoSans",
-                    color: Color(0xFFA3948D),
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: 30),
-                Container(
-                  width: double.infinity,
+              ),
+            ),
+            if (isLoading)
+              Container(
+                color: Colors.white.withOpacity(0.4),
+                child: Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
+                      LoadingAnimationWidget.staggeredDotsWave(
+                        color: Color(0xFF826754),
+                        size: 60,
+                      ),
+                      SizedBox(height: 12),
                       Text(
-                        'ID #${widget.id}',
-                        textAlign: TextAlign.center, // Rata tengah
+                        "Memuat ${widget.type}...",
                         style: TextStyle(
+                          color: Color(0xFF826754),
                           fontSize: 14,
-                          fontFamily: "NunitoSans",
-                          color: Color(0xFFB0B0B0),
+                          fontFamily: 'NunitoSans',
                           fontWeight: FontWeight.w400,
                         ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
+              ),
+          ],
         ),
       ),
     );

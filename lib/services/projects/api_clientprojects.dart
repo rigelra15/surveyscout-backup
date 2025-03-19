@@ -7,7 +7,7 @@ class Project {
   String deskripsiProyek;
   String tenggatPengerjaan;
   String lokasi;
-  List<String> keahlian;
+  String keahlian;
   List<String> tipeHasil;
   String kompensasi;
   String idClient;
@@ -69,7 +69,7 @@ class Project {
       deskripsiProyek: json['deskripsi_proyek'] ?? '',
       tenggatPengerjaan: json['tenggat_pengerjaan'] ?? '',
       lokasi: json['lokasi'] ?? '',
-      keahlian: List<String>.from(json['keahlian'] ?? []),
+      keahlian: json['keahlian'] ?? '',
       tipeHasil: List<String>.from(json['tipe_hasil'] ?? []),
       kompensasi: json['kompensasi'] ?? '',
       idClient: json['id_client'] ?? '',
@@ -125,7 +125,7 @@ class ApiService {
 
   Future<List<Project>> getSurveys() async {
     final response = await http.get(
-      Uri.parse('$baseUrl/surveys/clientSurveys'),
+      Uri.parse('$baseUrl/projects/clientProjects'),
       headers: {
         "Authorization": "Bearer $authToken",
         "Content-Type": "application/json",

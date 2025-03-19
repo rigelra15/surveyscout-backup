@@ -65,7 +65,7 @@ class _WelcomeState extends State<Welcome> {
         print("ID Token dari Firebase: $idToken");
         final response = await http.post(
           Uri.parse(
-              "https://d36b-118-99-84-24.ngrok-free.app/api/v1/users/GloginFirebase"),
+              "https://03d4-120-188-76-121.ngrok-free.app/api/v1/users/GloginFirebase"),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({"idToken": idToken}),
         );
@@ -111,7 +111,7 @@ class _WelcomeState extends State<Welcome> {
       }
       final response = await http.post(
         Uri.parse(
-            "https://d36b-118-99-84-24.ngrok-free.app/api/v1/users/selectRole"),
+            "https://03d4-120-188-76-121.ngrok-free.app/api/v1/users/selectRole"),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",

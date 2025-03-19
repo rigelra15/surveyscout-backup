@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(ClientProjectsDetail());
+class ClientProjectsDetail extends StatefulWidget {
+  final String id;
+  final String type;
+
+  ClientProjectsDetail({Key? key, required this.id, required this.type}) : super(key: key);
+
+  @override
+  _ClientProjectsDetail createState() => _ClientProjectsDetail();
 }
 
-class ClientProjectsDetail extends StatelessWidget {
+class _ClientProjectsDetail extends State<ClientProjectsDetail> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

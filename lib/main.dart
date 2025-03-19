@@ -6,9 +6,11 @@ import 'package:surveyscout/pages/surveyor/surveyorprojects.dart';
 import 'package:surveyscout/pages/welcome.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('id_ID', null);
   Platform.isAndroid
       ? await Firebase.initializeApp(
     options: const FirebaseOptions(
