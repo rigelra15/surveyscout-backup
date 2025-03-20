@@ -9,6 +9,7 @@ import 'package:surveyscout/pages/surveyor/surveyorsignup.dart';
 import 'package:surveyscout/pages/responden/respondensignup.dart';
 import 'package:surveyscout/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:surveyscout/pages/client/clientprojects.dart';
 
 class Welcome extends StatefulWidget {
   @override
@@ -37,6 +38,42 @@ class _WelcomeState extends State<Welcome> {
       print("Error mengambil token: $e");
       return null;
     }
+  }
+
+  Future<void> _enterDemoMode() async {
+    const String demoToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoiM2JmODgxYmMtMmNmZi00YTc4LTgxNGUtMDM3YjhmMzI1NzIzIiwiZW1haWwiOiJzdXJ2ZXlzY291dGRldmVsb3BlckBnbWFpbC5jb20iLCJyb2xlIjoiY2xpZW50IiwiaWF0IjoxNzQyNDg1OTU3fQ.bJhxhRHWBjtEOcMXQR9VyC7wiJ5FA5lQg5Cp95VLNiY";
+    await _saveToken(demoToken);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => ClientProjects()),
+    );
+  }
+
+  void _showDemoModeDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Buka mode demo"),
+          content: Text("Apakah Anda ingin masuk ke mode demo?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Tidak"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _enterDemoMode();
+              },
+              child: Text("Ya"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> _handleGoogleSignIn() async {
@@ -231,6 +268,7 @@ class _WelcomeState extends State<Welcome> {
                       width: double.infinity,
                       child: TextButton(
                         onPressed: _handleGoogleSignIn,
+                        onLongPress: _showDemoModeDialog,
                         style: TextButton.styleFrom(
                           backgroundColor: Color(0xFF3A2B24),
                           foregroundColor: Colors.white,
