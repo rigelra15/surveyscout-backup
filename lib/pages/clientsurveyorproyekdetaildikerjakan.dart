@@ -37,8 +37,7 @@ class _Clientsurveyorproyekdetaildikerjakan
 
   Future<void> _initializeApiService() async {
     setState(() {
-      apiService =
-          ApiService("https://surveyscoutbe.onrender.com/api/v1");
+      apiService = ApiService("https://surveyscoutbe.onrender.com/api/v1");
     });
 
     _fetchClientSurveyorDetail(widget.id);
