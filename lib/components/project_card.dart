@@ -283,35 +283,38 @@ class ProjectCard extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Container(
-                              width:
-                                  (MediaQuery.of(context).size.width - 47 * 2) *
-                                          (1.5 / 5) -
-                                      4,
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: Color(0xFFEDE7E2),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/chat.png',
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                  Text(
-                                    "Chat",
-                                    style: TextStyle(
-                                      fontFamily: 'NunitoSans',
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xFF3A2B24),
+                            GestureDetector(
+                              onTap: onTap,
+                              child: Container(
+                                width:
+                                    (MediaQuery.of(context).size.width - 47 * 2) *
+                                            (1.5 / 5) -
+                                        4,
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFEDE7E2),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/chat.png',
+                                      width: 24,
+                                      height: 24,
                                     ),
-                                  ),
-                                ],
+                                    Text(
+                                      "Chat",
+                                      style: TextStyle(
+                                        fontFamily: 'NunitoSans',
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xFF3A2B24),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             Container(
@@ -691,6 +694,7 @@ class ProjectCard extends StatelessWidget {
                           ],
                           _buildCircleButton(
                               Mdi.dots_vertical, _launchWhatsApp),
+                          _buildCircleButton(Mdi.dots_vertical, onTap),
                         ],
                       ),
                     ],

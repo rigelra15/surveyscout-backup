@@ -277,7 +277,7 @@ class _WelcomeState extends State<Welcome> {
                             ),
                             SizedBox(width: 8),
                             Text(
-                              "Daftar Dengan Google",
+                              "Daftar dengan Google",
                               style: TextStyle(
                                 fontFamily: 'NunitoSans',
                                 fontWeight: FontWeight.w700,
