@@ -497,166 +497,582 @@ class Clientsurveyorproyekdetailmerekrut extends StatelessWidget {
                   color: Color(0xFFB0B0B0), // Optional: set a color for the divider
                 ),
                 SizedBox(height: 10), // Spasi antara garis dan tulisan
-                Text(
-                  "Daftar Sebagai",
-                  style: TextStyle(
-                    fontFamily: 'SourceSans3',
-                    fontSize: 24,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF705D54),
-                  ),
-                ),
-                SizedBox(height: 20),
-                // Kontainer pertama
-                GestureDetector(
-                  onTap: () {
-                    // Navigasi ke halaman clientsignup2.dart
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ClientSignUp()),
-                    );
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Color(0xFFD7CCC8),
-                    ),
-                    child: ListTile(
-                      leading: Image.asset(
-                        'assets/images/klien.png',
-                        width: 50,
-                        height: 50,
-                      ),
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            "Klien",
+                            "Pelamar",
                             style: TextStyle(
-                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700, // Weight 700
-                              color: Color(0xFF705D54), // Warna #705D54
+                              fontFamily: 'SourceSans3',
+                              fontSize: 24,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF705D54),
                             ),
                           ),
-                          SizedBox(height: 2), // Spasi antara dua teks
-                          Text(
-                            "Rekrut surveyor atau responden untuk membantu observasi Anda berjalan lancar dan efisien.",
-                            style: TextStyle(
-                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400, // Weight 400
-                              color: Color(0xFF3A2B24), // Warna #3A2B24
+                          SizedBox(width: 8),
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFB8ADA5),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "20",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'SourceSans3',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF826754),
+                                ),
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                // Kontainer kedua
-                GestureDetector(
-                  onTap: () {
-                    // Navigasi ke halaman SurveyorProjects
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SurveyorProjects()),
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(16), // Padding untuk kontainer
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: const Color(0xFFD7CCC8), // Warna latar belakang
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          'assets/images/surveyor.png',
-                          width: 50,
-                          height: 50,
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: CircleAvatar(
+                        radius: 16,
+                        backgroundColor: Colors.grey[400],
+                        child: Icon(
+                          Icons.question_mark,
+                          color: Colors.white,
+                          size: 18,
                         ),
-                        const SizedBox(width: 12), // Spasi antara gambar dan teks
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Surveyor",
-                                style: TextStyle(
-                                  fontFamily: 'NunitoSans',
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700, // Font tebal
-                                  color: Color(0xFF705D54),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+
+                    Stack(
+                      alignment: Alignment.center,
+                      clipBehavior: Clip.none,
+                      children: [
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundImage: AssetImage('assets/images/hermanwalton.png'),
+                        ),
+                        Positioned(
+                          bottom: -3,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Container(
+                              width: 45,
+                              height: 15,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFD7CCC8),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Color(0xFF826754),
+                                  width: 1,
                                 ),
                               ),
-                              const SizedBox(height: 4), // Spasi antara judul dan deskripsi
-                              const Text(
-                                "Hasilkan uang dengan mencari data dengan wawancara, observasi, dan/atau lainnya hingga merekapnya.",
-                                style: TextStyle(
-                                  fontFamily: 'NunitoSans',
-                                  fontSize: 14, // Ukuran font deskripsi lebih kecil
-                                  fontWeight: FontWeight.w400, // Font normal
-                                  color: Color(0xFF3A2B24),
-                                ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.thumb_up,
+                                    color: Color(0xFF826754),
+                                    size: 8,
+                                  ),
+                                  SizedBox(width: 2),
+                                  Text(
+                                    "90%",
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFF826754),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                GestureDetector(
-                  onTap: () {
-                    // Navigasi ke halaman SurveyorProjects
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Respondenprojects()),
-                    );
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Color(0xFFD7CCC8),
-                    ),
-                    child: ListTile(
-                      leading: Image.asset(
-                        'assets/images/responden.png',
-                        width: 50,
-                        height: 50,
-                      ),
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Responden",
-                            style: TextStyle(
-                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700, // Weight 400
-                              color: Color(0xFF705D54), // Warna #705D54
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          //color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child:Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Herman Walton",
+                              style: TextStyle(
+                                fontFamily: 'NunitoSans',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF705D54),
+                              ),
                             ),
+                            SizedBox(height: 3),
+                            Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "Anda",
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFA3948D),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: " :  Oke, ditunggu ya, ini nanti untuk linknya zoom.us/InterviewWonderesearch",
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xFFA3948D),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
 
-                          ),
-                          SizedBox(height: 2), // Spasi antara dua teks
-                          Text("Hasilkan uang dengan menjadi narasumber. Anda akan mengisi survei, diwawancarai, dan lainnya.",
-                            style: TextStyle(
-                              fontFamily: 'NunitoSans', // Gunakan font yang sudah di-load
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400, // Weight 400
-                              color: Color(0xFF3A2B24), // Warna #705D54
+                    SizedBox(width: 10),
+
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Color(0xFF826754),
+                          width: 1,
+                        ),
+                      ),
+                      child: Icon(Icons.task, color: Color(0xFF826754)),
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFF826754),
+                      ),
+                      child: Icon(Icons.arrow_forward_rounded, color: Color(0xFFF1E9E5)),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+
+                    Stack(
+                      alignment: Alignment.center,
+                      clipBehavior: Clip.none,
+                      children: [
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundImage: AssetImage('assets/images/bagaskaraputra.png'),
+                        ),
+                        Positioned(
+                          bottom: -3,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Container(
+                              width: 45,
+                              height: 15,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFD7CCC8),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Color(0xFF826754),
+                                  width: 1,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.thumb_up,
+                                    color: Color(0xFF826754),
+                                    size: 8,
+                                  ),
+                                  SizedBox(width: 2),
+                                  Text(
+                                    "80%",
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFF826754),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ), // Teks kedua
-                        ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          //color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child:Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Bagaskara Putra",
+                              style: TextStyle(
+                                fontFamily: 'NunitoSans',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF705D54),
+                              ),
+                            ),
+                            SizedBox(height: 3),
+                            Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "Bagaskara",
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFA3948D),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: " :  Baik, Pak/Bu, saya bersedia untuk Zoom interview besok pagi",
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xFFA3948D),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
+
+                    SizedBox(width: 10),
+
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Color(0xFF826754),
+                          width: 1,
+                        ),
+                      ),
+                      child: Icon(Icons.task, color: Color(0xFF826754)),
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFF826754),
+                      ),
+                      child: Icon(Icons.arrow_forward_rounded, color: Color(0xFFF1E9E5)),
+                    )
+                  ],
                 ),
+                Row(
+                  children: [
+
+                    Stack(
+                      alignment: Alignment.center,
+                      clipBehavior: Clip.none,
+                      children: [
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundImage: AssetImage('assets/images/indri.png'),
+                        ),
+                        Positioned(
+                          bottom: -3,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Container(
+                              width: 45,
+                              height: 15,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFD7CCC8),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Color(0xFF826754),
+                                  width: 1,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.thumb_up,
+                                    color: Color(0xFF826754),
+                                    size: 8,
+                                  ),
+                                  SizedBox(width: 2),
+                                  Text(
+                                    "NEW",
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFF826754),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          //color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child:Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Indri Putri",
+                              style: TextStyle(
+                                fontFamily: 'NunitoSans',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF705D54),
+                              ),
+                            ),
+                            SizedBox(height: 3),
+                            Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "",
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFA3948D),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: "Belum ada percakapan. Tekan untuk memulai Chat.",
+
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xFFB0B0B0),
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(width: 10),
+
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Color(0xFF826754),
+                          width: 1,
+                        ),
+                      ),
+                      child: Icon(Icons.task, color: Color(0xFF826754)),
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFF826754),
+                      ),
+                      child: Icon(Icons.arrow_forward_rounded, color: Color(0xFFF1E9E5)),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+
+                    Stack(
+                      alignment: Alignment.center,
+                      clipBehavior: Clip.none,
+                      children: [
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundImage: AssetImage('assets/images/austinpamungkas.png'),
+                        ),
+                        Positioned(
+                          bottom: -3,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Container(
+                              width: 45,
+                              height: 15,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFD7CCC8),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Color(0xFF826754),
+                                  width: 1,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.thumb_up,
+                                    color: Color(0xFF826754),
+                                    size: 8,
+                                  ),
+                                  SizedBox(width: 2),
+                                  Text(
+                                    "85%",
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFF826754),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          //color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child:Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Austin Pamungkas",
+                              style: TextStyle(
+                                fontFamily: 'NunitoSans',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF705D54),
+                              ),
+                            ),
+                            SizedBox(height: 3),
+                            Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "",
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFA3948D),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: "Belum ada percakapan. Tekan untuk memulai Chat.",
+
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xFFB0B0B0),
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(width: 10),
+
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Color(0xFF826754),
+                          width: 1,
+                        ),
+                      ),
+                      child: Icon(Icons.task, color: Color(0xFF826754)),
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFF826754),
+                      ),
+                      child: Icon(Icons.arrow_forward_rounded, color: Color(0xFFF1E9E5)),
+                    )
+                  ],
+                ),
+                
               ],
             ),
           ),

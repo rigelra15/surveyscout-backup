@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Respondenproyekdetailselesai(),
+        '/': (context) => Welcome(),
       },
     );
   }

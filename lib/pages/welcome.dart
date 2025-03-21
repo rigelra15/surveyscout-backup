@@ -19,7 +19,6 @@ class _WelcomeState extends State<Welcome> {
   @override
   void initState() {
     super.initState();
-    // Initialize containers inside initState
     containers = [containerA(), containerB(), containerC()];
     _startContainerLoop();
   }

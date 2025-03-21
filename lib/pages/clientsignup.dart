@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'clientprojects.dart';
-
+import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
 class ClientSignUp extends StatefulWidget {
   const ClientSignUp({Key? key}) : super(key: key);
 
@@ -8,7 +9,39 @@ class ClientSignUp extends StatefulWidget {
   State<ClientSignUp> createState() => _ClientSignUpState();
 }
 
+
+
 class _ClientSignUpState extends State<ClientSignUp> {
+  Future<void> selectDate() async {
+    DateTime? _picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData(
+            colorScheme: ColorScheme.light(
+              primary: Color(0xFF826754),
+              onPrimary: Color(0xFFF1E9E5),
+              surface: Color(0xFFD7CCC8),
+              onSurface: Colors.black,
+            ),
+            dialogBackgroundColor: Color(0xFFD7CCC8),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (_picked != null) {
+      setState(() {
+        _dateController.text = DateFormat('dd/MM/yyyy').format(_picked);
+      });
+    }
+  }
+
+  TextEditingController _dateController = TextEditingController();
   final TextEditingController _controller1 = TextEditingController();
   final TextEditingController _controller2 = TextEditingController();
   final TextEditingController _controller3 = TextEditingController();
@@ -20,7 +53,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
   final TextEditingController _controller9 = TextEditingController();
   final TextEditingController _controller10 = TextEditingController();
   final TextEditingController _controller11 = TextEditingController();
-
+  String? _selectedGender;
   int nomortext = 0;
 
   void _validateFields() {
@@ -180,67 +213,105 @@ class _ClientSignUpState extends State<ClientSignUp> {
                   children: [
                     Container(
                       child: Align(
-                        alignment: Alignment.center, // Posisi gambar di tengah
+                        alignment: Alignment.center,
                         child: Image(
                           image: AssetImage('assets/images/jeniskelamin.png'),
                           width: 30,
                           height: 30,
-                          fit: BoxFit.cover, // Gambar menyesuaikan dengan ukuran yang ditentukan
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
                     SizedBox(width: 8),
                     Container(
-                      width: 250, // Tentukan lebar maksimum untuk kolom teks
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, // Rata kiri
-                          children: [
-                            Text(
-                              'Jenis Kelamin',
-                              style: TextStyle(
-                                color: Color(0xFF705D54),
-                                fontSize: 16,
-                                fontFamily: 'NunitoSans',
-                                fontWeight: FontWeight.w400,
-                              ),
+                      width: 250,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start, // Agar sejajar kiri
+                        children: [
+                          Text(
+                            'Jenis Kelamin',
+                            style: TextStyle(
+                              color: Color(0xFF705D54),
+                              fontSize: 16,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w400,
                             ),
-                            SizedBox(height: 2),
-                            Container(
-                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
-                              child: TextField(
-                                controller: _controller2,
-                                onChanged: (value) => _validateFields(),
-                                decoration: InputDecoration(
-                                  hintText: 'Laki-laki',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xFFB0B0B0),
-                                    fontSize: 16,
-                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                    fontStyle: FontStyle.italic, // Gaya italic
-                                    fontWeight: FontWeight.w400, // Bobot reguler
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                  isDense: true, // Mengurangi padding vertikal
-                                  border: InputBorder.none, // Menghilangkan garis bawah
-                                ),
-                                // Pastikan TextField mengisi lebar Container
-                              ),
-                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Radio<String>(
+                                    value: 'Pria',
+                                    groupValue: _selectedGender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedGender = value!;
+                                      });
+                                    },
+                                    fillColor: MaterialStateProperty.resolveWith<Color>(
+                                          (Set<MaterialState> states) {
+                                        if (states.contains(MaterialState.selected)) {
+                                          return Color(0xFF705D54);
+                                        }
+                                        return Color(0xFF705D54);
+                                      },
+                                    ),
 
-                          ],
-                        ),
+                                  ),
+                                  Text('Pria',
+                                    style: TextStyle(
+                                      color: Color(0xFF705D54),
+                                      fontSize: 16,
+                                      fontFamily: 'NunitoSans',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Radio<String>(
+                                    value: 'Wanita',
+                                    groupValue: _selectedGender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedGender = value!;
+                                      });
+                                    },
+                                    fillColor: MaterialStateProperty.resolveWith<Color>(
+                                          (Set<MaterialState> states) {
+                                        if (states.contains(MaterialState.selected)) {
+                                          return Color(0xFF705D54);
+                                        }
+                                        return Color(0xFF705D54);
+                                      },
+                                    ),
+
+                                  ),
+                                  Text('Wanita',
+                                    style: TextStyle(
+                                      color: Color(0xFF705D54),
+                                      fontSize: 16,
+                                      fontFamily: 'NunitoSans',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-              Container(
-                width: double.infinity, // Lebar mengikuti lebar layar
-                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
-                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
-              ),
+
               SizedBox(height: 15),
 
               //TANGGAL LAHIR########################################################################
@@ -277,28 +348,29 @@ class _ClientSignUpState extends State<ClientSignUp> {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                            SizedBox(height: 2),
-                            Container(
-                              width: (MediaQuery.of(context).size.width) * 9 / 10, // Lebar sesuai dengan yang diinginkan
-                              child: TextField(
-                                controller: _controller3,
-                                onChanged: (value) => _validateFields(),
-                                decoration: InputDecoration(
-                                  hintText: '1 Januari 1990',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xFFB0B0B0),
-                                    fontSize: 16,
-                                    fontFamily: 'NunitoSans', // Pastikan font sudah ditambahkan
-                                    fontStyle: FontStyle.italic, // Gaya italic
-                                    fontWeight: FontWeight.w400, // Bobot reguler
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // Sesuaikan padding
-                                  isDense: true, // Mengurangi padding vertikal
-                                  border: InputBorder.none, // Menghilangkan garis bawah
+                            SizedBox(height: 15),
+                            TextField(
+                              controller: _dateController,
+                              decoration: InputDecoration(
+                                labelText: 'DD-MM-YYYY',
+                                labelStyle: TextStyle(color: Color(0xFF826754)),
+                                filled: true,
+                                fillColor: Color(0xFFF1E9E5),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Color(0xFF826754)),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                                // Pastikan TextField mengisi lebar Container
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Color(0xFFD7CCC8)),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
+                              readOnly: true,
+                              onTap: () {
+                                selectDate();
+                              },
                             ),
+
 
                           ],
                         ),
@@ -307,11 +379,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                   ],
                 ),
               ),
-              Container(
-                width: double.infinity, // Lebar mengikuti lebar layar
-                height: 1, // Tinggi garis (dapat disesuaikan sesuai kebutuhan)
-                color: Color(0xFF705D54), // Warna garis sesuai dengan yang diinginkan
-              ),
+
               SizedBox(height: 15),
 
               //NOMOR TELEPON########################################################################

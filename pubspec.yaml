@@ -41,6 +41,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.13.1"
+  intl: "^0.18.1"
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -179,6 +180,7 @@ flutter:
     - assets/images/pekerjaan.png
     - assets/images/indri.png
     - assets/images/Ellipse 2-2.png
+    - assets/images/austinpamungkas.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
