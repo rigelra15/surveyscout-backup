@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +11,7 @@ import 'package:surveyscout/pages/client/clientprojects.dart';
 import 'package:surveyscout/pages/responden/respondenprojects.dart';
 import 'package:surveyscout/pages/surveyor/surveyorprojects.dart';
 import 'package:surveyscout/pages/welcome.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -19,8 +21,23 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   int currentIndex = 0;
   late List<Widget> containers;
+  bool showLongLoadingMessage = false;
+  bool isLoading = false;
 
   Future<void> _handleGoogleSignIn() async {
+    setState(() {
+      isLoading = true;
+      showLongLoadingMessage = false;
+    });
+
+    Timer(Duration(seconds: 5), () {
+      if (isLoading) {
+        setState(() {
+          showLongLoadingMessage = true;
+        });
+      }
+    });
+
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(
         serverClientId:
@@ -30,6 +47,9 @@ class _LoginState extends State<Login> {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
         print("Google Sign-In dibatalkan oleh pengguna.");
+        setState(() {
+          isLoading = false;
+        });
         return;
       }
       final GoogleSignInAuthentication googleAuth =
@@ -46,7 +66,7 @@ class _LoginState extends State<Login> {
         print("ID Token dari Firebase: $idToken");
         final response = await http.post(
           Uri.parse(
-              "https://03d4-120-188-76-121.ngrok-free.app/api/v1/users/GloginFirebase"),
+              "https://surveyscoutbe.onrender.com/api/v1/users/GloginFirebase"),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({"idToken": idToken}),
         );
@@ -54,11 +74,26 @@ class _LoginState extends State<Login> {
           print("Backend response: ${response.body}");
           final data = jsonDecode(response.body);
           String status = data["status"];
-          String role = data["role"];
+          String? role = data["role"];
           String token = data["token"];
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString('jwt_token', token);
-          await prefs.setString('user_role', role);
+
+          setState(() {
+            isLoading = false;
+          });
+
+          if (role == null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                    "Akun Anda belum terdaftar. Silakan daftar terlebih dahulu."),
+                backgroundColor: Color(0xFFf44336),
+              ),
+            );
+            return;
+          }
+
           if (status == "0") {
             Navigator.pushReplacement(
               context,
@@ -70,10 +105,28 @@ class _LoginState extends State<Login> {
         } else {
           print("Login Gagal di Backend! Status Code: ${response.statusCode}");
           print("Response dari server: ${response.body}");
+          setState(() {
+            isLoading = false;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Login gagal. Silakan coba lagi."),
+              backgroundColor: Colors.red,
+            ),
+          );
         }
       }
     } catch (error) {
       print("Terjadi error saat login: $error");
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Terjadi kesalahan saat login. Silakan coba lagi."),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -119,82 +172,146 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Color(0xFFF1E9E5),
-        padding: EdgeInsets.all(27),
-        child: Stack(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/surveyscoutlogo.png',
-                  width: 90,
-                  height: 40,
-                  fit: BoxFit.cover,
-                ),
-                SizedBox(height: 100),
-                Center(
-                  child: AnimatedSwitcher(
-                    duration: Duration(seconds: 1),
-                    child: containers[currentIndex],
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              bottom: 20,
-              left: 0,
-              right: 0,
+      body: Stack(
+        children: [
+          SafeArea(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Color(0xFFF1E9E5),
+              padding: EdgeInsets.all(27),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Image.asset(
+                    'assets/images/surveyscoutlogo.png',
+                    width: 90,
+                    height: 40,
+                    fit: BoxFit.cover,
+                  ),
+                  SizedBox(height: 100),
                   Center(
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: TextButton(
-                        onPressed: () {
-                          _handleGoogleSignIn();
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: Color(0xFF3A2B24),
-                          foregroundColor: Colors.white,
-                          padding: EdgeInsets.all(20),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset(
-                              'assets/images/google.png',
-                              height: 20,
-                              width: 20,
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              "Login Dengan Google",
-                              style: TextStyle(
-                                fontFamily: 'NunitoSans',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18,
-                                color: Color(0xFFf1e9e5),
-                              ),
-                            ),
-                          ],
+                    child: AnimatedSwitcher(
+                      duration: Duration(seconds: 1),
+                      child: containers[currentIndex],
+                    ),
+                  ),
+                  Spacer(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextButton(
+                      onPressed: _handleGoogleSignIn,
+                      style: TextButton.styleFrom(
+                        backgroundColor: Color(0xFF3A2B24),
+                        foregroundColor: Colors.white,
+                        padding: EdgeInsets.all(20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/google.png',
+                            height: 20,
+                            width: 20,
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            "Login Dengan Google",
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                              color: Color(0xFFf1e9e5),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Belum punya akun? ",
+                        style: TextStyle(
+                          fontFamily: 'NunitoSans',
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xFFa3948d),
+                          fontSize: 16,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: "Daftar di sini",
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans',
+                              color: Color(0xFFa3948d),
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ),
+          if (isLoading)
+            Positioned.fill(
+              child: Stack(
+                children: [
+                  BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+                    child: Container(
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+                  ),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        LoadingAnimationWidget.staggeredDotsWave(
+                          color: Colors.white,
+                          size: 60,
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          "Sedang memproses...",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        if (showLongLoadingMessage) ...[
+                          SizedBox(height: 12),
+                          Text(
+                            "Ini mungkin memakan waktu sedikit lebih lama dari biasanya...",
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 14,
+                              fontStyle: FontStyle.italic,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }

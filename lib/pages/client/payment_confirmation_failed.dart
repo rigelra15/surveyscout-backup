@@ -14,13 +14,19 @@ class PaymentFailedScreen extends StatefulWidget {
 
 class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
   Future<void> _launchWhatsApp() async {
-    final String phoneNumber = "6281800100800"; // Without the "+" sign
+    final String phoneNumber = "628728381934"; // Pastikan nomor valid
     final Uri whatsappUri = Uri.parse("https://wa.me/$phoneNumber");
 
     if (await canLaunchUrl(whatsappUri)) {
-      await launchUrl(whatsappUri, mode: LaunchMode.externalApplication);
+      final bool launched = await launchUrl(
+        whatsappUri,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!launched) {
+        print("Could not launch WhatsApp (launchUrl returned false)");
+      }
     } else {
-      print("Could not launch WhatsApp");
+      print("Could not launch WhatsApp (canLaunchUrl = false)");
     }
   }
 
@@ -70,7 +76,7 @@ class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
             ),
             SizedBox(height: 8),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal:16),
+                padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   'Mohon periksa histori transaksi di aplikasi m-banking atau e-wallet Anda, jika tertera berhasil, silakan chat kami untuk mengirimkan bukti.',
                   textAlign: TextAlign.center,
@@ -79,12 +85,10 @@ class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
                     color: Color(0xFFA3948D),
                     height: 1.1,
                   ),
-                )
-            )
+                ))
           ],
         ),
       ),
-
       bottomNavigationBar: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         color: Color(0xFF826754), // Footer background color
@@ -100,13 +104,15 @@ class _PaymentFailedScreenState extends State<PaymentFailedScreen> {
                   foregroundColor: Color(0xFF826754),
                   padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8), // 8dp rounded rectangle
+                    borderRadius:
+                        BorderRadius.circular(8), // 8dp rounded rectangle
                   ),
                 ),
-                child: Text("Chat Bantuan", style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold, color: Color(0xFF826754))),
+                child: Text("Chat Bantuan",
+                    style: GoogleFonts.nunitoSans(
+                        fontWeight: FontWeight.bold, color: Color(0xFF826754))),
               ),
             ),
-
           ],
         ),
       ),

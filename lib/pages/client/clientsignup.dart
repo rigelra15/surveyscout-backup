@@ -111,7 +111,7 @@ class _ClientSignUp extends State<ClientSignUp> {
 
       final response = await http.post(
         Uri.parse(
-            "https://03d4-120-188-76-121.ngrok-free.app/api/v1/clients/signInClient"),
+            "https://surveyscoutbe.onrender.com/api/v1/clients/signInClient"),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",
@@ -119,7 +119,7 @@ class _ClientSignUp extends State<ClientSignUp> {
         body: jsonEncode(requestData),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         print("Registrasi berhasil: ${response.body}");
         final data = jsonDecode(response.body);
         if (data.containsKey("token")) {
