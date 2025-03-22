@@ -7,6 +7,8 @@ import 'package:iconify_flutter_plus/icons/ph.dart';
 import 'package:iconify_flutter_plus/icons/mdi.dart';
 import 'package:iconify_flutter_plus/icons/material_symbols.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:android_intent_plus/android_intent.dart';
+import 'dart:io' show Platform;
 
 class ProjectCard extends StatelessWidget {
   final String orderId;
@@ -56,6 +58,31 @@ class ProjectCard extends StatelessWidget {
         return 'Kadaluwarsa';
       default:
         return 'Draft';
+    }
+  }
+
+  Future<void> _launchWhatsApp() async {
+    final String phoneNumber = "6285234115941"; // Without the "+" sign
+    final Uri whatsappUri = Uri.parse("https://wa.me/$phoneNumber");
+
+    if (await canLaunchUrl(whatsappUri)) {
+      await launchUrl(whatsappUri, mode: LaunchMode.externalApplication);
+    } else {
+      print("Could not launch WhatsApp");
+    }
+  }
+
+  void launchWhatsAppViaIntent() {
+    final String phoneNumber = "628728381934";
+    final String message = Uri.encodeComponent("Halo, saya ingin bertanya");
+
+    if (Platform.isAndroid) {
+      final intent = AndroidIntent(
+        action: 'android.intent.action.VIEW',
+        data: 'https://wa.me/$phoneNumber?text=$message',
+        package: 'com.whatsapp',
+      );
+      intent.launch();
     }
   }
 
@@ -390,9 +417,10 @@ class ProjectCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
-          color: showRating && orderId.startsWith("SURVEY") || status == 'ditinjau'
-              ? const Color(0xFF826754)
-              : Colors.black12,
+          color:
+              showRating && orderId.startsWith("SURVEY") || status == 'ditinjau'
+                  ? const Color(0xFF826754)
+                  : Colors.black12,
           borderRadius: BorderRadius.circular(10),
         ),
         width: double.infinity,
@@ -664,6 +692,8 @@ class ProjectCard extends StatelessWidget {
                             _buildCircleButton(Mdi.pencil, onEdit),
                             const SizedBox(width: 8),
                           ],
+                          _buildCircleButton(
+                              Mdi.dots_vertical, _launchWhatsApp),
                           _buildCircleButton(Mdi.dots_vertical, onTap),
                         ],
                       ),
