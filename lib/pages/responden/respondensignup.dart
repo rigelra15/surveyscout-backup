@@ -1,10 +1,20 @@
 // ignore_for_file: unused_field
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/pages/responden/respondenprojects.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:iconify_flutter/icons/ant_design.dart';
+import 'package:iconify_flutter/icons/maki.dart';
+import 'package:iconify_flutter/icons/material_symbols.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:iconify_flutter/icons/ph.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RespondenSignUp extends StatefulWidget {
   const RespondenSignUp({Key? key}) : super(key: key);
@@ -33,6 +43,445 @@ class _RespondenSignUp extends State<RespondenSignUp> {
   final TextEditingController _pinAksesController = TextEditingController();
   final TextEditingController _konfirmasiPinController =
       TextEditingController();
+
+  final List<Map<String, dynamic>> _hobbyList = [
+    {"name": "Berkebun", "icon": Mdi.flower},
+    {"name": "Belanja", "icon": Mdi.shopping},
+    {"name": "Bersosial", "icon": Ph.chat_fill},
+    {"name": "Film", "icon": Mdi.movie},
+    {"name": "Fotografi", "icon": Mdi.camera},
+    {"name": "Kerajinan", "icon": Mdi.palette},
+    {"name": "Komputer & Teknologi", "icon": Mdi.laptop},
+    {"name": "Karya Seni", "icon": Maki.landmark},
+    {"name": "Menggambar & Melukis", "icon": MaterialSymbols.draw},
+    {"name": "Memasak", "icon": AntDesign.heart_outline},
+    {"name": "Membaca", "icon": Mdi.book_open},
+    {"name": "Musik", "icon": Mdi.music},
+    {"name": "Olahraga", "icon": Mdi.run},
+    {"name": "Otomotif", "icon": Mdi.car},
+    {"name": "Permainan Papan & Kartu", "icon": Mdi.cards},
+    {"name": "Permainan Video", "icon": Mdi.controller},
+    {"name": "Traveling", "icon": Mdi.airplane},
+  ];
+
+  List<String> _selectedHobbies = [];
+
+  final List<String> maritalStatusOptions = [
+    "Belum Menikah",
+    "Menikah",
+    "Cerai Hidup",
+    "Cerai Mati",
+  ];
+
+  final List<String> educationLevelOptions = [
+    "Tidak Sekolah",
+    "Lulus SD (Sekolah Dasar)",
+    "Lulus SMP (Sekolah Menengah Pertama)",
+    "Lulus SMA/SMK (Sekolah Menengah Atas/Kejuruan)",
+    "Diploma (D1/D2/D3)",
+    "Sarjana (S1)",
+    "Magister (S2)",
+    "Doktor (S3)",
+  ];
+
+  final List<String> jobOptions = [
+    "Buruh Pabrik",
+    "Content Creator",
+    "Desainer Grafis",
+    "Fotografer/Videografer",
+    "Guru/Dosen",
+    "Ibu Rumah Tangga",
+    "Karyawan Swasta",
+    "Konsultan",
+    "Mahasiswa",
+    "Nelayan",
+    "Pedagang",
+    "Pegawai Negeri Sipil (PNS)",
+    "Pegawai Swasta",
+    "Pegawai BUMD",
+    "Pekerja IT Support",
+    "Pelajar SMA/SMK",
+    "Peneliti",
+    "Pengacara",
+    "Pensiunan",
+    "Penulis atau Editor",
+    "Petani",
+    "Programmer/Developer",
+    "Sopir/Transportasi (Ojek Online, Supir Taksi)",
+    "Tenaga Medis (Dokter, Perawat, Apoteker)",
+    "Tidak Bekerja",
+    "Wiraswasta (UMKM)",
+  ];
+
+  List<String> _selectedEducationLevels = [];
+  List<String> _selectedMaritalStatuses = [];
+  List<String> _selectedJobs = [];
+
+  void _showSingleSelectGrid({
+    required BuildContext context,
+    required String title,
+    required List<String> options,
+    required String? selectedValue,
+    required Function(String) onSelected,
+    bool enableSearch = false,
+  }) {
+    TextEditingController searchController = TextEditingController();
+    List<String> filteredOptions = List.from(options);
+    String? currentSelection = selectedValue;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Container(
+              height: MediaQuery.of(context).size.height * 0.6,
+              padding: EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Drag Handle
+                  Container(
+                    width: 60,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFB0B0B0),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+
+                  // Title
+                  Text(
+                    title,
+                    style: GoogleFonts.nunitoSans(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF705D54),
+                    ),
+                  ),
+                  SizedBox(height: 12),
+
+                  // Search Bar
+                  if (enableSearch)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: TextField(
+                        controller: searchController,
+                        onChanged: (value) {
+                          setState(() {
+                            filteredOptions = options
+                                .where((option) => option
+                                .toLowerCase()
+                                .contains(value.toLowerCase()))
+                                .toList();
+                          });
+                        },
+                        decoration: InputDecoration(
+                          hintText: "Cari...",
+                          prefixIcon:
+                          Icon(Icons.search, color: Color(0xFF705D54)),
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(color: Color(0xFF826754)),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  // Single-Select Grid
+                  Expanded(
+                    child: GridView.builder(
+                      itemCount: filteredOptions.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 3,
+                        crossAxisSpacing: 8,
+                        mainAxisSpacing: 8,
+                      ),
+                      itemBuilder: (context, index) {
+                        String option = filteredOptions[index];
+                        bool isSelected = currentSelection == option;
+
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentSelection = option;
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color:
+                              isSelected ? Color(0xFF826754) : Colors.white,
+                              border: Border.all(color: Color(0xFF826754)),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 12),
+                            child: Text(
+                              option,
+                              style: GoogleFonts.nunitoSans(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: isSelected
+                                    ? Colors.white
+                                    : Color(0xFF705D54),
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  // Confirm Button
+                  Container(
+                    padding: EdgeInsets.all(12),
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (currentSelection != null) {
+                          onSelected(currentSelection!);
+                          Navigator.pop(context);
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF826754),
+                        foregroundColor: Color(0xFFEDE7E2),
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Text(
+                        "Simpan",
+                        style:
+                        GoogleFonts.nunitoSans(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  // Hobby picker
+  void _showHobbySelectionModal() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+      ),
+      backgroundColor: Color(0xFFF0E8E4),
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Pilih setidaknya satu hobi",
+                    style: GoogleFonts.nunitoSans(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF705D54),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+
+                  // HOBBY GRID SELECTION
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 1.5,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                    ),
+                    itemCount: _hobbyList.length,
+                    itemBuilder: (context, index) {
+                      final hobby = _hobbyList[index];
+                      final isSelected =
+                      _selectedHobbies.contains(hobby["name"]);
+
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (isSelected) {
+                              _selectedHobbies.remove(hobby["name"]);
+                            } else {
+                              _selectedHobbies.add(hobby["name"]);
+                            }
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color:
+                            isSelected ? Color(0xFF826754) : Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border:
+                            Border.all(color: Color(0xFF826754), width: 1),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Iconify(hobby["icon"].toString(),
+                                  color: isSelected
+                                      ? Colors.white
+                                      : Color(0xFF826754)),
+                              SizedBox(height: 4),
+                              Text(
+                                hobby["name"],
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.nunitoSans(
+                                  fontSize: 12,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : Color(0xFF826754),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+
+                  SizedBox(height: 16),
+
+                  // BUTTON ROW
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: Color(0xFFEDE7E2)),
+                            foregroundColor: Color(0xFFEDE7E2),
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text("Batal",
+                              style: GoogleFonts.nunitoSans(
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _hobiController.text = _selectedHobbies.join(', ');
+                            Navigator.pop(context);
+                            setState(() {}); // Refresh UI
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFFEDE7E2),
+                            foregroundColor: Color(0xFF826754),
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text("Simpan",
+                              style: GoogleFonts.nunitoSans(
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  // WIDGET general picker, used for status perkawinan, tingkat pendidikan, pekerjaan
+  Widget _buildSelectableTextField({
+    required String title,
+    required TextEditingController controller,
+    required String hintText,
+    required Widget icon,
+    required VoidCallback onTap,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 24), // aligns icon vertically
+          child: icon,
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  color: Color(0xFF705D54),
+                  fontSize: 16,
+                  fontFamily: 'NunitoSans',
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              GestureDetector(
+                onTap: onTap,
+                child: AbsorbPointer(
+                  child: TextField(
+                    controller: controller,
+                    decoration: InputDecoration(
+                      hintText: hintText,
+                      hintStyle: const TextStyle(
+                        color: Color(0xFFB0B0B0),
+                        fontSize: 16,
+                        fontFamily: 'NunitoSans',
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 0,
+                        vertical: 10,
+                      ),
+                      isDense: true,
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+
+
 
   bool _isObscured = true;
   bool _isLoading = false;
@@ -89,6 +538,22 @@ class _RespondenSignUp extends State<RespondenSignUp> {
   }
 
   Future<void> _submitForm() async {
+    print("Submit button clicked");
+    print("Nama Lengkap: ${_namaLengkapController.text}");
+    print("Jenis Kelamin: ${_jenisKelaminController.text}");
+    print("Tanggal Lahir: ${_tanggalLahirController.text}");
+    print("Nomor Telepon: ${_nomorTeleponController.text}");
+    print("NIK: ${_nikController.text}");
+    print("Nama Bank: ${_namaBankController.text}");
+    print("Nomor Rekening: ${_nomorRekeningController.text}");
+    print("Tempat Tinggal: ${_tempatTinggalController.text}");
+    print("Hobi: ${_hobiController.text}");
+    print("Status Perkawinan: ${_statusPerkawinanController.text}");
+    print("Tingkat Pendidikan: ${_tingkatPendidikanController.text}");
+    print("Pekerjaan: ${_pekerjaanController.text}");
+    print("PIN Akses: ${_pinAksesController.text}");
+    print("Konfirmasi PIN Akses: ${_konfirmasiPinController.text}");
+
     if (!_validateForm()) return;
     setState(() {
       _isLoading = true;
@@ -121,6 +586,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
         "pekerjaan": _pekerjaanController.text,
         "pin_akses": _pinAksesController.text,
       };
+
 
       final response = await http.post(
         Uri.parse(
@@ -228,18 +694,136 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 iconPath: "assets/images/namalengkap.png",
               ),
               _buildDivider(),
-              _buildInputField(
-                controller: _jenisKelaminController,
-                label: "Jenis Kelamin",
-                hint: "Laki-laki / Perempuan",
-                iconPath: "assets/images/jeniskelamin.png",
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12), // adjust as needed for alignment
+                    child: Image.asset("assets/images/jeniskelamin.png", width: 30, height: 30),
+                  ),
+
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Jenis Kelamin",
+                          style: TextStyle(
+                            color: Color(0xFF705D54),
+                            fontSize: 16,
+                            fontFamily: 'NunitoSans',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Radio<String>(
+                              value: 'Pria',
+                              groupValue: _jenisKelaminController.text,
+                              onChanged: (value) {
+                                setState(() {
+                                  _jenisKelaminController.text = value!;
+                                  _validateForm();
+                                });
+                              },
+                              fillColor: MaterialStateProperty.all(Color(0xFF705D54)),
+                            ),
+                            const Text(
+                              'Pria',
+                              style: TextStyle(color: Color(0xFF705D54)),
+                            ),
+                            Radio<String>(
+                              value: 'Wanita',
+                              groupValue: _jenisKelaminController.text,
+                              onChanged: (value) {
+                                setState(() {
+                                  _jenisKelaminController.text = value!;
+                                  _validateForm();
+                                });
+                              },
+                              fillColor: MaterialStateProperty.all(Color(0xFF705D54)),
+                            ),
+                            const Text(
+                              'Wanita',
+                              style: TextStyle(color: Color(0xFF705D54)),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
               _buildDivider(),
-              _buildInputField(
-                controller: _tanggalLahirController,
-                label: "Tanggal Lahir",
-                hint: "1 Januari 1999",
-                iconPath: "assets/images/tanggallahir.png",
+              Row(
+                children: [
+                  Image.asset("assets/images/tanggallahir.png", width: 30, height: 30),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Tanggal Lahir",
+                          style: TextStyle(
+                            color: Color(0xFF705D54),
+                            fontSize: 16,
+                            fontFamily: 'NunitoSans',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextField(
+                          controller: _tanggalLahirController,
+                          readOnly: true,
+                          onTap: () async {
+                            DateTime? picked = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime(2000),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime(2100),
+                              builder: (context, child) {
+                                return Theme(
+                                  data: ThemeData(
+                                    colorScheme: ColorScheme.light(
+                                      primary: Color(0xFF826754),
+                                      onPrimary: Color(0xFFF1E9E5),
+                                      surface: Color(0xFFD7CCC8),
+                                      onSurface: Colors.black,
+                                    ),
+                                    dialogBackgroundColor: Color(0xFFD7CCC8),
+                                  ),
+                                  child: child!,
+                                );
+                              },
+                            );
+                            if (picked != null) {
+                              setState(() {
+                                _tanggalLahirController.text =
+                                "${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}";
+                                _validateForm();
+                              });
+                            }
+                          },
+                          decoration: InputDecoration(
+                            hintText: '1 Januari 1999',
+                            hintStyle: const TextStyle(
+                              color: Color(0xFFB0B0B0),
+                              fontSize: 16,
+                              fontFamily: 'NunitoSans',
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                            isDense: true,
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
               _buildDivider(),
               _buildInputField(
@@ -271,6 +855,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 hint: "1234567890",
                 iconPath: "assets/images/namaperusahaan.png",
                 keyboardType: TextInputType.number,
+                digitsOnly: true,
               ),
               _buildDivider(),
               _buildInputField(
@@ -280,32 +865,67 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 iconPath: "assets/images/kabupaten.png",
               ),
               _buildDivider(),
-              _buildInputField(
-                controller: _hobiController,
-                label: "Hobi",
-                hint: "Memasak, menyanyi",
-                iconPath: "assets/images/hobi.png",
+              GestureDetector(
+                onTap: () => _showHobbySelectionModal(),
+                child: AbsorbPointer(
+                  child: _buildInputField(
+                    controller: _hobiController,
+                    label: "Hobi",
+                    hint: "Pilih hobi...",
+                    iconPath: "assets/images/hobi.png",
+                  ),
+                ),
               ),
               _buildDivider(),
-              _buildInputField(
+              _buildSelectableTextField(
+                title: "Status Perkawinan",
                 controller: _statusPerkawinanController,
-                label: "Status Perkawinan",
-                hint: "Belum menikah",
-                iconPath: "assets/images/statusperkawinan.png",
+                hintText: "Pilih status",
+                icon: Icon(Icons.people, color: Color(0xFF826754)),
+                onTap: () => _showSingleSelectGrid(
+                  context: context,
+                  title: "Pilih Status Perkawinan",
+                  options: maritalStatusOptions,
+                  selectedValue: _statusPerkawinanController.text,
+                  onSelected: (selected) {
+                    _statusPerkawinanController.text = selected;
+                    setState(() => _validateForm());
+                  },
+                ),
               ),
               _buildDivider(),
-              _buildInputField(
+              _buildSelectableTextField(
+                title: "Tingkat Pendidikan",
                 controller: _tingkatPendidikanController,
-                label: "Tingkat Pendidikan",
-                hint: "Lulus SMA/K",
-                iconPath: "assets/images/tingkatpendidikan.png",
+                hintText: "Pilih tingkat pendidikan",
+                icon: Icon(Icons.school, color: Color(0xFF826754)),
+                onTap: () => _showSingleSelectGrid(
+                  context: context,
+                  title: "Pilih Tingkat Pendidikan",
+                  options: educationLevelOptions,
+                  selectedValue: _tingkatPendidikanController.text,
+                  onSelected: (selected) {
+                    _tingkatPendidikanController.text = selected;
+                    setState(() => _validateForm());
+                  },
+                ),
               ),
               _buildDivider(),
-              _buildInputField(
+              _buildSelectableTextField(
+                title: "Pekerjaan",
                 controller: _pekerjaanController,
-                label: "Pekerjaan",
-                hint: "Pegawai Swasta",
-                iconPath: "assets/images/pekerjaan.png",
+                hintText: "Pilih pekerjaan",
+                icon: Icon(Icons.work, color: Color(0xFF826754)),
+                onTap: () => _showSingleSelectGrid(
+                  context: context,
+                  title: "Pilih Pekerjaan",
+                  options: jobOptions,
+                  selectedValue: _pekerjaanController.text,
+                  onSelected: (selected) {
+                    _pekerjaanController.text = selected;
+                    setState(() => _validateForm());
+                  },
+                ),
               ),
               _buildDivider(),
               _buildPasswordField(
@@ -314,6 +934,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 hint: "6 digit angka",
                 iconPath: "assets/images/pinakses.png",
                 keyboardType: TextInputType.number,
+                digitsOnly: true,
               ),
               _buildDivider(),
               _buildPasswordField(
@@ -322,6 +943,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 hint: "Masukkan kembali PIN",
                 iconPath: "assets/images/pinakses.png",
                 keyboardType: TextInputType.number,
+                digitsOnly: true,
               ),
               _buildDivider(),
               const SizedBox(height: 20),
@@ -362,6 +984,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
     required String label,
     required String hint,
     required String iconPath,
+    bool digitsOnly = false, // 🆕 default to false
     TextInputType keyboardType = TextInputType.text,
   }) {
     return Column(
@@ -391,6 +1014,9 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                   TextField(
                     controller: controller,
                     onChanged: (value) => _validateForm(),
+                    inputFormatters: digitsOnly
+                        ? [FilteringTextInputFormatter.digitsOnly] // ✅ only if explicitly requested
+                        : [],
                     keyboardType: keyboardType,
                     decoration: InputDecoration(
                       hintText: hint,
@@ -423,7 +1049,8 @@ class _RespondenSignUp extends State<RespondenSignUp> {
     required String label,
     required String hint,
     required String iconPath,
-    TextInputType keyboardType = TextInputType.text,
+    bool digitsOnly = true,
+    TextInputType keyboardType = TextInputType.number,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -451,6 +1078,9 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                   ),
                   TextField(
                     controller: controller,
+                    inputFormatters: keyboardType == TextInputType.number
+                        ? [FilteringTextInputFormatter.digitsOnly] // 🚫 affects too many fields
+                        : [],
                     onChanged: (value) => _validateForm(),
                     obscureText: _isObscured,
                     decoration: InputDecoration(

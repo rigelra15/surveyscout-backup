@@ -20,7 +20,7 @@ class SurveyScoutApp extends StatelessWidget {
         primarySwatch: Colors.brown,
         textTheme: GoogleFonts.nunitoSansTextTheme(),
       ),
-      initialRoute: AppRoutes.paymentConfirmationTimeout, // 👈 Change this anytime
+      initialRoute: AppRoutes.welcome, // 👈 Change this anytime
       getPages: AppPages.pages,
     );
   }
