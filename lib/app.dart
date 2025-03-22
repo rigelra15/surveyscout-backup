@@ -12,6 +12,7 @@ class SurveyScoutApp extends StatelessWidget {
     // Get.put(AuthController());
     // Get.put(PaymentController());
 
+    //using approutes
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SurveyScout',
