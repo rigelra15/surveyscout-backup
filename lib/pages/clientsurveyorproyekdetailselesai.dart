@@ -1,14 +1,207 @@
 // ignore_for_file: unused_element
 
+import 'dart:io';
+
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/bi.dart';
+import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:iconify_flutter/icons/mingcute.dart';
+import 'package:iconify_flutter/icons/ph.dart';
+import 'package:iconify_flutter/icons/ri.dart';
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:surveyscout/pages/client/clientsignup.dart';
 import 'package:surveyscout/pages/responden/respondenprojects.dart';
 import 'package:surveyscout/pages/surveyor/surveyorprojects.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'dart:async';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:surveyscout/services/projects/api_projectdetail.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:share_plus/share_plus.dart';
+
+class PDFViewerPage extends StatelessWidget {
+  final String path;
+
+  const PDFViewerPage({Key? key, required this.path}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Penampil PDF'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.open_in_new),
+            tooltip: 'Buka dengan Aplikasi Lain',
+            onPressed: () {
+              OpenFile.open(path);
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.share),
+            tooltip: 'Bagikan File',
+            onPressed: () {
+              Share.shareXFiles([XFile(path)], text: 'Lihat file ini');
+            },
+          ),
+        ],
+      ),
+      body: PDFView(
+        filePath: path,
+      ),
+    );
+  }
+}
+
+class PopUpLuaran extends StatelessWidget {
+  const PopUpLuaran({Key? key}) : super(key: key);
+
+  Widget _buildItem(BuildContext context, String title, String subtitle, Widget icon, String filePath) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24),
+      child: Row(
+        children: [
+          icon,
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Color(0xFF705D54),
+                    fontSize: 16,
+                    fontFamily: 'NunitoSans',
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Text(
+                  subtitle,
+                  style: const TextStyle(
+                    color: Color(0xFFA3948D),
+                    fontSize: 12,
+                    fontFamily: 'NunitoSans',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            icon: Iconify(Bi.eye_fill, color: Color(0xFF826754)),
+            onPressed: () async {
+              final byteData = await rootBundle.load(filePath);
+              final buffer = byteData.buffer;
+
+              final tempDir = await getTemporaryDirectory();
+              final tempPath = '${tempDir.path}/${filePath.split('/').last}';
+              final file = await File(tempPath).writeAsBytes(
+                buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
+              );
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PDFViewerPage(path: file.path),
+                ),
+              );
+            },
+          ),
+          const SizedBox(width: 12),
+          IconButton(
+            icon: Iconify(Ri.share_fill, color: Color(0xFF826754)),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PDFViewerPage(path: filePath),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(top: 12),
+      decoration: const BoxDecoration(
+        color: Color(0xFFF0E8E4),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 64,
+            height: 4,
+            margin: const EdgeInsets.only(bottom: 16),
+            decoration: BoxDecoration(
+              color: Color(0xFFB0B0B0),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                'Luaran',
+                style: TextStyle(
+                  color: Color(0xFF705D54),
+                  fontSize: 24,
+                  fontFamily: 'Source Sans Pro',
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              SizedBox(width: 8),
+              CircleAvatar(
+                backgroundColor: Color(0xFFB8ADA5),
+                radius: 14,
+                child: Text(
+                  "2",
+                  style: TextStyle(
+                    color: Color(0xFF826754),
+                    fontSize: 16,
+                    fontFamily: 'NunitoSans',
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          _buildItem(
+              context,
+              'Transkrip Interview',
+              'Diunggah 20 Februari, 8MB',
+              Iconify(Ph.file_pdf, color: Color(0xFF826754)),
+              'assets/pdfs/transkrip_wawancara.pdf'
+          ),
+
+          _buildItem(
+              context,
+              'Data Responden',
+              'Diunggah 18 Februari, 5MB',
+              Iconify(Mdi.file_excel, color: Color(0xFF826754)),
+              'assets/xlsx/data_responden.xlsx'
+          ),
+
+          const SizedBox(height: 24),
+
+        ],
+      ),
+    );
+  }
+}
 
 class Clientsurveyorproyekdetailselesai extends StatefulWidget {
   final String id;
@@ -34,6 +227,20 @@ class _Clientsurveyorproyekdetailselesai
     super.initState();
     _initializeApiService();
   }
+
+
+  // Bottom modal sheet Luaran
+  void _showLuaran(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) => PopUpLuaran(),
+    );
+  }
+
 
   Future<void> _initializeApiService() async {
     setState(() {
@@ -664,49 +871,52 @@ class _Clientsurveyorproyekdetailselesai
                   ),
                   SizedBox(width: 8),
                   Expanded(
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF826754),
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Color(0xFFEDE7E2), width: 1),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.text_snippet, color: Color(0xFFEDE7E2)),
-                          SizedBox(width: 10),
-                          Text(
-                            'Luaran',
-                            style: TextStyle(
-                              fontFamily: 'NutinoSans',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                              color: Color(0xFFEDE7E2),
+                    child: GestureDetector(
+                      onTap: () => _showLuaran(context),
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF826754),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Color(0xFFEDE7E2), width: 1),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.text_snippet, color: Color(0xFFEDE7E2)),
+                            SizedBox(width: 10),
+                            Text(
+                              'Luaran',
+                              style: TextStyle(
+                                fontFamily: 'NutinoSans',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                                color: Color(0xFFEDE7E2),
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 10),
-                          Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFB3261E),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Text(
-                                "3",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
+                            SizedBox(width: 10),
+                            Container(
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFB3261E),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "2",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
+                    )
                   ),
                   SizedBox(width: 8),
                   Container(

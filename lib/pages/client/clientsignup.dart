@@ -212,18 +212,136 @@ class _ClientSignUp extends State<ClientSignUp> {
                 iconPath: "assets/images/namalengkap.png",
               ),
               _buildDivider(),
-              _buildInputField(
-                controller: _jenisKelaminController,
-                label: "Jenis Kelamin",
-                hint: "Laki-laki / Perempuan",
-                iconPath: "assets/images/jeniskelamin.png",
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12), // adjust as needed for alignment
+                    child: Image.asset("assets/images/jeniskelamin.png", width: 30, height: 30),
+                  ),
+
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Jenis Kelamin",
+                          style: TextStyle(
+                            color: Color(0xFF705D54),
+                            fontSize: 16,
+                            fontFamily: 'NunitoSans',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Radio<String>(
+                              value: 'Pria',
+                              groupValue: _jenisKelaminController.text,
+                              onChanged: (value) {
+                                setState(() {
+                                  _jenisKelaminController.text = value!;
+                                  _validateForm();
+                                });
+                              },
+                              fillColor: MaterialStateProperty.all(Color(0xFF705D54)),
+                            ),
+                            const Text(
+                              'Pria',
+                              style: TextStyle(color: Color(0xFF705D54)),
+                            ),
+                            Radio<String>(
+                              value: 'Wanita',
+                              groupValue: _jenisKelaminController.text,
+                              onChanged: (value) {
+                                setState(() {
+                                  _jenisKelaminController.text = value!;
+                                  _validateForm();
+                                });
+                              },
+                              fillColor: MaterialStateProperty.all(Color(0xFF705D54)),
+                            ),
+                            const Text(
+                              'Wanita',
+                              style: TextStyle(color: Color(0xFF705D54)),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
               _buildDivider(),
-              _buildInputField(
-                controller: _tanggalLahirController,
-                label: "Tanggal Lahir",
-                hint: "1 Januari 1999",
-                iconPath: "assets/images/tanggallahir.png",
+              Row(
+                children: [
+                  Image.asset("assets/images/tanggallahir.png", width: 30, height: 30),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Tanggal Lahir",
+                          style: TextStyle(
+                            color: Color(0xFF705D54),
+                            fontSize: 16,
+                            fontFamily: 'NunitoSans',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextField(
+                          controller: _tanggalLahirController,
+                          readOnly: true,
+                          onTap: () async {
+                            DateTime? picked = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime(2000),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime(2100),
+                              builder: (context, child) {
+                                return Theme(
+                                  data: ThemeData(
+                                    colorScheme: ColorScheme.light(
+                                      primary: Color(0xFF826754),
+                                      onPrimary: Color(0xFFF1E9E5),
+                                      surface: Color(0xFFD7CCC8),
+                                      onSurface: Colors.black,
+                                    ),
+                                    dialogBackgroundColor: Color(0xFFD7CCC8),
+                                  ),
+                                  child: child!,
+                                );
+                              },
+                            );
+                            if (picked != null) {
+                              setState(() {
+                                _tanggalLahirController.text =
+                                "${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}";
+                                _validateForm();
+                              });
+                            }
+                          },
+                          decoration: InputDecoration(
+                            hintText: '1 Januari 1999',
+                            hintStyle: const TextStyle(
+                              color: Color(0xFFB0B0B0),
+                              fontSize: 16,
+                              fontFamily: 'NunitoSans',
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                            isDense: true,
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
               _buildDivider(),
               _buildInputField(

@@ -36,7 +36,8 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.survey.newsurveyscout"
-    compileSdk = flutter.compileSdkVersion
+//    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -51,7 +52,8 @@ android {
     defaultConfig {
         applicationId = "com.survey.newsurveyscout"
         minSdkVersion 23
-        targetSdk = flutter.targetSdkVersion
+//        targetSdk = flutter.targetSdkVersion
+        targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
