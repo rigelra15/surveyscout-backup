@@ -388,600 +388,667 @@ class _ClientSaya extends State<ClientSaya> {
                   ],
                 ),
               ),
-              Container(
-                width: double.infinity, // Lebar penuh
-                padding: EdgeInsets.all(8),
-                //color: Colors.green,
-                child: const Center(
-                  child: Text(
-                    'Keamanan',
-                    style: TextStyle(
-                      color: Color(0xFF705D54),
-                      fontFamily: "SourceSans3",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
+                GestureDetector(
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Anda dapat mengubah pengaturan akun Anda saat menggunakan akun asli."),
+                        backgroundColor: Color(0xFF705D54),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: double.infinity, // Lebar penuh
+                    padding: EdgeInsets.all(8),
+                    //color: Colors.green,
+                    child: const Center(
+                      child: Text(
+                        'Keamanan',
+                        style: TextStyle(
+                          color: Color(0xFF705D54),
+                          fontFamily: "SourceSans3",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: const Color(0xFFEDE7E2), // Warna kontainer utama
-                ),
-                padding: const EdgeInsets.all(8), // Padding utama kontainer
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
-                      children: [
-                        // Kontainer Kiri
-                        Row(
-                          children: [
-                            // Gambar di sebelah kiri
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/images/pinakses2.png'),
-                                  fit: BoxFit.cover, // Menjaga proporsi gambar
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                                width: 8), // Jarak antara gambar dan teks
-                            // Teks di sebelah kanan
-                            Container(
-                              width: 100, // Atur lebar kontainer
-                              child: const Text(
-                                'Pin Akses',
-                                style: TextStyle(
-                                  color: Color(0xFF705D54),
-                                  fontSize: 14,
-                                  fontFamily: "NunitoSans",
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // Kontainer Tengah
-                        const Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              'Terakhir diubah 1 Mei 2023',
-                              style: TextStyle(
-                                color: Color(0xFFA3948D),
-                                fontFamily: "NunitoSans",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12,
-                              ),
-                              // Memotong teks jika terlalu panjang
-                            ),
-                          ),
-                        ),
-                        // Kontainer Kanan
-                        Container(
-                          width: 15,
-                          height: 15,
-                          child: Image.asset(
-                            'assets/images/panahkanan.png',
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ],
+              GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Anda dapat mengubah pengaturan akun Anda saat menggunakan akun asli."),
+                      backgroundColor: Color(0xFF705D54),
                     ),
-                    const SizedBox(height: 8), // Jarak antara Row dan Garis
-                    // Garis bawah
-                    Container(
-                      width: double.infinity,
-                      height: 1, // Tinggi garis
-                      color: const Color(0xFFCAC4D0), // Warna garis
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
-                      children: [
-                        // Kontainer Kiri
-                        Row(
-                          children: [
-                            // Gambar di sebelah kiri
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/autentikasi.png'),
-                                  fit: BoxFit.cover, // Menjaga proporsi gambar
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                                width: 8), // Jarak antara gambar dan teks
-                            // Teks di sebelah kanan
-                            Container(
-                              width: 100, // Atur lebar kontainer
-                              child: const Text(
-                                'Autentikasi',
-                                style: TextStyle(
-                                  color: Color(0xFF705D54),
-                                  fontSize: 14,
-                                  fontFamily: "NunitoSans",
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // Kontainer Tengah
-                        const Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              'OTP',
-                              style: TextStyle(
-                                color: Color(0xFFA3948D),
-                                fontFamily: "NunitoSans",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ),
-                        // Kontainer Kanan
-                        Container(
-                          width: 15,
-                          height: 15,
-                          child: Image.asset(
-                            'assets/images/panahkanan.png',
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      width: double.infinity,
-                      height: 1, // Tinggi garis
-                      color: const Color(0xFFCAC4D0), // Warna garis
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
-                      children: [
-                        // Kontainer Kiri
-                        Row(
-                          children: [
-                            // Gambar di sebelah kiri
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/images/perangkat.png'),
-                                  fit: BoxFit.cover, // Menjaga proporsi gambar
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                                width: 8), // Jarak antara gambar dan teks
-                            // Teks di sebelah kanan
-                            Container(
-                              width: 100, // Atur lebar kontainer
-                              child: const Text(
-                                'Perangkat',
-                                style: TextStyle(
-                                  color: Color(0xFF705D54),
-                                  fontSize: 14,
-                                  fontFamily: "NunitoSans",
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // Kontainer Tengah
-                        const Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              'Google Pixel 9XL +1 lainnya',
-                              style: TextStyle(
-                                color: Color(0xFFA3948D),
-                                fontFamily: "NunitoSans",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12,
-                              ),
-                              // Memotong teks jika terlalu panjang
-                            ),
-                          ),
-                        ),
-                        // Kontainer Kanan
-                        Container(
-                          width: 15,
-                          height: 15,
-                          child: Image.asset(
-                            'assets/images/panahkanan.png',
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: double.infinity, // Lebar penuh
-                padding: EdgeInsets.all(8),
-                //color: Colors.green,
-                child: const Center(
-                  child: Text(
-                    'Pembayaran',
-                    style: TextStyle(
-                      color: Color(0xFF705D54),
-                      fontFamily: "SourceSans3",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: const Color(0xFFEDE7E2), // Warna kontainer utama
                   ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: const Color(0xFFEDE7E2), // Warna kontainer utama
-                ),
-                padding: const EdgeInsets.all(8), // Padding utama kontainer
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
-                      children: [
-                        // Kontainer Kiri
-                        Row(
-                          children: [
-                            // Gambar di sebelah kiri
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/images/rekening.png'),
-                                  fit: BoxFit.cover, // Menjaga proporsi gambar
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                                width: 8), // Jarak antara gambar dan teks
-                            // Teks di sebelah kanan
-                            Container(
-                              width: 100, // Atur lebar kontainer
-                              child: const Text(
-                                'Rekening',
-                                style: TextStyle(
-                                  color: Color(0xFF705D54),
-                                  fontSize: 14,
-                                  fontFamily: "NunitoSans",
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // Kontainer Tengah
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              '${clientProfile.namaBank} | ${clientProfile.nomorRekening}',
-                              style: TextStyle(
-                                color: Color(0xFFA3948D),
-                                fontFamily: "NunitoSans",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12,
-                              ),
-                              // Memotong teks jika terlalu panjang
-                            ),
-                          ),
-                        ),
-                        // Kontainer Kanan
-                        Container(
-                          width: 15,
-                          height: 15,
-                          child: Image.asset(
-                            'assets/images/panahkanan.png',
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8), // Jarak antara Row dan Garis
-                    // Garis bawah
-                    Container(
-                      width: double.infinity,
-                      height: 1, // Tinggi garis
-                      color: const Color(0xFFCAC4D0), // Warna garis
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
-                      children: [
-                        // Kontainer Kiri
-                        Row(
-                          children: [
-                            // Gambar di sebelah kiri
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/images/riwayat.png'),
-                                  fit: BoxFit.cover, // Menjaga proporsi gambar
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                                width: 8), // Jarak antara gambar dan teks
-                            // Teks di sebelah kanan
-                            Container(
-                              width: 100, // Atur lebar kontainer
-                              child: const Text(
-                                'Riwayat',
-                                style: TextStyle(
-                                  color: Color(0xFF705D54),
-                                  fontSize: 14,
-                                  fontFamily: "NunitoSans",
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // Kontainer Tengah
-                        const Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              'Membayar Rp 500.000 23 Agustus 2024',
-                              style: TextStyle(
-                                color: Color(0xFFA3948D),
-                                fontFamily: "NunitoSans",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ),
-                        // Kontainer Kanan
-                        Container(
-                          width: 15,
-                          height: 15,
-                          child: Image.asset(
-                            'assets/images/panahkanan.png',
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: double.infinity, // Lebar penuh
-                padding: EdgeInsets.all(8),
-                //color: Colors.green,
-                child: const Center(
-                  child: Text(
-                    'Notifikasi',
-                    style: TextStyle(
-                      color: Color(0xFF705D54),
-                      fontFamily: "SourceSans3",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: const Color(0xFFEDE7E2), // Warna kontainer utama
-                ),
-                padding: const EdgeInsets.fromLTRB(8, 8, 20, 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
-                      children: [
-                        // Kontainer Kiri
-                        Row(
-                          children: [
-                            // Gambar di sebelah kiri
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/informasiumum.png'),
-                                  fit: BoxFit.cover, // Menjaga proporsi gambar
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                                width: 8), // Jarak antara gambar dan teks
-                            // Teks di sebelah kanan
-                            Container(
-                              width: 150,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceBetween, // Atur jarak antara teks atas dan bawah
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start, // Rata kiri
-                                children: [
-                                  Text(
-                                    'Informasi umum, tips, dan pengenalan produk', // Teks atas
-                                    style: TextStyle(
-                                      color: Color(0xFF705D54),
-                                      fontSize: 14,
-                                      fontFamily: "NunitoSans",
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                    softWrap:
-                                        true, // Aktifkan pembungkusan teks
-                                    overflow: TextOverflow
-                                        .visible, // Tampilkan teks penuh jika terlalu panjang
-                                    maxLines:
-                                        null, // Izinkan teks menggunakan baris sebanyak yang diperlukan
+                  padding: const EdgeInsets.all(8), // Padding utama kontainer
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                        children: [
+                          // Kontainer Kiri
+                          Row(
+                            children: [
+                              // Gambar di sebelah kiri
+                              Container(
+                                width: 24,
+                                height: 24,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image:
+                                    AssetImage('assets/images/pinakses2.png'),
+                                    fit: BoxFit.cover, // Menjaga proporsi gambar
                                   ),
-                                  Text(
-                                    'Kiat menggunakan SurveyScout', // Teks bawah
-                                    style: TextStyle(
-                                      color: Color(0xFF705D54),
-                                      fontSize: 14,
-                                      fontFamily: "NunitoSans",
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                                ),
+                              ),
+                              const SizedBox(
+                                  width: 8), // Jarak antara gambar dan teks
+                              // Teks di sebelah kanan
+                              Container(
+                                width: 100, // Atur lebar kontainer
+                                child: const Text(
+                                  'Pin Akses',
+                                  style: TextStyle(
+                                    color: Color(0xFF705D54),
+                                    fontSize: 14,
+                                    fontFamily: "NunitoSans",
+                                    fontWeight: FontWeight.w700,
                                   ),
-                                ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Kontainer Tengah
+                          const Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                'Terakhir diubah 1 Mei 2023',
+                                style: TextStyle(
+                                  color: Color(0xFFA3948D),
+                                  fontFamily: "NunitoSans",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                ),
+                                // Memotong teks jika terlalu panjang
                               ),
                             ),
-                          ],
-                        ),
-                        // Kontainer Tengah
+                          ),
+                          // Kontainer Kanan
+                          Container(
+                            width: 15,
+                            height: 15,
+                            child: Image.asset(
+                              'assets/images/panahkanan.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8), // Jarak antara Row dan Garis
+                      // Garis bawah
+                      Container(
+                        width: double.infinity,
+                        height: 1, // Tinggi garis
+                        color: const Color(0xFFCAC4D0), // Warna garis
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                        children: [
+                          // Kontainer Kiri
+                          Row(
+                            children: [
+                              // Gambar di sebelah kiri
+                              Container(
+                                width: 24,
+                                height: 24,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/images/autentikasi.png'),
+                                    fit: BoxFit.cover, // Menjaga proporsi gambar
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                  width: 8), // Jarak antara gambar dan teks
+                              // Teks di sebelah kanan
+                              Container(
+                                width: 100, // Atur lebar kontainer
+                                child: const Text(
+                                  'Autentikasi',
+                                  style: TextStyle(
+                                    color: Color(0xFF705D54),
+                                    fontSize: 14,
+                                    fontFamily: "NunitoSans",
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Kontainer Tengah
+                          const Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                'OTP',
+                                style: TextStyle(
+                                  color: Color(0xFFA3948D),
+                                  fontFamily: "NunitoSans",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Kontainer Kanan
+                          Container(
+                            width: 15,
+                            height: 15,
+                            child: Image.asset(
+                              'assets/images/panahkanan.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        width: double.infinity,
+                        height: 1, // Tinggi garis
+                        color: const Color(0xFFCAC4D0), // Warna garis
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                        children: [
+                          // Kontainer Kiri
+                          Row(
+                            children: [
+                              // Gambar di sebelah kiri
+                              Container(
+                                width: 24,
+                                height: 24,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image:
+                                    AssetImage('assets/images/perangkat.png'),
+                                    fit: BoxFit.cover, // Menjaga proporsi gambar
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                  width: 8), // Jarak antara gambar dan teks
+                              // Teks di sebelah kanan
+                              Container(
+                                width: 100, // Atur lebar kontainer
+                                child: const Text(
+                                  'Perangkat',
+                                  style: TextStyle(
+                                    color: Color(0xFF705D54),
+                                    fontSize: 14,
+                                    fontFamily: "NunitoSans",
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Kontainer Tengah
+                          const Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                'Google Pixel 9XL +1 lainnya',
+                                style: TextStyle(
+                                  color: Color(0xFFA3948D),
+                                  fontFamily: "NunitoSans",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                ),
+                                // Memotong teks jika terlalu panjang
+                              ),
+                            ),
+                          ),
+                          // Kontainer Kanan
+                          Container(
+                            width: 15,
+                            height: 15,
+                            child: Image.asset(
+                              'assets/images/panahkanan.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Anda dapat mengubah pengaturan akun Anda saat menggunakan akun asli."),
+                      backgroundColor: Color(0xFF705D54),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: double.infinity, // Lebar penuh
+                  padding: EdgeInsets.all(8),
+                  //color: Colors.green,
+                  child: const Center(
+                    child: Text(
+                      'Pembayaran',
+                      style: TextStyle(
+                        color: Color(0xFF705D54),
+                        fontFamily: "SourceSans3",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Anda dapat mengubah pengaturan akun Anda saat menggunakan akun asli."),
+                      backgroundColor: Color(0xFF705D54),
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: const Color(0xFFEDE7E2), // Warna kontainer utama
+                  ),
+                  padding: const EdgeInsets.all(8), // Padding utama kontainer
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                        children: [
+                          // Kontainer Kiri
+                          Row(
+                            children: [
+                              // Gambar di sebelah kiri
+                              Container(
+                                width: 24,
+                                height: 24,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image:
+                                    AssetImage('assets/images/rekening.png'),
+                                    fit: BoxFit.cover, // Menjaga proporsi gambar
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                  width: 8), // Jarak antara gambar dan teks
+                              // Teks di sebelah kanan
+                              Container(
+                                width: 100, // Atur lebar kontainer
+                                child: const Text(
+                                  'Rekening',
+                                  style: TextStyle(
+                                    color: Color(0xFF705D54),
+                                    fontSize: 14,
+                                    fontFamily: "NunitoSans",
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Kontainer Tengah
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                '${clientProfile.namaBank} | ${clientProfile.nomorRekening}',
+                                style: TextStyle(
+                                  color: Color(0xFFA3948D),
+                                  fontFamily: "NunitoSans",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                ),
+                                // Memotong teks jika terlalu panjang
+                              ),
+                            ),
+                          ),
+                          // Kontainer Kanan
+                          Container(
+                            width: 15,
+                            height: 15,
+                            child: Image.asset(
+                              'assets/images/panahkanan.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8), // Jarak antara Row dan Garis
+                      // Garis bawah
+                      Container(
+                        width: double.infinity,
+                        height: 1, // Tinggi garis
+                        color: const Color(0xFFCAC4D0), // Warna garis
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                        children: [
+                          // Kontainer Kiri
+                          Row(
+                            children: [
+                              // Gambar di sebelah kiri
+                              Container(
+                                width: 24,
+                                height: 24,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image:
+                                    AssetImage('assets/images/riwayat.png'),
+                                    fit: BoxFit.cover, // Menjaga proporsi gambar
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                  width: 8), // Jarak antara gambar dan teks
+                              // Teks di sebelah kanan
+                              Container(
+                                width: 100, // Atur lebar kontainer
+                                child: const Text(
+                                  'Riwayat',
+                                  style: TextStyle(
+                                    color: Color(0xFF705D54),
+                                    fontSize: 14,
+                                    fontFamily: "NunitoSans",
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Kontainer Tengah
+                          const Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                'Membayar Rp 500.000 23 Agustus 2024',
+                                style: TextStyle(
+                                  color: Color(0xFFA3948D),
+                                  fontFamily: "NunitoSans",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Kontainer Kanan
+                          Container(
+                            width: 15,
+                            height: 15,
+                            child: Image.asset(
+                              'assets/images/panahkanan.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Anda dapat mengubah pengaturan akun Anda saat menggunakan akun asli."),
+                      backgroundColor: Color(0xFF705D54),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: double.infinity, // Lebar penuh
+                  padding: EdgeInsets.all(8),
+                  //color: Colors.green,
+                  child: const Center(
+                    child: Text(
+                      'Notifikasi',
+                      style: TextStyle(
+                        color: Color(0xFF705D54),
+                        fontFamily: "SourceSans3",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Anda dapat mengubah pengaturan akun Anda saat menggunakan akun asli."),
+                      backgroundColor: Color(0xFF705D54),
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: const Color(0xFFEDE7E2), // Warna kontainer utama
+                  ),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 20, 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                        children: [
+                          // Kontainer Kiri
+                          Row(
+                            children: [
+                              // Gambar di sebelah kiri
+                              Container(
+                                width: 24,
+                                height: 24,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/images/informasiumum.png'),
+                                    fit: BoxFit.cover, // Menjaga proporsi gambar
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                  width: 8), // Jarak antara gambar dan teks
+                              // Teks di sebelah kanan
+                              Container(
+                                width: 150,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceBetween, // Atur jarak antara teks atas dan bawah
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start, // Rata kiri
+                                  children: [
+                                    Text(
+                                      'Informasi umum, tips, dan pengenalan produk', // Teks atas
+                                      style: TextStyle(
+                                        color: Color(0xFF705D54),
+                                        fontSize: 14,
+                                        fontFamily: "NunitoSans",
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      softWrap:
+                                      true, // Aktifkan pembungkusan teks
+                                      overflow: TextOverflow
+                                          .visible, // Tampilkan teks penuh jika terlalu panjang
+                                      maxLines:
+                                      null, // Izinkan teks menggunakan baris sebanyak yang diperlukan
+                                    ),
+                                    Text(
+                                      'Kiat menggunakan SurveyScout', // Teks bawah
+                                      style: TextStyle(
+                                        color: Color(0xFF705D54),
+                                        fontSize: 14,
+                                        fontFamily: "NunitoSans",
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Kontainer Tengah
 
-                        // Kontainer Kanan
-                        Container(
-                          padding: EdgeInsets.all(8),
-                          width: 40, // Ukuran tombol
-                          height: 20,
-                          child: Switch(
-                            value: isOn2,
-                            onChanged: (bool value) {
-                              setState(() {
-                                isOn2 = value; // Ubah status tombol
-                              });
-                            },
-                            activeColor: Color(
-                                0xFF826754), // Warna tombol saat aktifColors.white,
-                            inactiveThumbColor: Color(
-                                0xFFD7CCC8), // Warna tombol saat tidak aktif
-                            inactiveTrackColor: Colors
-                                .white, // Warna track saat tidak aktifColor(0xFF826754),
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 8), // Jarak antara Row dan Garis
-                    // Garis bawah
-                    Container(
-                      width: double.infinity,
-                      height: 1, // Tinggi garis
-                      color: const Color(0xFFCAC4D0), // Warna garis
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween, // Jarak antar elemen
-                      children: [
-                        // Kontainer Kiri
-                        Row(
-                          children: [
-                            // Gambar di sebelah kiri
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/newsletter.png'),
-                                  fit: BoxFit.cover, // Menjaga proporsi gambar
+                          // Kontainer Kanan
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            width: 40, // Ukuran tombol
+                            height: 20,
+                            child: Switch(
+                              value: isOn2,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  isOn2 = value; // Ubah status tombol
+                                });
+                              },
+                              activeColor: Color(
+                                  0xFF826754), // Warna tombol saat aktifColors.white,
+                              inactiveThumbColor: Color(
+                                  0xFFD7CCC8), // Warna tombol saat tidak aktif
+                              inactiveTrackColor: Colors
+                                  .white, // Warna track saat tidak aktifColor(0xFF826754),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 8), // Jarak antara Row dan Garis
+                      // Garis bawah
+                      Container(
+                        width: double.infinity,
+                        height: 1, // Tinggi garis
+                        color: const Color(0xFFCAC4D0), // Warna garis
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween, // Jarak antar elemen
+                        children: [
+                          // Kontainer Kiri
+                          Row(
+                            children: [
+                              // Gambar di sebelah kiri
+                              Container(
+                                width: 24,
+                                height: 24,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/images/newsletter.png'),
+                                    fit: BoxFit.cover, // Menjaga proporsi gambar
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                                width: 8), // Jarak antara gambar dan teks
-                            // Teks di sebelah kanan
-                            Container(
-                              width: 150,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceBetween, // Atur jarak antara teks atas dan bawah
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start, // Rata kiri
-                                children: [
-                                  Text(
-                                    'Newsletter dan promosi', // Teks atas
-                                    style: TextStyle(
-                                      color: Color(0xFF705D54),
-                                      fontSize: 14,
-                                      fontFamily: "NunitoSans",
-                                      fontWeight: FontWeight.w700,
+                              const SizedBox(
+                                  width: 8), // Jarak antara gambar dan teks
+                              // Teks di sebelah kanan
+                              Container(
+                                width: 150,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceBetween, // Atur jarak antara teks atas dan bawah
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start, // Rata kiri
+                                  children: [
+                                    Text(
+                                      'Newsletter dan promosi', // Teks atas
+                                      style: TextStyle(
+                                        color: Color(0xFF705D54),
+                                        fontSize: 14,
+                                        fontFamily: "NunitoSans",
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      softWrap:
+                                      true, // Aktifkan pembungkusan teks
+                                      overflow: TextOverflow
+                                          .visible, // Tampilkan teks penuh jika terlalu panjang
+                                      maxLines:
+                                      null, // Izinkan teks menggunakan baris sebanyak yang diperlukan
                                     ),
-                                    softWrap:
-                                        true, // Aktifkan pembungkusan teks
-                                    overflow: TextOverflow
-                                        .visible, // Tampilkan teks penuh jika terlalu panjang
-                                    maxLines:
-                                        null, // Izinkan teks menggunakan baris sebanyak yang diperlukan
-                                  ),
-                                  Text(
-                                    'Jadilah yang pertama mendapatkan penawaran terbaik', // Teks bawah
-                                    style: TextStyle(
-                                      color: Color(0xFF705D54),
-                                      fontSize: 14,
-                                      fontFamily: "NunitoSans",
-                                      fontWeight: FontWeight.w400,
+                                    Text(
+                                      'Jadilah yang pertama mendapatkan penawaran terbaik', // Teks bawah
+                                      style: TextStyle(
+                                        color: Color(0xFF705D54),
+                                        fontSize: 14,
+                                        fontFamily: "NunitoSans",
+                                        fontWeight: FontWeight.w400,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        // Kontainer Tengah
-
-                        // Kontainer Kanan
-                        Container(
-                          padding: EdgeInsets.all(8),
-                          width: 40, // Ukuran tombol
-                          height: 20,
-                          child: Switch(
-                            value: isOn,
-                            onChanged: (bool value) {
-                              setState(() {
-                                isOn = value; // Ubah status tombol
-                              });
-                            },
-                            activeColor: Color(
-                                0xFF826754), // Warna tombol saat aktifColors.white,
-                            inactiveThumbColor: Color(
-                                0xFFD7CCC8), // Warna tombol saat tidak aktif
-                            inactiveTrackColor: Colors
-                                .white, // Warna track saat tidak aktifColor(0xFF826754),
+                            ],
                           ),
-                        )
-                      ],
-                    ),
-                  ],
+                          // Kontainer Tengah
+
+                          // Kontainer Kanan
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            width: 40, // Ukuran tombol
+                            height: 20,
+                            child: Switch(
+                              value: isOn,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  isOn = value; // Ubah status tombol
+                                });
+                              },
+                              activeColor: Color(
+                                  0xFF826754), // Warna tombol saat aktifColors.white,
+                              inactiveThumbColor: Color(
+                                  0xFFD7CCC8), // Warna tombol saat tidak aktif
+                              inactiveTrackColor: Colors
+                                  .white, // Warna track saat tidak aktifColor(0xFF826754),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
+
+
+
+
+
+
+
               // Tambahkan lebih banyak kontainer jika diperlukan
             ],
           ),

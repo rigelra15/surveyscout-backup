@@ -34,6 +34,8 @@ class PDFViewerPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Penampil PDF'),
+        backgroundColor: const Color(0xFFD7CCC8),
+        iconTheme: const IconThemeData(color: Color(0xFF705D54)),
         actions: [
           IconButton(
             icon: const Icon(Icons.open_in_new),
@@ -105,24 +107,33 @@ class PopUpLuaran extends StatelessWidget {
                 buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
               );
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PDFViewerPage(path: file.path),
-                ),
-              );
+              if (filePath.endsWith('.pdf')) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PDFViewerPage(path: file.path),
+                  ),
+                );
+              } else {
+                await OpenFile.open(file.path);
+              }
             },
           ),
           const SizedBox(width: 12),
           IconButton(
             icon: Iconify(Ri.share_fill, color: Color(0xFF826754)),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PDFViewerPage(path: filePath),
-                ),
+            onPressed: () async {
+              final byteData = await rootBundle.load(filePath);
+              final buffer = byteData.buffer;
+
+              final tempDir = await getTemporaryDirectory();
+              final tempPath = '${tempDir.path}/${filePath.split('/').last}';
+              final file = await File(tempPath).writeAsBytes(
+                buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
               );
+
+
+              Share.shareXFiles([XFile(file.path)], text: 'Lihat file ini');
             },
           ),
         ],
@@ -843,28 +854,40 @@ class _Clientsurveyorproyekdetailselesai
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Expanded(
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF1E9E5),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.chat, color: Color(0xFF826754)),
-                          SizedBox(width: 10),
-                          Text(
-                            'Chat',
-                            style: TextStyle(
-                              fontFamily: 'NutinoSans',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                              color: Color(0xFF826754),
+                    child: Builder(
+                      builder: (context) => GestureDetector(
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Ini hanya demo, Chat dengan surveyor akan terbuka pada akun asli."),
+                              backgroundColor: Color(0xFF826754),
                             ),
+                          );
+                        },
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFF1E9E5),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ],
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(Icons.chat, color: Color(0xFF826754)),
+                              SizedBox(width: 10),
+                              Text(
+                                'Chat',
+                                style: TextStyle(
+                                  fontFamily: 'NunitoSans',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  color: Color(0xFF826754),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -921,17 +944,31 @@ class _Clientsurveyorproyekdetailselesai
                   Container(
                     height: 60,
                     width: 30,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF826754),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.more_vert, color: Color(0xFFEDE7E2)),
-                      ],
+                    color: const Color(0xFF826754),
+                    child: Builder(
+                      builder: (context) => PopupMenuButton<String>(
+                        icon: const Icon(Icons.more_vert, color: Color(0xFFEDE7E2)),
+                        color: const Color(0xFFF0E8E4),
+                        onSelected: (value) {
+                          if (value == 'chat_bantuan') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Ini hanya demo, fitur Chat Bantuan akan tersedia pada akun asli."),
+                                backgroundColor: Color(0xFF826754),
+                              ),
+                            );
+                          }
+                        },
+                        itemBuilder: (context) => [
+                          const PopupMenuItem(
+                            value: 'chat_bantuan',
+                            child: Text('Chat Bantuan'),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
+
                 ],
               ),
             ),

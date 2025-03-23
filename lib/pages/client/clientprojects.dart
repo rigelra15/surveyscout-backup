@@ -27,6 +27,8 @@ class _ClientProjects extends State<ClientProjects> {
   List<Project> filteredProjects = [];
   String searchQuery = "";
 
+  Map<String, int> _ratings = {};
+
   @override
   void initState() {
     super.initState();
@@ -322,7 +324,14 @@ class _ClientProjects extends State<ClientProjects> {
                               showRating: (project.statusTask == "selesai" &&
                                   project.statusRating == "belum"),
                               onDownload: project.statusTask == "selesai"
-                                  ? () => print("Download tapped")
+                                  ? () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Ini adalah akun demo. Pada akun sesunggunya, file luaran Anda akan terunduh."),
+                                    backgroundColor: Color(0xFF826754),
+                                  ),
+                                );
+                              }
                                   : null,
                               onChat: project.statusTask == "ditinjau" ||
                                       project.statusTask == "dikerjakan"

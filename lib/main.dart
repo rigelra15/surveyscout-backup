@@ -42,7 +42,7 @@ void main() async {
         )
       : await Firebase.initializeApp();
 
-  runApp(MyApp());
+  runApp(SurveyScoutApp());
 }
 
 Future<Widget> _determineStartPage() async {
