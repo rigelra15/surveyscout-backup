@@ -10,6 +10,9 @@ import 'package:surveyscout/pages/responden/respondensignup.dart';
 import 'package:surveyscout/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/pages/client/clientprojects.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:surveyscout/components/role_option_card.dart';
+import 'dart:ui';
 
 class Welcome extends StatefulWidget {
   @override
@@ -20,6 +23,8 @@ class _WelcomeState extends State<Welcome> {
   int currentIndex = 0;
   late List<Widget> containers;
   Timer? _timer;
+
+  bool isLoading = false;
 
   Future<void> _saveToken(String token) async {
     try {
@@ -77,6 +82,10 @@ class _WelcomeState extends State<Welcome> {
   }
 
   Future<void> _handleGoogleSignIn() async {
+    setState(() {
+      isLoading = true;
+    });
+
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(
         serverClientId:
@@ -86,6 +95,9 @@ class _WelcomeState extends State<Welcome> {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
         print("Google Sign-In dibatalkan oleh pengguna.");
+        setState(() {
+          isLoading = false;
+        });
         return;
       }
       final GoogleSignInAuthentication googleAuth =
@@ -112,6 +124,11 @@ class _WelcomeState extends State<Welcome> {
           String status = data["status"];
           String token = data["token"];
           await _saveToken(token);
+
+          setState(() {
+            isLoading = false;
+          });
+
           if (status == "0") {
             _showGoogleSignupMenu(context);
           } else if (status == "1") {
@@ -126,10 +143,28 @@ class _WelcomeState extends State<Welcome> {
         } else {
           print("Login Gagal di Backend! Status Code: ${response.statusCode}");
           print("Response dari server: ${response.body}");
+          setState(() {
+            isLoading = false;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Login gagal. Silakan coba lagi."),
+              backgroundColor: Colors.red,
+            ),
+          );
         }
       }
     } catch (error) {
       print("Terjadi error saat login: $error");
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Terjadi kesalahan saat login. Silakan coba lagi."),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -147,8 +182,7 @@ class _WelcomeState extends State<Welcome> {
         return;
       }
       final response = await http.post(
-        Uri.parse(
-            "https://surveyscoutbe.onrender.com/api/v1/users/selectRole"),
+        Uri.parse("https://surveyscoutbe.onrender.com/api/v1/users/selectRole"),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",
@@ -230,41 +264,34 @@ class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Color(0xFFF1E9E5),
-        padding: EdgeInsets.all(27),
-        child: Stack(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/surveyscoutlogo.png',
-                  width: 90,
-                  height: 40,
-                  fit: BoxFit.cover,
-                ),
-                SizedBox(height: 100),
-                Center(
-                  child: AnimatedSwitcher(
-                    duration: Duration(seconds: 1),
-                    child: containers[currentIndex],
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              bottom: 20,
-              left: 0,
-              right: 0,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Center(
-                    child: SizedBox(
+      body: Stack(
+        children: [
+          SafeArea(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Color(0xFFF1E9E5),
+              child: Padding(
+                padding: EdgeInsets.all(27),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/surveyscoutlogo.png',
+                      width: 90,
+                      height: 40,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(height: 100),
+                    Center(
+                      child: AnimatedSwitcher(
+                        duration: Duration(seconds: 1),
+                        child: containers[currentIndex],
+                      ),
+                    ),
+                    Spacer(),
+                    SizedBox(
                       width: double.infinity,
                       child: TextButton(
                         onPressed: _handleGoogleSignIn,
@@ -279,6 +306,7 @@ class _WelcomeState extends State<Welcome> {
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(
                               'assets/images/google.png',
@@ -299,43 +327,77 @@ class _WelcomeState extends State<Welcome> {
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 16),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login()),
-                      );
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        text: "Sudah punya akun? ",
-                        style: TextStyle(
-                          fontFamily: 'NunitoSans',
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFFa3948d),
-                          fontSize: 16,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: "Masuk di sini",
-                            style: TextStyle(
-                              fontFamily: 'NunitoSans',
-                              color: Color(0xFFa3948d),
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
-                            ),
+                    SizedBox(height: 16),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Login()),
+                        );
+                      },
+                      child: RichText(
+                        text: TextSpan(
+                          text: "Sudah punya akun? ",
+                          style: TextStyle(
+                            fontFamily: 'NunitoSans',
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFFa3948d),
+                            fontSize: 16,
                           ),
-                        ],
+                          children: [
+                            TextSpan(
+                              text: "Masuk di sini",
+                              style: TextStyle(
+                                fontFamily: 'NunitoSans',
+                                color: Color(0xFFa3948d),
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
+                    ),
+                    SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          if (isLoading)
+            Positioned.fill(
+              child: Stack(
+                children: [
+                  BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+                    child: Container(
+                      color: Colors.black.withOpacity(0.4),
+                    ),
+                  ),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        LoadingAnimationWidget.staggeredDotsWave(
+                          color: Colors.white,
+                          size: 60,
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          "Sedang memproses...",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }
@@ -378,142 +440,32 @@ class _WelcomeState extends State<Welcome> {
                   ),
                 ),
                 SizedBox(height: 20),
-                GestureDetector(
-                  onTap: () {
-                    _sendSelectedRole("client");
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Color(0xFFD7CCC8),
-                    ),
-                    child: ListTile(
-                      leading: Image.asset(
-                        'assets/images/klien.png',
-                        width: 50,
-                        height: 50,
-                      ),
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Klien",
-                            style: TextStyle(
-                              fontFamily: 'NunitoSans',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF705D54),
-                            ),
-                          ),
-                          SizedBox(height: 2),
-                          Text(
-                            "Rekrut surveyor atau responden untuk membantu observasi Anda berjalan lancar dan efisien.",
-                            style: TextStyle(
-                              fontFamily: 'NunitoSans',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFF3A2B24),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                RoleOptionCard(
+                    title: "Klient",
+                    description:
+                        "Rekrut surveyor atau responden untuk membantu observasi Anda berjalan lancar dan efisien.",
+                    imagePath: 'assets/images/klien.png',
+                    onTap: () {
+                      _sendSelectedRole("client");
+                    }),
                 SizedBox(height: 10),
-                GestureDetector(
-                  onTap: () {
-                    _sendSelectedRole("surveyor");
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: const Color(0xFFD7CCC8),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          'assets/images/surveyor.png',
-                          width: 50,
-                          height: 50,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Surveyor",
-                                style: TextStyle(
-                                  fontFamily: 'NunitoSans',
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: Color(0xFF705D54),
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              const Text(
-                                "Hasilkan uang dengan mencari data dengan wawancara, observasi, dan/atau lainnya hingga merekapnya.",
-                                style: TextStyle(
-                                  fontFamily: 'NunitoSans',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xFF3A2B24),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                RoleOptionCard(
+                    title: "Surveyor",
+                    description:
+                        "Hasilkan uang dengan mencari data dengan wawancara, observasi, dan/atau lainnya hingga merekapnya.",
+                    imagePath: 'assets/images/surveyor.png',
+                    onTap: () {
+                      _sendSelectedRole("surveyor");
+                    }),
                 SizedBox(height: 10),
-                GestureDetector(
+                RoleOptionCard(
+                  title: "Responden",
+                  description:
+                      "Hasilkan uang dengan menjadi narasumber. Anda akan mengisi survei, diwawancarai, dan lainnya.",
+                  imagePath: 'assets/images/responden.png',
                   onTap: () {
                     _sendSelectedRole("responden");
                   },
-                  child: Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Color(0xFFD7CCC8),
-                    ),
-                    child: ListTile(
-                      leading: Image.asset(
-                        'assets/images/responden.png',
-                        width: 50,
-                        height: 50,
-                      ),
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Responden",
-                            style: TextStyle(
-                              fontFamily: 'NunitoSans',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF705D54),
-                            ),
-                          ),
-                          SizedBox(height: 2),
-                          Text(
-                            "Hasilkan uang dengan menjadi narasumber. Anda akan mengisi survei, diwawancarai, dan lainnya.",
-                            style: TextStyle(
-                              fontFamily: 'NunitoSans',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFF3A2B24),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 ),
               ],
             ),
