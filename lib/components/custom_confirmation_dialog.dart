@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomSignOut extends StatefulWidget {
+class CustomConfirmationDialog extends StatefulWidget {
   final String title;
   final String message;
   final String confirmText;
@@ -8,7 +8,7 @@ class CustomSignOut extends StatefulWidget {
   final VoidCallback onConfirm;
   final VoidCallback onCancel;
 
-  const CustomSignOut({
+  const CustomConfirmationDialog({
     super.key,
     required this.title,
     required this.message,
@@ -19,10 +19,11 @@ class CustomSignOut extends StatefulWidget {
   });
 
   @override
-  _CustomSignOutState createState() => _CustomSignOutState();
+  _CustomConfirmationDialogState createState() =>
+      _CustomConfirmationDialogState();
 }
 
-class _CustomSignOutState extends State<CustomSignOut> {
+class _CustomConfirmationDialogState extends State<CustomConfirmationDialog> {
   bool _isProcessing = false;
 
   @override

@@ -81,7 +81,7 @@ class AppPages {
 
     // Transaction routes
     // GetPage(name: AppRoutes.transactionReview, page: () => TransactionReviewScreen(idDraft: idDraft, commission: commission)),
-    GetPage(name: AppRoutes.transactionReviewRespondent, page: () => TransactionReviewRespondentScreen()),
+    // GetPage(name: AppRoutes.transactionReviewRespondent, page: () => TransactionReviewRespondentScreen()),
 
     // Respondent-specific details
     // GetPage(name: AppRoutes.respondentSurveyDetails, page: () => RespondentSurveyDetailsScreen()),

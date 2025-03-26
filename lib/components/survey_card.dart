@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class SurveyCard extends StatefulWidget {
+  final String id;
   final String title;
   final String description;
   final int deadlineDays;
@@ -9,9 +10,11 @@ class SurveyCard extends StatefulWidget {
   final String reward;
   final VoidCallback? onBookmarkToggle;
   final bool isBookmarked;
+  final VoidCallback? onTap;
 
   const SurveyCard({
     Key? key,
+    required this.id,
     required this.title,
     required this.description,
     required this.deadlineDays,
@@ -19,6 +22,7 @@ class SurveyCard extends StatefulWidget {
     required this.reward,
     this.onBookmarkToggle,
     this.isBookmarked = false,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -77,105 +81,108 @@ class _SurveyCardState extends State<SurveyCard> {
     String deadlineText = formatDeadlineText(widget.deadlineDays);
     String formattedReward = formatCurrency(widget.reward);
 
-    return Container(
-      decoration: BoxDecoration(
-        color: Color(0xFFEDE7E2),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      width: double.infinity,
-      padding: EdgeInsets.all(12),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Color(0xFF705D54),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: "SourceSans3",
+    return GestureDetector(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFFEDE7E2),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        width: double.infinity,
+        padding: EdgeInsets.all(12),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      widget.title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Color(0xFF705D54),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: "SourceSans3",
+                      ),
                     ),
                   ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _isSaved = !_isSaved;
-                  });
-                  if (widget.onBookmarkToggle != null) {
-                    widget.onBookmarkToggle!();
-                  }
-                },
-                child: Container(
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isSaved = !_isSaved;
+                    });
+                    if (widget.onBookmarkToggle != null) {
+                      widget.onBookmarkToggle!();
+                    }
+                  },
+                  child: Container(
+                    width: 50,
+                    height: 60,
+                    child: Center(
+                      child: Icon(
+                        _isSaved ? Icons.bookmark : Icons.bookmark_border,
+                        color: Color(0xFF705D54),
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8),
+                Container(
                   width: 50,
                   height: 60,
                   child: Center(
-                    child: Icon(
-                      _isSaved ? Icons.bookmark : Icons.bookmark_border,
-                      color: Color(0xFF705D54),
-                      size: 30,
+                    child: Image.asset(
+                      'assets/images/titik32.png',
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
-              ),
-              SizedBox(width: 8),
-              Container(
-                width: 50,
-                height: 60,
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/titik32.png',
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              widget.description,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: Color(0xFFA3948D),
-                fontSize: 12,
-                fontFamily: "NunitoSans",
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Row(
-              children: [
-                Expanded(
-                    child: _buildInfoTag(
-                        deadlineText,
-                        'assets/images/2bulanlagi2.png',
-                        _getDeadlineColor(widget.deadlineDays))),
-                SizedBox(width: 8),
-                Expanded(
-                    child: _buildInfoTag(widget.location,
-                        'assets/images/semarang.png', Color(0xFFA3948D))),
-                SizedBox(width: 8),
-                Expanded(
-                    child: _buildInfoTag(formattedReward,
-                        'assets/images/limaratus.png', Color(0xFF4A7C59))),
               ],
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                widget.description,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Color(0xFFA3948D),
+                  fontSize: 12,
+                  fontFamily: "NunitoSans",
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: _buildInfoTag(
+                          deadlineText,
+                          'assets/images/2bulanlagi2.png',
+                          _getDeadlineColor(widget.deadlineDays))),
+                  SizedBox(width: 8),
+                  Expanded(
+                      child: _buildInfoTag(widget.location,
+                          'assets/images/semarang.png', Color(0xFFA3948D))),
+                  SizedBox(width: 8),
+                  Expanded(
+                      child: _buildInfoTag(formattedReward,
+                          'assets/images/limaratus.png', Color(0xFF4A7C59))),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
+      onTap: widget.onTap,
     );
   }
 

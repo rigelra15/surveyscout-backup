@@ -18,7 +18,7 @@ dependencies:
   google_sign_in: ^6.2.2
   shared_preferences: ^2.5.2
   intl: ^0.20.2
-  file_picker: ^9.0.0
+  file_picker: ^9.2.1
   iconify_flutter_plus: ^1.0.4
   flutter_pdfview: ^1.4.0
   path_provider: ^2.1.5
@@ -31,6 +31,7 @@ dependencies:
   loading_animation_widget: ^1.3.0
   url_launcher: ^6.3.1
   android_intent_plus: ^5.3.0
+  flutter_svg: ^2.0.17
 
 dev_dependencies:
   flutter_test:
@@ -46,14 +47,39 @@ flutter:
 
     - family: NunitoSans
       fonts:
-        - asset: assets/fonts/NunitoSans_7pt_SemiCondensed-Medium.ttf
+        - asset: assets/fonts/nunito-sans/NunitoSans-Regular.ttf
           weight: 400
-        - asset: assets/fonts/NunitoSans_7pt-SemiBold.ttf
+        - asset: assets/fonts/nunito-sans/NunitoSans-Bold.ttf
           weight: 700
-        - asset: assets/fonts/NunitoSans_7pt-ExtraLight.ttf
+        - asset: assets/fonts/nunito-sans/NunitoSans-Italic.ttf
+          style: italic
+        - asset: assets/fonts/nunito-sans/NunitoSans-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/nunito-sans/NunitoSans-Light.ttf
           weight: 300
-        - asset: assets/fonts/NunitoSans_7pt-LightItalic.ttf
-          weight: 400
+        - asset: assets/fonts/nunito-sans/NunitoSans-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/nunito-sans/NunitoSans-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/nunito-sans/NunitoSans-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/nunito-sans/NunitoSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/nunito-sans/NunitoSans-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/nunito-sans/NunitoSans-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/nunito-sans/NunitoSans-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/nunito-sans/NunitoSans-Black.ttf
+          weight: 900
+        - asset: assets/fonts/nunito-sans/NunitoSans-BlackItalic.ttf
+          weight: 900
           style: italic
 
   uses-material-design: true

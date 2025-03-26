@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:surveyscout/pages/client/clientprojects.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
@@ -70,10 +71,13 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
 
         if (currentStatus == 'expire') {
           try {
-            final response = await http.post(
-              Uri.parse(
-                  "https://surveyscoutbe.onrender.com/api/v1/surveys/createSurveyPayment/$draft"),
-            );
+            // Tentukan endpoint berdasarkan tipe order
+            final String endpoint = widget.orderId.startsWith("SURVEY")
+                ? "https://surveyscoutbe.onrender.com/api/v1/surveys/createSurveyPayment/$draft"
+                : "https://surveyscoutbe.onrender.com/api/v1/responds/createRespondPayment/$draft";
+
+            // Lakukan request
+            final response = await http.post(Uri.parse(endpoint));
 
             if (response.statusCode == 201) {
               final data = jsonDecode(response.body);
@@ -302,7 +306,12 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
                 icon: Iconify(MaterialSymbols.arrow_back,
                     color: Color(0xFF826754)),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ClientProjects(),
+                    ),
+                  );
                 },
               ),
       ),

@@ -3,8 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:surveyscout/pages/client/clientprojects.dart';
+import 'package:surveyscout/pages/client/clientpages.dart';
+
+enum InputType {
+  textField,
+  datePicker,
+}
 
 class ClientSignUp extends StatefulWidget {
   const ClientSignUp({Key? key}) : super(key: key);
@@ -14,6 +20,7 @@ class ClientSignUp extends StatefulWidget {
 }
 
 class _ClientSignUp extends State<ClientSignUp> {
+  TextEditingController _dateController = TextEditingController();
   final TextEditingController _namaLengkapController = TextEditingController();
   final TextEditingController _jenisKelaminController = TextEditingController();
   final TextEditingController _tanggalLahirController = TextEditingController();
@@ -28,6 +35,37 @@ class _ClientSignUp extends State<ClientSignUp> {
   final TextEditingController _pinAksesController = TextEditingController();
   final TextEditingController _konfirmasiPinController =
       TextEditingController();
+  String? _selectedGender;
+
+  Future<void> selectDate() async {
+    DateTime? _picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData(
+            colorScheme: ColorScheme.light(
+              primary: Color(0xFF826754),
+              onPrimary: Color(0xFFF1E9E5),
+              surface: Color(0xFFD7CCC8),
+              onSurface: Colors.black,
+            ),
+            dialogBackgroundColor: Color(0xFFD7CCC8),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (_picked != null) {
+      setState(() {
+        _tanggalLahirController.text =
+            DateFormat('dd MMMM yyyy', 'id_ID').format(_picked);
+      });
+    }
+  }
 
   bool _isObscured = true;
   bool _isLoading = false;
@@ -136,7 +174,7 @@ class _ClientSignUp extends State<ClientSignUp> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => ClientProjects()),
+          MaterialPageRoute(builder: (context) => ClientPages()),
         );
       } else {
         print("Registrasi gagal! Status Code: ${response.statusCode}");
@@ -221,9 +259,11 @@ class _ClientSignUp extends State<ClientSignUp> {
               _buildDivider(),
               _buildInputField(
                 controller: _tanggalLahirController,
-                label: "Tanggal Lahir",
-                hint: "1 Januari 1999",
-                iconPath: "assets/images/tanggallahir.png",
+                label: 'Tanggal Lahir',
+                hint: 'DD-MM-YYYY',
+                iconPath: 'assets/images/tanggallahir.png',
+                inputType: InputType.datePicker,
+                onTapDate: () => selectDate(),
               ),
               _buildDivider(),
               _buildInputField(
@@ -326,6 +366,8 @@ class _ClientSignUp extends State<ClientSignUp> {
     required String hint,
     required String iconPath,
     TextInputType keyboardType = TextInputType.text,
+    InputType inputType = InputType.textField, // default textField
+    VoidCallback? onTapDate, // untuk datePicker
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -351,27 +393,49 @@ class _ClientSignUp extends State<ClientSignUp> {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  TextField(
-                    controller: controller,
-                    onChanged: (value) => _validateForm(),
-                    keyboardType: keyboardType,
-                    decoration: InputDecoration(
-                      hintText: hint,
-                      hintStyle: const TextStyle(
-                        color: Color(0xFFB0B0B0),
-                        fontSize: 16,
-                        fontFamily: 'NunitoSans',
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 0,
-                        vertical: 10,
-                      ),
-                      isDense: true,
-                      border: InputBorder.none,
-                    ),
-                  ),
+                  inputType == InputType.textField
+                      ? TextField(
+                          controller: controller,
+                          onChanged: (value) => _validateForm(),
+                          keyboardType: keyboardType,
+                          decoration: InputDecoration(
+                            hintText: hint,
+                            hintStyle: const TextStyle(
+                              color: Color(0xFFB0B0B0),
+                              fontSize: 16,
+                              fontFamily: 'NunitoSans',
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 0,
+                              vertical: 10,
+                            ),
+                            isDense: true,
+                            border: InputBorder.none,
+                          ),
+                        )
+                      : TextField(
+                          controller: controller,
+                          readOnly: true,
+                          onTap: onTapDate,
+                          decoration: InputDecoration(
+                            hintText: hint,
+                            hintStyle: const TextStyle(
+                              color: Color(0xFFB0B0B0),
+                              fontSize: 16,
+                              fontFamily: 'NunitoSans',
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 0,
+                              vertical: 10,
+                            ),
+                            isDense: true,
+                            border: InputBorder.none,
+                          ),
+                        ),
                 ],
               ),
             ),

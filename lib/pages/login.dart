@@ -7,8 +7,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/custom_container.dart';
+import 'package:surveyscout/pages/client/clientpages.dart';
 import 'package:surveyscout/pages/client/clientprojects.dart';
 import 'package:surveyscout/pages/responden/respondenprojects.dart';
+import 'package:surveyscout/pages/surveyor/surveyorpages.dart';
 import 'package:surveyscout/pages/surveyor/surveyorprojects.dart';
 import 'package:surveyscout/pages/welcome.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -74,14 +76,17 @@ class _LoginState extends State<Login> {
           print("Backend response: ${response.body}");
           final data = jsonDecode(response.body);
           String status = data["status"];
-          String? role = data["role"];
+          String role = data["role"];
           String token = data["token"];
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString('jwt_token', token);
+          await prefs.setString('user_role', role);
 
           setState(() {
             isLoading = false;
           });
+
+          print("Token: $token, Role: $role, Status: $status");
 
           if (role == null) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -134,10 +139,10 @@ class _LoginState extends State<Login> {
     Widget nextPage;
     switch (role) {
       case "client":
-        nextPage = ClientProjects();
+        nextPage = ClientPages();
         break;
       case "surveyor":
-        nextPage = SurveyorProjects();
+        nextPage = SurveyorPages();
         break;
       case "responden":
         nextPage = RespondenProjects();

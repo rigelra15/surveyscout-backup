@@ -1,5 +1,3 @@
-// ignore_for_file: unused_import, unused_element
-
 import 'dart:convert';
 import 'dart:ffi';
 
@@ -16,6 +14,7 @@ import 'package:iconify_flutter/icons/gis.dart';
 import 'package:iconify_flutter/icons/healthicons.dart';
 import 'package:iconify_flutter/icons/maki.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:surveyscout/components/loading_overlay.dart';
 import 'package:surveyscout/pages/client/transaction_review_respondent_screen.dart';
 import 'package:surveyscout/routes/app_routes.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
@@ -27,15 +26,15 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
 class RespondentCriteriaDetailsScreen extends StatefulWidget {
-  String? title;
-  String? description;
-  String? method;
-  String? task;
-  String? commission;
-  String? respondentAmount;
-  String? location;
-  String? registrationDeadline;
-  String? completionDeadline;
+  final String? title;
+  final String? description;
+  final String? method;
+  final String? task;
+  final String? commission;
+  final String? respondentAmount;
+  final String? location;
+  final String? registrationDeadline;
+  final String? completionDeadline;
 
   RespondentCriteriaDetailsScreen({
     this.title,
@@ -260,13 +259,12 @@ class _RespondentCriteriaDetailsScreenState
         _projectRespondentPendidikanController.text);
   }
 
-  // Selection for Status Perkawinan, Tingkat Pendidikan, Pekerjaan bottom sheet modal
   void _showSelectionModal({
     required BuildContext context,
     required String title,
     required List<String> options,
     required Function(String) onSelected,
-    bool hasSearch = false, // Enable search only for "Pekerjaan"
+    bool hasSearch = false,
   }) {
     TextEditingController searchController = TextEditingController();
     List<String> filteredOptions = options;
@@ -291,7 +289,6 @@ class _RespondentCriteriaDetailsScreenState
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Handle Bar
                   Container(
                     width: 60,
                     height: 4,
@@ -301,8 +298,6 @@ class _RespondentCriteriaDetailsScreenState
                     ),
                   ),
                   SizedBox(height: 12),
-
-                  // Title
                   Text(
                     title,
                     style: GoogleFonts.nunitoSans(
@@ -311,8 +306,6 @@ class _RespondentCriteriaDetailsScreenState
                       color: Color(0xFF705D54),
                     ),
                   ),
-
-                  // Search Bar (Only for "Pekerjaan")
                   if (hasSearch)
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 12),
@@ -342,8 +335,6 @@ class _RespondentCriteriaDetailsScreenState
                         ),
                       ),
                     ),
-
-                  // Options List
                   ListView.builder(
                     shrinkWrap: true,
                     itemCount: filteredOptions.length,
@@ -357,9 +348,8 @@ class _RespondentCriteriaDetailsScreenState
                           ),
                         ),
                         onTap: () {
-                          onSelected(
-                              filteredOptions[index]); // Callback function
-                          Navigator.pop(context); // Close modal
+                          onSelected(filteredOptions[index]);
+                          Navigator.pop(context);
                         },
                       );
                     },
@@ -374,7 +364,6 @@ class _RespondentCriteriaDetailsScreenState
     );
   }
 
-  // WIDGET general picker, used for status perkawinan, tingkat pendidikan, pekerjaan
   Widget _buildSelectableTextField({
     required String title,
     required TextEditingController controller,
@@ -429,21 +418,20 @@ class _RespondentCriteriaDetailsScreenState
     );
   }
 
-  // Function for widget
   void _showMultiSelectGrid({
     required BuildContext context,
     required String title,
     required List<String> options,
     required List<String> selectedValues,
     required Function(List<String>) onConfirm,
-    bool enableSearch = false, // ✅ Only true for "Pekerjaan"
+    bool enableSearch = false,
   }) {
     TextEditingController searchController = TextEditingController();
     List<String> filteredOptions = List.from(options);
 
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // Allow full-height modal control
+      isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
@@ -451,13 +439,11 @@ class _RespondentCriteriaDetailsScreenState
         return StatefulBuilder(
           builder: (context, setState) {
             return Container(
-              height: MediaQuery.of(context).size.height *
-                  0.6, // ✅ Limit height to 60% of screen
+              height: MediaQuery.of(context).size.height * 0.6,
               padding: EdgeInsets.all(16),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Drag Handle
                   Container(
                     width: 60,
                     height: 4,
@@ -467,8 +453,6 @@ class _RespondentCriteriaDetailsScreenState
                     ),
                   ),
                   SizedBox(height: 16),
-
-                  // Title
                   Text(
                     title,
                     style: GoogleFonts.nunitoSans(
@@ -478,8 +462,6 @@ class _RespondentCriteriaDetailsScreenState
                     ),
                   ),
                   SizedBox(height: 12),
-
-                  // ✅ Search Bar (Only for Pekerjaan)
                   if (enableSearch)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12),
@@ -507,15 +489,13 @@ class _RespondentCriteriaDetailsScreenState
                         ),
                       ),
                     ),
-
-                  // ✅ Multi-Select Grid
                   Expanded(
                     child: GridView.builder(
                       shrinkWrap: true,
                       itemCount: filteredOptions.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, // Two columns per row
-                        childAspectRatio: 3, // Box height
+                        crossAxisCount: 2,
+                        childAspectRatio: 3,
                         crossAxisSpacing: 8,
                         mainAxisSpacing: 8,
                       ),
@@ -559,24 +539,21 @@ class _RespondentCriteriaDetailsScreenState
                       },
                     ),
                   ),
-
-                  // ✅ Footer with Background
                   Container(
                     padding: EdgeInsets.all(12),
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
+                        print("Selected: $selectedValues");
                         onConfirm(selectedValues);
                         Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Color(0xFF826754), // ✅ Matches "Lanjut" button
-                        foregroundColor: Color(0xFFEDE7E2), // ✅ Brown text
+                        backgroundColor: Color(0xFF826754),
+                        foregroundColor: Color(0xFFEDE7E2),
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(8), // 8dp rounded rectangle
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                       child: Text("Simpan",
@@ -620,7 +597,6 @@ class _RespondentCriteriaDetailsScreenState
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Drag Handle
                   Container(
                     width: 60,
                     height: 4,
@@ -630,8 +606,6 @@ class _RespondentCriteriaDetailsScreenState
                     ),
                   ),
                   SizedBox(height: 16),
-
-                  // Title
                   Text(
                     title,
                     style: GoogleFonts.nunitoSans(
@@ -641,8 +615,6 @@ class _RespondentCriteriaDetailsScreenState
                     ),
                   ),
                   SizedBox(height: 12),
-
-                  // Search Bar
                   if (enableSearch)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12),
@@ -670,8 +642,6 @@ class _RespondentCriteriaDetailsScreenState
                         ),
                       ),
                     ),
-
-                  // Single-Select Grid
                   Expanded(
                     child: GridView.builder(
                       itemCount: filteredOptions.length,
@@ -717,14 +687,13 @@ class _RespondentCriteriaDetailsScreenState
                       },
                     ),
                   ),
-
-                  // Confirm Button
                   Container(
                     padding: EdgeInsets.all(12),
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
                         if (currentSelection != null) {
+                          print("Selected: $currentSelection");
                           onSelected(currentSelection!);
                           Navigator.pop(context);
                         }
@@ -753,7 +722,6 @@ class _RespondentCriteriaDetailsScreenState
     );
   }
 
-  // Hobby picker
   void _showHobbySelectionModal() {
     showModalBottomSheet(
       context: context,
@@ -780,8 +748,6 @@ class _RespondentCriteriaDetailsScreenState
                     ),
                   ),
                   SizedBox(height: 16),
-
-                  // HOBBY GRID SELECTION
                   GridView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
@@ -840,10 +806,7 @@ class _RespondentCriteriaDetailsScreenState
                       );
                     },
                   ),
-
                   SizedBox(height: 16),
-
-                  // BUTTON ROW
                   Row(
                     children: [
                       Expanded(
@@ -873,7 +836,7 @@ class _RespondentCriteriaDetailsScreenState
                             _saveProjectRespondentHobi(
                                 _selectedHobbies.join(", "));
                             Navigator.pop(context);
-                            setState(() {}); // Refresh UI
+                            setState(() {});
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFFEDE7E2),
@@ -899,11 +862,10 @@ class _RespondentCriteriaDetailsScreenState
     );
   }
 
-  // Age range picker
   void _showAgeRangeModal() {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // Allow the modal to resize with the keyboard
+      isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
@@ -913,8 +875,7 @@ class _RespondentCriteriaDetailsScreenState
             left: 16,
             right: 16,
             top: 16,
-            bottom:
-                MediaQuery.of(context).viewInsets.bottom, // Adjust for keyboard
+            bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -949,32 +910,26 @@ class _RespondentCriteriaDetailsScreenState
                 ),
                 SizedBox(height: 24),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 16), // ✅ Add bottom margin
+                  padding: EdgeInsets.only(bottom: 16),
                   child: SizedBox(
-                    width: double.infinity, // ✅ Full width
+                    width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Combine min and max age into a single string
                         String range =
                             "${_minAgeController.text}-${_maxAgeController.text}";
                         _projectRespondentUsiaRangeController.text = range;
 
-                        // Save the range to storage
                         _saveProjectRespondentUsiaRange(range);
 
-                        // Close the modal
                         Navigator.pop(context);
-                        setState(() {}); // Update the UI
+                        setState(() {});
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Color(0xFF826754), // ✅ Corrected Background Color
-                        foregroundColor: Color(
-                            0xFFEDE7E2), // ✅ Match Bottom Navigation Text Color
+                        backgroundColor: Color(0xFF826754),
+                        foregroundColor: Color(0xFFEDE7E2),
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              8), // ✅ 8dp rounded rectangle
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                       child: Text(
@@ -992,6 +947,8 @@ class _RespondentCriteriaDetailsScreenState
       },
     );
   }
+
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -1017,264 +974,267 @@ class _RespondentCriteriaDetailsScreenState
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            //Progress bar
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView(
               children: [
-                // Progress bar with full width and 16dp spacing
-                Padding(
-                  padding: const EdgeInsets.only(
-                      bottom: 16.0), // Add 16dp spacing below progress bar
-                  child: Row(
+                //Progress bar
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 8,
+                              decoration: ShapeDecoration(
+                                color: Color(0xFF826754),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Container(
+                              height: 8,
+                              decoration: ShapeDecoration(
+                                color: Color(0xFF826754),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Container(
+                              height: 8,
+                              decoration: ShapeDecoration(
+                                color: Color(0xFF826754),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Container(
+                              height: 8,
+                              decoration: ShapeDecoration(
+                                color: Color(0xFFD9D9D9),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(
+                      'Langkah 3',
+                      style: TextStyle(
+                        color: Color(0xFF705D54),
+                        fontSize: 24,
+                        fontFamily: 'Source Sans Pro',
+                        fontWeight: FontWeight.w700,
+                        height: 1,
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 8),
+                Text.rich(
+                  TextSpan(
                     children: [
-                      Expanded(
-                        child: Container(
-                          height: 8,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF826754),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                          ),
+                      TextSpan(
+                        text:
+                            'Ceritakan kriteria latar belakang responden yang Anda butuhkan. ',
+                        style: GoogleFonts.nunitoSans(
+                          color: Color(0xFFA3948D),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Container(
-                          height: 8,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF826754),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                          ),
+                      TextSpan(
+                        text:
+                            'Biarkan kosong untuk bagian yang tidak memiliki syarat mengikat.',
+                        style: GoogleFonts.nunitoSans(
+                          color: Color(0xFFA3948D),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Container(
-                          height: 8,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF826754),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                          ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 24),
+                GestureDetector(
+                  onTap: _showAgeRangeModal,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Rentang Usia",
+                        style: GoogleFonts.nunitoSans(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF705D54),
                         ),
                       ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Container(
-                          height: 8,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFFD9D9D9),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
+                      SizedBox(height: 8),
+                      TextField(
+                        controller: _projectRespondentUsiaRangeController,
+                        enabled: false,
+                        decoration: InputDecoration(
+                          hintText: "Seluruh usia",
+                          hintStyle:
+                              GoogleFonts.nunitoSans(color: Color(0xFFA3948D)),
+                          prefixIcon: SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: Center(
+                              child: Iconify(
+                                Healthicons.elderly_outline,
+                                color: Color(0xFF826754),
+                              ),
+                            ),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide:
+                                BorderSide(color: Color(0xFF826754), width: 1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide:
+                                BorderSide(color: Color(0xFFD9D9D9), width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide:
+                                BorderSide(color: Color(0xFF826754), width: 2),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                // Title "Langkah 3"
-                Text(
-                  'Langkah 3',
-                  style: TextStyle(
-                    color: Color(0xFF705D54),
-                    fontSize: 24,
-                    fontFamily: 'Source Sans Pro',
-                    fontWeight: FontWeight.w700,
-                    height: 1,
+                SizedBox(height: 16),
+                _buildEditableTextField(
+                  title: "Kabupaten/Kota Tempat Tinggal",
+                  controller: _projectRespondentKabKotaTinggalController,
+                  hintText: "Semua Kabupaten/Kota",
+                  icon: Iconify(Mdi.home_variant_outline,
+                      color: Color(0xFF826754)),
+                  onChanged: (value) {
+                    _saveProjectRespondentKabKotaTinggal(value);
+                    setState(() {});
+                  },
+                ),
+                SizedBox(height: 16),
+                GestureDetector(
+                  onTap: _showHobbySelectionModal,
+                  child: AbsorbPointer(
+                    child: _buildEditableTextField(
+                      title: "Hobi",
+                      controller: _projectRespondentHobiController,
+                      hintText: "Semua hobi",
+                      icon: Iconify(AntDesign.heart_outline,
+                          color: Color(0xFF826754)),
+                      onChanged: (value) {},
+                    ),
                   ),
+                ),
+
+                SizedBox(height: 16),
+                _buildSelectableTextField(
+                  title: "Status Perkawinan",
+                  controller: _projectRespondentStatusKawinController,
+                  hintText: "Semua status perkawinan",
+                  icon:
+                      Iconify(Mdi.human_male_female, color: Color(0xFF826754)),
+                  onTap: () => _showSingleSelectGrid(
+                    context: context,
+                    title: "Pilih Status Perkawinan",
+                    options: maritalStatusOptions,
+                    selectedValue: _projectRespondentStatusKawinController.text,
+                    onSelected: (selected) {
+                      _projectRespondentStatusKawinController.text = selected;
+                      _saveProjectRespondentStatusKawin(selected);
+                      setState(() {});
+                    },
+                  ),
+                ),
+                SizedBox(height: 16),
+                _buildSelectableTextField(
+                  title: "Tingkat Pendidikan",
+                  controller: _projectRespondentPendidikanController,
+                  hintText: "Pilih tingkat pendidikan",
+                  icon: Iconify(Mdi.school, color: Color(0xFF826754)),
+                  onTap: () => _showSingleSelectGrid(
+                    context: context,
+                    title: "Pilih Tingkat Pendidikan",
+                    options: educationLevelOptions,
+                    selectedValue: _projectRespondentPendidikanController.text,
+                    onSelected: (selected) {
+                      _projectRespondentPendidikanController.text = selected;
+                      _saveProjectRespondentPendidikan(selected);
+                      setState(() {});
+                    },
+                  ),
+                ),
+                SizedBox(height: 16),
+                _buildSelectableTextField(
+                  title: "Pekerjaan",
+                  controller: _projectRespondentPekerjaanController,
+                  hintText: "Semua bidang pekerjaan",
+                  icon: Iconify(Mdi.briefcase, color: Color(0xFF826754)),
+                  onTap: () => _showSingleSelectGrid(
+                    context: context,
+                    title: "Pilih Pekerjaan",
+                    options: jobOptions,
+                    selectedValue: _projectRespondentPekerjaanController.text,
+                    onSelected: (selected) {
+                      _projectRespondentPekerjaanController.text = selected;
+                      _saveProjectRespondentPekerjaan(selected);
+                      setState(() {});
+                    },
+                  ),
+                ),
+                SizedBox(height: 16),
+                _buildEditableTextField(
+                  title: "Kualifikasi Lainnya",
+                  controller: _projectRespondentKualifikasiLainnyaController,
+                  hintText:
+                      "Contoh : 'Menggunakan produk kecantikan secara rutin dalam sebulan terakhir...'",
+                  icon: Iconify(Gis.search_propertie, color: Color(0xFF826754)),
+                  onChanged: (value) {
+                    _saveProjectRespondentKualifikasiLainnya(value);
+                    setState(() {});
+                  },
                 ),
               ],
             ),
-
-            SizedBox(height: 8),
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text:
-                        'Ceritakan kriteria latar belakang responden yang Anda butuhkan. ',
-                    style: GoogleFonts.nunitoSans(
-                      color: Color(0xFFA3948D),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  TextSpan(
-                    text:
-                        'Biarkan kosong untuk bagian yang tidak memiliki syarat mengikat.',
-                    style: GoogleFonts.nunitoSans(
-                      color: Color(0xFFA3948D),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ],
-              ),
+          ),
+          if (_isLoading)
+            const LoadingOverlay(
+              message: "Sedang memproses...",
+              showLongLoadingMessage: false,
             ),
-            SizedBox(height: 24),
-            GestureDetector(
-              onTap: _showAgeRangeModal, // Trigger the modal popup
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Rentang Usia",
-                    style: GoogleFonts.nunitoSans(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF705D54),
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  TextField(
-                    controller: _projectRespondentUsiaRangeController,
-                    enabled: false, // Disable direct editing
-                    decoration: InputDecoration(
-                      hintText: "Seluruh usia", // Default hint text
-                      hintStyle:
-                          GoogleFonts.nunitoSans(color: Color(0xFFA3948D)),
-                      prefixIcon: SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: Center(
-                          child: Iconify(
-                            Healthicons.elderly_outline, // Icon on the left
-                            color: Color(0xFF826754),
-                          ),
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            BorderSide(color: Color(0xFF826754), width: 1),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            BorderSide(color: Color(0xFFD9D9D9), width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            BorderSide(color: Color(0xFF826754), width: 2),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 16),
-            _buildEditableTextField(
-              title: "Kabupaten/Kota Tempat Tinggal",
-              controller: _projectRespondentKabKotaTinggalController,
-              hintText: "Semua Kabupaten/Kota",
-              icon: Iconify(Mdi.home_variant_outline, color: Color(0xFF826754)),
-              onChanged: (value) {
-                _saveProjectRespondentKabKotaTinggal(value);
-                setState(() {}); // Force UI to update
-              },
-            ),
-            SizedBox(height: 16),
-            GestureDetector(
-              onTap: _showHobbySelectionModal,
-              child: AbsorbPointer(
-                child: _buildEditableTextField(
-                  title: "Hobi",
-                  controller: _projectRespondentHobiController,
-                  hintText: "Semua hobi",
-                  icon: Iconify(AntDesign.heart_outline,
-                      color: Color(0xFF826754)),
-                  onChanged: (value) {},
-                ),
-              ),
-            ),
-
-            SizedBox(height: 16),
-            _buildSelectableTextField(
-              title: "Status Perkawinan",
-              controller: _projectRespondentStatusKawinController,
-              hintText: "Semua status perkawinan",
-              icon: Iconify(Mdi.human_male_female, color: Color(0xFF826754)),
-              onTap: () => _showSingleSelectGrid(
-                context: context,
-                title: "Pilih Status Perkawinan",
-                options: maritalStatusOptions,
-                selectedValue: _projectRespondentStatusKawinController
-                    .text, // Single value
-                onSelected: (selected) {
-                  _projectRespondentStatusKawinController.text = selected;
-                  _saveProjectRespondentStatusKawin(selected);
-                  setState(() {});
-                },
-              ),
-            ),
-            SizedBox(height: 16),
-            _buildSelectableTextField(
-              title: "Tingkat Pendidikan",
-              controller: _projectRespondentPendidikanController,
-              hintText: "Pilih tingkat pendidikan",
-              icon: Iconify(Mdi.school, color: Color(0xFF826754)),
-              onTap: () => _showSingleSelectGrid(
-                context: context,
-                title: "Pilih Tingkat Pendidikan",
-                options: educationLevelOptions,
-                selectedValue:
-                    _projectRespondentPendidikanController.text, // Single value
-                onSelected: (selected) {
-                  _projectRespondentPendidikanController.text = selected;
-                  _saveProjectRespondentPendidikan(
-                      selected); // Kalau ada logic simpan
-                  setState(() {});
-                },
-              ),
-            ),
-            SizedBox(height: 16),
-            _buildSelectableTextField(
-              title: "Pekerjaan",
-              controller: _projectRespondentPekerjaanController,
-              hintText: "Semua bidang pekerjaan",
-              icon: Iconify(Mdi.briefcase, color: Color(0xFF826754)),
-              onTap: () => _showSingleSelectGrid(
-                context: context,
-                title: "Pilih Pekerjaan",
-                options: jobOptions,
-                selectedValue: _projectRespondentPekerjaanController.text,
-                onSelected: (selected) {
-                  _projectRespondentPekerjaanController.text = selected;
-                  _saveProjectRespondentPekerjaan(selected);
-                  setState(() {});
-                },
-              ),
-            ),
-            SizedBox(height: 16),
-            _buildEditableTextField(
-              title: "Kualifikasi Lainnya",
-              controller: _projectRespondentKualifikasiLainnyaController,
-              hintText:
-                  "Contoh : 'Menggunakan produk kecantikan secara rutin dalam sebulan terakhir...'",
-              icon: Iconify(Gis.search_propertie, color: Color(0xFF826754)),
-              onChanged: (value) {
-                _saveProjectRespondentKualifikasiLainnya(value);
-                setState(() {}); // Force UI to update
-              },
-            ),
-          ],
-        ),
+        ],
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        color: Color(0xFF826754), // Footer background color
+        color: Color(0xFF826754),
         child: Row(
           children: [
-            // Kembali Button (Outlined) - Takes Half Width
             Expanded(
               child: OutlinedButton(
                 onPressed: () {
@@ -1285,26 +1245,25 @@ class _RespondentCriteriaDetailsScreenState
                   foregroundColor: Color(0xFFEDE7E2),
                   padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(8), // 8dp rounded rectangle
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 child: Text("Kembali",
                     style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold)),
               ),
             ),
-
-            SizedBox(width: 8), // Space between buttons
-
-            // Lanjut Button (Filled) - Takes Half Width
+            SizedBox(width: 8),
             Expanded(
               child: ElevatedButton.icon(
                 onPressed: _isFormComplete()
                     ? () async {
+                        setState(() => _isLoading = true);
+
                         final rawCommission = widget.commission ?? '';
                         final cleanedCommission =
                             rawCommission.replaceAll(RegExp(r'[^0-9]'), '');
                         String? token = await _getToken();
+
                         final response = await http.post(
                           Uri.parse(
                               'https://surveyscoutbe.onrender.com/api/v1/responds/createRespondDraft'),
@@ -1329,38 +1288,49 @@ class _RespondentCriteriaDetailsScreenState
                               int.tryParse(_minAgeController.text) ?? 0,
                               int.tryParse(_maxAgeController.text) ?? 0
                             ],
-                            "hobi": _projectRespondentHobiController.text
-                                .split(',')
-                                .map((e) => e.trim())
-                                .toList(),
+                            "hobi": _selectedHobbies,
+                            "lokasi_responden":
+                                _projectRespondentKabKotaTinggalController.text,
+                            "pendidikan":
+                                _projectRespondentPendidikanController.text,
+                            "status_perkawinan":
+                                _projectRespondentStatusKawinController.text,
+                            "pekerjaan":
+                                _projectRespondentPekerjaanController.text,
                           }),
                         );
+
+                        setState(() => _isLoading = false);
 
                         if (response.statusCode == 201) {
                           final data = jsonDecode(response.body);
                           final idDraft = data['data']['id_draft'];
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  "Proyek Anda telah berhasil dibuat dan tersimpan."),
+                              backgroundColor: Color(0xFF826754),
+                              behavior: SnackBarBehavior.floating,
+                              margin: EdgeInsets.all(16),
+                            ),
+                          );
+
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
                                   TransactionReviewRespondentScreen(
-                                      idDraft: idDraft.toString(),
-                                      commission:
-                                          int.tryParse(cleanedCommission) ?? 0),
+                                idDraft: idDraft.toString(),
+                                projectTitle: widget.title ?? '',
+                                respondentAmount: int.tryParse(
+                                        widget.respondentAmount ?? '0') ??
+                                    0,
+                                commission:
+                                    int.tryParse(cleanedCommission) ?? 0,
+                              ),
                             ),
                           );
-
-                          Future.delayed(Duration(milliseconds: 500), () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                    "Proyek Anda telah berhasil dibuat dan tersimpan."),
-                                backgroundColor: Color(0xFF826754),
-                                behavior: SnackBarBehavior.floating,
-                                margin: EdgeInsets.all(16),
-                              ),
-                            );
-                          });
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -1373,19 +1343,18 @@ class _RespondentCriteriaDetailsScreenState
                           );
                         }
                       }
-                    : null, // Disable if incomplete
-                icon: Icon(Icons.arrow_forward, size: 20),
+                    : null,
+                icon: Icon(Icons.arrow_forward,
+                    size: 20, color: Color(0xFF826754)),
                 label: Text("Lanjut",
                     style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold)),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _isFormComplete()
-                      ? Color(0xFFEDE7E2)
-                      : Color(0xFFB5A89A), // Disabled color if incomplete
-                  foregroundColor: Color(0xFF826754), // Text/icon color
+                  backgroundColor:
+                      _isFormComplete() ? Color(0xFFEDE7E2) : Color(0xFFB5A89A),
+                  foregroundColor: Color(0xFF826754),
                   padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(8), // 8dp rounded rectangle
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               ),
@@ -1421,14 +1390,12 @@ Widget _buildEditableTextField({
         controller: controller,
         onChanged: onChanged,
         enabled: enabled,
-        maxLines: null, // Allow multi-line input
+        maxLines: null,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: GoogleFonts.nunitoSans(color: Color(0xFFA3948D)),
-          prefixIcon: SizedBox(
-              width: 24,
-              height: 24,
-              child: Center(child: icon)), // Icon inside text field
+          prefixIcon:
+              SizedBox(width: 24, height: 24, child: Center(child: icon)),
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:surveyscout/components/custom_signout.dart';
+import 'package:surveyscout/components/custom_confirmation_dialog.dart';
 import 'package:surveyscout/pages/welcome.dart';
 import 'package:surveyscout/services/profile/api_respondenprofile.dart';
 import 'respondenmyprojects.dart';
@@ -88,7 +88,7 @@ class _RespondenAccount extends State<RespondenAccount> {
 
     showDialog(
       context: context,
-      builder: (context) => CustomSignOut(
+      builder: (context) => CustomConfirmationDialog(
         title: 'Konfirmasi Keluar Akun',
         message: 'Apakah Anda yakin ingin keluar?',
         confirmText: 'Ya',

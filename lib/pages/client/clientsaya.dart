@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:surveyscout/components/custom_signout.dart';
+import 'package:surveyscout/components/custom_confirmation_dialog.dart';
 import 'package:surveyscout/pages/welcome.dart';
 import 'package:surveyscout/services/profile/api_clientprofile.dart';
 import 'clientprojects.dart';
@@ -86,7 +86,7 @@ class _ClientSaya extends State<ClientSaya> {
 
     showDialog(
       context: context,
-      builder: (context) => CustomSignOut(
+      builder: (context) => CustomConfirmationDialog(
         title: 'Konfirmasi Keluar Akun',
         message: 'Apakah Anda yakin ingin keluar?',
         confirmText: 'Ya',
@@ -983,130 +983,6 @@ class _ClientSaya extends State<ClientSaya> {
                 ),
               ),
               // Tambahkan lebih banyak kontainer jika diperlukan
-            ],
-          ),
-        ),
-      ),
-
-      bottomNavigationBar: Container(
-        color: Color(0xffD7CCC8), // Footer berwarna #D7CCC8
-        padding: EdgeInsets.symmetric(
-            horizontal: 32, vertical: 8), // Padding horizontal dan vertikal
-        child: GestureDetector(
-          onTap: () {
-            // Navigasi atau aksi untuk footer
-            print("Footer link clicked!");
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment
-                .spaceBetween, // Jarak antar container dibuat maksimal
-            children: [
-              GestureDetector(
-                onTap: () {
-                  // Navigasi ke halaman baru
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ClientProjects()), // Ganti dengan nama halaman Anda
-                  );
-                },
-                child: Container(
-                  width: 80,
-                  height: 60,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment
-                        .center, // Pusatkan isi secara vertikal
-                    children: [
-                      Image.asset(
-                        'assets/images/proyek2.png', // Path ke gambar
-                        width: 24, // Lebar gambar
-                        height: 24, // Tinggi gambar
-                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                      ),
-                      SizedBox(
-                          height: 4), // Memberikan jarak antara gambar dan teks
-                      Text(
-                        'Proyek',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xFFB8ADA5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  // Navigasi ke halaman baru
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ClientChat()), // Ganti dengan nama halaman Anda
-                  );
-                },
-                child: Container(
-                  width: 80,
-                  height: 60,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment
-                        .center, // Pusatkan isi secara vertikal
-                    children: [
-                      Image.asset(
-                        'assets/images/chat3.png', // Path ke gambar
-                        width: 24, // Lebar gambar
-                        height: 24, // Tinggi gambar
-                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                      ),
-                      SizedBox(
-                          height: 4), // Memberikan jarak antara gambar dan teks
-                      Text(
-                        'Chat',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xFFB8ADA5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  width: 80,
-                  height: 60,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment
-                        .center, // Pusatkan isi secara vertikal
-                    children: [
-                      Image.asset(
-                        'assets/images/saya2.png', // Path ke gambar
-                        width: 24, // Lebar gambar
-                        height: 24, // Tinggi gambar
-                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                      ),
-                      SizedBox(
-                          height: 4), // Memberikan jarak antara gambar dan teks
-                      Text(
-                        'Saya',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xFF705D54),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ],
           ),
         ),

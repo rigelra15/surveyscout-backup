@@ -145,26 +145,4 @@ class ApiService {
       throw Exception('Failed to load surveys');
     }
   }
-
-  Future<Project> getSurvey(String id) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/surveys/clientSurveys/$id'),
-      headers: {
-        "Authorization": "Bearer $authToken",
-        "Content-Type": "application/json",
-      },
-    );
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> jsonResponse = json.decode(response.body);
-
-      if (jsonResponse['data'] is Map<String, dynamic>) {
-        return Project.fromJson(jsonResponse['data']);
-      } else {
-        throw Exception("Unexpected data format: ${jsonResponse['data']}");
-      }
-    } else {
-      throw Exception('Failed to load survey');
-    }
-  }
 }

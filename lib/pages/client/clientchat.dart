@@ -10,11 +10,9 @@ class ClientChat extends StatefulWidget {
 class _ClientChat extends State<ClientChat> {
   int activeButton = -1;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: Color(0xFFF1E9E5), // Background berwarna #F1E9E5
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(165), // Tinggi AppBar diatur menjadi 130
@@ -32,11 +30,14 @@ class _ClientChat extends State<ClientChat> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Color(0xFFF1E9E5), // Warna latar belakang
-                      borderRadius: BorderRadius.circular(8), // Sudut melengkung
+                      borderRadius:
+                          BorderRadius.circular(8), // Sudut melengkung
                       boxShadow: [
                         BoxShadow(
-                          color: Color(0x40000000), // Warna shadow (semi-transparent hitam)
-                          offset: Offset(0, 4), // Posisi shadow (horizontal, vertikal)
+                          color: Color(
+                              0x40000000), // Warna shadow (semi-transparent hitam)
+                          offset: Offset(
+                              0, 4), // Posisi shadow (horizontal, vertikal)
                           blurRadius: 4, // Blur radius
                           spreadRadius: 0, // Radius sebaran shadow
                         ),
@@ -49,7 +50,8 @@ class _ClientChat extends State<ClientChat> {
                         fillColor: Color(0xFFF1E9E5), // Warna latar belakang
                         contentPadding: const EdgeInsets.all(10.0),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8), // Sudut melengkung
+                          borderRadius:
+                              BorderRadius.circular(8), // Sudut melengkung
                           borderSide: BorderSide(
                             color: Color(0xFF757575), // Warna border #757575
                             width: 0.1, // Lebar border 0.5px
@@ -58,18 +60,21 @@ class _ClientChat extends State<ClientChat> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide(
-                            color: Color(0xFF705D54), // Warna border tetap saat fokus
+                            color: Color(
+                                0xFF705D54), // Warna border tetap saat fokus
                             width: 2.0, // Lebar border saat fokus
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide(
-                            color: Color(0xFF705D54), // Warna border tetap saat tidak fokus
+                            color: Color(
+                                0xFF705D54), // Warna border tetap saat tidak fokus
                             width: 1.0, // Lebar border saat tidak fokus
                           ),
                         ),
-                        prefixIcon: Icon(Icons.search, color: Color(0xFF826754)), // Ikon pencarian
+                        prefixIcon: Icon(Icons.search,
+                            color: Color(0xFF826754)), // Ikon pencarian
                         hintStyle: TextStyle(
                           color: Color(0xFFB0B0B0), // Warna teks #B0B0B0
                           fontFamily: 'NunitoSans',
@@ -257,7 +262,6 @@ class _ClientChat extends State<ClientChat> {
                           ],
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -271,10 +275,9 @@ class _ClientChat extends State<ClientChat> {
         height: double.infinity,
         color: const Color(0xFFF2EEE9),
         child: SingleChildScrollView(
-
           child: Align(
-
-            alignment: Alignment.topCenter, // Menempatkan kontainer di bagian atas
+            alignment:
+                Alignment.topCenter, // Menempatkan kontainer di bagian atas
             child: Container(
               color: const Color(0xFFF2EEE9),
 
@@ -307,7 +310,8 @@ class _ClientChat extends State<ClientChat> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage('assets/images/hermanwalton.png'),
+                                      image: AssetImage(
+                                          'assets/images/hermanwalton.png'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -317,51 +321,66 @@ class _ClientChat extends State<ClientChat> {
                                   child: Padding(
                                     padding: EdgeInsets.all(8),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         // Baris Pertama
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   width: 24, // Lebar Container
-                                                  height: 24, // Tinggi Container
+                                                  height:
+                                                      24, // Tinggi Container
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
-                                                  child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Center(
+                                                    // Untuk menempatkan isi di tengah
                                                     child: Image.asset(
                                                       'assets/images/hermanwalton2.png',
                                                       width: 24, // Lebar gambar
-                                                      height: 24, // Tinggi gambar
-                                                      fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                      height:
+                                                          24, // Tinggi gambar
+                                                      fit: BoxFit
+                                                          .contain, // Menyesuaikan gambar dengan area yang tersedia
                                                     ),
                                                   ),
                                                 ),
-
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
                                                     "Herman Walton".length > 10
-                                                        ? "Herman Walton".substring(0, 10) + "..."
+                                                        ? "Herman Walton"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Herman Walton",
                                                     style: TextStyle(
                                                       color: Color(0xFF705D54),
-                                                      fontWeight: FontWeight.w700,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                       fontFamily: "NunitoSans",
                                                       fontSize: 14,
                                                     ),
@@ -371,31 +390,40 @@ class _ClientChat extends State<ClientChat> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 0), // Jarak antar baris
+                                        SizedBox(
+                                            height: 0), // Jarak antar baris
                                         // Baris Kedua
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   width: 24, // Lebar Container
-                                                  height: 24, // Tinggi Container
+                                                  height:
+                                                      24, // Tinggi Container
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
-                                                  child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Center(
+                                                    // Untuk menempatkan isi di tengah
                                                     child: Image.asset(
                                                       'assets/images/centang.png',
                                                       width: 24, // Lebar gambar
-                                                      height: 24, // Tinggi gambar
-                                                      fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                      height:
+                                                          24, // Tinggi gambar
+                                                      fit: BoxFit
+                                                          .contain, // Menyesuaikan gambar dengan area yang tersedia
                                                     ),
                                                   ),
                                                 ),
@@ -403,21 +431,27 @@ class _ClientChat extends State<ClientChat> {
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Oke, ditunggu ya, ini nanti untuk linknya zoom.us/InterviewWonderesearch".length > 10
-                                                        ? "Oke, ditunggu ya, ini nanti untuk linknya zoom.us/InterviewWonderesearch".substring(0, 10) + "..."
+                                                    "Oke, ditunggu ya, ini nanti untuk linknya zoom.us/InterviewWonderesearch"
+                                                                .length >
+                                                            10
+                                                        ? "Oke, ditunggu ya, ini nanti untuk linknya zoom.us/InterviewWonderesearch"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Oke, ditunggu ya, ini nanti untuk linknya zoom.us/InterviewWonderesearch",
                                                     style: TextStyle(
                                                       color: Color(0xFFA3948D),
                                                       fontFamily: "NunitoSans",
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 14,
-
                                                     ),
-
                                                   ),
                                                 ),
                                               ],
@@ -441,9 +475,12 @@ class _ClientChat extends State<ClientChat> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Align(
-                            alignment: Alignment.topCenter, // Menempatkan konten di bagian atas kiri
+                            alignment: Alignment
+                                .topCenter, // Menempatkan konten di bagian atas kiri
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20), // Tambahkan padding agar tidak terlalu mepet
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                      20), // Tambahkan padding agar tidak terlalu mepet
                               child: Text(
                                 "08.00",
                                 style: TextStyle(
@@ -451,13 +488,11 @@ class _ClientChat extends State<ClientChat> {
                                   fontSize: 12,
                                   fontFamily: "NunitoSans",
                                   fontWeight: FontWeight.w400,
-
                                 ),
                               ),
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -486,7 +521,8 @@ class _ClientChat extends State<ClientChat> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage('assets/images/bagaskaraputra.png'),
+                                      image: AssetImage(
+                                          'assets/images/bagaskaraputra.png'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -496,51 +532,67 @@ class _ClientChat extends State<ClientChat> {
                                   child: Padding(
                                     padding: EdgeInsets.all(8),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         // Baris Pertama
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   width: 24, // Lebar Container
-                                                  height: 24, // Tinggi Container
+                                                  height:
+                                                      24, // Tinggi Container
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
-                                                  child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Center(
+                                                    // Untuk menempatkan isi di tengah
                                                     child: Image.asset(
                                                       'assets/images/hermanwalton2.png',
                                                       width: 24, // Lebar gambar
-                                                      height: 24, // Tinggi gambar
-                                                      fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                      height:
+                                                          24, // Tinggi gambar
+                                                      fit: BoxFit
+                                                          .contain, // Menyesuaikan gambar dengan area yang tersedia
                                                     ),
                                                   ),
                                                 ),
-
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Bagaskara Putra".length > 10
-                                                        ? "Bagaskara Putra".substring(0, 10) + "..."
+                                                    "Bagaskara Putra".length >
+                                                            10
+                                                        ? "Bagaskara Putra"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Bagaskara Putra",
                                                     style: TextStyle(
                                                       color: Color(0xFF705D54),
-                                                      fontWeight: FontWeight.w700,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                       fontFamily: "NunitoSans",
                                                       fontSize: 14,
                                                     ),
@@ -550,35 +602,45 @@ class _ClientChat extends State<ClientChat> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 0), // Jarak antar baris
+                                        SizedBox(
+                                            height: 0), // Jarak antar baris
                                         // Baris Kedua
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Baik, Pak/Bu, saya bersedia untuk Zoom interview besok pagi".length > 10
-                                                        ? "Baik, Pak/Bu, saya bersedia untuk Zoom interview besok pagi".substring(0, 10) + "..."
+                                                    "Baik, Pak/Bu, saya bersedia untuk Zoom interview besok pagi"
+                                                                .length >
+                                                            10
+                                                        ? "Baik, Pak/Bu, saya bersedia untuk Zoom interview besok pagi"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Baik, Pak/Bu, saya bersedia untuk Zoom interview besok pagi",
                                                     style: TextStyle(
                                                       color: Color(0xFFA3948D),
                                                       fontFamily: "NunitoSans",
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 14,
-
                                                     ),
                                                   ),
                                                 ),
@@ -603,9 +665,12 @@ class _ClientChat extends State<ClientChat> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Align(
-                            alignment: Alignment.topCenter, // Menempatkan konten di bagian atas kiri
+                            alignment: Alignment
+                                .topCenter, // Menempatkan konten di bagian atas kiri
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20), // Tambahkan padding agar tidak terlalu mepet
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                      20), // Tambahkan padding agar tidak terlalu mepet
                               child: Text(
                                 "07.00",
                                 style: TextStyle(
@@ -613,13 +678,11 @@ class _ClientChat extends State<ClientChat> {
                                   fontSize: 12,
                                   fontFamily: "NunitoSans",
                                   fontWeight: FontWeight.w400,
-
                                 ),
                               ),
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -648,7 +711,8 @@ class _ClientChat extends State<ClientChat> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage('assets/images/richardsantoso2.png'),
+                                      image: AssetImage(
+                                          'assets/images/richardsantoso2.png'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -658,51 +722,66 @@ class _ClientChat extends State<ClientChat> {
                                   child: Padding(
                                     padding: EdgeInsets.all(8),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         // Baris Pertama
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   width: 24, // Lebar Container
-                                                  height: 24, // Tinggi Container
+                                                  height:
+                                                      24, // Tinggi Container
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
-                                                  child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Center(
+                                                    // Untuk menempatkan isi di tengah
                                                     child: Image.asset(
                                                       'assets/images/richardsantoso.png',
                                                       width: 24, // Lebar gambar
-                                                      height: 24, // Tinggi gambar
-                                                      fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                      height:
+                                                          24, // Tinggi gambar
+                                                      fit: BoxFit
+                                                          .contain, // Menyesuaikan gambar dengan area yang tersedia
                                                     ),
                                                   ),
                                                 ),
-
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
                                                     "Richard Santoso".length > 7
-                                                        ? "Richard Santoso".substring(0, 7) + "..."
+                                                        ? "Richard Santoso"
+                                                                .substring(
+                                                                    0, 7) +
+                                                            "..."
                                                         : "Richard Santoso",
                                                     style: TextStyle(
                                                       color: Color(0xFF705D54),
-                                                      fontWeight: FontWeight.w700,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                       fontFamily: "NunitoSans",
                                                       fontSize: 14,
                                                     ),
@@ -712,36 +791,45 @@ class _ClientChat extends State<ClientChat> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 0), // Jarak antar baris
+                                        SizedBox(
+                                            height: 0), // Jarak antar baris
                                         // Baris Kedua
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
-
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Untuk selanjutnya, saya coba untuk ke halte bus yang sebelah utara, Pak. Akan segera saya kabarkan kembali untuk progressnya.".length > 10
-                                                        ? "Untuk selanjutnya, saya coba untuk ke halte bus yang sebelah utara, Pak. Akan segera saya kabarkan kembali untuk progressnya.".substring(0, 10) + "..."
+                                                    "Untuk selanjutnya, saya coba untuk ke halte bus yang sebelah utara, Pak. Akan segera saya kabarkan kembali untuk progressnya."
+                                                                .length >
+                                                            10
+                                                        ? "Untuk selanjutnya, saya coba untuk ke halte bus yang sebelah utara, Pak. Akan segera saya kabarkan kembali untuk progressnya."
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Untuk selanjutnya, saya coba untuk ke halte bus yang sebelah utara, Pak. Akan segera saya kabarkan kembali untuk progressnya.",
                                                     style: TextStyle(
                                                       color: Color(0xFFA3948D),
                                                       fontFamily: "NunitoSans",
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 14,
-
                                                     ),
                                                   ),
                                                 ),
@@ -774,10 +862,12 @@ class _ClientChat extends State<ClientChat> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(0), // Menambahkan padding ke teks
+                                  padding: EdgeInsets.all(
+                                      0), // Menambahkan padding ke teks
                                   child: Text(
                                     "Kemarin",
-                                    textAlign: TextAlign.end, // Menyelaraskan teks ke tengah
+                                    textAlign: TextAlign
+                                        .end, // Menyelaraskan teks ke tengah
                                     style: TextStyle(
                                       color: Color(0xFFB8ADA5),
                                       fontSize: 12,
@@ -787,22 +877,28 @@ class _ClientChat extends State<ClientChat> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 10), // Memberi jarak antara kontainer atas dan bawah
+                              SizedBox(
+                                  height:
+                                      10), // Memberi jarak antara kontainer atas dan bawah
 
                               // Kontainer bawah
                               Container(
                                 width: 20,
-                                height: 20, // Disesuaikan agar lebih proporsional
+                                height:
+                                    20, // Disesuaikan agar lebih proporsional
                                 decoration: BoxDecoration(
-                                  color: Colors.red, // Warna background kontainer bawah
+                                  color: Colors
+                                      .red, // Warna background kontainer bawah
                                   shape: BoxShape.circle,
                                 ),
                                 child: Center(
                                   child: Text(
                                     "3",
                                     style: TextStyle(
-                                      color: Colors.white, // Warna tulisan putih
-                                      fontSize: 10, // Ukuran font disesuaikan agar lebih jelas
+                                      color:
+                                          Colors.white, // Warna tulisan putih
+                                      fontSize:
+                                          10, // Ukuran font disesuaikan agar lebih jelas
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -811,9 +907,6 @@ class _ClientChat extends State<ClientChat> {
                             ],
                           ),
                         ),
-
-
-
                       ],
                     ),
                   ),
@@ -842,7 +935,8 @@ class _ClientChat extends State<ClientChat> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage('assets/images/layananpelanggan.png'),
+                                      image: AssetImage(
+                                          'assets/images/layananpelanggan.png'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -852,51 +946,67 @@ class _ClientChat extends State<ClientChat> {
                                   child: Padding(
                                     padding: EdgeInsets.all(8),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         // Baris Pertama
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   width: 24, // Lebar Container
-                                                  height: 24, // Tinggi Container
+                                                  height:
+                                                      24, // Tinggi Container
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
-                                                  child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Center(
+                                                    // Untuk menempatkan isi di tengah
                                                     child: Image.asset(
                                                       'assets/images/layananpelanggan2.png',
                                                       width: 24, // Lebar gambar
-                                                      height: 24, // Tinggi gambar
-                                                      fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                      height:
+                                                          24, // Tinggi gambar
+                                                      fit: BoxFit
+                                                          .contain, // Menyesuaikan gambar dengan area yang tersedia
                                                     ),
                                                   ),
                                                 ),
-
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Layanan Pelanggan".length > 10
-                                                        ? "Layanan Pelanggan".substring(0, 10) + "..."
+                                                    "Layanan Pelanggan".length >
+                                                            10
+                                                        ? "Layanan Pelanggan"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Layanan Pelanggan",
                                                     style: TextStyle(
                                                       color: Color(0xFF705D54),
-                                                      fontWeight: FontWeight.w700,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                       fontFamily: "NunitoSans",
                                                       fontSize: 14,
                                                     ),
@@ -906,35 +1016,45 @@ class _ClientChat extends State<ClientChat> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 0), // Jarak antar baris
+                                        SizedBox(
+                                            height: 0), // Jarak antar baris
                                         // Baris Kedua
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Apabila sudah tidak ada pertanyaan lagi, kami izin menutup percakapan ini. Terima kasih telah menghubungi Layanan Pelanggan SurveyScout!".length > 10
-                                                        ? "Apabila sudah tidak ada pertanyaan lagi, kami izin menutup percakapan ini. Terima kasih telah menghubungi Layanan Pelanggan SurveyScout!".substring(0, 10) + "..."
+                                                    "Apabila sudah tidak ada pertanyaan lagi, kami izin menutup percakapan ini. Terima kasih telah menghubungi Layanan Pelanggan SurveyScout!"
+                                                                .length >
+                                                            10
+                                                        ? "Apabila sudah tidak ada pertanyaan lagi, kami izin menutup percakapan ini. Terima kasih telah menghubungi Layanan Pelanggan SurveyScout!"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Apabila sudah tidak ada pertanyaan lagi, kami izin menutup percakapan ini. Terima kasih telah menghubungi Layanan Pelanggan SurveyScout!",
                                                     style: TextStyle(
                                                       color: Color(0xFFA3948D),
                                                       fontFamily: "NunitoSans",
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 14,
-
                                                     ),
                                                   ),
                                                 ),
@@ -959,9 +1079,12 @@ class _ClientChat extends State<ClientChat> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Align(
-                            alignment: Alignment.topCenter, // Menempatkan konten di bagian atas kiri
+                            alignment: Alignment
+                                .topCenter, // Menempatkan konten di bagian atas kiri
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20), // Tambahkan padding agar tidak terlalu mepet
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                      20), // Tambahkan padding agar tidak terlalu mepet
                               child: Text(
                                 "Kemarin",
                                 style: TextStyle(
@@ -969,13 +1092,11 @@ class _ClientChat extends State<ClientChat> {
                                   fontSize: 12,
                                   fontFamily: "NunitoSans",
                                   fontWeight: FontWeight.w400,
-
                                 ),
                               ),
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -1004,7 +1125,8 @@ class _ClientChat extends State<ClientChat> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage('assets/images/notifikasipembayaran.png'),
+                                      image: AssetImage(
+                                          'assets/images/notifikasipembayaran.png'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -1014,51 +1136,68 @@ class _ClientChat extends State<ClientChat> {
                                   child: Padding(
                                     padding: EdgeInsets.all(8),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         // Baris Pertama
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   width: 24, // Lebar Container
-                                                  height: 24, // Tinggi Container
+                                                  height:
+                                                      24, // Tinggi Container
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
-                                                  child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Center(
+                                                    // Untuk menempatkan isi di tengah
                                                     child: Image.asset(
                                                       'assets/images/layananpelanggan2.png',
                                                       width: 24, // Lebar gambar
-                                                      height: 24, // Tinggi gambar
-                                                      fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                      height:
+                                                          24, // Tinggi gambar
+                                                      fit: BoxFit
+                                                          .contain, // Menyesuaikan gambar dengan area yang tersedia
                                                     ),
                                                   ),
                                                 ),
-
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Notifikasi Pembayaran".length > 10
-                                                        ? "Notifikasi Pembayaran".substring(0, 10) + "..."
+                                                    "Notifikasi Pembayaran"
+                                                                .length >
+                                                            10
+                                                        ? "Notifikasi Pembayaran"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Notifikasi Pembayaran",
                                                     style: TextStyle(
                                                       color: Color(0xFF705D54),
-                                                      fontWeight: FontWeight.w700,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                       fontFamily: "NunitoSans",
                                                       fontSize: 14,
                                                     ),
@@ -1068,35 +1207,45 @@ class _ClientChat extends State<ClientChat> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 0), // Jarak antar baris
+                                        SizedBox(
+                                            height: 0), // Jarak antar baris
                                         // Baris Kedua
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Pembayaran QRIS Anda untuk “Pengamatan Lalu Lintas di Simpang Lima Semarang” sudah kami terima. Proses rekrutmen untuk proyek tersebut telah dimulai. Terima kasih!".length > 10
-                                                        ? "Pembayaran QRIS Anda untuk “Pengamatan Lalu Lintas di Simpang Lima Semarang” sudah kami terima. Proses rekrutmen untuk proyek tersebut telah dimulai. Terima kasih!".substring(0, 10) + "..."
+                                                    "Pembayaran QRIS Anda untuk “Pengamatan Lalu Lintas di Simpang Lima Semarang” sudah kami terima. Proses rekrutmen untuk proyek tersebut telah dimulai. Terima kasih!"
+                                                                .length >
+                                                            10
+                                                        ? "Pembayaran QRIS Anda untuk “Pengamatan Lalu Lintas di Simpang Lima Semarang” sudah kami terima. Proses rekrutmen untuk proyek tersebut telah dimulai. Terima kasih!"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Pembayaran QRIS Anda untuk “Pengamatan Lalu Lintas di Simpang Lima Semarang” sudah kami terima. Proses rekrutmen untuk proyek tersebut telah dimulai. Terima kasih!",
                                                     style: TextStyle(
                                                       color: Color(0xFFA3948D),
                                                       fontFamily: "NunitoSans",
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 14,
-
                                                     ),
                                                   ),
                                                 ),
@@ -1121,9 +1270,12 @@ class _ClientChat extends State<ClientChat> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Align(
-                            alignment: Alignment.topCenter, // Menempatkan konten di bagian atas kiri
+                            alignment: Alignment
+                                .topCenter, // Menempatkan konten di bagian atas kiri
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20), // Tambahkan padding agar tidak terlalu mepet
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                      20), // Tambahkan padding agar tidak terlalu mepet
                               child: Text(
                                 "Kemarin",
                                 style: TextStyle(
@@ -1131,13 +1283,11 @@ class _ClientChat extends State<ClientChat> {
                                   fontSize: 12,
                                   fontFamily: "NunitoSans",
                                   fontWeight: FontWeight.w400,
-
                                 ),
                               ),
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -1145,138 +1295,24 @@ class _ClientChat extends State<ClientChat> {
               ),
             ),
           ),
-
-        ),
-      ),
-
-
-
-      bottomNavigationBar:
-      Container(
-        color: Color(0xffD7CCC8), // Footer berwarna #D7CCC8
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8), // Padding horizontal dan vertikal
-        child: GestureDetector(
-          onTap: () {
-            // Navigasi atau aksi untuk footer
-            print("Footer link clicked!");
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Jarak antar container dibuat maksimal
-            children: [
-              GestureDetector(
-                onTap: () {
-                  // Navigasi ke halaman baru
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ClientProjects(),
-                    ), // Ganti dengan nama halaman Anda
-                  );
-                },
-                child: Container(
-                  width: 80,
-                  height: 60,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
-                    children: [
-                      Image.asset(
-                        'assets/images/proyek2.png', // Path ke gambar
-                        width: 24, // Lebar gambar
-                        height: 24, // Tinggi gambar
-                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                      ),
-                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
-                      Text(
-                        'Proyek',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xFFB8ADA5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-
-              Container(
-                width: 80,
-                height: 60,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
-                  children: [
-                    Image.asset(
-                      'assets/images/chat4.png', // Path ke gambar
-                      width: 24, // Lebar gambar
-                      height: 24, // Tinggi gambar
-                      fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                    ),
-                    SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
-                    Text(
-                      'Chat',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'NunitoSans',
-                        color: Color(0xFF705D54),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ClientSaya(),
-                    ), // Ganti dengan nama halaman Anda
-                  );
-                },
-                child: Container(
-                  width: 80,
-                  height: 60,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
-                    children: [
-                      Image.asset(
-                        'assets/images/saya.png', // Path ke gambar
-                        width: 24, // Lebar gambar
-                        height: 24, // Tinggi gambar
-                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                      ),
-                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
-                      Text(
-                        'Saya',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xFFB8ADA5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
   }
 
-  Widget _buildDropdown(String hint, List<String> options, {required String selectedValue, required ValueChanged<String?> onChanged, bool isWide = false}) {
+  Widget _buildDropdown(String hint, List<String> options,
+      {required String selectedValue,
+      required ValueChanged<String?> onChanged,
+      bool isWide = false}) {
     return Container(
       width: isWide ? 300 : 200, // Conditional width based on isWide parameter
       height: 40, // Set the total height of the dropdown to 40
       child: DropdownButtonFormField<String>(
         isDense: true, // Make the dropdown more compact
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 0), // Padding to control internal spacing
+          contentPadding: EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 0), // Padding to control internal spacing
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16), // Rounded corners
             borderSide: BorderSide(
@@ -1328,14 +1364,14 @@ class _ClientChat extends State<ClientChat> {
           );
         }).toList(),
         onChanged: onChanged, // Set the onChanged callback
-        icon: Icon(Icons.keyboard_arrow_down, color: Color(0xFF705D54)), // Icon color
+        icon: Icon(Icons.keyboard_arrow_down,
+            color: Color(0xFF705D54)), // Icon color
       ),
     );
   }
 
   Widget _buildIconBox() {
     return GestureDetector(
-
       child: Container(
         width: 40,
         height: 40,
@@ -1348,8 +1384,10 @@ class _ClientChat extends State<ClientChat> {
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Center align vertically
-          crossAxisAlignment: CrossAxisAlignment.start, // Center align horizontally
+          mainAxisAlignment:
+              MainAxisAlignment.center, // Center align vertically
+          crossAxisAlignment:
+              CrossAxisAlignment.start, // Center align horizontally
           children: [
             // Top line (full width)
             Container(

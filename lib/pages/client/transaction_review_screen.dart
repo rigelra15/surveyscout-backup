@@ -1,5 +1,3 @@
-// ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
@@ -90,7 +88,6 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Progress Bar
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: Row(
@@ -133,8 +130,6 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
                     ],
                   ),
                 ),
-
-                // Title "Langkah 3"
                 Text(
                   'Langkah 3',
                   style: TextStyle(
@@ -145,7 +140,6 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
                     height: 1,
                   ),
                 ),
-
                 SizedBox(height: 8),
                 Text(
                   'Tinjau dan konfirmasi transaksi untuk proyek “Studi Kepuasan Penggunaan Produk Kecantikan”',
@@ -157,7 +151,7 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 24), // Add spacing before receipt section
+            SizedBox(height: 24),
             Container(
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -186,23 +180,21 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
                 ],
               ),
             ),
-            // Garansi Uang Kembali Panel
-
             SizedBox(height: 16),
             Container(
               padding: EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Color(0xFFA3948D), // Background color
-                borderRadius: BorderRadius.circular(8), // Rounded corners
+                color: Color(0xFFA3948D),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Center(
                     child: Iconify(IconParkSolid.protect,
-                        color: Colors.white, size: 24), // Icon
+                        color: Colors.white, size: 24),
                   ),
-                  SizedBox(width: 12), // Spacing
+                  SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,10 +221,7 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
                 ],
               ),
             ),
-
-            SizedBox(height: 16), // Spacing below panel
-
-            // Pembayaran akan diproses dengan
+            SizedBox(height: 16),
             Text(
               "Pembayaran akan diproses dengan",
               textAlign: TextAlign.center,
@@ -242,10 +231,7 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
                 color: Color(0xFF705D54),
               ),
             ),
-
-            SizedBox(height: 8), // Spacing
-
-            // Payment Processing Image (Replace with actual asset or URL)
+            SizedBox(height: 8),
             Center(
               child: Image.asset(
                 "assets/images/qrislogo.png",
@@ -258,10 +244,9 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        color: Color(0xFF826754), // Footer background color
+        color: Color(0xFF826754),
         child: Row(
           children: [
-            // Kembali Button (Outlined) - Takes Half Width
             Expanded(
               child: OutlinedButton(
                 onPressed: () {
@@ -272,23 +257,17 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
                   foregroundColor: Color(0xFFEDE7E2),
                   padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(8), // 8dp rounded rectangle
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 child: Text("Kembali",
                     style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold)),
               ),
             ),
-
-            SizedBox(width: 8), // Space between buttons
-
-            // Lanjut Button (Filled) - Takes Half Width
+            SizedBox(width: 8),
             Expanded(
               child: ElevatedButton.icon(
-                // onPressed: () => Get.back(),
                 onPressed: () async {
-// POST request to create transaction
                   final response = await http.post(
                     Uri.parse(
                         'https://surveyscoutbe.onrender.com/api/v1/surveys/createSurveyPayment/${widget.idDraft}'),
@@ -328,12 +307,10 @@ class _TransactionReviewScreenState extends State<TransactionReviewScreen> {
                 label: Text("Lanjut",
                     style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold)),
                 style: ElevatedButton.styleFrom(
-                  // backgroundColor: _isFormComplete() ? Color(0xFFEDE7E2) : Color(0xFFB5A89A), // Disabled color if incomplete
-                  foregroundColor: Color(0xFF826754), // Text/icon color
+                  foregroundColor: Color(0xFF826754),
                   padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(8), // 8dp rounded rectangle
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               ),

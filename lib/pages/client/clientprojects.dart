@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/custom_choose_sort.dart';
 import 'package:surveyscout/components/project_card.dart';
@@ -26,6 +27,7 @@ class _ClientProjects extends State<ClientProjects> {
   List<Project> allProjects = [];
   List<Project> filteredProjects = [];
   String searchQuery = "";
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -49,6 +51,9 @@ class _ClientProjects extends State<ClientProjects> {
   }
 
   Future<void> _fetchSurveys() async {
+    setState(() {
+      isLoading = true;
+    });
     if (apiService != null) {
       try {
         List<Project> surveys = await apiService!.getSurveys();
@@ -68,9 +73,13 @@ class _ClientProjects extends State<ClientProjects> {
         setState(() {
           allProjects = surveys;
           filteredProjects = surveys;
+          isLoading = false;
         });
       } catch (e) {
         print("Error mengambil data survei: $e");
+        setState(() {
+          isLoading = false;
+        });
       }
     }
   }
@@ -275,389 +284,316 @@ class _ClientProjects extends State<ClientProjects> {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 27),
-            child: Column(
-              children: [
-                Expanded(
-                    child: RefreshIndicator(
-                  onRefresh: _fetchSurveys,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10),
-                        Container(
-                          width: double.infinity,
-                          height: 100,
-                          padding: EdgeInsets.all(0),
-                          child: FutureBuilder<List<Project>>(
-                            future: apiService != null
-                                ? apiService!.getSurveys()
-                                : Future.value([]),
-                            builder: (context, snapshot) {
-                              List<Project> surveys = [];
-                              if (snapshot.hasData && snapshot.data != null) {
-                                surveys = snapshot.data!;
-                              }
-                              return SurveyStatusWidget(surveys: surveys);
-                            },
-                          ),
-                        ),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: filteredProjects.length,
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 12),
-                          itemBuilder: (context, index) {
-                            Project project = filteredProjects[index];
-                            return ProjectCard(
-                              orderId: project.orderId,
-                              title: project.namaProyek,
-                              timeAgo: project.calculateDeadline(),
-                              fileType: project.tipeHasil.join(", "),
-                              status: project.statusTask,
-                              showRating: (project.statusTask == "selesai" &&
-                                  project.statusRating == "belum"),
-                              onDownload: project.statusTask == "selesai"
-                                  ? () => print("Download tapped")
-                                  : null,
-                              onChat: project.statusTask == "ditinjau" ||
-                                      project.statusTask == "dikerjakan"
-                                  ? () => print("Chat tapped")
-                                  : null,
-                              onMore: () => print("More options tapped"),
-                              chatCount: (project.statusTask == "dikerjakan")
-                                  ? 3
-                                  : null,
-                              onTap: () {
-                                if (project.statusTask == "ditinjau") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          Clientsurveyorproyekdetailbutuhtinjau(
-                                        id: project.idSurvey,
-                                        type: project.orderId
-                                                .startsWith("RESPOND")
-                                            ? "respond"
-                                            : "survey",
-                                      ),
-                                    ),
-                                  );
-                                } else if (project.statusTask ==
-                                    "kadaluwarsa") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          Clientsurveyorproyekdetailkadaluwarsa(
-                                        id: project.idSurvey,
-                                        type: project.orderId
-                                                .startsWith("RESPOND")
-                                            ? "respond"
-                                            : "survey",
-                                      ),
-                                    ),
-                                  );
-                                } else if (project.statusTask == "pembayaran") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          Clientsurveyorproyekdetailmenunggubayar(
-                                        id: project.idSurvey,
-                                        type: project.orderId
-                                                .startsWith("RESPOND")
-                                            ? "respond"
-                                            : "survey",
-                                      ),
-                                    ),
-                                  );
-                                } else if (project.statusTask == "draft") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          Clientsurveyorproyekdetaildraft(
-                                        id: project.idSurvey,
-                                        type: project.orderId
-                                                .startsWith("RESPOND")
-                                            ? "respond"
-                                            : "survey",
-                                      ),
-                                    ),
-                                  );
-                                } else if (project.statusTask == "merekrut") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          Clientrespondenproyekdetailmerekrut(
-                                        id: project.idSurvey,
-                                        type: project.orderId
-                                                .startsWith("RESPOND")
-                                            ? "respond"
-                                            : "survey",
-                                      ),
-                                    ),
-                                  );
-                                } else if (project.statusTask == "dikerjakan") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          Clientsurveyorproyekdetaildikerjakan(
-                                        id: project.idSurvey,
-                                        type: project.orderId
-                                                .startsWith("RESPOND")
-                                            ? "respond"
-                                            : "survey",
-                                      ),
-                                    ),
-                                  );
-                                } else if (project.statusTask == "selesai") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          Clientsurveyorproyekdetailselesai(
-                                        id: project.idSurvey,
-                                        type: project.orderId
-                                                .startsWith("RESPOND")
-                                            ? "respond"
-                                            : "survey",
-                                      ),
-                                    ),
-                                  );
-                                } else if (project.statusTask == "peringatan") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            Clientsurveyorproyekdetailperingatan(
-                                                id: project.idSurvey,
-                                                type: project.orderId
-                                                        .startsWith("RESPOND")
-                                                    ? "respond"
-                                                    : "survey")),
-                                  );
-                                }
-                              },
-                              onWork: project.statusTask == "merekrut"
-                                  ? () => print("Work tapped")
-                                  : null,
-                            );
-                          },
-                        ),
-                        SizedBox(height: 40),
-                        if (filteredProjects.isEmpty)
-                          Center(
-                            child: Text(
-                              'Tidak ada survei yang ditemukan.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFFA3948D),
-                                fontFamily: 'NunitoSans',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        if (filteredProjects.isNotEmpty)
-                          Center(
-                            child: Container(
-                              width: double.infinity,
-                              child: Center(
-                                child: Text(
-                                  'Anda memiliki total ${filteredProjects.length} proyek',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Color(0xFFA3948D),
-                                    fontFamily: 'NunitoSans',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        SizedBox(height: 40),
-                      ],
-                    ),
+      body: isLoading
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LoadingAnimationWidget.fourRotatingDots(
+                    color: Color(0xFF705D54),
+                    size: 50,
                   ),
-                )),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 32,
-            right: 32,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xFF3A2B24), // Warna background
-                borderRadius: BorderRadius.circular(16), // Membuat button bulat
-                boxShadow: [
-                  BoxShadow(
-                    color:
-                        Color(0x40000000), // Warna shadow dengan opasitas 40%
-                    offset: Offset(0, 4),
-                    blurRadius: 4,
+                  SizedBox(height: 16),
+                  Text(
+                    "Memuat proyek...",
+                    style: TextStyle(
+                      color: Color(0xFF705D54),
+                      fontFamily: 'NunitoSans',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ],
               ),
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor:
-                      Colors.transparent, // Background dibiarkan transparan
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+            )
+          : Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 27),
+                  child: Column(
+                    children: [
+                      Expanded(
+                          child: RefreshIndicator(
+                        onRefresh: _fetchSurveys,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10),
+                              Container(
+                                width: double.infinity,
+                                height: 100,
+                                padding: EdgeInsets.all(0),
+                                child: FutureBuilder<List<Project>>(
+                                  future: apiService != null
+                                      ? apiService!.getSurveys()
+                                      : Future.value([]),
+                                  builder: (context, snapshot) {
+                                    List<Project> surveys = [];
+                                    if (snapshot.hasData &&
+                                        snapshot.data != null) {
+                                      surveys = snapshot.data!;
+                                    }
+                                    return SurveyStatusWidget(surveys: surveys);
+                                  },
+                                ),
+                              ),
+                              ListView.separated(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: filteredProjects.length,
+                                separatorBuilder: (context, index) =>
+                                    SizedBox(height: 12),
+                                itemBuilder: (context, index) {
+                                  Project project = filteredProjects[index];
+                                  return ProjectCard(
+                                    orderId: project.orderId,
+                                    title: project.namaProyek,
+                                    timeAgo: project.calculateDeadline(),
+                                    fileType: project.tipeHasil.join(", "),
+                                    status: project.statusTask,
+                                    showRating:
+                                        (project.statusTask == "selesai" &&
+                                            project.statusRating == "belum"),
+                                    onDownload: project.statusTask == "selesai"
+                                        ? () => print("Download tapped")
+                                        : null,
+                                    onChat: project.statusTask == "ditinjau" ||
+                                            project.statusTask == "dikerjakan"
+                                        ? () => print("Chat tapped")
+                                        : null,
+                                    onMore: () => print("More options tapped"),
+                                    chatCount:
+                                        (project.statusTask == "dikerjakan")
+                                            ? 3
+                                            : null,
+                                    onTap: () {
+                                      if (project.statusTask == "ditinjau") {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Clientsurveyorproyekdetailbutuhtinjau(
+                                              id: project.idSurvey,
+                                              type: project.orderId
+                                                      .startsWith("RESPOND")
+                                                  ? "respond"
+                                                  : "survey",
+                                            ),
+                                          ),
+                                        );
+                                      } else if (project.statusTask ==
+                                          "kadaluwarsa") {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Clientsurveyorproyekdetailkadaluwarsa(
+                                              id: project.idSurvey,
+                                              type: project.orderId
+                                                      .startsWith("RESPOND")
+                                                  ? "respond"
+                                                  : "survey",
+                                            ),
+                                          ),
+                                        );
+                                      } else if (project.statusTask ==
+                                          "pembayaran") {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Clientsurveyorproyekdetailmenunggubayar(
+                                              id: project.idSurvey,
+                                              type: project.orderId
+                                                      .startsWith("RESPOND")
+                                                  ? "respond"
+                                                  : "survey",
+                                            ),
+                                          ),
+                                        );
+                                      } else if (project.statusTask ==
+                                          "draft") {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Clientsurveyorproyekdetaildraft(
+                                              id: project.idSurvey,
+                                              type: project.orderId
+                                                      .startsWith("RESPOND")
+                                                  ? "respond"
+                                                  : "survey",
+                                            ),
+                                          ),
+                                        );
+                                      } else if (project.statusTask ==
+                                          "merekrut") {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Clientrespondenproyekdetailmerekrut(
+                                              id: project.idSurvey,
+                                              type: project.orderId
+                                                      .startsWith("RESPOND")
+                                                  ? "respond"
+                                                  : "survey",
+                                            ),
+                                          ),
+                                        );
+                                      } else if (project.statusTask ==
+                                          "dikerjakan") {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Clientsurveyorproyekdetaildikerjakan(
+                                              id: project.idSurvey,
+                                              type: project.orderId
+                                                      .startsWith("RESPOND")
+                                                  ? "respond"
+                                                  : "survey",
+                                            ),
+                                          ),
+                                        );
+                                      } else if (project.statusTask ==
+                                          "selesai") {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Clientsurveyorproyekdetailselesai(
+                                              id: project.idSurvey,
+                                              type: project.orderId
+                                                      .startsWith("RESPOND")
+                                                  ? "respond"
+                                                  : "survey",
+                                            ),
+                                          ),
+                                        );
+                                      } else if (project.statusTask ==
+                                          "peringatan") {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Clientsurveyorproyekdetailperingatan(
+                                                      id: project.idSurvey,
+                                                      type: project.orderId
+                                                              .startsWith(
+                                                                  "RESPOND")
+                                                          ? "respond"
+                                                          : "survey")),
+                                        );
+                                      }
+                                    },
+                                    onWork: project.statusTask == "merekrut"
+                                        ? () => print("Work tapped")
+                                        : null,
+                                  );
+                                },
+                              ),
+                              SizedBox(height: 40),
+                              if (filteredProjects.isEmpty)
+                                Center(
+                                  child: Text(
+                                    'Tidak ada survei yang ditemukan.',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFFA3948D),
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                              if (filteredProjects.isNotEmpty)
+                                Center(
+                                  child: Container(
+                                    width: double.infinity,
+                                    child: Center(
+                                      child: Text(
+                                        'Anda memiliki total ${filteredProjects.length} proyek',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Color(0xFFA3948D),
+                                          fontFamily: 'NunitoSans',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              SizedBox(height: 40),
+                            ],
+                          ),
+                        ),
+                      )),
+                    ],
                   ),
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChooseRecruitmentScreen(),
+                Positioned(
+                  bottom: 32,
+                  right: 32,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFF3A2B24), // Warna background
+                      borderRadius:
+                          BorderRadius.circular(16), // Membuat button bulat
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(
+                              0x40000000), // Warna shadow dengan opasitas 40%
+                          offset: Offset(0, 4),
+                          blurRadius: 4,
+                        ),
+                      ],
                     ),
-                  );
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.add,
-                      color: Colors.white, // Warna ikon
-                    ),
-                    SizedBox(width: 4), // Gap antara ikon dan teks
-                    Text(
-                      "Buat Baru",
-                      style: TextStyle(
-                        fontFamily: 'NunitoSans',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        decoration:
-                            TextDecoration.none, // Tidak ada dekorasi tambahan
-                        color: Color(0xFFffffff),
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors
+                            .transparent, // Background dibiarkan transparan
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChooseRecruitmentScreen(),
+                          ),
+                        );
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.add,
+                            color: Colors.white, // Warna ikon
+                          ),
+                          SizedBox(width: 4), // Gap antara ikon dan teks
+                          Text(
+                            "Buat Baru",
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              decoration: TextDecoration
+                                  .none, // Tidak ada dekorasi tambahan
+                              color: Color(0xFFffffff),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: Container(
-        color: Color(0xffD7CCC8),
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-        child: GestureDetector(
-          onTap: () {
-            print("Footer link clicked!");
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 80,
-                height: 60,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/images/proyek.png',
-                      width: 24,
-                      height: 24,
-                      fit: BoxFit.contain,
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      'Proyek',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'NunitoSans',
-                        color: Color(0xFF705D54),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ClientChat()),
-                  );
-                },
-                child: Container(
-                  width: 80,
-                  height: 60,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/chat3.png',
-                        width: 24,
-                        height: 24,
-                        fit: BoxFit.contain,
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        'Chat',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xFFC4B8B1),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ClientSaya(),
-                    ),
-                  );
-                },
-                child: Container(
-                  width: 80,
-                  height: 60,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/saya.png',
-                        width: 24,
-                        height: 24,
-                        fit: BoxFit.contain,
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        'Saya',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xFFB8ADA5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 

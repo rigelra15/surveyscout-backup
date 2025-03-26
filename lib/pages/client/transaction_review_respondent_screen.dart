@@ -4,14 +4,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/icon_park_solid.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
-import 'package:get/get.dart';
-import 'package:surveyscout/routes/app_routes.dart';
+import 'package:surveyscout/components/loading_overlay.dart';
+import 'package:surveyscout/pages/client/payment_gateway_screen.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class TransactionReviewRespondentScreen extends StatefulWidget {
-  String? idDraft;
-  int? commission;
+  final String idDraft;
+  final String projectTitle;
+  final int commission;
+  final int respondentAmount;
 
-  TransactionReviewRespondentScreen({this.idDraft, this.commission});
+  TransactionReviewRespondentScreen({
+    Key? key,
+    required this.idDraft,
+    required this.projectTitle,
+    required this.commission,
+    required this.respondentAmount,
+  });
 
   @override
   _TransactionReviewRespondentScreenState createState() =>
@@ -20,6 +30,12 @@ class TransactionReviewRespondentScreen extends StatefulWidget {
 
 class _TransactionReviewRespondentScreenState
     extends State<TransactionReviewRespondentScreen> {
+  String formatRupiah(dynamic amount) {
+    if (amount == null) return "Rp 0";
+    final number = int.tryParse(amount.toString()) ?? 0;
+    return "Rp ${number.toString().replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (match) => '${match[1]}.')}";
+  }
+
   String _projectTitle = "";
   int _projectCommissionPerPerson = 0;
   int _projectRespondentAmount = 0;
@@ -30,7 +46,6 @@ class _TransactionReviewRespondentScreenState
   void initState() {
     super.initState();
 
-    // Retrieve stored values using GetStorage()
     _projectTitle =
         GetStorage().read('project_title') ?? "Judul Proyek Tidak Ditemukan";
     _projectCommissionPerPerson =
@@ -38,9 +53,8 @@ class _TransactionReviewRespondentScreenState
     _projectRespondentAmount =
         GetStorage().read('project_respondent_amount') ?? 0;
 
-    // Perform calculations inside initState()
     _totalCommission = _projectCommissionPerPerson * _projectRespondentAmount;
-    _totalPayment = _totalCommission + 5000; // Biaya penanganan 5000
+    _totalPayment = _totalCommission + 5000;
 
     //Print debug all numbers
     print("projectitle: $_projectTitle");
@@ -73,6 +87,8 @@ class _TransactionReviewRespondentScreenState
     );
   }
 
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,186 +116,195 @@ class _TransactionReviewRespondentScreenState
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView(
               children: [
-                // Progress Bar
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 8,
+                              decoration: ShapeDecoration(
+                                color: Color(0xFF826754),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Container(
+                              height: 8,
+                              decoration: ShapeDecoration(
+                                color: Color(0xFF826754),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Container(
+                              height: 8,
+                              decoration: ShapeDecoration(
+                                color: Color(0xFF826754),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Container(
+                              height: 8,
+                              decoration: ShapeDecoration(
+                                color: Color(0xFF826754),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(
+                      'Langkah 4',
+                      style: TextStyle(
+                        color: Color(0xFF705D54),
+                        fontSize: 24,
+                        fontFamily: 'Source Sans Pro',
+                        fontWeight: FontWeight.w700,
+                        height: 1,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Tinjau dan konfirmasi transaksi untuk proyek "${widget.projectTitle}"',
+                      style: GoogleFonts.nunitoSans(
+                        color: Color(0xFFA3948D),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24),
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF0E8E4),
+                    border: Border(
+                      top: BorderSide(color: Color(0xFF826754), width: 1),
+                      bottom: BorderSide(color: Color(0xFF826754), width: 1),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        offset: Offset(0, 4),
+                        blurRadius: 4,
+                      ),
+                    ],
+                  ),
+                  child: Column(
                     children: [
-                      Expanded(
-                        child: Container(
-                          height: 8,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF826754),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
+                      _buildReceiptRow(
+                          "Komisi (${widget.respondentAmount} responden)",
+                          formatRupiah(widget.commission)),
+                      _buildReceiptRow("Biaya Penanganan", "Rp 5.000"),
+                      _buildReceiptRow("Biaya Administrasi Bank", "Rp 0"),
+                      Divider(color: Color(0xFF826754), thickness: 1),
+                      _buildReceiptRow("Total Pembayaran",
+                          formatRupiah(widget.commission + 5000),
+                          isBold: true),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 16),
+                Container(
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFA3948D),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Iconify(IconParkSolid.protect,
+                            color: Colors.white, size: 24),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 12),
                       Expanded(
-                        child: Container(
-                          height: 8,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF826754),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Garansi Uang Kembali 100%",
+                              style: GoogleFonts.nunitoSans(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Container(
-                          height: 8,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF826754),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                            Text(
+                              "Pembayaran Anda akan dikembalikan apabila tidak ada kandidat yang mendaftar setelah 7 hari pengunggahan",
+                              style: GoogleFonts.nunitoSans(
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                // Title "Langkah 3"
+                SizedBox(height: 16),
                 Text(
-                  'Langkah 3',
-                  style: TextStyle(
+                  "Pembayaran akan diproses dengan",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.nunitoSans(
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
                     color: Color(0xFF705D54),
-                    fontSize: 24,
-                    fontFamily: 'Source Sans Pro',
-                    fontWeight: FontWeight.w700,
-                    height: 1,
                   ),
                 ),
-
                 SizedBox(height: 8),
-                Text(
-                  'Tinjau dan konfirmasi transaksi untuk proyek “Studi Kepuasan Penggunaan Produk Kecantikan”',
-                  style: GoogleFonts.nunitoSans(
-                    color: Color(0xFFA3948D),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
+                Center(
+                  child: Image.asset(
+                    "assets/images/qrislogo.png",
+                    width: 167,
+                    height: 27,
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 24), // Add spacing before receipt section
-            Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Color(0xFFF0E8E4),
-                border: Border(
-                  top: BorderSide(color: Color(0xFF826754), width: 1),
-                  bottom: BorderSide(color: Color(0xFF826754), width: 1),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
-                    offset: Offset(0, 4),
-                    blurRadius: 4,
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  _buildReceiptRow(
-                      "Komisi ($_projectRespondentAmount responden)",
-                      "Rp $_totalCommission"),
-                  _buildReceiptRow("Biaya Penanganan", "Rp 5.000"),
-                  _buildReceiptRow("Biaya Administrasi Bank", "Rp 0"),
-                  Divider(color: Color(0xFF826754), thickness: 1),
-                  _buildReceiptRow("Total Pembayaran", "Rp $_totalPayment",
-                      isBold: true),
-                ],
-              ),
+          ),
+          if (_isLoading)
+            const LoadingOverlay(
+              message: "Sedang memproses...",
+              showLongLoadingMessage: false,
             ),
-            // Garansi Uang Kembali Panel
-
-            SizedBox(height: 16),
-            Container(
-              padding: EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Color(0xFFA3948D), // Background color
-                borderRadius: BorderRadius.circular(8), // Rounded corners
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Iconify(IconParkSolid.protect,
-                        color: Colors.white, size: 24), // Icon
-                  ),
-                  SizedBox(width: 12), // Spacing
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Garansi Uang Kembali 100%",
-                          style: GoogleFonts.nunitoSans(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          "Pembayaran Anda akan dikembalikan apabila tidak ada kandidat yang mendaftar setelah 7 hari pengunggahan",
-                          style: GoogleFonts.nunitoSans(
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 16), // Spacing below panel
-
-            // Pembayaran akan diproses dengan
-            Text(
-              "Pembayaran akan diproses dengan",
-              textAlign: TextAlign.center,
-              style: GoogleFonts.nunitoSans(
-                fontSize: 12,
-                fontWeight: FontWeight.normal,
-                color: Color(0xFF705D54),
-              ),
-            ),
-
-            SizedBox(height: 8), // Spacing
-
-            // Payment Processing Image (Replace with actual asset or URL)
-            Center(
-              child: Image.asset(
-                "assets/images/qrislogo.png",
-                width: 167,
-                height: 27,
-              ),
-            ),
-          ],
-        ),
+        ],
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        color: Color(0xFF826754), // Footer background color
+        color: Color(0xFF826754),
         child: Row(
           children: [
-            // Kembali Button (Outlined) - Takes Half Width
             Expanded(
               child: OutlinedButton(
                 onPressed: () {
@@ -290,32 +315,63 @@ class _TransactionReviewRespondentScreenState
                   foregroundColor: Color(0xFFEDE7E2),
                   padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(8), // 8dp rounded rectangle
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 child: Text("Kembali",
                     style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold)),
               ),
             ),
-
-            SizedBox(width: 8), // Space between buttons
-
-            // Lanjut Button (Filled) - Takes Half Width
+            SizedBox(width: 8),
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: () => Get.toNamed(
-                    AppRoutes.paymentGateway), // Disable if incomplete
-                icon: Icon(Icons.arrow_forward, size: 20),
+                onPressed: () async {
+                  setState(() => _isLoading = true);
+                  final response = await http.post(
+                    Uri.parse(
+                        'https://surveyscoutbe.onrender.com/api/v1/responds/createRespondPayment/${widget.idDraft}'),
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                  );
+                  setState(() => _isLoading = false);
+
+                  if (response.statusCode == 201) {
+                    final data = jsonDecode(response.body);
+                    print(data);
+                    final snapUrl = data['snap_url'];
+                    final orderId = data['order_id'];
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PaymentGatewayScreen(
+                          snapUrl: snapUrl,
+                          orderId: orderId,
+                          idDraft: widget.idDraft,
+                        ),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                            "Terjadi kesalahan saat membuat transaksi. Silakan coba lagi."),
+                        backgroundColor: Color(0xFF826754),
+                        behavior: SnackBarBehavior.floating,
+                        margin: EdgeInsets.all(16),
+                      ),
+                    );
+                  }
+                },
+                icon: Icon(Icons.arrow_forward,
+                    size: 20, color: Color(0xFF826754)),
                 label: Text("Lanjut",
                     style: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold)),
                 style: ElevatedButton.styleFrom(
-                  // backgroundColor: _isFormComplete() ? Color(0xFFEDE7E2) : Color(0xFFB5A89A), // Disabled color if incomplete
-                  foregroundColor: Color(0xFF826754), // Text/icon color
+                  foregroundColor: Color(0xFF826754),
                   padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(8), // 8dp rounded rectangle
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               ),

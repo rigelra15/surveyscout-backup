@@ -1,5 +1,3 @@
-// ignore_for_file: unused_element
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:surveyscout/pages/client/clientsignup.dart';
@@ -8,7 +6,7 @@ import 'package:surveyscout/pages/surveyor/surveyorprojects.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'dart:async';
 
-import 'package:surveyscout/services/projects/api_projectdetail.dart'; // Import untuk Future.delayed
+import 'package:surveyscout/services/projects/api_projectdetail.dart';
 
 class Clientsurveyorproyekdetaildikerjakan extends StatefulWidget {
   final String id;
@@ -84,21 +82,19 @@ class _Clientsurveyorproyekdetaildikerjakan
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          backgroundColor: Color(0xFFF2EEE9), // Warna latar belakang
+          backgroundColor: Color(0xFFF2EEE9),
           appBar: PreferredSize(
-            preferredSize:
-                Size.fromHeight(60), // Tinggi total AppBar (50 + 10 padding)
+            preferredSize: Size.fromHeight(60),
             child: Container(
-              padding: EdgeInsets.only(top: 20), // Padding atas 10
+              padding: EdgeInsets.only(top: 20),
               color: (widget.type == "survey")
                   ? Color(0xFFD7CCC8)
                   : Color(0xFF826754),
               child: AppBar(
-                backgroundColor: Colors
-                    .transparent, // Transparan agar tidak menimpa warna Container
+                backgroundColor: Colors.transparent,
                 toolbarHeight: 50,
                 centerTitle: true,
-                elevation: 0, // Hilangkan shadow agar lebih rapi
+                elevation: 0,
                 leading: IconButton(
                   icon: Icon(
                     Icons.arrow_back,
@@ -129,12 +125,11 @@ class _Clientsurveyorproyekdetaildikerjakan
           body: Stack(
             children: [
               Padding(
-                padding: EdgeInsets.all(27), // Padding di semua sisi
+                padding: EdgeInsets.all(27),
                 child: SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start, // Sejajar ke kiri
-                    mainAxisAlignment: MainAxisAlignment.start, // Tetap di atas
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         projectDetail.namaProyek,
@@ -145,28 +140,23 @@ class _Clientsurveyorproyekdetaildikerjakan
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      SizedBox(height: 10), // Spasi antar elemen
+                      SizedBox(height: 10),
                       Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8), // Padding dalam container
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                         decoration: BoxDecoration(
-                          color: Color(
-                              0xFFFF9800), // Warna latar belakang container
-                          borderRadius: BorderRadius.circular(
-                              16), // Membuat sudut melengkung
+                          color: Color(0xFFFF9800),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         child: Row(
-                          mainAxisSize: MainAxisSize
-                              .min, // Sesuaikan ukuran Container dengan konten
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(
-                              Icons
-                                  .timelapse, // Ganti dengan ikon sesuai kebutuhan
+                              Icons.timelapse,
                               color: Colors.white,
-                              size: 14, // Ukuran ikon sesuai teks
+                              size: 14,
                             ),
-                            SizedBox(width: 6), // Jarak antara ikon dan teks
+                            SizedBox(width: 6),
                             Text(
                               'Dikerjakan',
                               style: TextStyle(
@@ -192,24 +182,20 @@ class _Clientsurveyorproyekdetaildikerjakan
                       SizedBox(height: 10),
                       Container(
                         width: double.infinity,
-                        padding: EdgeInsets.all(8), // Padding dalam container
+                        padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: Color(
-                              0xFFA3948D), // Warna latar belakang container
-                          borderRadius: BorderRadius.circular(
-                              8), // Membuat sudut melengkung
+                          color: Color(0xFFA3948D),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         child: Row(
-                          mainAxisSize: MainAxisSize
-                              .min, // Sesuaikan ukuran Container dengan konten
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(
-                              Icons
-                                  .punch_clock_rounded, // Ganti dengan ikon sesuai kebutuhan
+                              Icons.punch_clock_rounded,
                               color: Colors.white,
-                              size: 14, // Ukuran ikon sesuai teks
+                              size: 14,
                             ),
-                            SizedBox(width: 6), // Jarak antara ikon dan teks
+                            SizedBox(width: 6),
                             Expanded(
                               child: Container(
                                 child: Column(
@@ -257,16 +243,12 @@ class _Clientsurveyorproyekdetaildikerjakan
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: Row(
-                                mainAxisSize: MainAxisSize
-                                    .max, // Memastikan Row mengikuti lebar Container
+                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Icon(Icons.location_on,
-                                      color: Color(0xFFA3948D),
-                                      size: 20), // Ikon di kiri
-                                  SizedBox(
-                                      width: 8), // Jarak antara ikon dan teks
+                                      color: Color(0xFFA3948D), size: 20),
+                                  SizedBox(width: 8),
                                   Flexible(
-                                    // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -310,16 +292,12 @@ class _Clientsurveyorproyekdetaildikerjakan
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: Row(
-                                mainAxisSize: MainAxisSize
-                                    .max, // Memastikan Row mengikuti lebar Container
+                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Icon(Icons.money,
-                                      color: Color(0xFFA3948D),
-                                      size: 20), // Ikon di kiri
-                                  SizedBox(
-                                      width: 8), // Jarak antara ikon dan teks
+                                      color: Color(0xFFA3948D), size: 20),
+                                  SizedBox(width: 8),
                                   Flexible(
-                                    // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -358,8 +336,8 @@ class _Clientsurveyorproyekdetaildikerjakan
                       ),
                       SizedBox(height: 10),
                       Container(
-                        width: double.infinity, // Lebar penuh
-                        height: 1, // Tinggi 1
+                        width: double.infinity,
+                        height: 1,
                         color: Color(0xFFB0B0B0),
                       ),
                       SizedBox(height: 10),
@@ -371,8 +349,7 @@ class _Clientsurveyorproyekdetaildikerjakan
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: Column(
-                          mainAxisSize: MainAxisSize
-                              .max, // Memastikan Row mengikuti lebar Container
+                          mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -391,11 +368,8 @@ class _Clientsurveyorproyekdetaildikerjakan
                                       ),
                                     ),
                                   ),
-
-                                  SizedBox(
-                                      width: 8), // Jarak antara ikon dan teks
+                                  SizedBox(width: 8),
                                   Flexible(
-                                    // Ganti Expanded dengan Flexible untuk menghindari unbounded width issue
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -581,7 +555,7 @@ class _Clientsurveyorproyekdetaildikerjakan
                           children: [
                             Text(
                               'ID #${widget.id}',
-                              textAlign: TextAlign.center, // Rata tengah
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontFamily: "NunitoSans",
@@ -755,32 +729,24 @@ class _Clientsurveyorproyekdetaildikerjakan
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
       ),
-      isScrollControlled:
-          true, // Allow bottom sheet to adjust based on its content
+      isScrollControlled: true,
       builder: (BuildContext context) {
         return ClipRRect(
-          borderRadius: BorderRadius.vertical(
-              top: Radius.circular(30)), // Apply rounded corners to the content
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
           child: Container(
-            width: MediaQuery.of(context)
-                .size
-                .width, // Make the width fill the screen
+            width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(24),
             color: Color(0xFFF1E9E5),
             child: Column(
-              mainAxisSize: MainAxisSize
-                  .min, // Makes the bottom sheet take only necessary height
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Divider(
-                  thickness: 3, // Adjust thickness to make the line thicker
-                  indent:
-                      150, // Make the line shorter by adding space from the start
-                  endIndent:
-                      150, // Make the line shorter by adding space from the end
-                  color: Color(
-                      0xFFB0B0B0), // Optional: set a color for the divider
+                  thickness: 3,
+                  indent: 150,
+                  endIndent: 150,
+                  color: Color(0xFFB0B0B0),
                 ),
-                SizedBox(height: 10), // Spasi antara garis dan tulisan
+                SizedBox(height: 10),
                 Text(
                   "Daftar Sebagai",
                   style: TextStyle(
@@ -791,10 +757,8 @@ class _Clientsurveyorproyekdetaildikerjakan
                   ),
                 ),
                 SizedBox(height: 20),
-                // Kontainer pertama
                 GestureDetector(
                   onTap: () {
-                    // Navigasi ke halaman clientsignup2.dart
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => ClientSignUp()),
@@ -818,22 +782,20 @@ class _Clientsurveyorproyekdetaildikerjakan
                           Text(
                             "Klien",
                             style: TextStyle(
-                              fontFamily:
-                                  'NunitoSans', // Gunakan font yang sudah di-load
+                              fontFamily: 'NunitoSans',
                               fontSize: 16,
-                              fontWeight: FontWeight.w700, // Weight 700
-                              color: Color(0xFF705D54), // Warna #705D54
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF705D54),
                             ),
                           ),
-                          SizedBox(height: 2), // Spasi antara dua teks
+                          SizedBox(height: 2),
                           Text(
                             "Rekrut surveyor atau responden untuk membantu observasi Anda berjalan lancar dan efisien.",
                             style: TextStyle(
-                              fontFamily:
-                                  'NunitoSans', // Gunakan font yang sudah di-load
+                              fontFamily: 'NunitoSans',
                               fontSize: 16,
-                              fontWeight: FontWeight.w400, // Weight 400
-                              color: Color(0xFF3A2B24), // Warna #3A2B24
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF3A2B24),
                             ),
                           ),
                         ],
@@ -842,10 +804,8 @@ class _Clientsurveyorproyekdetaildikerjakan
                   ),
                 ),
                 SizedBox(height: 10),
-                // Kontainer kedua
                 GestureDetector(
                   onTap: () {
-                    // Navigasi ke halaman SurveyorProjects
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -853,11 +813,10 @@ class _Clientsurveyorproyekdetaildikerjakan
                     );
                   },
                   child: Container(
-                    padding:
-                        const EdgeInsets.all(16), // Padding untuk kontainer
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: const Color(0xFFD7CCC8), // Warna latar belakang
+                      color: const Color(0xFFD7CCC8),
                     ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -867,8 +826,7 @@ class _Clientsurveyorproyekdetaildikerjakan
                           width: 50,
                           height: 50,
                         ),
-                        const SizedBox(
-                            width: 12), // Spasi antara gambar dan teks
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -878,20 +836,17 @@ class _Clientsurveyorproyekdetaildikerjakan
                                 style: TextStyle(
                                   fontFamily: 'NunitoSans',
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w700, // Font tebal
+                                  fontWeight: FontWeight.w700,
                                   color: Color(0xFF705D54),
                                 ),
                               ),
-                              const SizedBox(
-                                  height:
-                                      4), // Spasi antara judul dan deskripsi
+                              const SizedBox(height: 4),
                               const Text(
                                 "Hasilkan uang dengan mencari data dengan wawancara, observasi, dan/atau lainnya hingga merekapnya.",
                                 style: TextStyle(
                                   fontFamily: 'NunitoSans',
-                                  fontSize:
-                                      14, // Ukuran font deskripsi lebih kecil
-                                  fontWeight: FontWeight.w400, // Font normal
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
                                   color: Color(0xFF3A2B24),
                                 ),
                               ),
@@ -905,7 +860,6 @@ class _Clientsurveyorproyekdetaildikerjakan
                 SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
-                    // Navigasi ke halaman SurveyorProjects
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -930,24 +884,22 @@ class _Clientsurveyorproyekdetaildikerjakan
                           Text(
                             "Responden",
                             style: TextStyle(
-                              fontFamily:
-                                  'NunitoSans', // Gunakan font yang sudah di-load
+                              fontFamily: 'NunitoSans',
                               fontSize: 16,
-                              fontWeight: FontWeight.w700, // Weight 400
-                              color: Color(0xFF705D54), // Warna #705D54
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF705D54),
                             ),
                           ),
-                          SizedBox(height: 2), // Spasi antara dua teks
+                          SizedBox(height: 2),
                           Text(
                             "Hasilkan uang dengan menjadi narasumber. Anda akan mengisi survei, diwawancarai, dan lainnya.",
                             style: TextStyle(
-                              fontFamily:
-                                  'NunitoSans', // Gunakan font yang sudah di-load
+                              fontFamily: 'NunitoSans',
                               fontSize: 16,
-                              fontWeight: FontWeight.w400, // Weight 400
-                              color: Color(0xFF3A2B24), // Warna #705D54
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF3A2B24),
                             ),
-                          ), // Teks kedua
+                          ),
                         ],
                       ),
                     ),
