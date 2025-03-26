@@ -5,14 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:surveyscout/pages/responden/respondenprojects.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:surveyscout/pages/responden/respondenpages.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:iconify_flutter/icons/ant_design.dart';
 import 'package:iconify_flutter/icons/maki.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:iconify_flutter/icons/ph.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -176,15 +174,15 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                           setState(() {
                             filteredOptions = options
                                 .where((option) => option
-                                .toLowerCase()
-                                .contains(value.toLowerCase()))
+                                    .toLowerCase()
+                                    .contains(value.toLowerCase()))
                                 .toList();
                           });
                         },
                         decoration: InputDecoration(
                           hintText: "Cari...",
                           prefixIcon:
-                          Icon(Icons.search, color: Color(0xFF705D54)),
+                              Icon(Icons.search, color: Color(0xFF705D54)),
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -218,7 +216,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                           child: Container(
                             decoration: BoxDecoration(
                               color:
-                              isSelected ? Color(0xFF826754) : Colors.white,
+                                  isSelected ? Color(0xFF826754) : Colors.white,
                               border: Border.all(color: Color(0xFF826754)),
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -264,7 +262,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                       child: Text(
                         "Simpan",
                         style:
-                        GoogleFonts.nunitoSans(fontWeight: FontWeight.bold),
+                            GoogleFonts.nunitoSans(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -319,7 +317,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                     itemBuilder: (context, index) {
                       final hobby = _hobbyList[index];
                       final isSelected =
-                      _selectedHobbies.contains(hobby["name"]);
+                          _selectedHobbies.contains(hobby["name"]);
 
                       return GestureDetector(
                         onTap: () {
@@ -334,10 +332,10 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                         child: Container(
                           decoration: BoxDecoration(
                             color:
-                            isSelected ? Color(0xFF826754) : Colors.white,
+                                isSelected ? Color(0xFF826754) : Colors.white,
                             borderRadius: BorderRadius.circular(8),
                             border:
-                            Border.all(color: Color(0xFF826754), width: 1),
+                                Border.all(color: Color(0xFF826754), width: 1),
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -480,9 +478,6 @@ class _RespondenSignUp extends State<RespondenSignUp> {
     );
   }
 
-
-
-
   bool _isObscured = true;
   bool _isLoading = false;
   bool _isButtonEnabled = false;
@@ -587,7 +582,6 @@ class _RespondenSignUp extends State<RespondenSignUp> {
         "pin_akses": _pinAksesController.text,
       };
 
-
       final response = await http.post(
         Uri.parse(
             "https://surveyscoutbe.onrender.com/api/v1/respondents/signInResponden"),
@@ -615,7 +609,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => RespondenProjects()),
+          MaterialPageRoute(builder: (context) => RespondenPages()),
         );
       } else {
         print("Registrasi gagal! Status Code: ${response.statusCode}");
@@ -698,10 +692,11 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 12), // adjust as needed for alignment
-                    child: Image.asset("assets/images/jeniskelamin.png", width: 30, height: 30),
+                    padding: const EdgeInsets.only(
+                        top: 12), // adjust as needed for alignment
+                    child: Image.asset("assets/images/jeniskelamin.png",
+                        width: 30, height: 30),
                   ),
-
                   const SizedBox(width: 8),
                   Expanded(
                     child: Column(
@@ -727,7 +722,8 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                                   _validateForm();
                                 });
                               },
-                              fillColor: MaterialStateProperty.all(Color(0xFF705D54)),
+                              fillColor:
+                                  MaterialStateProperty.all(Color(0xFF705D54)),
                             ),
                             const Text(
                               'Pria',
@@ -742,7 +738,8 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                                   _validateForm();
                                 });
                               },
-                              fillColor: MaterialStateProperty.all(Color(0xFF705D54)),
+                              fillColor:
+                                  MaterialStateProperty.all(Color(0xFF705D54)),
                             ),
                             const Text(
                               'Wanita',
@@ -758,7 +755,8 @@ class _RespondenSignUp extends State<RespondenSignUp> {
               _buildDivider(),
               Row(
                 children: [
-                  Image.asset("assets/images/tanggallahir.png", width: 30, height: 30),
+                  Image.asset("assets/images/tanggallahir.png",
+                      width: 30, height: 30),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Column(
@@ -801,7 +799,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                             if (picked != null) {
                               setState(() {
                                 _tanggalLahirController.text =
-                                "${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}";
+                                    "${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}";
                                 _validateForm();
                               });
                             }
@@ -815,7 +813,8 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.w400,
                             ),
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 0, vertical: 10),
                             isDense: true,
                             border: InputBorder.none,
                           ),
@@ -1015,7 +1014,9 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                     controller: controller,
                     onChanged: (value) => _validateForm(),
                     inputFormatters: digitsOnly
-                        ? [FilteringTextInputFormatter.digitsOnly] // ✅ only if explicitly requested
+                        ? [
+                            FilteringTextInputFormatter.digitsOnly
+                          ] // ✅ only if explicitly requested
                         : [],
                     keyboardType: keyboardType,
                     decoration: InputDecoration(
@@ -1079,7 +1080,9 @@ class _RespondenSignUp extends State<RespondenSignUp> {
                   TextField(
                     controller: controller,
                     inputFormatters: keyboardType == TextInputType.number
-                        ? [FilteringTextInputFormatter.digitsOnly] // 🚫 affects too many fields
+                        ? [
+                            FilteringTextInputFormatter.digitsOnly
+                          ] // 🚫 affects too many fields
                         : [],
                     onChanged: (value) => _validateForm(),
                     obscureText: _isObscured,

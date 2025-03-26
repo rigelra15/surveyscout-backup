@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/icon_park_outline.dart';
 import 'package:iconify_flutter/icons/icon_park_solid.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
-import 'package:get/get.dart';
 import 'package:surveyscout/pages/client/payment_gateway_screen.dart';
-import 'package:surveyscout/routes/app_routes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

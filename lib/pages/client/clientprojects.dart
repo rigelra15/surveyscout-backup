@@ -5,8 +5,6 @@ import 'package:surveyscout/components/custom_choose_sort.dart';
 import 'package:surveyscout/components/project_card.dart';
 import 'package:surveyscout/components/survey_status.dart';
 import 'package:surveyscout/pages/client/choose_recruitment_screen.dart';
-import 'package:surveyscout/pages/client/clientchat.dart';
-import 'package:surveyscout/pages/client/clientsaya.dart';
 import 'package:surveyscout/pages/clientrespondenproyekdetailmerekrut.dart';
 import 'package:surveyscout/pages/clientsurveyorproyekdetailbutuhtinjau.dart';
 import 'package:surveyscout/pages/clientsurveyorproyekdetaildikerjakan.dart';

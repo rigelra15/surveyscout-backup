@@ -7,8 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/custom_confirmation_dialog.dart';
 import 'package:surveyscout/pages/welcome.dart';
 import 'package:surveyscout/services/profile/api_clientprofile.dart';
-import 'clientprojects.dart';
-import 'clientchat.dart';
 
 class ClientSaya extends StatefulWidget {
   @override

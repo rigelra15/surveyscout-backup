@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconify_flutter/icons/ant_design.dart';
 import 'package:iconify_flutter/icons/dashicons.dart';
-import 'package:iconify_flutter/icons/mingcute.dart';
-import 'package:iconify_flutter/icons/tabler.dart';
 import 'package:iconify_flutter_plus/icons/material_symbols.dart';
 import 'package:iconify_flutter_plus/icons/ci.dart';
 import 'package:iconify_flutter_plus/icons/mdi.dart';
@@ -11,9 +8,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:surveyscout/services/projects/api_surveyorprojects.dart';
-import 'package:surveyscout/pages/responden/respondenprojects.dart';
-import 'package:surveyscout/pages/client/clientsignup.dart';
-import 'package:surveyscout/pages/surveyor/surveyorprojects.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Surveyorproyekdetailmengerjakan extends StatefulWidget {
@@ -884,6 +878,17 @@ class _SurveyorproyekdetailmengerjakanState
                                 horizontal: 27, vertical: 60),
                             child: Column(
                               children: [
+                                SvgPicture.string(
+                                    '''<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="#a3948d" d="M12.916 3.244a3 3 0 0 0-1.832 0L4.55 5.34a1 1 0 0 0-.556.45L1.757 9.654a1 1 0 0 0 .56 1.453l7.14 2.292a1 1 0 0 0 1.171-.451l.372-.642v2.317a1 1 0 0 1-1.306.952l-5.838-1.873v3.278a2 2 0 0 0 1.388 1.905l5.84 1.872a3 3 0 0 0 1.832 0l5.84-1.872a2 2 0 0 0 1.389-1.905l-.002-3.278l-5.837 1.873A1 1 0 0 1 13 14.622v-2.317l.371.642a1 1 0 0 0 1.171.45l7.141-2.29a1 1 0 0 0 .56-1.454L20.006 5.79a1 1 0 0 0-.556-.45zm2.953 3.048L12 7.533L8.13 6.292l3.564-1.144a1 1 0 0 1 .611 0z"/></g></svg>''',
+                                    width: 57.0,
+                                    height: 57.0,
+                                    placeholderBuilder:
+                                        (BuildContext context) => Container(
+                                              padding:
+                                                  const EdgeInsets.all(30.0),
+                                              child:
+                                                  const CircularProgressIndicator(),
+                                            )),
                                 Text(
                                   'Belum ada luaran',
                                   style: TextStyle(
