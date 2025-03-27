@@ -3,9 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/custom_confirmation_dialog.dart';
 import 'package:surveyscout/pages/welcome.dart';
 import 'package:surveyscout/services/profile/api_respondenprofile.dart';
-import 'respondenmyprojects.dart';
-import 'respondenprojects.dart';
-import 'respondenchat.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -887,113 +884,6 @@ class _RespondenAccount extends State<RespondenAccount> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDropdown(String hint, List<String> options,
-      {required String selectedValue,
-      required ValueChanged<String?> onChanged,
-      bool isWide = false}) {
-    return Container(
-      width: isWide ? 300 : 200,
-      height: 40,
-      child: DropdownButtonFormField<String>(
-        isDense: true,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(
-              color: Color(0xFF705D54),
-              width: 1,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(
-              color: Color(0xFF705D54),
-              width: 2.0,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(
-              color: Color(0xFF705D54),
-              width: 1.0,
-            ),
-          ),
-        ),
-        hint: Text(
-          hint,
-          style: TextStyle(
-            fontFamily: 'NunitoSans',
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            height: 21.82 / 16,
-            decoration: TextDecoration.none,
-            color: Color(0xFF705D54),
-          ),
-        ),
-        value: selectedValue,
-        items: options.map((String option) {
-          return DropdownMenuItem<String>(
-            value: option,
-            child: Text(
-              option,
-              style: TextStyle(
-                fontFamily: 'NunitoSans',
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                height: 21.82 / 16,
-                decoration: TextDecoration.none,
-                color: Color(0xFF705D54),
-              ),
-            ),
-          );
-        }).toList(),
-        onChanged: onChanged,
-        icon: Icon(Icons.keyboard_arrow_down, color: Color(0xFF705D54)),
-      ),
-    );
-  }
-
-  Widget _buildIconBox() {
-    return GestureDetector(
-      child: Container(
-        width: 40,
-        height: 40,
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: Color(0xFF705D54),
-            width: 1,
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              height: 2,
-              color: Color(0xFF705D54),
-            ),
-            SizedBox(height: 4),
-            Container(
-              width: 2 / 3 * 20,
-              height: 2,
-              color: Color(0xFF705D54),
-            ),
-            SizedBox(height: 4),
-            Container(
-              width: 1 / 2 * 20,
-              height: 2,
-              color: Color(0xFF705D54),
-            ),
-          ],
         ),
       ),
     );

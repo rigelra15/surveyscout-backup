@@ -4,17 +4,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/survey_card.dart';
 import 'package:surveyscout/services/projects/api_surveyorprojects.dart';
-import 'package:surveyscout/pages/surveyorproyekdetailbutuhtinjau.dart';
-import 'package:surveyscout/pages/surveyorproyekdetaildeadline.dart';
-import 'package:surveyscout/pages/surveyorproyekdetailditolak.dart';
 import 'package:surveyscout/pages/surveyorproyekdetailkirimlamaran.dart';
-import 'package:surveyscout/pages/surveyorproyekdetailmendaftar.dart';
-import 'package:surveyscout/pages/surveyorproyekdetailmengerjakan.dart';
-import 'package:surveyscout/pages/surveyorproyekdetailmengerjakanchatluaran.dart';
-import 'package:surveyscout/pages/surveyorproyekdetailselesai.dart';
-import 'surveyormyprojects.dart';
-import 'surveyorchat.dart';
-import 'surveyorakun.dart';
 
 class SurveyorProjects extends StatefulWidget {
   @override

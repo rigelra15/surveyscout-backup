@@ -1,28 +1,19 @@
 import 'dart:convert';
-import 'dart:ffi';
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ant_design.dart';
-import 'package:iconify_flutter/icons/bx.dart';
-import 'package:iconify_flutter/icons/cil.dart';
-import 'package:iconify_flutter/icons/codicon.dart';
 import 'package:iconify_flutter/icons/gis.dart';
 import 'package:iconify_flutter/icons/healthicons.dart';
 import 'package:iconify_flutter/icons/maki.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/loading_overlay.dart';
 import 'package:surveyscout/pages/client/transaction_review_respondent_screen.dart';
-import 'package:surveyscout/routes/app_routes.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iconify_flutter/icons/ph.dart';
-import 'package:iconify_flutter/icons/ic.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
 class RespondentCriteriaDetailsScreen extends StatefulWidget {

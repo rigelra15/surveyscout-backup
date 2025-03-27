@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
 
           print("Token: $token, Role: $role, Status: $status");
 
-          if (role == null) {
+          if (role == '') {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(

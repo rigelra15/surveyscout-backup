@@ -770,7 +770,8 @@ class ProjectCard extends StatelessWidget {
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text("Untuk akun demo, Anda hanya dapat mencobanya 😊🙏"),
+                                content: Text(
+                                    "Untuk akun demo, Anda hanya dapat mencobanya 😊🙏"),
                                 backgroundColor: Color(0xFF826754),
                               ),
                             );
@@ -778,7 +779,6 @@ class ProjectCard extends StatelessWidget {
                         );
                       }),
                     ),
-
                   ],
                 ),
               ),

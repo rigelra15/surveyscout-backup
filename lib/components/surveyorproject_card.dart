@@ -3,9 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:iconify_flutter_plus/icons/ic.dart';
-import 'package:iconify_flutter_plus/icons/ph.dart';
 import 'package:iconify_flutter_plus/icons/humbleicons.dart';
-import 'package:iconify_flutter/icons/mingcute.dart';
 import 'package:iconify_flutter/icons/pajamas.dart';
 import 'package:iconify_flutter_plus/icons/mdi.dart';
 import 'package:iconify_flutter_plus/icons/material_symbols.dart';

@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/pages/surveyor/surveyorpages.dart';
-import 'package:surveyscout/pages/surveyor/surveyorprojects.dart';
 import 'package:file_picker/file_picker.dart';
 
 class SurveyorSignUp extends StatefulWidget {

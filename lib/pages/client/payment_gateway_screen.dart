@@ -230,13 +230,6 @@ class _PaymentGatewayScreenState extends State<PaymentGatewayScreen> {
     }
   }
 
-  void _startPolling() {
-    _statusPollingTimer?.cancel();
-    _statusPollingTimer = Timer.periodic(Duration(seconds: 5), (timer) {
-      _fetchPaymentStatus();
-    });
-  }
-
   @override
   void initState() {
     super.initState();

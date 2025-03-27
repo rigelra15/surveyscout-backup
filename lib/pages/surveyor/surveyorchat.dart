@@ -1,9 +1,6 @@
 // ignore_for_file: unused_element
 
 import 'package:flutter/material.dart';
-import 'surveyormyprojects.dart';
-import 'surveyorprojects.dart';
-import 'surveyorakun.dart';
 
 class SurveyorChat extends StatefulWidget {
   @override
