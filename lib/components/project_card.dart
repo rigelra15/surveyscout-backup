@@ -761,16 +761,24 @@ class ProjectCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(5, (index) {
-                        return const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 3),
-                          child: Icon(
+                        return IconButton(
+                          icon: const Icon(
                             Icons.star_border_rounded,
                             size: 30,
                             color: Color(0xFFD7CCC8),
                           ),
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Untuk akun demo, Anda hanya dapat mencobanya 😊🙏"),
+                                backgroundColor: Color(0xFF826754),
+                              ),
+                            );
+                          },
                         );
                       }),
                     ),
+
                   ],
                 ),
               ),

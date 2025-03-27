@@ -28,6 +28,8 @@ class _ClientProjects extends State<ClientProjects> {
   String searchQuery = "";
   bool isLoading = false;
 
+  Map<String, int> _ratings = {};
+
   @override
   void initState() {
     super.initState();

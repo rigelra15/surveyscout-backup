@@ -46,10 +46,10 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  Future<Widget> _determineStartPage() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('jwt_token');
-    final String? role = prefs.getString('user_role');
+Future<Widget> _determineStartPage() async {
+  final prefs = await SharedPreferences.getInstance();
+  final String? token = prefs.getString('jwt_token');
+  final String? role = prefs.getString('user_role');
     print("Token: $token, Role: $role");
 
     if (token != null && role != null) {
