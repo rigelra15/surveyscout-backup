@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import 'package:iconify_flutter/icons/dashicons.dart';
 import 'package:iconify_flutter_plus/icons/material_symbols.dart';
 import 'package:iconify_flutter_plus/icons/ci.dart';
@@ -9,6 +12,8 @@ import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:surveyscout/services/projects/api_surveyorprojects.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class Surveyorproyekdetailmengerjakan extends StatefulWidget {
   final String id;
@@ -28,6 +33,8 @@ class _SurveyorproyekdetailmengerjakanState
   late Survey surveyDetail = Survey();
   bool isLoading = true;
   List<PlatformFile> selectedFiles = [];
+  Map<String, dynamic> detailFiles = {};
+  bool uploaded = false;
 
   @override
   void initState() {
@@ -47,27 +54,48 @@ class _SurveyorproyekdetailmengerjakanState
   }
 
   Future<void> _initializeApiService() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('jwt_token');
+    print("Token: $token");
+
     setState(() {
-      apiService = ApiService("https://surveyscoutbe.onrender.com/api/v1");
+      apiService =
+          ApiService("https://surveyscoutbe.onrender.com/api/v1", token: token);
     });
 
-    _fetchClientRespondenDetail(widget.id);
+    fetchSurveyAndFiles(widget.id);
   }
 
-  Future<void> _fetchClientRespondenDetail(String id) async {
+  Future<void> fetchSurveyAndFiles(String id) async {
     setState(() {
       isLoading = true;
     });
 
     try {
       if (apiService != null) {
-        Survey profile = await apiService!.getASurvey(id);
+        Survey profile = await apiService!.getAppliedSurveys(id);
         setState(() {
           surveyDetail = profile;
         });
       }
+
+      final response = await http.get(
+        Uri.parse(
+            "https://surveyscoutbe.onrender.com/api/v1/surveys/$id/surveyAnswer"),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          detailFiles = data['data'];
+        });
+        print("Detail file: $detailFiles");
+      } else {
+        print("Gagal mengambil detail file: ${response.statusCode}");
+      }
     } catch (e) {
-      print("Error mengambil profil klien: $e");
+      print("Error saat mengambil data: $e");
     } finally {
       setState(() {
         isLoading = false;
@@ -75,8 +103,142 @@ class _SurveyorproyekdetailmengerjakanState
     }
   }
 
+  void _uploadFiles(String token, List<PlatformFile> selectedFiles) async {
+    try {
+      Dio dio = Dio();
+
+      print("Token: $token");
+      dio.options.headers = {
+        "Authorization": "Bearer $token",
+        "Content-Type": "multipart/form-data",
+      };
+      print(dio.options.headers);
+
+      FormData formData = FormData();
+
+      for (var file in selectedFiles) {
+        formData.files.add(MapEntry(
+          'file',
+          await MultipartFile.fromFile(file.path!, filename: file.name),
+        ));
+      }
+
+      String apiUrl =
+          "https://surveyscoutbe.onrender.com/api/v1/surveys/uploadAnswer/${widget.id}";
+
+      Response response = await dio.post(apiUrl, data: formData);
+
+      if (response.statusCode == 201) {
+        print("Upload berhasil!");
+        print(response.data);
+        setState(() {
+          uploaded = true;
+        });
+        fetchSurveyAndFiles(widget.id);
+      } else if (response.statusCode == 403) {
+        print(
+            "Akses ditolak: Token mungkin sudah kadaluarsa atau Anda tidak memiliki izin.");
+      } else {
+        print("Upload gagal, status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      if (e is DioException) {
+        if (e.response != null) {
+          print('Error Response: ${e.response?.statusCode}');
+          print('Error Message: ${e.response?.data}');
+        } else {
+          print('Error terjadi: $e');
+        }
+      }
+    }
+  }
+
+  Map<String, Map<String, dynamic>> _getStatusIndicator(String status) {
+    Map<String, Map<String, dynamic>> statusMap = {
+      'mendaftar': {
+        'color': Color(0xFF2196F3),
+        'icon': Icons.local_post_office,
+        'text': 'Mendaftar',
+      },
+      'ditolak': {
+        'color': Color(0xFFFF9696),
+        'icon': Icons.warning_rounded,
+        'text': 'Ditolak',
+      },
+      'ditinjau': {
+        'color': Color(0xFFFFC107),
+        'icon': Icons.pause_circle_filled,
+        'text': 'Ditinjau',
+      },
+      'mengerjakan': {
+        'color': Color(0xFFFF9800),
+        'icon': Icons.lock_clock,
+        'text': 'Mengerjakan',
+      },
+      'selesai': {
+        'color': Color(0xFF4CAF50),
+        'icon': Icons.check,
+        'text': 'Selesai',
+      },
+      'deadline': {
+        'color': Color(0xFFF44336),
+        'icon': Icons.warning_rounded,
+        'text': 'Deadline',
+      }
+    };
+
+    return statusMap.containsKey(status) ? {status: statusMap[status]!} : {};
+  }
+
+  Map<String, Map<String, dynamic>> _getDetailStatus(String status) {
+    Map<String, Map<String, dynamic>> statusMap = {
+      'mendaftar': {
+        'colorIcon': Color(0xFF826754),
+        'colorBg': Color(0xFFEDE7E2),
+        'colorTitle': Color(0xFF705D54),
+        'colorDesc': Color(0xFFA3948D),
+        'icon': Icons.local_post_office,
+        'text': 'Mendaftar',
+        'title': 'Menunggu respons',
+        'desc':
+            'Klien akan memeriksa lamaran atau mengirimkan chat. Anda akan menerima notifikasi mengenai status lamaran Anda.',
+        'iconMessage': Icons.check,
+        'textMessage': 'Lamaran terkirim',
+      },
+      'ditolak': {
+        'colorIcon': Color(0xFFF44336),
+        'colorBg': Color(0xFFFFCFCC),
+        'colorTitle': Color(0xFFF44336),
+        'colorDesc': Color(0xFFFF7E74),
+        'icon': Icons.warning_rounded,
+        'text': 'Ditolak',
+        'title': 'Lamaran Anda ditolak',
+        'desc':
+            'Klien telah menolak lamaran Anda. Jangan khawatir, Anda masih dapat melamar proyek tersedia lainnya.',
+        'iconMessage': Icons.close,
+        'textMessage': 'Lamaran ditolak',
+      },
+      'selesai': {
+        'colorIcon': Color(0xFF826754),
+        'colorBg': Color(0xFFEDE7E2),
+        'colorTitle': Color(0xFF705D54),
+        'colorDesc': Color(0xFFA3948D),
+        'icon': Icons.tag_faces,
+        'text': 'Selesai',
+        'title': 'Proyek telah selesai!',
+        'desc':
+            'Selamat, Anda menyelesaikan proyek ini sebelum tenggat! Pencapaian ini akan meningkatkan nilai ScoutTrust Anda.',
+        'iconMessage': Icons.close,
+        'textMessage': 'Lamaran ditolak',
+      },
+    };
+
+    return statusMap.containsKey(status) ? {status: statusMap[status]!} : {};
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool hasFiles = detailFiles.keys.any((key) => int.tryParse(key) != null);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -133,7 +295,7 @@ class _SurveyorproyekdetailmengerjakanState
               )
             : RefreshIndicator(
                 color: Color(0xFF705D54),
-                onRefresh: () => _fetchClientRespondenDetail(widget.id),
+                onRefresh: () => fetchSurveyAndFiles(widget.id),
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
                   child: Padding(
@@ -177,20 +339,27 @@ class _SurveyorproyekdetailmengerjakanState
                           padding:
                               EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                           decoration: BoxDecoration(
-                            color: Color(0xFFFF9800),
+                            color:
+                                _getStatusIndicator(surveyDetail.statusSurveyor)
+                                    .values
+                                    .first['color'],
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(
-                                Icons.lock_clock,
+                                _getStatusIndicator(surveyDetail.statusSurveyor)
+                                    .values
+                                    .first['icon'],
                                 color: Colors.white,
                                 size: 14,
                               ),
                               SizedBox(width: 6),
                               Text(
-                                'Mengerjakan',
+                                _getStatusIndicator(surveyDetail.statusSurveyor)
+                                    .values
+                                    .first['text'],
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
@@ -216,15 +385,22 @@ class _SurveyorproyekdetailmengerjakanState
                           width: double.infinity,
                           padding: EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Color(0xFFA3948D),
+                            color: surveyDetail.statusSurveyor == "deadline"
+                                ? Color(0xFFFFCFCC)
+                                : Color(0xFFA3948D),
                             borderRadius: BorderRadius.circular(8),
+                            border: surveyDetail.statusSurveyor == "deadline"
+                                ? Border.all(color: Color(0xFFF44336), width: 1)
+                                : null,
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(
                                 Icons.punch_clock_rounded,
-                                color: Colors.white,
+                                color: surveyDetail.statusSurveyor == "deadline"
+                                    ? Color(0xFFF44336)
+                                    : Colors.white,
                                 size: 14,
                               ),
                               SizedBox(width: 6),
@@ -240,7 +416,10 @@ class _SurveyorproyekdetailmengerjakanState
                                           fontSize: 10,
                                           fontWeight: FontWeight.w700,
                                           fontFamily: "NunitoSans",
-                                          color: Colors.white,
+                                          color: surveyDetail.statusSurveyor ==
+                                                  "deadline"
+                                              ? Color(0xFFF44336)
+                                              : Colors.white,
                                         ),
                                       ),
                                       SizedBox(height: 4),
@@ -250,7 +429,10 @@ class _SurveyorproyekdetailmengerjakanState
                                           fontSize: 10,
                                           fontWeight: FontWeight.w400,
                                           fontFamily: "NunitoSans",
-                                          color: Colors.white,
+                                          color: surveyDetail.statusSurveyor ==
+                                                  "deadline"
+                                              ? Color(0xFFFF7E74)
+                                              : Colors.white,
                                         ),
                                       ),
                                     ],
@@ -376,122 +558,201 @@ class _SurveyorproyekdetailmengerjakanState
                         ),
                         SizedBox(height: 10),
                         Container(
+                          padding: EdgeInsets.all(10),
                           width: double.infinity,
-                          padding: EdgeInsets.all(15),
+                          height: 100,
                           decoration: BoxDecoration(
-                            color: Color(0xFFEDE7E2),
-                            borderRadius: BorderRadius.circular(8.0),
+                            color: _getDetailStatus(surveyDetail.statusSurveyor)
+                                .values
+                                .first['colorBg'],
+                            border: Border.all(
+                              color:
+                                  _getDetailStatus(surveyDetail.statusSurveyor)
+                                      .values
+                                      .first['colorIcon'],
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                          child: Row(
                             children: [
                               Container(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                    SizedBox(width: 8),
-                                    Flexible(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Agus Ginting',
-                                            style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: "NunitoSans",
-                                              color: Color(0xFF705D54),
-                                            ),
-                                          ),
-                                          SizedBox(height: 4),
-                                          Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Text(
-                                                'Klien',
-                                                style: TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: "NunitoSans",
-                                                  color: Color(0xFFA3948D),
-                                                ),
-                                              ),
-                                              SizedBox(width: 8),
-                                              Icon(Icons.location_on,
-                                                  color: Color(0xFFA3948D),
-                                                  size: 10),
-                                              SizedBox(width: 4),
-                                              Text(
-                                                'Jakarta',
-                                                style: TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: "NunitoSans",
-                                                  color: Color(0xFFA3948D),
-                                                ),
-                                              ),
-                                              SizedBox(width: 8),
-                                              Icon(Icons.check_circle,
-                                                  color: Color(0xFFA3948D),
-                                                  size: 10),
-                                              SizedBox(width: 4),
-                                              Text(
-                                                'PT Widya Mandiri',
-                                                style: TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: "NunitoSans",
-                                                  color: Color(0xFFA3948D),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                                child: Center(
+                                  child: Icon(
+                                    Icons.local_post_office,
+                                    color: Color(0xFF826754),
+                                    size: 40,
+                                  ),
                                 ),
                               ),
-                              SizedBox(height: 10),
-                              Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'Anda: ',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "NunitoSans",
-                                        color: Color(0xFF705D54),
+                              SizedBox(width: 10),
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _getDetailStatus(
+                                                surveyDetail.statusSurveyor)
+                                            .values
+                                            .first['title'],
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontFamily: "NunitoSans",
+                                          color: _getDetailStatus(
+                                                  surveyDetail.statusSurveyor)
+                                              .values
+                                              .first['colorTitle'],
+                                          fontWeight: FontWeight.w700,
+                                        ),
                                       ),
-                                    ),
-                                    TextSpan(
-                                      text:
-                                          'Untuk selanjutnya, saya coba untuk ke halte bus yang sebelah utara, Pak. Akan segera saya kabarkan ',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: "NunitoSans",
-                                        color: Color(0xFF705D54),
+                                      SizedBox(height: 4),
+                                      Flexible(
+                                        child: Text(
+                                          _getDetailStatus(
+                                                  surveyDetail.statusSurveyor)
+                                              .values
+                                              .first['desc'],
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontFamily: "NunitoSans",
+                                            color: _getDetailStatus(
+                                                    surveyDetail.statusSurveyor)
+                                                .values
+                                                .first['colorDesc'],
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
                               ),
                             ],
                           ),
                         ),
+                        if (surveyDetail.statusSurveyor != "mendaftar")
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFEDE7E2),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Flexible(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Agus Ginting',
+                                              style: TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w700,
+                                                fontFamily: "NunitoSans",
+                                                color: Color(0xFF705D54),
+                                              ),
+                                            ),
+                                            SizedBox(height: 4),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(
+                                                  'Klien',
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: "NunitoSans",
+                                                    color: Color(0xFFA3948D),
+                                                  ),
+                                                ),
+                                                SizedBox(width: 8),
+                                                Icon(Icons.location_on,
+                                                    color: Color(0xFFA3948D),
+                                                    size: 10),
+                                                SizedBox(width: 4),
+                                                Text(
+                                                  'Jakarta',
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: "NunitoSans",
+                                                    color: Color(0xFFA3948D),
+                                                  ),
+                                                ),
+                                                SizedBox(width: 8),
+                                                Icon(Icons.check_circle,
+                                                    color: Color(0xFFA3948D),
+                                                    size: 10),
+                                                SizedBox(width: 4),
+                                                Text(
+                                                  'PT Widya Mandiri',
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: "NunitoSans",
+                                                    color: Color(0xFFA3948D),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text.rich(
+                                  TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'Anda: ',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "NunitoSans",
+                                          color: Color(0xFF705D54),
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            'Untuk selanjutnya, saya coba untuk ke halte bus yang sebelah utara, Pak. Akan segera saya kabarkan ',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoSans",
+                                          color: Color(0xFF705D54),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
                         SizedBox(height: 10),
                         Text(
                           'Deskripsi',
@@ -578,86 +839,230 @@ class _SurveyorproyekdetailmengerjakanState
                 ),
               ),
         bottomNavigationBar: Container(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 27),
-          height: 80,
-          decoration: BoxDecoration(
-            color: Color(0xFF826754),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          height: 124,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Expanded(
-                child: Container(
-                  height: 600,
+              if (surveyDetail.statusSurveyor == "deadline")
+                Container(
+                  padding: EdgeInsets.all(5),
+                  height: 28,
                   decoration: BoxDecoration(
-                    color: Color(0xFFF1E9E5),
-                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xFF3A2B24),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.chat, color: Color(0xFF826754)),
-                      SizedBox(width: 10),
-                      Text(
-                        'Chat',
-                        style: TextStyle(
-                          fontFamily: 'NutinoSans',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          color: Color(0xFF826754),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Tenggat terlewat, performa ScoutTrust Anda akan terpengaruh',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'NutinoSans',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: Color(0xFFF1E9E5),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(width: 8),
-              Expanded(
-                  child: GestureDetector(
-                onTap: () {
-                  _showLuaran(context);
-                },
-                child: Container(
-                  height: 600,
+              if (surveyDetail.statusSurveyor == "ditinjau")
+                Container(
+                  padding: EdgeInsets.all(5),
+                  height: 44,
                   decoration: BoxDecoration(
-                      color: Color(0xFF826754),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Color(0xFFEDE7E2), width: 1)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.text_snippet, color: Color(0xFFEDE7E2)),
-                      SizedBox(width: 10),
-                      Text(
-                        'Luaran',
-                        style: TextStyle(
-                          fontFamily: 'NutinoSans',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          color: Color(0xFFEDE7E2),
+                    color: Color(0xFF3A2B24),
+                  ),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Kami telah memberitahu klien bahwa luaran Anda telah selesai. Mohon tunggu verifikasi dalam 3 hari.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'NutinoSans',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: Color(0xFFF1E9E5),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              )),
-              SizedBox(width: 8),
+              if (surveyDetail.statusRevisi == true)
+                Container(
+                  padding: EdgeInsets.all(5),
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF3A2B24),
+                  ),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Klien mengajukan revisi, silakan periksa chat',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'NutinoSans',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: Color(0xFFF1E9E5),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               Container(
-                height: 600,
-                width: 30,
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 27),
+                height: 80,
                 decoration: BoxDecoration(
                   color: Color(0xFF826754),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Icon(Icons.more_vert, color: Color(0xFFEDE7E2)),
+                    if (surveyDetail.statusSurveyor != "mendaftar") ...[
+                      Expanded(
+                        child: Container(
+                          height: 600,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFF1E9E5),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(Icons.chat, color: Color(0xFF826754)),
+                              SizedBox(width: 10),
+                              Text(
+                                'Chat',
+                                style: TextStyle(
+                                  fontFamily: 'NutinoSans',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  color: Color(0xFF826754),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                          child: GestureDetector(
+                        onTap: () {
+                          _showLuaran(context);
+                        },
+                        child: Container(
+                          height: 600,
+                          decoration: BoxDecoration(
+                              color: Color(0xFF826754),
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                  color: Color(0xFFEDE7E2), width: 1)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(Icons.text_snippet,
+                                  color: Color(0xFFEDE7E2)),
+                              SizedBox(width: 10),
+                              Text(
+                                'Luaran',
+                                style: TextStyle(
+                                  fontFamily: 'NutinoSans',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  color: Color(0xFFEDE7E2),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              if (hasFiles)
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 6, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFB3261E),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    (detailFiles['jumlah_luaran'] ?? 0)
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontFamily: 'NunitoSans',
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      )),
+                    ],
+                    if (surveyDetail.statusSurveyor == "mendaftar" ||
+                        surveyDetail.statusSurveyor == "ditolak" ||
+                        surveyDetail.statusSurveyor == "selesai")
+                      Expanded(
+                        child: Container(
+                          height: 600,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF826754),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                  _getDetailStatus(surveyDetail.statusSurveyor)
+                                      .values
+                                      .first['iconMessage'],
+                                  color: Color(0xFFEDE7E2)),
+                              SizedBox(width: 10),
+                              Text(
+                                _getDetailStatus(surveyDetail.statusSurveyor)
+                                    .values
+                                    .first['textMessage'],
+                                style: TextStyle(
+                                  fontFamily: 'NutinoSans',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  color: Color(0xFFEDE7E2),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    SizedBox(width: 8),
+                    Container(
+                      height: 600,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF826754),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.more_vert, color: Color(0xFFEDE7E2)),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ),
@@ -848,25 +1253,28 @@ class _SurveyorproyekdetailmengerjakanState
                                               ),
                                             ),
                                             SizedBox(width: 8),
-                                            GestureDetector(
-                                              onTap: () => _removeFile(
-                                                  setStateModal, file),
-                                              child: Container(
-                                                padding: EdgeInsets.all(8),
-                                                width: 40,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  border: Border.all(
+                                            if (!uploaded)
+                                              GestureDetector(
+                                                onTap: () => _removeFile(
+                                                    setStateModal, file),
+                                                child: Container(
+                                                  padding: EdgeInsets.all(8),
+                                                  width: 40,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                        color:
+                                                            Color(0xFF826754),
+                                                        width: 2),
+                                                    color: Colors.transparent,
+                                                  ),
+                                                  child: Iconify(
+                                                      Dashicons.trash,
                                                       color: Color(0xFF826754),
-                                                      width: 2),
-                                                  color: Colors.transparent,
+                                                      size: 9),
                                                 ),
-                                                child: Iconify(Dashicons.trash,
-                                                    color: Color(0xFF826754),
-                                                    size: 9),
                                               ),
-                                            ),
                                           ],
                                         ),
                                       ))
@@ -914,77 +1322,126 @@ class _SurveyorproyekdetailmengerjakanState
                               ],
                             ),
                           ),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF826754),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          if (selectedFiles.isNotEmpty) ...[
+                    if (!uploaded || surveyDetail.statusRevisi == true)
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                        height: 80,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF826754),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            if (selectedFiles.isNotEmpty) ...[
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () => _pickFiles(setStateModal),
+                                  child: Container(
+                                    height: 600,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFF826754),
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                          color: Color(0xFFF1E9E5), width: 1),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.add,
+                                            color: Color(0xFFF1E9E5)),
+                                        SizedBox(width: 10),
+                                        Text('Tambah File',
+                                            style: TextStyle(
+                                              fontFamily: 'NunitoSans',
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14,
+                                              color: Color(0xFFF1E9E5),
+                                            )),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 8),
+                            ],
                             Expanded(
                               child: GestureDetector(
-                                onTap: () => _pickFiles(setStateModal),
+                                onTap: () async {
+                                  if (selectedFiles.isEmpty) {
+                                    _pickFiles(setStateModal);
+                                  } else {
+                                    final prefs =
+                                        await SharedPreferences.getInstance();
+                                    final token = prefs.getString('jwt_token');
+                                    _uploadFiles(token!, selectedFiles);
+                                  }
+                                },
                                 child: Container(
                                   height: 600,
                                   decoration: BoxDecoration(
-                                    color: Color(0xFF826754),
+                                    color: Color(0xFFF1E9E5),
                                     borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        color: Color(0xFFF1E9E5), width: 1),
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.add, color: Color(0xFFF1E9E5)),
+                                      Icon(Icons.upload,
+                                          color: Color(0xFF826754)),
                                       SizedBox(width: 10),
-                                      Text('Tambah File',
+                                      Text('Unggah',
                                           style: TextStyle(
                                             fontFamily: 'NunitoSans',
                                             fontWeight: FontWeight.w700,
                                             fontSize: 14,
-                                            color: Color(0xFFF1E9E5),
+                                            color: Color(0xFF826754),
                                           )),
                                     ],
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(width: 8),
                           ],
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => _pickFiles(setStateModal),
-                              child: Container(
-                                height: 600,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFF1E9E5),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.upload,
-                                        color: Color(0xFF826754)),
-                                    SizedBox(width: 10),
-                                    Text('Unggah',
-                                        style: TextStyle(
-                                          fontFamily: 'NunitoSans',
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 14,
-                                          color: Color(0xFF826754),
-                                        )),
-                                  ],
+                        ),
+                      )
+                    else
+                      Padding(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEDE7E2),
+                            borderRadius: BorderRadius.circular(8),
+                            border:
+                                Border.all(color: Color(0xFF826754), width: 1),
+                          ),
+                          padding: EdgeInsets.all(16),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Menunggu respons',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: "NunitoSans",
+                                  color: Color(0xFF705D54),
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
-                            ),
+                              SizedBox(height: 8),
+                              Text(
+                                'Klien akan memeriksa luaran dalam 3 hari. Apabila terdapat revisi, kami akan memberitahu Anda.',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: "NunitoSans",
+                                  color: Color(0xFFA3948D),
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
+                        padding: EdgeInsets.all(16),
                       ),
-                    ),
                   ],
                 ),
               ),

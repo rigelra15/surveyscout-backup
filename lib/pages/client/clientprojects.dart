@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/custom_choose_sort.dart';
@@ -64,6 +65,7 @@ class _ClientProjects extends State<ClientProjects> {
 
           int diffA = dateA.difference(now).inMilliseconds;
           int diffB = dateB.difference(now).inMilliseconds;
+          print(diffA.compareTo(diffB));
 
           return diffA.compareTo(diffB);
         });
@@ -73,6 +75,7 @@ class _ClientProjects extends State<ClientProjects> {
           filteredProjects = surveys;
           isLoading = false;
         });
+        print(filteredProjects);
       } catch (e) {
         print("Error mengambil data survei: $e");
         setState(() {
@@ -138,6 +141,48 @@ class _ClientProjects extends State<ClientProjects> {
   String selectedKomisi = "Semua komisi";
   String selectedSort = "Tenggat Pengerjaan Terdekat";
 
+  void navigateToDetail(Project project) {
+    final type = project.orderId.startsWith("RESPOND") ? "respond" : "survey";
+
+    Widget getRouteForProject(String statusTask) {
+      switch (statusTask) {
+        case "ditinjau":
+          return Clientsurveyorproyekdetailbutuhtinjau(
+              id: project.idSurvey, type: type);
+        case "kadaluwarsa":
+          return Clientsurveyorproyekdetailkadaluwarsa(
+              id: project.idSurvey, type: type);
+        case "pembayaran":
+          return Clientsurveyorproyekdetailmenunggubayar(
+              id: project.idSurvey, type: type);
+        case "draft":
+          return Clientsurveyorproyekdetaildraft(
+              id: project.idSurvey, type: type);
+        case "merekrut":
+          return Clientrespondenproyekdetailmerekrut(
+              id: project.idSurvey, type: type);
+        case "dikerjakan":
+          return Clientsurveyorproyekdetaildikerjakan(
+              id: project.idSurvey, type: type);
+        case "selesai":
+          return Clientsurveyorproyekdetailselesai(
+              id: project.idSurvey, type: type);
+        case "peringatan":
+          return Clientsurveyorproyekdetailperingatan(
+              id: project.idSurvey, type: type);
+        default:
+          throw Exception("Unknown project status: $statusTask");
+      }
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => getRouteForProject(project.statusTask),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -170,6 +215,7 @@ class _ClientProjects extends State<ClientProjects> {
                     child: TextField(
                       onChanged: (value) {
                         searchQuery = value;
+                        print("Search query: $searchQuery");
                         _filterSortProjects();
                       },
                       decoration: InputDecoration(
@@ -311,224 +357,133 @@ class _ClientProjects extends State<ClientProjects> {
                   child: Column(
                     children: [
                       Expanded(
-                          child: RefreshIndicator(
-                        onRefresh: _fetchSurveys,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              SizedBox(height: 10),
-                              Container(
-                                width: double.infinity,
-                                height: 100,
-                                padding: EdgeInsets.all(0),
-                                child: FutureBuilder<List<Project>>(
-                                  future: apiService != null
-                                      ? apiService!.getSurveys()
-                                      : Future.value([]),
-                                  builder: (context, snapshot) {
-                                    List<Project> surveys = [];
-                                    if (snapshot.hasData &&
-                                        snapshot.data != null) {
-                                      surveys = snapshot.data!;
-                                    }
-                                    return SurveyStatusWidget(surveys: surveys);
-                                  },
-                                ),
-                              ),
-                              ListView.separated(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: filteredProjects.length,
-                                separatorBuilder: (context, index) =>
-                                    SizedBox(height: 12),
-                                itemBuilder: (context, index) {
-                                  Project project = filteredProjects[index];
-                                  return ProjectCard(
-                                    orderId: project.orderId,
-                                    title: project.namaProyek,
-                                    timeAgo: project.calculateDeadline(),
-                                    fileType: project.tipeHasil.join(", "),
-                                    status: project.statusTask,
-                                    showRating:
-                                        (project.statusTask == "selesai" &&
-                                            project.statusRating == "belum"),
-                                    onDownload: project.statusTask == "selesai"
-                                        ? () => print("Download tapped")
-                                        : null,
-                                    onChat: project.statusTask == "ditinjau" ||
-                                            project.statusTask == "dikerjakan"
-                                        ? () => print("Chat tapped")
-                                        : null,
-                                    onMore: () => print("More options tapped"),
-                                    chatCount:
-                                        (project.statusTask == "dikerjakan")
-                                            ? 3
-                                            : null,
-                                    onTap: () {
-                                      if (project.statusTask == "ditinjau") {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                Clientsurveyorproyekdetailbutuhtinjau(
-                                              id: project.idSurvey,
-                                              type: project.orderId
-                                                      .startsWith("RESPOND")
-                                                  ? "respond"
-                                                  : "survey",
-                                            ),
+                        child: RefreshIndicator(
+                          onRefresh: _fetchSurveys,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                if (filteredProjects.isNotEmpty)
+                                  SizedBox(height: 110),
+                                filteredProjects.isEmpty
+                                    ? ListView(
+                                        shrinkWrap: true,
+                                        physics:
+                                            AlwaysScrollableScrollPhysics(),
+                                        children: [
+                                          SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.3),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.string(
+                                                allProjects.isEmpty
+                                                    ? '''<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="#705D54" d="M3.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5H7v-1H4V2h8v5h1V1.5a.5.5 0 0 0-.5-.5z"/><path fill="#705D54" d="M5 5h6V4H5zm0 2h4V6H5z"/><path fill="#705D54" fill-rule="evenodd" d="M10.5 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-1.354 2.854l.647.646l-.647.646l.708.707l.646-.646l.646.646l.708-.707l-.647-.646l.647-.646l-.707-.708l-.647.647l-.646-.647z" clip-rule="evenodd"/></svg>'''
+                                                    : '''<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#705D54" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-4.99-5.58-5.34A6.49 6.49 0 0 0 3.03 9h2.02c.24-2.12 1.92-3.8 4.06-3.98C11.65 4.8 14 6.95 14 9.5c0 2.49-2.01 4.5-4.5 4.5c-.17 0-.33-.03-.5-.05v2.02l.01.01c1.8.13 3.47-.47 4.72-1.55l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0s.41-1.08 0-1.49z"/><path fill="#705D54" d="M6.12 11.17L4 13.29l-2.12-2.12c-.2-.2-.51-.2-.71 0s-.2.51 0 .71L3.29 14l-2.12 2.12c-.2.2-.2.51 0 .71s.51.2.71 0L4 14.71l2.12 2.12c.2.2.51.2.71 0s.2-.51 0-.71L4.71 14l2.12-2.12c.2-.2.2-.51 0-.71a.513.513 0 0 0-.71 0"/></svg>''',
+                                                width: 48,
+                                                height: 48,
+                                                placeholderBuilder:
+                                                    (BuildContext context) =>
+                                                        Container(
+                                                  padding: const EdgeInsets.all(
+                                                      30.0),
+                                                  child:
+                                                      const CircularProgressIndicator(
+                                                    color: Color(0xFF705D54),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                allProjects.isEmpty
+                                                    ? "Tidak ada proyek yang tersedia"
+                                                    : "Tidak ada proyek yang ditemukan",
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Color(0xFFA3948D),
+                                                  fontFamily: 'NunitoSans',
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
                                           ),
-                                        );
-                                      } else if (project.statusTask ==
-                                          "kadaluwarsa") {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                Clientsurveyorproyekdetailkadaluwarsa(
-                                              id: project.idSurvey,
-                                              type: project.orderId
-                                                      .startsWith("RESPOND")
-                                                  ? "respond"
-                                                  : "survey",
+                                        ],
+                                      )
+                                    : ListView.builder(
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount: filteredProjects.length,
+                                        itemBuilder: (context, index) {
+                                          Project project =
+                                              filteredProjects[index];
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 12),
+                                            child: ProjectCard(
+                                              orderId: project.orderId,
+                                              title: project.namaProyek,
+                                              timeAgo:
+                                                  project.calculateDeadline(),
+                                              fileType:
+                                                  project.tipeHasil.join(", "),
+                                              status: project.statusTask,
+                                              showRating: (project.statusTask ==
+                                                      "selesai" &&
+                                                  project.statusRating ==
+                                                      "belum"),
+                                              onDownload: project.statusTask ==
+                                                      "selesai"
+                                                  ? () =>
+                                                      print("Download tapped")
+                                                  : null,
+                                              onChat: project.statusTask ==
+                                                          "ditinjau" ||
+                                                      project.statusTask ==
+                                                          "dikerjakan"
+                                                  ? () => print("Chat tapped")
+                                                  : null,
+                                              onMore: () =>
+                                                  print("More options tapped"),
+                                              chatCount: project.statusTask ==
+                                                      "dikerjakan"
+                                                  ? 3
+                                                  : null,
+                                              onTap: () =>
+                                                  navigateToDetail(project),
+                                              onWork: project.statusTask ==
+                                                      "merekrut"
+                                                  ? () => print("Work tapped")
+                                                  : null,
                                             ),
-                                          ),
-                                        );
-                                      } else if (project.statusTask ==
-                                          "pembayaran") {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                Clientsurveyorproyekdetailmenunggubayar(
-                                              id: project.idSurvey,
-                                              type: project.orderId
-                                                      .startsWith("RESPOND")
-                                                  ? "respond"
-                                                  : "survey",
-                                            ),
-                                          ),
-                                        );
-                                      } else if (project.statusTask ==
-                                          "draft") {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                Clientsurveyorproyekdetaildraft(
-                                              id: project.idSurvey,
-                                              type: project.orderId
-                                                      .startsWith("RESPOND")
-                                                  ? "respond"
-                                                  : "survey",
-                                            ),
-                                          ),
-                                        );
-                                      } else if (project.statusTask ==
-                                          "merekrut") {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                Clientrespondenproyekdetailmerekrut(
-                                              id: project.idSurvey,
-                                              type: project.orderId
-                                                      .startsWith("RESPOND")
-                                                  ? "respond"
-                                                  : "survey",
-                                            ),
-                                          ),
-                                        );
-                                      } else if (project.statusTask ==
-                                          "dikerjakan") {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                Clientsurveyorproyekdetaildikerjakan(
-                                              id: project.idSurvey,
-                                              type: project.orderId
-                                                      .startsWith("RESPOND")
-                                                  ? "respond"
-                                                  : "survey",
-                                            ),
-                                          ),
-                                        );
-                                      } else if (project.statusTask ==
-                                          "selesai") {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                Clientsurveyorproyekdetailselesai(
-                                              id: project.idSurvey,
-                                              type: project.orderId
-                                                      .startsWith("RESPOND")
-                                                  ? "respond"
-                                                  : "survey",
-                                            ),
-                                          ),
-                                        );
-                                      } else if (project.statusTask ==
-                                          "peringatan") {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Clientsurveyorproyekdetailperingatan(
-                                                      id: project.idSurvey,
-                                                      type: project.orderId
-                                                              .startsWith(
-                                                                  "RESPOND")
-                                                          ? "respond"
-                                                          : "survey")),
-                                        );
-                                      }
-                                    },
-                                    onWork: project.statusTask == "merekrut"
-                                        ? () => print("Work tapped")
-                                        : null,
-                                  );
-                                },
-                              ),
-                              SizedBox(height: 40),
-                              if (filteredProjects.isEmpty)
-                                Center(
-                                  child: Text(
-                                    'Tidak ada survei yang ditemukan.',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Color(0xFFA3948D),
-                                      fontFamily: 'NunitoSans',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              if (filteredProjects.isNotEmpty)
-                                Center(
-                                  child: Container(
-                                    width: double.infinity,
-                                    child: Center(
-                                      child: Text(
-                                        'Anda memiliki total ${filteredProjects.length} proyek',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Color(0xFFA3948D),
-                                          fontFamily: 'NunitoSans',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                          );
+                                        },
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              SizedBox(height: 40),
-                            ],
+                                SizedBox(height: 40),
+                              ],
+                            ),
                           ),
                         ),
-                      )),
+                      ),
                     ],
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 27,
+                  right: 27,
+                  child: Container(
+                    width: double.infinity,
+                    height: 88,
+                    child: FutureBuilder<List<Project>>(
+                      future: apiService?.getSurveys() ?? Future.value([]),
+                      builder: (context, snapshot) {
+                        List<Project> surveys = snapshot.data ?? [];
+                        return SurveyStatusWidget(surveys: surveys);
+                      },
+                    ),
                   ),
                 ),
                 Positioned(
@@ -536,13 +491,11 @@ class _ClientProjects extends State<ClientProjects> {
                   right: 32,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFF3A2B24), // Warna background
-                      borderRadius:
-                          BorderRadius.circular(16), // Membuat button bulat
+                      color: Color(0xFF3A2B24),
+                      borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: Color(
-                              0x40000000), // Warna shadow dengan opasitas 40%
+                          color: Color(0x40000000),
                           offset: Offset(0, 4),
                           blurRadius: 4,
                         ),
@@ -550,8 +503,7 @@ class _ClientProjects extends State<ClientProjects> {
                     ),
                     child: TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors
-                            .transparent, // Background dibiarkan transparan
+                        backgroundColor: Colors.transparent,
                         padding:
                             EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                         shape: RoundedRectangleBorder(
@@ -571,17 +523,16 @@ class _ClientProjects extends State<ClientProjects> {
                         children: [
                           Icon(
                             Icons.add,
-                            color: Colors.white, // Warna ikon
+                            color: Colors.white,
                           ),
-                          SizedBox(width: 4), // Gap antara ikon dan teks
+                          SizedBox(width: 4),
                           Text(
                             "Buat Baru",
                             style: TextStyle(
                               fontFamily: 'NunitoSans',
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
-                              decoration: TextDecoration
-                                  .none, // Tidak ada dekorasi tambahan
+                              decoration: TextDecoration.none,
                               color: Color(0xFFffffff),
                             ),
                           ),

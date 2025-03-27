@@ -597,7 +597,8 @@ class _Clientsurveyorproyekdetaildikerjakan
                 ),
             ],
           ),
-          bottomNavigationBar: Container(
+          bottomNavigationBar: SafeArea(
+              child: Container(
             width: double.infinity,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -719,7 +720,7 @@ class _Clientsurveyorproyekdetaildikerjakan
                 ),
               ],
             ),
-          )),
+          ))),
     );
   }
 

@@ -121,7 +121,7 @@ class SurveyorprojectCard extends StatelessWidget {
       case 'ditinjau':
         return const Iconify(Pajamas.status, color: Colors.white, size: 16);
       case 'selesai':
-        return const Iconify(Mingcute.check_fill,
+        return const Iconify(MaterialSymbols.check_small_rounded,
             color: Colors.white, size: 16);
       case 'ditolak':
         return const Iconify(Humbleicons.exclamation,

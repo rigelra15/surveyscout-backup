@@ -8,10 +8,8 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surveyscout/components/custom_container.dart';
 import 'package:surveyscout/pages/client/clientpages.dart';
-import 'package:surveyscout/pages/client/clientprojects.dart';
-import 'package:surveyscout/pages/responden/respondenprojects.dart';
+import 'package:surveyscout/pages/responden/respondenpages.dart';
 import 'package:surveyscout/pages/surveyor/surveyorpages.dart';
-import 'package:surveyscout/pages/surveyor/surveyorprojects.dart';
 import 'package:surveyscout/pages/welcome.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -145,7 +143,7 @@ class _LoginState extends State<Login> {
         nextPage = SurveyorPages();
         break;
       case "responden":
-        nextPage = RespondenProjects();
+        nextPage = RespondenPages();
         break;
       default:
         nextPage = Login();

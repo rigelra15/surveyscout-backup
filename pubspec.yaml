@@ -18,7 +18,7 @@ dependencies:
   google_sign_in: ^6.2.2
   shared_preferences: ^2.5.2
   intl: ^0.20.2
-  file_picker: ^9.2.1
+  file_picker: ^9.2.2
   iconify_flutter_plus: ^1.0.4
   flutter_pdfview: ^1.4.0
   path_provider: ^2.1.5
@@ -32,6 +32,9 @@ dependencies:
   url_launcher: ^6.3.1
   android_intent_plus: ^5.3.0
   flutter_svg: ^2.0.17
+  dio: ^5.8.0+1
+  permission_handler: ^11.4.0
+  fluttertoast: ^8.2.12
 
 dev_dependencies:
   flutter_test:

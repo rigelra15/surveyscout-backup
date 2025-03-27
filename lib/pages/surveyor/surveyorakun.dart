@@ -143,55 +143,41 @@ class _SurveyorAccount extends State<SurveyorAccount> {
     return Scaffold(
       backgroundColor: Color(0xFFF1E9E5),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(110),
+        preferredSize: Size.fromHeight(70), // Pastikan ukuran cukup
         child: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Color(0xFFF2EEE9),
-          flexibleSpace: Padding(
-            padding: const EdgeInsets.all(27.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  //color: Colors.blue,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: 50,
-                        height: 50,
-                        //color: Colors.yellow,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 50,
-                              child: Image.asset(
-                                'assets/images/surveyscoutlogo.png',
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          ],
+          flexibleSpace: SafeArea(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 27.0, vertical: 10.0),
+              child: SizedBox(
+                // Bungkus dengan SizedBox agar tidak overflow
+                height: 50, // Sesuaikan agar pas dengan gambar
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(
+                      'assets/images/surveyscoutlogo.png',
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.contain,
+                    ),
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image:
+                              AssetImage('assets/images/layananpelanggan.png'),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage(
-                                'assets/images/layananpelanggan.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
