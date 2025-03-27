@@ -5,7 +5,14 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:surveyscout/pages/responden/respondenprojects.dart';
+import 'package:surveyscout/pages/responden/respondenpages.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:iconify_flutter/icons/ant_design.dart';
+import 'package:iconify_flutter/icons/maki.dart';
+import 'package:iconify_flutter/icons/material_symbols.dart';
+import 'package:iconify_flutter/icons/ph.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
@@ -615,7 +622,7 @@ class _RespondenSignUp extends State<RespondenSignUp> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => RespondenProjects()),
+          MaterialPageRoute(builder: (context) => RespondenPages()),
         );
       } else {
         print("Registrasi gagal! Status Code: ${response.statusCode}");

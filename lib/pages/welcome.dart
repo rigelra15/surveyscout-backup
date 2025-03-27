@@ -46,7 +46,8 @@ class _WelcomeState extends State<Welcome> {
   }
 
   Future<void> _enterDemoMode() async {
-    const String demoToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoiM2JmODgxYmMtMmNmZi00YTc4LTgxNGUtMDM3YjhmMzI1NzIzIiwiZW1haWwiOiJzdXJ2ZXlzY291dGRldmVsb3BlckBnbWFpbC5jb20iLCJyb2xlIjoiY2xpZW50IiwiaWF0IjoxNzQyNDg1OTU3fQ.bJhxhRHWBjtEOcMXQR9VyC7wiJ5FA5lQg5Cp95VLNiY";
+    const String demoToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoiM2JmODgxYmMtMmNmZi00YTc4LTgxNGUtMDM3YjhmMzI1NzIzIiwiZW1haWwiOiJzdXJ2ZXlzY291dGRldmVsb3BlckBnbWFpbC5jb20iLCJyb2xlIjoiY2xpZW50IiwiaWF0IjoxNzQyNDg1OTU3fQ.bJhxhRHWBjtEOcMXQR9VyC7wiJ5FA5lQg5Cp95VLNiY";
     await _saveToken(demoToken);
     Navigator.pushReplacement(
       context,
@@ -161,7 +162,7 @@ class _WelcomeState extends State<Welcome> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Terjadi kesalahan saat login. Silakan coba lagi."),
+          content: Text('Terjadi kesalahan saat login: $error'),
           backgroundColor: Colors.red,
         ),
       );

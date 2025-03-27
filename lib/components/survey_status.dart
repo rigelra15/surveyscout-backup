@@ -17,15 +17,32 @@ class SurveyStatusWidget extends StatelessWidget {
 
     for (var survey in surveys) {
       if (statusCounts.containsKey(survey.statusTask)) {
-        statusCounts[survey.statusTask] = (statusCounts[survey.statusTask] ?? 0) + 1;
+        statusCounts[survey.statusTask] =
+            (statusCounts[survey.statusTask] ?? 0) + 1;
       }
     }
 
     List<Map<String, dynamic>> statusData = [
-      {'status': 'merekrut', 'label': 'Merekrut', 'icon': 'assets/images/merekrut.png'},
-      {'status': 'dikerjakan', 'label': 'Dikerjakan', 'icon': 'assets/images/dikerjakan.png'},
-      {'status': 'ditinjau', 'label': 'Butuh Tinjau', 'icon': 'assets/images/butuhtinjau.png'},
-      {'status': 'selesai', 'label': 'Selesai', 'icon': 'assets/images/selesai.png'},
+      {
+        'status': 'merekrut',
+        'label': 'Merekrut',
+        'icon': 'assets/images/merekrut.png'
+      },
+      {
+        'status': 'dikerjakan',
+        'label': 'Dikerjakan',
+        'icon': 'assets/images/dikerjakan.png'
+      },
+      {
+        'status': 'ditinjau',
+        'label': 'Butuh Tinjau',
+        'icon': 'assets/images/butuhtinjau.png'
+      },
+      {
+        'status': 'selesai',
+        'label': 'Selesai',
+        'icon': 'assets/images/selesai.png'
+      },
     ];
 
     return Row(
@@ -41,10 +58,12 @@ class SurveyStatusWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusCard(BuildContext context, int count, String label, String iconPath) {
+  Widget _buildStatusCard(
+      BuildContext context, int count, String label, String iconPath) {
     return Container(
+      color: Color(0xFFF1E9E5),
       width: (MediaQuery.of(context).size.width - 54) / 4,
-      height: 100,
+      height: 88,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

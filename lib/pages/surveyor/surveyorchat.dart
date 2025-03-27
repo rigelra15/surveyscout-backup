@@ -13,11 +13,9 @@ class SurveyorChat extends StatefulWidget {
 class _SurveyorChat extends State<SurveyorChat> {
   int activeButton = -1; // Tombol default yang tidak aktif
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: Color(0xFFF1E9E5), // Background berwarna #F1E9E5
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(165), // Tinggi AppBar diatur menjadi 130
@@ -35,11 +33,14 @@ class _SurveyorChat extends State<SurveyorChat> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Color(0xFFF1E9E5), // Warna latar belakang
-                      borderRadius: BorderRadius.circular(8), // Sudut melengkung
+                      borderRadius:
+                          BorderRadius.circular(8), // Sudut melengkung
                       boxShadow: [
                         BoxShadow(
-                          color: Color(0x40000000), // Warna shadow (semi-transparent hitam)
-                          offset: Offset(0, 4), // Posisi shadow (horizontal, vertikal)
+                          color: Color(
+                              0x40000000), // Warna shadow (semi-transparent hitam)
+                          offset: Offset(
+                              0, 4), // Posisi shadow (horizontal, vertikal)
                           blurRadius: 4, // Blur radius
                           spreadRadius: 0, // Radius sebaran shadow
                         ),
@@ -52,7 +53,8 @@ class _SurveyorChat extends State<SurveyorChat> {
                         fillColor: Color(0xFFF1E9E5), // Warna latar belakang
                         contentPadding: const EdgeInsets.all(10.0),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8), // Sudut melengkung
+                          borderRadius:
+                              BorderRadius.circular(8), // Sudut melengkung
                           borderSide: BorderSide(
                             color: Color(0xFF757575), // Warna border #757575
                             width: 0.1, // Lebar border 0.5px
@@ -61,18 +63,21 @@ class _SurveyorChat extends State<SurveyorChat> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide(
-                            color: Color(0xFF705D54), // Warna border tetap saat fokus
+                            color: Color(
+                                0xFF705D54), // Warna border tetap saat fokus
                             width: 2.0, // Lebar border saat fokus
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide(
-                            color: Color(0xFF705D54), // Warna border tetap saat tidak fokus
+                            color: Color(
+                                0xFF705D54), // Warna border tetap saat tidak fokus
                             width: 1.0, // Lebar border saat tidak fokus
                           ),
                         ),
-                        prefixIcon: Icon(Icons.search, color: Color(0xFF826754)), // Ikon pencarian
+                        prefixIcon: Icon(Icons.search,
+                            color: Color(0xFF826754)), // Ikon pencarian
                         hintStyle: TextStyle(
                           color: Color(0xFFB0B0B0), // Warna teks #B0B0B0
                           fontFamily: 'NunitoSans',
@@ -260,7 +265,6 @@ class _SurveyorChat extends State<SurveyorChat> {
                           ],
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -274,10 +278,9 @@ class _SurveyorChat extends State<SurveyorChat> {
         height: double.infinity,
         color: const Color(0xFFF2EEE9),
         child: SingleChildScrollView(
-
           child: Align(
-
-            alignment: Alignment.topCenter, // Menempatkan kontainer di bagian atas
+            alignment:
+                Alignment.topCenter, // Menempatkan kontainer di bagian atas
             child: Container(
               color: const Color(0xFFF2EEE9),
 
@@ -310,7 +313,8 @@ class _SurveyorChat extends State<SurveyorChat> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage('assets/images/agusginting.png'),
+                                      image: AssetImage(
+                                          'assets/images/agusginting.png'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -320,51 +324,66 @@ class _SurveyorChat extends State<SurveyorChat> {
                                   child: Padding(
                                     padding: EdgeInsets.all(8),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         // Baris Pertama
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   width: 24, // Lebar Container
-                                                  height: 24, // Tinggi Container
+                                                  height:
+                                                      24, // Tinggi Container
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
-                                                  child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Center(
+                                                    // Untuk menempatkan isi di tengah
                                                     child: Image.asset(
                                                       'assets/images/loading.png',
                                                       width: 24, // Lebar gambar
-                                                      height: 24, // Tinggi gambar
-                                                      fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                      height:
+                                                          24, // Tinggi gambar
+                                                      fit: BoxFit
+                                                          .contain, // Menyesuaikan gambar dengan area yang tersedia
                                                     ),
                                                   ),
                                                 ),
-
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
                                                     "Agus Ginting".length > 10
-                                                        ? "Agus Ginting".substring(0, 10) + "..."
+                                                        ? "Agus Ginting"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Agus Ginting",
                                                     style: TextStyle(
                                                       color: Color(0xFF705D54),
-                                                      fontWeight: FontWeight.w700,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                       fontFamily: "NunitoSans",
                                                       fontSize: 14,
                                                     ),
@@ -374,38 +393,46 @@ class _SurveyorChat extends State<SurveyorChat> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 0), // Jarak antar baris
+                                        SizedBox(
+                                            height: 0), // Jarak antar baris
                                         // Baris Kedua
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
-
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Mas, ini per kolom excelnya tolong rapikan sesuai format datanya ya, misal kalau angka dijadikan number jangan text, makasih".length > 10
-                                                        ? "Mas, ini per kolom excelnya tolong rapikan sesuai format datanya ya, misal kalau angka dijadikan number jangan text, makasih".substring(0, 10) + "..."
+                                                    "Mas, ini per kolom excelnya tolong rapikan sesuai format datanya ya, misal kalau angka dijadikan number jangan text, makasih"
+                                                                .length >
+                                                            10
+                                                        ? "Mas, ini per kolom excelnya tolong rapikan sesuai format datanya ya, misal kalau angka dijadikan number jangan text, makasih"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Mas, ini per kolom excelnya tolong rapikan sesuai format datanya ya, misal kalau angka dijadikan number jangan text, makasih",
                                                     style: TextStyle(
                                                       color: Color(0xFFA3948D),
                                                       fontFamily: "NunitoSans",
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 14,
-
                                                     ),
-
                                                   ),
                                                 ),
                                               ],
@@ -429,9 +456,12 @@ class _SurveyorChat extends State<SurveyorChat> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Align(
-                            alignment: Alignment.topCenter, // Menempatkan konten di bagian atas kiri
+                            alignment: Alignment
+                                .topCenter, // Menempatkan konten di bagian atas kiri
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20), // Tambahkan padding agar tidak terlalu mepet
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                      20), // Tambahkan padding agar tidak terlalu mepet
                               child: Text(
                                 "08.00",
                                 style: TextStyle(
@@ -439,13 +469,11 @@ class _SurveyorChat extends State<SurveyorChat> {
                                   fontSize: 12,
                                   fontFamily: "NunitoSans",
                                   fontWeight: FontWeight.w400,
-
                                 ),
                               ),
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -474,7 +502,8 @@ class _SurveyorChat extends State<SurveyorChat> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage('assets/images/company.png'),
+                                      image: AssetImage(
+                                          'assets/images/company.png'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -484,51 +513,67 @@ class _SurveyorChat extends State<SurveyorChat> {
                                   child: Padding(
                                     padding: EdgeInsets.all(8),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         // Baris Pertama
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   width: 24, // Lebar Container
-                                                  height: 24, // Tinggi Container
+                                                  height:
+                                                      24, // Tinggi Container
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
-                                                  child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Center(
+                                                    // Untuk menempatkan isi di tengah
                                                     child: Image.asset(
                                                       'assets/images/hermanwalton2.png',
                                                       width: 24, // Lebar gambar
-                                                      height: 24, // Tinggi gambar
-                                                      fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                      height:
+                                                          24, // Tinggi gambar
+                                                      fit: BoxFit
+                                                          .contain, // Menyesuaikan gambar dengan area yang tersedia
                                                     ),
                                                   ),
                                                 ),
-
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Bagaskara Putra".length > 10
-                                                        ? "Bagaskara Putra".substring(0, 10) + "..."
+                                                    "Bagaskara Putra".length >
+                                                            10
+                                                        ? "Bagaskara Putra"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Bagaskara Putra",
                                                     style: TextStyle(
                                                       color: Color(0xFF705D54),
-                                                      fontWeight: FontWeight.w700,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                       fontFamily: "NunitoSans",
                                                       fontSize: 14,
                                                     ),
@@ -538,31 +583,40 @@ class _SurveyorChat extends State<SurveyorChat> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 0), // Jarak antar baris
+                                        SizedBox(
+                                            height: 0), // Jarak antar baris
                                         // Baris Kedua
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   width: 24, // Lebar Container
-                                                  height: 24, // Tinggi Container
+                                                  height:
+                                                      24, // Tinggi Container
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
-                                                  child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Center(
+                                                    // Untuk menempatkan isi di tengah
                                                     child: Image.asset(
                                                       'assets/images/centang.png',
                                                       width: 24, // Lebar gambar
-                                                      height: 24, // Tinggi gambar
-                                                      fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                      height:
+                                                          24, // Tinggi gambar
+                                                      fit: BoxFit
+                                                          .contain, // Menyesuaikan gambar dengan area yang tersedia
                                                     ),
                                                   ),
                                                 ),
@@ -570,19 +624,26 @@ class _SurveyorChat extends State<SurveyorChat> {
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Berikut ini Pak portofolio pekerjaan saya sebelumnya".length > 10
-                                                        ? "Berikut ini Pak portofolio pekerjaan saya sebelumnya".substring(0, 10) + "..."
+                                                    "Berikut ini Pak portofolio pekerjaan saya sebelumnya"
+                                                                .length >
+                                                            10
+                                                        ? "Berikut ini Pak portofolio pekerjaan saya sebelumnya"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Berikut ini Pak portofolio pekerjaan saya sebelumnya",
                                                     style: TextStyle(
                                                       color: Color(0xFFA3948D),
                                                       fontFamily: "NunitoSans",
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 14,
-
                                                     ),
                                                   ),
                                                 ),
@@ -607,9 +668,12 @@ class _SurveyorChat extends State<SurveyorChat> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Align(
-                            alignment: Alignment.topCenter, // Menempatkan konten di bagian atas kiri
+                            alignment: Alignment
+                                .topCenter, // Menempatkan konten di bagian atas kiri
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20), // Tambahkan padding agar tidak terlalu mepet
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                      20), // Tambahkan padding agar tidak terlalu mepet
                               child: Text(
                                 "07.00",
                                 style: TextStyle(
@@ -617,13 +681,11 @@ class _SurveyorChat extends State<SurveyorChat> {
                                   fontSize: 12,
                                   fontFamily: "NunitoSans",
                                   fontWeight: FontWeight.w400,
-
                                 ),
                               ),
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -653,7 +715,8 @@ class _SurveyorChat extends State<SurveyorChat> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage('assets/images/layananpelanggan.png'),
+                                      image: AssetImage(
+                                          'assets/images/layananpelanggan.png'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -663,51 +726,67 @@ class _SurveyorChat extends State<SurveyorChat> {
                                   child: Padding(
                                     padding: EdgeInsets.all(8),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         // Baris Pertama
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   width: 24, // Lebar Container
-                                                  height: 24, // Tinggi Container
+                                                  height:
+                                                      24, // Tinggi Container
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
-                                                  child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Center(
+                                                    // Untuk menempatkan isi di tengah
                                                     child: Image.asset(
                                                       'assets/images/layananpelanggan2.png',
                                                       width: 24, // Lebar gambar
-                                                      height: 24, // Tinggi gambar
-                                                      fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                      height:
+                                                          24, // Tinggi gambar
+                                                      fit: BoxFit
+                                                          .contain, // Menyesuaikan gambar dengan area yang tersedia
                                                     ),
                                                   ),
                                                 ),
-
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Layanan Pelanggan".length > 10
-                                                        ? "Layanan Pelanggan".substring(0, 10) + "..."
+                                                    "Layanan Pelanggan".length >
+                                                            10
+                                                        ? "Layanan Pelanggan"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Layanan Pelanggan",
                                                     style: TextStyle(
                                                       color: Color(0xFF705D54),
-                                                      fontWeight: FontWeight.w700,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                       fontFamily: "NunitoSans",
                                                       fontSize: 14,
                                                     ),
@@ -717,35 +796,45 @@ class _SurveyorChat extends State<SurveyorChat> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 0), // Jarak antar baris
+                                        SizedBox(
+                                            height: 0), // Jarak antar baris
                                         // Baris Kedua
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Apabila sudah tidak ada pertanyaan lagi, kami izin menutup percakapan ini. Terima kasih telah menghubungi Layanan Pelanggan SurveyScout!".length > 10
-                                                        ? "Apabila sudah tidak ada pertanyaan lagi, kami izin menutup percakapan ini. Terima kasih telah menghubungi Layanan Pelanggan SurveyScout!".substring(0, 10) + "..."
+                                                    "Apabila sudah tidak ada pertanyaan lagi, kami izin menutup percakapan ini. Terima kasih telah menghubungi Layanan Pelanggan SurveyScout!"
+                                                                .length >
+                                                            10
+                                                        ? "Apabila sudah tidak ada pertanyaan lagi, kami izin menutup percakapan ini. Terima kasih telah menghubungi Layanan Pelanggan SurveyScout!"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Apabila sudah tidak ada pertanyaan lagi, kami izin menutup percakapan ini. Terima kasih telah menghubungi Layanan Pelanggan SurveyScout!",
                                                     style: TextStyle(
                                                       color: Color(0xFFA3948D),
                                                       fontFamily: "NunitoSans",
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 14,
-
                                                     ),
                                                   ),
                                                 ),
@@ -770,9 +859,12 @@ class _SurveyorChat extends State<SurveyorChat> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Align(
-                            alignment: Alignment.topCenter, // Menempatkan konten di bagian atas kiri
+                            alignment: Alignment
+                                .topCenter, // Menempatkan konten di bagian atas kiri
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20), // Tambahkan padding agar tidak terlalu mepet
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                      20), // Tambahkan padding agar tidak terlalu mepet
                               child: Text(
                                 "Kemarin",
                                 style: TextStyle(
@@ -780,13 +872,11 @@ class _SurveyorChat extends State<SurveyorChat> {
                                   fontSize: 12,
                                   fontFamily: "NunitoSans",
                                   fontWeight: FontWeight.w400,
-
                                 ),
                               ),
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -815,7 +905,8 @@ class _SurveyorChat extends State<SurveyorChat> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage('assets/images/notifikasipembayaran.png'),
+                                      image: AssetImage(
+                                          'assets/images/notifikasipembayaran.png'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -825,51 +916,68 @@ class _SurveyorChat extends State<SurveyorChat> {
                                   child: Padding(
                                     padding: EdgeInsets.all(8),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         // Baris Pertama
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   width: 24, // Lebar Container
-                                                  height: 24, // Tinggi Container
+                                                  height:
+                                                      24, // Tinggi Container
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
-                                                  child: Center( // Untuk menempatkan isi di tengah
+                                                  child: Center(
+                                                    // Untuk menempatkan isi di tengah
                                                     child: Image.asset(
                                                       'assets/images/layananpelanggan2.png',
                                                       width: 24, // Lebar gambar
-                                                      height: 24, // Tinggi gambar
-                                                      fit: BoxFit.contain, // Menyesuaikan gambar dengan area yang tersedia
+                                                      height:
+                                                          24, // Tinggi gambar
+                                                      fit: BoxFit
+                                                          .contain, // Menyesuaikan gambar dengan area yang tersedia
                                                     ),
                                                   ),
                                                 ),
-
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Notifikasi Pembayaran".length > 10
-                                                        ? "Notifikasi Pembayaran".substring(0, 10) + "..."
+                                                    "Notifikasi Pembayaran"
+                                                                .length >
+                                                            10
+                                                        ? "Notifikasi Pembayaran"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Notifikasi Pembayaran",
                                                     style: TextStyle(
                                                       color: Color(0xFF705D54),
-                                                      fontWeight: FontWeight.w700,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                       fontFamily: "NunitoSans",
                                                       fontSize: 14,
                                                     ),
@@ -879,35 +987,45 @@ class _SurveyorChat extends State<SurveyorChat> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 0), // Jarak antar baris
+                                        SizedBox(
+                                            height: 0), // Jarak antar baris
                                         // Baris Kedua
                                         Container(
                                           decoration: BoxDecoration(
                                             //color: Colors.blue,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.all(0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 SizedBox(width: 2),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     //color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
                                                   ),
                                                   padding: EdgeInsets.all(4),
                                                   child: Text(
-                                                    "Pembayaran QRIS Anda untuk “Pengamatan Lalu Lintas di Simpang Lima Semarang” sudah kami terima. Proses rekrutmen untuk proyek tersebut telah dimulai. Terima kasih!".length > 10
-                                                        ? "Pembayaran QRIS Anda untuk “Pengamatan Lalu Lintas di Simpang Lima Semarang” sudah kami terima. Proses rekrutmen untuk proyek tersebut telah dimulai. Terima kasih!".substring(0, 10) + "..."
+                                                    "Pembayaran QRIS Anda untuk “Pengamatan Lalu Lintas di Simpang Lima Semarang” sudah kami terima. Proses rekrutmen untuk proyek tersebut telah dimulai. Terima kasih!"
+                                                                .length >
+                                                            10
+                                                        ? "Pembayaran QRIS Anda untuk “Pengamatan Lalu Lintas di Simpang Lima Semarang” sudah kami terima. Proses rekrutmen untuk proyek tersebut telah dimulai. Terima kasih!"
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "..."
                                                         : "Pembayaran QRIS Anda untuk “Pengamatan Lalu Lintas di Simpang Lima Semarang” sudah kami terima. Proses rekrutmen untuk proyek tersebut telah dimulai. Terima kasih!",
                                                     style: TextStyle(
                                                       color: Color(0xFFA3948D),
                                                       fontFamily: "NunitoSans",
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 14,
-
                                                     ),
                                                   ),
                                                 ),
@@ -932,9 +1050,12 @@ class _SurveyorChat extends State<SurveyorChat> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Align(
-                            alignment: Alignment.topCenter, // Menempatkan konten di bagian atas kiri
+                            alignment: Alignment
+                                .topCenter, // Menempatkan konten di bagian atas kiri
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20), // Tambahkan padding agar tidak terlalu mepet
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                      20), // Tambahkan padding agar tidak terlalu mepet
                               child: Text(
                                 "17 Jan",
                                 style: TextStyle(
@@ -942,13 +1063,11 @@ class _SurveyorChat extends State<SurveyorChat> {
                                   fontSize: 12,
                                   fontFamily: "NunitoSans",
                                   fontWeight: FontWeight.w400,
-
                                 ),
                               ),
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -956,167 +1075,24 @@ class _SurveyorChat extends State<SurveyorChat> {
               ),
             ),
           ),
-
-        ),
-      ),
-
-
-
-      bottomNavigationBar:
-      Container(
-        color: Color(0xffD7CCC8), // Footer berwarna #D7CCC8
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8), // Padding horizontal dan vertikal
-        child: GestureDetector(
-          onTap: () {
-            // Navigasi atau aksi untuk footer
-            print("Footer link clicked!");
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Jarak antar container dibuat maksimal
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SurveyorProjects()), // Ganti dengan nama halaman Anda
-                  );
-                },
-                child: Container(
-                  width: 60,
-                  height: 60,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
-                    children: [
-                      Image.asset(
-                        'assets/images/tersedia2.png', // Path ke gambar
-                        width: 24, // Lebar gambar
-                        height: 24, // Tinggi gambar
-                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                      ),
-                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
-                      Text(
-                        'Tersedia',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xFFB8ADA5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SurveyorMyProjects()), // Ganti dengan nama halaman Anda
-                  );
-                },
-                child: Container(
-                  width: 100,
-                  height: 80,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
-                    children: [
-                      Image.asset(
-                        'assets/images/proyeksaya.png', // Path ke gambar
-                        width: 24, // Lebar gambar
-                        height: 24, // Tinggi gambar
-                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                      ),
-                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
-                      Text(
-                        'Proyek Saya',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xFFB8ADA5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              Container(
-                width: 80,
-                height: 60,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
-                  children: [
-                    Image.asset(
-                      'assets/images/chat4.png', // Path ke gambar
-                      width: 24, // Lebar gambar
-                      height: 24, // Tinggi gambar
-                      fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                    ),
-                    SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
-                    Text(
-                      'Chat',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'NunitoSans',
-                        color: Color(0xFF705D54),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SurveyorAccount()), // Ganti dengan nama halaman Anda
-                  );
-                },
-                child: Container(
-                  width: 60,
-                  height: 60,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Pusatkan isi secara vertikal
-                    children: [
-                      Image.asset(
-                        'assets/images/saya.png', // Path ke gambar
-                        width: 24, // Lebar gambar
-                        height: 24, // Tinggi gambar
-                        fit: BoxFit.contain, // Menyesuaikan ukuran gambar
-                      ),
-                      SizedBox(height: 4), // Memberikan jarak antara gambar dan teks
-                      Text(
-                        'Akun',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'NunitoSans',
-                          color: Color(0xFFB8ADA5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
   }
 
-  Widget _buildDropdown(String hint, List<String> options, {required String selectedValue, required ValueChanged<String?> onChanged, bool isWide = false}) {
+  Widget _buildDropdown(String hint, List<String> options,
+      {required String selectedValue,
+      required ValueChanged<String?> onChanged,
+      bool isWide = false}) {
     return Container(
       width: isWide ? 300 : 200, // Conditional width based on isWide parameter
       height: 40, // Set the total height of the dropdown to 40
       child: DropdownButtonFormField<String>(
         isDense: true, // Make the dropdown more compact
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 0), // Padding to control internal spacing
+          contentPadding: EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 0), // Padding to control internal spacing
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16), // Rounded corners
             borderSide: BorderSide(
@@ -1168,14 +1144,14 @@ class _SurveyorChat extends State<SurveyorChat> {
           );
         }).toList(),
         onChanged: onChanged, // Set the onChanged callback
-        icon: Icon(Icons.keyboard_arrow_down, color: Color(0xFF705D54)), // Icon color
+        icon: Icon(Icons.keyboard_arrow_down,
+            color: Color(0xFF705D54)), // Icon color
       ),
     );
   }
 
   Widget _buildIconBox() {
     return GestureDetector(
-
       child: Container(
         width: 40,
         height: 40,
@@ -1188,8 +1164,10 @@ class _SurveyorChat extends State<SurveyorChat> {
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Center align vertically
-          crossAxisAlignment: CrossAxisAlignment.start, // Center align horizontally
+          mainAxisAlignment:
+              MainAxisAlignment.center, // Center align vertically
+          crossAxisAlignment:
+              CrossAxisAlignment.start, // Center align horizontally
           children: [
             // Top line (full width)
             Container(

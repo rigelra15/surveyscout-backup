@@ -96,5 +96,33 @@ class AppPages {
     // GetPage(name: AppRoutes.clientSurveyorProyekDetailKadaluarsa, page: () => Clientsurveyorproyekdetailkadaluwarsa(id: id, type: type)),
     // GetPage(name: AppRoutes.clientSurveyorProyekDetailPeringatan, page: () => Clientsurveyorproyekdetailperingatan(id: id, type: type)),
     // GetPage(name: AppRoutes.clientSurveyorProyekDetailSelesai, page: () => Clientsurveyorproyekdetailselesai(id: id, type: type)),
+
+    // Respondent routes
+    GetPage(name: AppRoutes.respondenProjects, page: () => RespondenProjects()),
+
+    // Payment routes
+    // GetPage(name: AppRoutes.paymentGateway, page: () => PaymentGatewayScreen(snapUrl: snapUrl, orderId: orderId, idDraft: idDraft)),
+    GetPage(name: AppRoutes.paymentConfirmation, page: () => PaymentConfirmationScreen()),
+    GetPage(name: AppRoutes.paymentConfirmationFailed, page: () => PaymentFailedScreen()),
+    GetPage(name: AppRoutes.paymentConfirmationTimeout, page: () => PaymentTimeoutScreen()),
+
+    // Transaction routes
+    // GetPage(name: AppRoutes.transactionReview, page: () => TransactionReviewScreen(idDraft: idDraft, commission: commission)),
+    // GetPage(name: AppRoutes.transactionReviewRespondent, page: () => TransactionReviewRespondentScreen()),
+
+    // Respondent-specific details
+    // GetPage(name: AppRoutes.respondentSurveyDetails, page: () => RespondentSurveyDetailsScreen()),
+    GetPage(name: AppRoutes.respondentCriteriaDetails, page: () => RespondentCriteriaDetailsScreen()),
+
+    // Client Project Details (root-level pages)
+    // GetPage(name: AppRoutes.clientRespondenProyekDetailMerekrut, page: () => Clientrespondenproyekdetailmerekrut(id: id, type: type)),
+    // GetPage(name: AppRoutes.clientSurveyorProyekDetailButuhTinjau, page: () => Clientsurveyorproyekdetailbutuhtinjau(id: id, type: type)),
+    // GetPage(name: AppRoutes.clientSurveyorProyekDetailDikerjakan, page: () => Clientsurveyorproyekdetaildikerjakan(id: id, type: type)),
+    // GetPage(name: AppRoutes.clientSurveyorProyekDetailDMenungguBayar, page: () => Clientsurveyorproyekdetailmenunggubayar(id: id, type: type)),
+    // GetPage(name: AppRoutes.clientSurveyorProyekDetailDraft, page: () => Clientsurveyorproyekdetaildraft(id: id, type: type)),
+    // GetPage(name: AppRoutes.clientSurveyorProyekDetailKadaluarsa, page: () => Clientsurveyorproyekdetailkadaluwarsa(id: id, type: type)),
+    // GetPage(name: AppRoutes.clientSurveyorProyekDetailPeringatan, page: () => Clientsurveyorproyekdetailperingatan(id: id, type: type)),
+    // GetPage(name: AppRoutes.clientSurveyorProyekDetailSelesai, page: () => Clientsurveyorproyekdetailselesai(id: id, type: type)),
   ];
 }
+

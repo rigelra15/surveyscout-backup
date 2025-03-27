@@ -62,7 +62,7 @@ class ProjectCard extends StatelessWidget {
   }
 
   Future<void> _launchWhatsApp() async {
-    final String phoneNumber = "6285234115941"; // Without the "+" sign
+    final String phoneNumber = ""; // Without the "+" sign
     final Uri whatsappUri = Uri.parse("https://wa.me/$phoneNumber");
 
     if (await canLaunchUrl(whatsappUri)) {
@@ -286,10 +286,10 @@ class ProjectCard extends StatelessWidget {
                             GestureDetector(
                               onTap: onTap,
                               child: Container(
-                                width:
-                                    (MediaQuery.of(context).size.width - 47 * 2) *
-                                            (1.5 / 5) -
-                                        4,
+                                width: (MediaQuery.of(context).size.width -
+                                            47 * 2) *
+                                        (1.5 / 5) -
+                                    4,
                                 padding: EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   color: Color(0xFFEDE7E2),
