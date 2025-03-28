@@ -8,7 +8,7 @@ class ProjectDetail {
   final String tenggatPengerjaan;
   final String lokasi;
   final String alamat;
-  List<String> keahlian;
+  final String keahlian;
   List<String> tipeHasil;
   final String kompensasi;
   final String idClient;
@@ -16,6 +16,7 @@ class ProjectDetail {
   final String statusTask;
   final String orderId;
   final String metodeSurvey;
+  final bool statusRevisi;
   final String? idLuaran;
   final String? midtransToken;
   final String? midtransLink;
@@ -27,7 +28,7 @@ class ProjectDetail {
     this.tenggatPengerjaan = '',
     this.lokasi = '',
     this.alamat = '',
-    this.keahlian = const [],
+    this.keahlian = '',
     this.tipeHasil = const [],
     this.kompensasi = '',
     this.idClient = '',
@@ -35,6 +36,7 @@ class ProjectDetail {
     this.statusTask = '',
     this.orderId = '',
     this.metodeSurvey = '',
+    this.statusRevisi = false,
     this.idLuaran,
     this.midtransToken,
     this.midtransLink,
@@ -56,6 +58,7 @@ class ProjectDetail {
       'status_task': statusTask,
       'order_id': orderId,
       'metode_survey': metodeSurvey,
+      'status_revisi': statusRevisi,
       'id_luaran': idLuaran,
       'midtrans_token': midtransToken,
       'midtrans_link': midtransLink,
@@ -70,7 +73,7 @@ class ProjectDetail {
       tenggatPengerjaan: json['tenggat_pengerjaan'] ?? '',
       lokasi: json['lokasi'] ?? '',
       alamat: json['alamat'] ?? '',
-      keahlian: List<String>.from(json['keahlian'] ?? []),
+      keahlian: json['keahlian'] ?? '',
       tipeHasil: List<String>.from(json['tipe_hasil'] ?? []),
       kompensasi: json['kompensasi'] ?? '',
       idClient: json['id_client'] ?? '',
@@ -78,6 +81,7 @@ class ProjectDetail {
       statusTask: json['status_task'] ?? '',
       orderId: json['order_id'] ?? '',
       metodeSurvey: json['metode_survey'] ?? '',
+      statusRevisi: json['status_revisi'] ?? false,
       idLuaran: json['id_luaran'],
       midtransToken: json['midtrans_token'],
       midtransLink: json['midtrans_link'],

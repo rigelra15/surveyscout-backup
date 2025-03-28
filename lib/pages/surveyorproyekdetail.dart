@@ -18,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:iconify_flutter_plus/icons/fa6_solid.dart';
 
 class UploadedFile {
   final String url;
@@ -26,6 +27,7 @@ class UploadedFile {
   final String idLuaran;
   final String surveyId;
   final String fileName;
+  final String uploadedAt;
 
   bool isDownloading;
   double downloadProgress;
@@ -38,6 +40,7 @@ class UploadedFile {
     required this.idLuaran,
     required this.surveyId,
     required this.fileName,
+    required this.uploadedAt,
     this.isDownloading = false,
     this.downloadProgress = 0.0,
     this.downloadCompleted = false,
@@ -183,6 +186,7 @@ class _SurveyorproyekdetailState extends State<Surveyorproyekdetail>
               idLuaran: value['id_luaran'],
               surveyId: value['survey_id'],
               fileName: value['file_name'],
+              uploadedAt: value['diajukan_pada'],
             ));
           }
         });
@@ -204,11 +208,13 @@ class _SurveyorproyekdetailState extends State<Surveyorproyekdetail>
     }
   }
 
-  Future<bool> _uploadFiles(String token, List<PlatformFile> selectedFiles,
-      StateSetter setStateModal) async {
+  Future<void> _uploadFiles(
+      List<PlatformFile> selectedFiles, StateSetter setStateModal) async {
     setState(() {
       isUploading = true;
     });
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('jwt_token');
 
     try {
       Dio dio = Dio();
@@ -255,7 +261,6 @@ class _SurveyorproyekdetailState extends State<Surveyorproyekdetail>
         Navigator.pop(context);
         selectedFiles.clear();
         fetchSurveyAndFiles(widget.id);
-        return true;
       } else if (response.statusCode == 403) {
         setStateModal(() {
           isUploading = false;
@@ -271,7 +276,6 @@ class _SurveyorproyekdetailState extends State<Surveyorproyekdetail>
           fontSize: 16.0,
           fontAsset: 'assets/fonts/nunito-sans/NunitoSans-Bold.ttf',
         );
-        return false;
       } else {
         setStateModal(() {
           isUploading = false;
@@ -287,7 +291,6 @@ class _SurveyorproyekdetailState extends State<Surveyorproyekdetail>
           fontSize: 16.0,
           fontAsset: 'assets/fonts/nunito-sans/NunitoSans-Bold.ttf',
         );
-        return false;
       }
     } catch (e) {
       if (e is DioException) {
@@ -298,7 +301,6 @@ class _SurveyorproyekdetailState extends State<Surveyorproyekdetail>
           print('Error terjadi: $e');
         }
       }
-      return false;
     }
   }
 
@@ -1270,10 +1272,16 @@ class _SurveyorproyekdetailState extends State<Surveyorproyekdetail>
     }
 
     String _getFileIconify(String fileName) {
-      if (fileName.endsWith('.pdf') ||
-          fileName.endsWith('.docx') ||
-          fileName.endsWith('.txt')) {
+      if (fileName.endsWith('.pdf')) {
         return Ci.file_pdf;
+      } else if (fileName.endsWith('.docx')) {
+        return Mdi.file_word;
+      } else if (fileName.endsWith('.xlsx')) {
+        return Mdi.file_excel;
+      } else if (fileName.endsWith('.pptx')) {
+        return Mdi.file_powerpoint;
+      } else if (fileName.endsWith('.txt')) {
+        return Mdi.file_document;
       } else if (fileName.endsWith('.jpg') ||
           fileName.endsWith('.png') ||
           fileName.endsWith('.gif')) {
@@ -1309,6 +1317,11 @@ class _SurveyorproyekdetailState extends State<Surveyorproyekdetail>
       } else {
         return "${(bytes / (1000 * 1000 * 1000)).toStringAsFixed(1)} GB";
       }
+    }
+
+    String _convertDate(String date) {
+      DateTime dateTime = DateTime.parse(date);
+      return DateFormat('dd MMMM yyyy', 'id-ID').format(dateTime);
     }
 
     Future<String?> _getCustomDownloadDirectory() async {
@@ -1626,7 +1639,7 @@ class _SurveyorproyekdetailState extends State<Surveyorproyekdetail>
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
-                                      _formatFileSizeUploaded(file.size),
+                                      "Diunggah pada ${_convertDate(file.uploadedAt)} • ${_formatFileSizeUploaded(file.size)}",
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontFamily: "NunitoSans",
@@ -1902,20 +1915,8 @@ class _SurveyorproyekdetailState extends State<Surveyorproyekdetail>
                                         isUploading = true;
                                       });
 
-                                      try {
-                                        final prefs = await SharedPreferences
-                                            .getInstance();
-                                        final token =
-                                            prefs.getString('jwt_token');
-                                        if (token == null) {
-                                          print("Token tidak tersedia");
-                                          return;
-                                        }
-                                        await _uploadFiles(token, selectedFiles,
-                                            setStateModal);
-                                      } catch (e) {
-                                        print("Upload error: $e");
-                                      }
+                                      _uploadFiles(
+                                          selectedFiles, setStateModal);
                                     }
                                   },
                                   child: Container(

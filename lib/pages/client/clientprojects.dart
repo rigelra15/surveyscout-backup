@@ -6,14 +6,7 @@ import 'package:surveyscout/components/custom_choose_sort.dart';
 import 'package:surveyscout/components/project_card.dart';
 import 'package:surveyscout/components/survey_status.dart';
 import 'package:surveyscout/pages/client/choose_recruitment_screen.dart';
-import 'package:surveyscout/pages/clientrespondenproyekdetailmerekrut.dart';
-import 'package:surveyscout/pages/clientsurveyorproyekdetailbutuhtinjau.dart';
-import 'package:surveyscout/pages/clientsurveyorproyekdetaildikerjakan.dart';
-import 'package:surveyscout/pages/clientsurveyorproyekdetaildmenunggubayar.dart';
-import 'package:surveyscout/pages/clientsurveyorproyekdetaildraft.dart';
-import 'package:surveyscout/pages/clientsurveyorproyekdetailkadaluwarsa.dart';
-import 'package:surveyscout/pages/clientsurveyorproyekdetailperingatan.dart';
-import 'package:surveyscout/pages/clientsurveyorproyekdetailselesai.dart';
+import 'package:surveyscout/pages/clientsurveyorproyekdetail.dart';
 import 'package:surveyscout/services/projects/api_clientprojects.dart';
 
 class ClientProjects extends StatefulWidget {
@@ -142,48 +135,6 @@ class _ClientProjects extends State<ClientProjects> {
   String selectedLokasi = "Semua lokasi";
   String selectedKomisi = "Semua komisi";
   String selectedSort = "Tenggat Pengerjaan Terdekat";
-
-  void navigateToDetail(Project project) {
-    final type = project.orderId.startsWith("RESPOND") ? "respond" : "survey";
-
-    Widget getRouteForProject(String statusTask) {
-      switch (statusTask) {
-        case "ditinjau":
-          return Clientsurveyorproyekdetailbutuhtinjau(
-              id: project.idSurvey, type: type);
-        case "kadaluwarsa":
-          return Clientsurveyorproyekdetailkadaluwarsa(
-              id: project.idSurvey, type: type);
-        case "pembayaran":
-          return Clientsurveyorproyekdetailmenunggubayar(
-              id: project.idSurvey, type: type);
-        case "draft":
-          return Clientsurveyorproyekdetaildraft(
-              id: project.idSurvey, type: type);
-        case "merekrut":
-          return Clientrespondenproyekdetailmerekrut(
-              id: project.idSurvey, type: type);
-        case "dikerjakan":
-          return Clientsurveyorproyekdetaildikerjakan(
-              id: project.idSurvey, type: type);
-        case "selesai":
-          return Clientsurveyorproyekdetailselesai(
-              id: project.idSurvey, type: type);
-        case "peringatan":
-          return Clientsurveyorproyekdetailperingatan(
-              id: project.idSurvey, type: type);
-        default:
-          throw Exception("Unknown project status: $statusTask");
-      }
-    }
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => getRouteForProject(project.statusTask),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -360,6 +311,7 @@ class _ClientProjects extends State<ClientProjects> {
                     children: [
                       Expanded(
                         child: RefreshIndicator(
+                          color: Color(0xFF705D54),
                           onRefresh: _fetchSurveys,
                           child: SingleChildScrollView(
                             child: Column(
@@ -453,8 +405,23 @@ class _ClientProjects extends State<ClientProjects> {
                                                       "dikerjakan"
                                                   ? 3
                                                   : null,
-                                              onTap: () =>
-                                                  navigateToDetail(project),
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Clientsurveyorproyekdetail(
+                                                            id: project
+                                                                .idSurvey,
+                                                            type: project
+                                                                    .orderId
+                                                                    .startsWith(
+                                                                        "RESPOND")
+                                                                ? "respond"
+                                                                : "survey"),
+                                                  ),
+                                                );
+                                              },
                                               onWork: project.statusTask ==
                                                       "merekrut"
                                                   ? () => print("Work tapped")
