@@ -60,7 +60,6 @@ class _ClientProjects extends State<ClientProjects> {
 
           int diffA = dateA.difference(now).inMilliseconds;
           int diffB = dateB.difference(now).inMilliseconds;
-          print(diffA.compareTo(diffB));
 
           return diffA.compareTo(diffB);
         });
@@ -70,7 +69,6 @@ class _ClientProjects extends State<ClientProjects> {
           filteredProjects = surveys;
           isLoading = false;
         });
-        print(filteredProjects);
       } catch (e) {
         print("Error mengambil data survei: $e");
         setState(() {
@@ -414,11 +412,9 @@ class _ClientProjects extends State<ClientProjects> {
                                                             id: project
                                                                 .idSurvey,
                                                             type: project
-                                                                    .orderId
-                                                                    .startsWith(
-                                                                        "RESPOND")
-                                                                ? "respond"
-                                                                : "survey"),
+                                                                .orderId
+                                                                .toLowerCase()
+                                                                .split('-')[0]),
                                                   ),
                                                 );
                                               },

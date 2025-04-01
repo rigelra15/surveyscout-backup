@@ -8,7 +8,7 @@ class ProjectDetail {
   final String tenggatPengerjaan;
   final String lokasi;
   final String alamat;
-  final String keahlian;
+  List<String> keahlian;
   List<String> tipeHasil;
   final String kompensasi;
   final String idClient;
@@ -28,7 +28,7 @@ class ProjectDetail {
     this.tenggatPengerjaan = '',
     this.lokasi = '',
     this.alamat = '',
-    this.keahlian = '',
+    this.keahlian = const [],
     this.tipeHasil = const [],
     this.kompensasi = '',
     this.idClient = '',
@@ -73,7 +73,9 @@ class ProjectDetail {
       tenggatPengerjaan: json['tenggat_pengerjaan'] ?? '',
       lokasi: json['lokasi'] ?? '',
       alamat: json['alamat'] ?? '',
-      keahlian: json['keahlian'] ?? '',
+      keahlian: (json['keahlian'] is List)
+          ? List<String>.from(json['keahlian'])
+          : (json['keahlian'] != null ? [json['keahlian'].toString()] : []),
       tipeHasil: List<String>.from(json['tipe_hasil'] ?? []),
       kompensasi: json['kompensasi'] ?? '',
       idClient: json['id_client'] ?? '',

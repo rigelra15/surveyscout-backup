@@ -1259,15 +1259,6 @@ class _SurveyorproyekdetailState extends State<Surveyorproyekdetail>
         setStateModal(() {
           selectedFiles.addAll(result.files);
         });
-
-        print("==== DEBUGGING FILE PICKER ====");
-        print("Jumlah file terpilih: ${selectedFiles.length}");
-        for (var file in selectedFiles) {
-          print("File Name: ${file.name}");
-          print("File Path: ${file.path}");
-          print("File Size: ${file.size} bytes");
-        }
-        print("==============================");
       }
     }
 
@@ -1350,8 +1341,6 @@ class _SurveyorproyekdetailState extends State<Surveyorproyekdetail>
 
     void _downloadFile(UploadedFile file, StateSetter setStateModal) async {
       try {
-        print("Mengunduh file: ${file.fileName}");
-
         setStateModal(() {
           file.isDownloading = true;
           file.downloadProgress = 0.0;
@@ -1392,7 +1381,7 @@ class _SurveyorproyekdetailState extends State<Surveyorproyekdetail>
           });
 
           Fluttertoast.showToast(
-            msg: "${file.fileName} berhasil diunduh!",
+            msg: "${file.fileName} berhasil disimpan di $savePath!",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.TOP,
             timeInSecForIosWeb: 1,
